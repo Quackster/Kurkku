@@ -5,7 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
+using System.Linq;
+using MySql.Data.MySqlClient;
+using System.Data;
+using Kurkku.Storage.Database;
+using Kurkku.Storage.Database.Models;
 
 namespace Kurkku
 {
@@ -38,15 +42,26 @@ namespace Kurkku
 
             log.Info("Booting Kurkku - Written by Quackster");
             log.Info("Emulation of Habbo Hotel 2013 flash client");
-            log.Info("Attempting to connect to MySQL database");
 
             try
             {
+                log.Warn("Attempting to connect to MySQL database");
+                SessionFactoryBuilder.Instance.InitialiseSessionFactory(ServerConfig.Instance.ConnectionString);
+                log.Info("Connection using Fluid NHibernate is successful!");
 
+                using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+                {
+                    var tasks = session.CreateCriteria(typeof(Test)).List<Test>();
+
+                    foreach (var task in tasks)
+                    {
+                        Console.WriteLine(task.Id);
+                    }
+                }
             }
-            catch
+            catch (Exception ex)
             {
-
+                log.Error(ex);
             }
 
 #if DEBUG

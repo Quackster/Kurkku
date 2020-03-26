@@ -10,8 +10,14 @@ namespace Kurkku.Network
 {
     internal class GameNetworkHandler : ChannelHandlerAdapter
     {
+        #region Fields
+
         private static AttributeKey<Player> PLAYER_KEY = AttributeKey<Player>.NewInstance("PLAYER_KEY");
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        #endregion
+
+        #region Public methods
 
         /// <summary>
         /// Handle client connections.
@@ -82,5 +88,7 @@ namespace Kurkku.Network
         /// <param name="exception">the exception</param>
         public override void ExceptionCaught(IChannelHandlerContext context, Exception exception) =>
             log.Error(exception.ToString());
+
+        #endregion
     }
 }

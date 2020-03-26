@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -26,6 +27,22 @@ namespace Kurkku.Util
             get
             {
                 return m_ServerConfig;
+            }
+        }
+
+        public string ConnectionString
+        {
+            get
+            {
+                var connectionString = new MySqlConnectionStringBuilder();
+                connectionString.Server = ServerConfig.Instance.GetString("mysql", "hostname");
+                connectionString.UserID = ServerConfig.Instance.GetString("mysql", "username");
+                connectionString.Password = ServerConfig.Instance.GetString("mysql", "password");
+                connectionString.Database = ServerConfig.Instance.GetString("mysql", "database");
+                connectionString.Port = (uint)ServerConfig.Instance.GetInt("mysql", "port");
+                connectionString.MinimumPoolSize = (uint)ServerConfig.Instance.GetInt("mysql", "mincon");
+                connectionString.MaximumPoolSize = (uint)ServerConfig.Instance.GetInt("mysql", "maxcon");
+                return connectionString.ToString();
             }
         }
 
@@ -60,8 +77,6 @@ namespace Kurkku.Util
             SetConfig(xmlDoc, "mysql/max_connections", "max_connections");
             SetConfig(xmlDoc, "server/ip");
             SetConfig(xmlDoc, "server/port");
-
-            Console.WriteLine(GetString("mysql", "hostname"));
         }
 
         private void SetConfig(XmlDocument xmlDoc, string xmlPath, string configKey = null)
