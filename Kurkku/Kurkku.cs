@@ -55,7 +55,30 @@ namespace Kurkku
 
                     foreach (var task in tasks)
                     {
-                        Console.WriteLine(task.Id);
+                        Console.WriteLine(task.TestId);
+                    }
+
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        session.SaveOrUpdate(new Test
+                        {
+                            TestId = "14",
+                            User = "LOL"
+                        });
+                        session.SaveOrUpdate(new Test
+                        {
+                            TestId = "15",
+                            User = "LOL"
+                        });
+                        transaction.Commit();
+                    }
+
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        var t = session.QueryOver<Test>().Where(test => test.TestId == "loled").SingleOrDefault();
+
+                        session.Delete(t);
+                        transaction.Commit();
                     }
                 }
             }

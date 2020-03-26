@@ -35,6 +35,16 @@ namespace Kurkku.Util
             get
             {
                 var connectionString = new MySqlConnectionStringBuilder();
+                connectionString.Server = "localhost";
+                connectionString.Port = 3306;
+                connectionString.UserID = "root";
+                connectionString.Password = "123";
+                connectionString.Database = "kurkku";
+                connectionString.MinimumPoolSize = 5;
+                connectionString.MaximumPoolSize = 10;
+
+                /*
+                var connectionString = new MySqlConnectionStringBuilder();
                 connectionString.Server = ServerConfig.Instance.GetString("mysql", "hostname");
                 connectionString.UserID = ServerConfig.Instance.GetString("mysql", "username");
                 connectionString.Password = ServerConfig.Instance.GetString("mysql", "password");
@@ -42,6 +52,9 @@ namespace Kurkku.Util
                 connectionString.Port = (uint)ServerConfig.Instance.GetInt("mysql", "port");
                 connectionString.MinimumPoolSize = (uint)ServerConfig.Instance.GetInt("mysql", "mincon");
                 connectionString.MaximumPoolSize = (uint)ServerConfig.Instance.GetInt("mysql", "maxcon");
+                return connectionString.ToString();
+                */
+
                 return connectionString.ToString();
             }
         }
