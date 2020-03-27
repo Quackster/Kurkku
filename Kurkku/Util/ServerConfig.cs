@@ -43,9 +43,6 @@ namespace Kurkku.Util
                 connectionString.MinimumPoolSize = (uint)ServerConfig.Instance.GetInt("mysql", "mincon");
                 connectionString.MaximumPoolSize = (uint)ServerConfig.Instance.GetInt("mysql", "maxcon");
                 return connectionString.ToString();
-                */
-
-                return connectionString.ToString();
             }
         }
 
