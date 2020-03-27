@@ -12,12 +12,30 @@ namespace Kurkku.Storage.Database.Models
             Table("test");
             Id(x => x.TestId, "test_id");
             Map(x => x.User, "user");
+
+            Join("test_room", m =>
+            {
+                m.Fetch.Select().Inverse();
+                //m.KeyColumn("test_id");
+                m.References(x => x.Room, "test_id");
+                //m.Map(t => t.Room).
+                //m.Map(t => t.Name);
+
+            });
+
+            /*
+            Join("FormFields", m =>
+            {
+                m.Fetch.Join();
+                m.KeyColumn("FieldId");
+                m.Map(t => t.DisplayOrder).Nullable();
+            });
+            */
         }
     }
 
     public class Test
     {
-
         public virtual string TestId
         {
             get;
@@ -25,6 +43,18 @@ namespace Kurkku.Storage.Database.Models
         }
 
         public virtual string User
+        {
+            get;
+            set;
+        }
+
+        public virtual TestRoom Room
+        {
+            get;
+            set;
+        }
+
+        public virtual string Name
         {
             get;
             set;

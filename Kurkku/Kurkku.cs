@@ -56,8 +56,12 @@ namespace Kurkku
                     foreach (var task in tasks)
                     {
                         Console.WriteLine(task.TestId);
+                        Console.WriteLine(task.User);
+                        Console.WriteLine(task.Room != null ? task.Room.Name : "null");
+                        Console.WriteLine("--");
                     }
 
+                    /*
                     using (var transaction = session.BeginTransaction())
                     {
                         session.SaveOrUpdate(new Test
@@ -80,6 +84,7 @@ namespace Kurkku
                         session.Delete(t);
                         transaction.Commit();
                     }
+                    */
                 }
             }
             catch (Exception ex)
