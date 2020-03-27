@@ -35,21 +35,11 @@ namespace Kurkku.Util
             get
             {
                 var connectionString = new MySqlConnectionStringBuilder();
-                connectionString.Server = "localhost";
-                connectionString.Port = 3306;
-                connectionString.UserID = "root";
-                connectionString.Password = "123";
-                connectionString.Database = "kurkku";
-                connectionString.MinimumPoolSize = 5;
-                connectionString.MaximumPoolSize = 10;
-
-                /*
-                var connectionString = new MySqlConnectionStringBuilder();
                 connectionString.Server = ServerConfig.Instance.GetString("mysql", "hostname");
+                connectionString.Port = (uint)ServerConfig.Instance.GetInt("mysql", "port");
                 connectionString.UserID = ServerConfig.Instance.GetString("mysql", "username");
                 connectionString.Password = ServerConfig.Instance.GetString("mysql", "password");
                 connectionString.Database = ServerConfig.Instance.GetString("mysql", "database");
-                connectionString.Port = (uint)ServerConfig.Instance.GetInt("mysql", "port");
                 connectionString.MinimumPoolSize = (uint)ServerConfig.Instance.GetInt("mysql", "mincon");
                 connectionString.MaximumPoolSize = (uint)ServerConfig.Instance.GetInt("mysql", "maxcon");
                 return connectionString.ToString();
@@ -86,8 +76,8 @@ namespace Kurkku.Util
             SetConfig(xmlDoc, "mysql/password");
             SetConfig(xmlDoc, "mysql/database");
             SetConfig(xmlDoc, "mysql/port");
-            SetConfig(xmlDoc, "mysql/min_connections", "min_connections");
-            SetConfig(xmlDoc, "mysql/max_connections", "max_connections");
+            SetConfig(xmlDoc, "mysql/min_connections", "mincon");
+            SetConfig(xmlDoc, "mysql/max_connections", "maxcon");
             SetConfig(xmlDoc, "server/ip");
             SetConfig(xmlDoc, "server/port");
         }
@@ -96,11 +86,11 @@ namespace Kurkku.Util
         {
             try
             {
-                m_ConfigValues[configKey ?? xmlPath] = xmlDoc.SelectSingleNode("//configuration/" + xmlPath).InnerText;
+                m_ConfigValues[configKey != null ? xmlPath.Split('/')[0] + "/" + configKey : xmlPath] = xmlDoc.SelectSingleNode("//configuration/" + xmlPath).InnerText;
             }
             catch
             {
-                m_ConfigValues[configKey ?? xmlPath] = string.Empty;
+                m_ConfigValues[configKey != null ? xmlPath.Split('/')[0] + "/" + configKey : xmlPath] = string.Empty;
             }
         }
 
@@ -149,7 +139,7 @@ namespace Kurkku.Util
             xmlWriter.WriteEndElement();
 
             xmlWriter.WriteStartElement("max_connections");
-            xmlWriter.WriteString("5");
+            xmlWriter.WriteString("10");
             xmlWriter.WriteEndElement();
 
             xmlWriter.WriteEndElement();
