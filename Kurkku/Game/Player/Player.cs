@@ -1,42 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DotNetty.Transport.Channels;
+﻿using Kurkku.Network.Session;
 using log4net;
+using System;
+using System.Reflection;
 
 namespace Kurkku.Game.Player
 {
-    class Player
+    public class Player
     {
-        private static readonly ILog _log = LogManager.GetLogger(typeof(Player));
-
         #region Fields
 
-        private bool m_Disconnected;
-        private IChannel m_Channel;
+        private ILog m_Log = LogManager.GetLogger(typeof(Player));
+        private ConnectionSession m_ConnectionSession;
 
         #endregion
 
         #region Properties
 
         /// <summary>
-        /// Gets the player channel.
+        /// Get the connection session
         /// </summary>
-        public IChannel Channel
+        public ConnectionSession ConnectionSession
         {
-            get { return m_Channel; }
+            get { return m_ConnectionSession; }
         }
 
-        /// <summary>
-        /// Get the ip address of the player connected.
-        /// </summary>
-        public string IpAddress
+        public ILog Log
         {
-            get { return m_Channel.RemoteAddress.ToString().Split(':')[3].Replace("]", ""); }
+            get { return m_Log; }
         }
 
         #endregion
-
 
         #region Constructors
 
@@ -44,9 +37,10 @@ namespace Kurkku.Game.Player
         /// Constructor for player.
         /// </summary>
         /// <param name="channel">the channel</param>
-        public Player(IChannel channel)
+        public Player(ConnectionSession connectionSession)
         {
-            m_Channel = channel;
+            this.m_ConnectionSession = connectionSession;
+            this.m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Connection {connectionSession.Channel.Id}");
         }
 
         #endregion
@@ -56,7 +50,7 @@ namespace Kurkku.Game.Player
         /// <summary>
         /// Disconnection handler
         /// </summary>
-        internal void Disconnect()
+        public void Disconnect()
         {
 
         }

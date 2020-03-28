@@ -2,14 +2,10 @@
 using log4net;
 using log4net.Config;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Linq;
-using MySql.Data.MySqlClient;
-using System.Data;
 using Kurkku.Storage.Database;
-using Kurkku.Storage.Database.Models;
+using Kurkku.Network;
 
 namespace Kurkku
 {
@@ -45,47 +41,8 @@ namespace Kurkku
 
             try
             {
-                log.Warn("Attempting to connect to MySQL database");
-                SessionFactoryBuilder.Instance.InitialiseSessionFactory(ServerConfig.Instance.ConnectionString);
-                log.Info("Connection using Fluid NHibernate is successful!");
-
-                using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
-                {
-                    var tasks = session.CreateCriteria(typeof(Test)).List<Test>();
-
-                    foreach (var task in tasks)
-                    {
-                        Console.WriteLine(task.TestId);
-                        Console.WriteLine(task.User);
-                        Console.WriteLine(task.Room != null ? task.Room.Name : "null");
-                        Console.WriteLine("--");
-                    }
-
-                    /*
-                    using (var transaction = session.BeginTransaction())
-                    {
-                        session.SaveOrUpdate(new Test
-                        {
-                            TestId = "14",
-                            User = "LOL"
-                        });
-                        session.SaveOrUpdate(new Test
-                        {
-                            TestId = "15",
-                            User = "LOL"
-                        });
-                        transaction.Commit();
-                    }
-
-                    using (var transaction = session.BeginTransaction())
-                    {
-                        var t = session.QueryOver<Test>().Where(test => test.TestId == "loled").SingleOrDefault();
-
-                        session.Delete(t);
-                        transaction.Commit();
-                    }
-                    */
-                }
+                tryDatabaseConnection();
+                tryCreateServer();
             }
             catch (Exception ex)
             {
@@ -97,5 +54,32 @@ namespace Kurkku
 #endif
 
         }
+
+        #region Private methods
+
+        /// <summary>
+        /// Test database connection
+        /// </summary>
+        private static void tryDatabaseConnection()
+        {
+            log.Warn("Attempting to connect to MySQL database");
+            SessionFactoryBuilder.Instance.InitialiseSessionFactory(ServerConfig.Instance.ConnectionString);
+            log.Info("Connection using Fluid NHibernate is successful!");
+        }
+
+        /// <summary>
+        /// Try and create server
+        /// </summary>
+        private static void tryCreateServer()
+        {
+            GameServer.Logger.Warn("Starting server");
+
+            GameServer.Instance.CreateServer(ServerConfig.Instance.GetString("server", "ip"), ServerConfig.Instance.GetInt("server", "port"));
+            GameServer.Instance.InitialiseServer();
+
+            GameServer.Logger.Info($"Server is now listening on port: {GameServer.Instance.IpAddress}:{GameServer.Instance.Port}!");
+        }
+
+        #endregion
     }
 }

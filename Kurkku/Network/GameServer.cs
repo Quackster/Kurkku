@@ -3,16 +3,13 @@ using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
 using log4net;
-using Kurkku.Util;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
-using System.Text;
 
 namespace Kurkku.Network
 {
-    class GameServer
+    public class GameServer
     {
         #region Fields
 
@@ -22,9 +19,13 @@ namespace Kurkku.Network
         private MultithreadEventLoopGroup m_BossGroup;
         private MultithreadEventLoopGroup m_WorkerGroup;
 
+        private string m_Ip;
+        private int m_Port;
+
         #endregion
 
         #region Properties
+
         /// <summary>
         /// Invoke the singleton instance
         /// </summary>
@@ -34,6 +35,33 @@ namespace Kurkku.Network
             {
                 return m_GameServer;
             }
+        }
+
+        /// <summary>
+        /// Get the logger
+        /// </summary>
+        public static ILog Logger
+        {
+            get
+            {
+                return m_Log;
+            }
+        }
+
+        /// <summary>
+        /// Get the server IP address
+        /// </summary>
+        public string IpAddress
+        {
+            get { return m_Ip; }
+        }
+
+        /// <summary>
+        /// Port
+        /// </summary>
+        public int Port
+        {
+            get { return m_Port; }
         }
 
         #endregion
@@ -53,6 +81,12 @@ namespace Kurkku.Network
 
         #region Public methods
 
+        public void CreateServer(string ip, int port)
+        {
+            this.m_Ip = ip;
+            this.m_Port = port;
+        }
+
         /// <summary>
         /// Initialise the game server by given pot
         /// </summary>
@@ -64,10 +98,7 @@ namespace Kurkku.Network
                 ServerBootstrap bootstrap = new ServerBootstrap()
                     .Group(m_BossGroup, m_WorkerGroup)
                     .Channel<TcpServerSocketChannel>()
-                    .ChildHandler(new GameChannelInitializer())/*new ActionChannelInitializer<IChannel>(channel =>
-                        channel.Pipeline.AddLast("gameEncoder", new NetworkEncoder()),
-                        channel.Pipeline.AddLast("ClientHandler", new GameNetworkHandler())
-                    ))*/
+                    .ChildHandler(new GameChannelInitializer())
                     .ChildOption(ChannelOption.TcpNodelay, true)
                     .ChildOption(ChannelOption.SoKeepalive, true)
                     .ChildOption(ChannelOption.SoReuseaddr, true)
@@ -75,8 +106,7 @@ namespace Kurkku.Network
                     .ChildOption(ChannelOption.RcvbufAllocator, new FixedRecvByteBufAllocator(1024))
                     .ChildOption(ChannelOption.Allocator, UnpooledByteBufferAllocator.Default);
 
-                bootstrap.BindAsync(IPAddress.Parse(ServerConfig.Instance.GetString("server", "ip")), ServerConfig.Instance.GetInt("server", "port"));
-                m_Log.Info($"Server is now listening on port: {ServerConfig.Instance.GetInt("server", "port")}!");
+                bootstrap.BindAsync(IPAddress.Parse(m_Ip), m_Port);
             }
             catch (Exception e)
             {

@@ -2,6 +2,7 @@
 using DotNetty.Codecs;
 using DotNetty.Transport.Channels;
 using Kurkku.Network.Streams;
+using Kurkku.Util;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,27 +11,47 @@ namespace Kurkku.Network
 {
     internal class NetworkDecoder : ByteToMessageDecoder
     {
-        protected override void Decode(IChannelHandlerContext context, IByteBuffer input, List<object> output)
+        protected override void Decode(IChannelHandlerContext ctx, IByteBuffer buffer, List<object> output)
         {
-            if (input.ReadableBytes < 4)
-                return;
+            buffer.MarkReaderIndex();
 
-            int messageLength = int.Parse(Encoding.Default.GetString(input.ReadBytes(4).Array));
-            string messageBody = Encoding.Default.GetString(input.ReadBytes(messageLength).Array);
-            string messageHeader = null;
-
-            if (messageBody.Contains(" "))
+            if (buffer.ReadableBytes < 6) 
             {
-                messageHeader = messageBody.Split(' ')[0];
-                messageBody = messageBody.Substring(messageHeader.Length + 1);
+                // If the incoming data is less than 6 bytes, it's junk.
+                return;
+            }
+
+            byte delimiter = buffer.ReadByte();
+            buffer.ResetReaderIndex();
+
+            if (delimiter == 60)
+            {
+                string policy = "<?xml version=\"1.0\"?>\r\n"
+                        + "<!DOCTYPE cross-domain-policy SYSTEM \"/xml/dtds/cross-domain-policy.dtd\">\r\n"
+                        + "<cross-domain-policy>\r\n"
+                        + "<allow-access-from domain=\"*\" to-ports=\"*\" />\r\n"
+                        + "</cross-domain-policy>\0)";
+
+                ctx.Channel.WriteAndFlushAsync(Unpooled.CopiedBuffer(StringUtil.GetEncoding().GetBytes(policy)));
             }
             else
             {
-                messageHeader = messageBody;
-                messageBody = string.Empty;
-            }
+                buffer.MarkReaderIndex();
+                int length = buffer.ReadInt();
 
-            output.Add(new Request(messageHeader, messageBody));
+                if (buffer.ReadableBytes < length)
+                {
+                    buffer.ResetReaderIndex();
+                    return;
+                }
+
+                if (length < 0)
+                {
+                    return;
+                }
+
+                output.Add(new Request(length, buffer.ReadBytes(length)));
+            }
         }
     }
 }

@@ -1,10 +1,10 @@
-﻿using DotNetty.Buffers;
-using DotNetty.Common.Utilities;
+﻿using DotNetty.Common.Utilities;
 using DotNetty.Transport.Channels;
-using Kurkku.Game.Player;
+using Kurkku.Messages;
+using Kurkku.Network.Session;
+using Kurkku.Network.Streams;
 using log4net;
 using System;
-using System.Text;
 
 namespace Kurkku.Network
 {
@@ -12,7 +12,7 @@ namespace Kurkku.Network
     {
         #region Fields
 
-        private static AttributeKey<Player> PLAYER_KEY = AttributeKey<Player>.NewInstance("PLAYER_KEY");
+        private static AttributeKey<ConnectionSession> CONNECTION_KEY = AttributeKey<ConnectionSession>.NewInstance("CONNECTION_KEY");
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         #endregion
@@ -26,14 +26,13 @@ namespace Kurkku.Network
         public override void ChannelActive(IChannelHandlerContext ctx)
         {
             base.ChannelActive(ctx);
-            var player = new Player(ctx.Channel);
 
-            if (player != null)
+            var connection = new ConnectionSession(ctx.Channel);
+
+            if (connection != null)
             {
-                log.Debug($"Client connected to server: {player.IpAddress}");
-
-                ctx.Channel.GetAttribute(PLAYER_KEY).SetIfAbsent(player);
-                //ctx.Channel.WriteAndFlushAsync(new Response("HELLO"));
+                log.Debug($"Client connected to server: {connection.IpAddress}");
+                ctx.Channel.GetAttribute(CONNECTION_KEY).SetIfAbsent(connection);
             }
         }
 
@@ -44,14 +43,14 @@ namespace Kurkku.Network
         public override void ChannelInactive(IChannelHandlerContext ctx)
         {
             base.ChannelInactive(ctx);
-            Player player = ctx.Channel.GetAttribute(PLAYER_KEY).Get();
+            ConnectionSession connection = ctx.Channel.GetAttribute(CONNECTION_KEY).Get();
 
-            if (player == null)
+            if (connection == null)
                 return;
 
-            player.Disconnect();
+            connection.Disconnect();
 
-            log.Debug($"Client disconnected from server: {player.IpAddress}");
+            log.Debug($"Client disconnected from server: {connection.IpAddress}");
         }
 
         /// <summary>
@@ -61,16 +60,16 @@ namespace Kurkku.Network
         /// <param name="msg">the incoming message</param>
         public override void ChannelRead(IChannelHandlerContext ctx, object msg)
         {
-            Player player = ctx.Channel.GetAttribute(PLAYER_KEY).Get();
+            ConnectionSession connectionSession = ctx.Channel.GetAttribute(CONNECTION_KEY).Get();
 
-            if (player == null)
+            if (connectionSession == null)
                 return;
 
-            /*if (msg is Request)
+            if (msg is Request)
             {
                 Request request = (Request)msg;
-                MessageHandler.Instance.ProcessRequest(player, request);
-            }*/
+                MessageHandler.Instance.HandleMesage(connectionSession.Player, request);
+            }
 
             base.ChannelRead(ctx, msg);
         }

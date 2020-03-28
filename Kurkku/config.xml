@@ -1,0 +1,15 @@
+﻿<configuration>
+   <mysql>
+      <hostname>localhost</hostname>
+      <username>root</username>
+      <password>123</password>
+      <database>kurkku</database>
+      <port>3306</port>
+      <min_connections>5</min_connections>
+      <max_connections>10</max_connections>
+   </mysql>
+   <server>
+      <ip>127.0.0.1</ip>
+      <port>30001</port>
+   </server>
+</configuration>
