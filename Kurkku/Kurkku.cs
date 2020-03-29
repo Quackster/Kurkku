@@ -2,12 +2,8 @@
 using log4net;
 using log4net.Config;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Linq;
-using MySql.Data.MySqlClient;
-using System.Data;
 using Kurkku.Storage.Database;
 using Kurkku.Storage.Database.Models;
 
