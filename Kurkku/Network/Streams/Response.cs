@@ -1,158 +1,101 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DotNetty.Buffers;
+using Kurkku.Util;
+using System;
 
 namespace Kurkku.Network.Streams
 {
     public class Response
     {
-        private string _header;
-        private bool _finalised;
+        #region Fields
 
-        private StringBuilder _buffer;
+        private short m_Header;
+        private IByteBuffer m_Buffer;
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// Get the message header
         /// </summary>
-        public string Header
+        public short Header
         {
-            get { return _header; }
+            get { return m_Header; }
         }
 
         /// <summary>
-        /// Get the message buffer
+        /// Get whether the length has been set
         /// </summary>
-        public StringBuilder Buffer
+        public bool HasLength
         {
-            get { return _buffer; }
+            get { return m_Buffer.GetInt(0) > -1; }
         }
 
         /// <summary>
-        /// Get the message body
+        /// Get the message body with characters replaced
         /// </summary>
-        public string Body
+        public string MessageBody
         {
             get
             {
-                string consoleBody = _buffer.ToString();
+                string consoleText = m_Buffer.ToString(StringUtil.GetEncoding());
 
-                for (int i = 0; i < 14; i++)
-                    consoleBody = consoleBody.Replace("" + (char)i, "{" + i + "}");
+                for (int i = 0; i < 13; i++)
+                    consoleText = consoleText.Replace(Convert.ToString((char)i), "[" + i + "]");
 
-                return consoleBody;
+                return consoleText;
             }
         }
 
+        #endregion
+
+        #region Constructors
+
         /// <summary>
-        /// Constructor for request class.
+        /// Constructor for response
         /// </summary>
-        /// <param name="messageHeader">the header requested</param>
-        /// <param name="messageData">the data sent from client</param>
-        public Response(string header)
+        /// <param name="header"></param>
+        /// <param name="buffer"></param>
+        public Response(short header, IByteBuffer buffer)
         {
-            _header = header;
-            _buffer = new StringBuilder();
+            this.m_Header = header;
+            this.m_Buffer = buffer;
+            this.m_Buffer.WriteInt(-1);
+            this.m_Buffer.WriteShort(m_Header);
+        }
+
+        #endregion
+
+        #region Public methods
+
+        /// <summary>
+        /// Write string for client
+        /// </summary>
+        /// <param name="obj"></param>
+        public void writeString(object obj)
+        {
+            m_Buffer.WriteShort(obj.ToString().Length);
+            m_Buffer.WriteBytes(StringUtil.GetEncoding().GetBytes(obj.ToString()));
         }
 
         /// <summary>
-        /// Static method for creating response.
+        /// Write int for client
         /// </summary>
-        /// <param name="header">the header for the response</param>
-        /// <returns></returns>
-        public static Response Init(string header)
+        /// <param name="obj"></param>
+        public void writeInt(int obj)
         {
-            return new Response(header);
+            m_Buffer.WriteInt(obj);
         }
 
         /// <summary>
-        /// Append a raw object to the response
+        /// Write boolean for client
         /// </summary>
-        /// <param name="data">the data to send</param>
-        public void Append(object data)
+        /// <param name="obj"></param>
+        public void writeBool(bool obj)
         {
-            string value = data.ToString();
-            value = value.Replace("#", "*");
-
-            _buffer.Append(value);
+            m_Buffer.WriteBoolean(obj);
         }
 
-        /// <summary>
-        /// Append an argument with the default delimeter.
-        /// </summary>
-        /// <param name="arg">the argument to append</param>
-        public void AppendArgument(object arg) =>
-            AppendArgument(arg, ' ');
-
-        /// <summary>
-        /// Append an argument with the breakline delimeter.
-        /// </summary>
-        /// <param name="arg">the argument to append</param>
-        public void AppendNewArgument(object arg) =>
-            AppendArgument(arg, (char)13);
-
-        /// <summary>
-        /// Append an argument with the slash delimeter.
-        /// </summary>
-        /// <param name="arg">the argument to append</param>
-        public void AppendPartArgument(object arg) =>
-            AppendArgument(arg, '/');
-
-        /// <summary>
-        /// Append an argument with the tab delimeter.
-        /// </summary>
-        /// <param name="arg">the argument to append</param>
-        public void AppendTabArgument(object arg) =>
-            AppendArgument(arg, (char)9);
-
-        /// <summary>
-        /// Append a key value argument with the equals sign.
-        /// </summary>
-        /// <param name="key">the key</param>
-        /// <param name="value">the value</param>
-        public void AppendKVArgument(object key, object value)
-        {
-            this.Append((char)13);
-            this.Append(key);
-            this.Append('=');
-            this.Append(value);
-        }
-
-        /// <summary>
-        /// Append a key value argument with the colon sign.
-        /// </summary>
-        /// <param name="key">the key</param>
-        /// <param name="value">the value</param>
-        public void AppendKV2Argument(string key, string value)
-        {
-            this.Append((char)13);
-            this.Append(key);
-            this.Append(':');
-            this.Append(value);
-        }
-
-        /// <summary>
-        /// Append argument by custom delimeter
-        /// </summary>
-        /// <param name="arg">the argument</param>
-        /// <param name="delimiter">the delimeter</param>
-        public void AppendArgument(object arg, char delimiter)
-        {
-            this.Append(delimiter);
-            this.Append(arg);
-        }
-
-        /// <summary>
-        /// Get the finalised message
-        /// </summary>
-        /// <returns>the created message</returns>
-        public string GetMessage()
-        {
-            if (!_finalised)
-            {
-                _finalised = true;
-            }
-
-            return string.Format("#{0}{1}##", _header, _buffer.ToString());
-        }
+        #endregion
     }
 }

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kurkku", "Kurkku\Kurkku.csproj", "{9B4ED829-E4E3-44BC-A518-344745EFD48B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kurkku.Storage", "Kurkku.Storage\Kurkku.Storage.csproj", "{B981244B-BDB9-4A5B-9C08-59D2069FF174}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kurkku.Storage", "Kurkku.Storage\Kurkku.Storage.csproj", "{B981244B-BDB9-4A5B-9C08-59D2069FF174}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

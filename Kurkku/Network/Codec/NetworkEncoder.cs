@@ -4,17 +4,41 @@ using System.Text;
 using DotNetty.Buffers;
 using DotNetty.Codecs;
 using DotNetty.Transport.Channels;
-using log4net;
+using Kurkku.Messages;
+using Kurkku.Network.Session;
 using Kurkku.Network.Streams;
 
 namespace Kurkku.Network.Codec
 {
-    internal class NetworkEncoder : MessageToMessageEncoder<object>
+    internal class NetworkEncoder : MessageToMessageEncoder<MessageComposer>
     {
-        protected override void Encode(IChannelHandlerContext context, object msg, List<object> output)
+        protected override void Encode(IChannelHandlerContext ctx, MessageComposer composer, List<object> output)
         {
-            if (msg is Response response)
-                context.WriteAndFlushAsync(Unpooled.CopiedBuffer(Encoding.GetEncoding(0).GetBytes(response.GetMessage())));
+            var buffer = Unpooled.Buffer();
+            
+            var response = new Response(composer.Header, buffer);
+            response.writeInt(0);
+
+            foreach (var objectData in composer.Data)
+            {
+                if (objectData is string)
+                    response.writeString((string)objectData);
+
+                if (objectData is int)
+                    response.writeInt((int)objectData);
+
+                if (objectData is bool)
+                    response.writeBool((bool)objectData);
+            }
+
+            buffer.SetInt(0, buffer.WriterIndex - 4);
+
+            ConnectionSession connection = ctx.Channel.GetAttribute(GameNetworkHandler.CONNECTION_KEY).Get();
+
+            if (connection != null)
+                connection.Player.Log.Debug("Sending: " + response.Header + " / " + response.MessageBody);
+            
+            output.Add(buffer);
         }
     }
 }

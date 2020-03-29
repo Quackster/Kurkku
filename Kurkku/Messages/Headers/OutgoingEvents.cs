@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Kurkku.Messages.Headers
+{
+    public class OutgoingEvents
+    {
+        public static readonly short InitCryptoComposer = 889;
+        public static readonly short SecretKeyComposer = 3489;
+        public static readonly short AuthenticationOKComposer = 2008;
+        public static readonly short ActivityPointsComposer = 1271;
+        public static readonly short CreditsBalanceComposer = 3412;
+        public static readonly short LandingViewComposer = 2680;
+    }
+}
