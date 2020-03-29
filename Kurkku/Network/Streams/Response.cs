@@ -16,11 +16,35 @@ namespace Kurkku.Network.Streams
         #region Properties
 
         /// <summary>
+        /// Get the message header
+        /// </summary>
+        public short Header
+        {
+            get { return m_Header; }
+        }
+
+        /// <summary>
         /// Get whether the length has been set
         /// </summary>
         public bool HasLength
         {
             get { return m_Buffer.GetInt(0) > -1; }
+        }
+
+        /// <summary>
+        /// Get the message body with characters replaced
+        /// </summary>
+        public string MessageBody
+        {
+            get
+            {
+                string consoleText = m_Buffer.ToString(StringUtil.GetEncoding());
+
+                for (int i = 0; i < 13; i++)
+                    consoleText = consoleText.Replace(Convert.ToString((char)i), "[" + i + "]");
+
+                return consoleText;
+            }
         }
 
         #endregion

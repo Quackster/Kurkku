@@ -10,7 +10,7 @@ namespace Kurkku.Network.Streams
     {
         #region Fields
 
-        private int m_Header;
+        private short m_Header;
         private int m_Length;
         private IByteBuffer m_Buffer;
 
@@ -19,7 +19,7 @@ namespace Kurkku.Network.Streams
         /// <summary>
         /// Get the message header
         /// </summary>
-        public int Header
+        public short Header
         {
             get { return m_Header; }
         }

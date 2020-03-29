@@ -3,9 +3,8 @@ using Kurkku.Network.Streams;
 
 namespace Kurkku.Messages
 {
-    public interface MessageComposer
+    public interface MessageEvent
     {
-        void Write();
-        object[] GetMessageArray();
+        void Handle(Player player, Request request);
     }
 }

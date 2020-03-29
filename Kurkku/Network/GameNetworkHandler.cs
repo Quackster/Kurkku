@@ -12,8 +12,8 @@ namespace Kurkku.Network
     {
         #region Fields
 
-        private static AttributeKey<ConnectionSession> CONNECTION_KEY = AttributeKey<ConnectionSession>.NewInstance("CONNECTION_KEY");
-        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        public static AttributeKey<ConnectionSession> CONNECTION_KEY = AttributeKey<ConnectionSession>.NewInstance("CONNECTION_KEY");
+        public static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         #endregion
 

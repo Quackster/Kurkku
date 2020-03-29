@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 using Kurkku.Game.Player;
+using Kurkku.Messages.Outgoing.Handshake;
 using Kurkku.Network.Streams;
 
 namespace Kurkku.Messages.Incoming.Handshake
 {
-    class VersionCheckMessageEvent : MessageEvent
+    class SSOTicketMessageEvent : MessageEvent
     {
         public void Handle(Player player, Request request)
         {
-            var clientVersion = request.ReadString();
+            var ssoTicket = request.ReadString();
 
-            if (clientVersion == Kurkku.ClientVersion)
-                player.Log.Debug($"Received request: {clientVersion}");
-            else
+            if (!player.TryLogin(ssoTicket))
                 player.Connection.Disconnect();
         }
     }

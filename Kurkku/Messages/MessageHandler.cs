@@ -15,7 +15,7 @@ namespace Kurkku.Messages
 
         private static readonly ILog m_Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private static readonly MessageHandler m_MessageHandler = new MessageHandler();
-        private Dictionary<int, MessageEvent> m_Events;
+        private Dictionary<short, MessageEvent> m_Events;
 
         #endregion
 
@@ -38,7 +38,7 @@ namespace Kurkku.Messages
         /// </summary>
         public MessageHandler()
         {
-            m_Events = new Dictionary<int, MessageEvent>();
+            m_Events = new Dictionary<short, MessageEvent>();
             registerHandshake();
         }
 
@@ -48,6 +48,11 @@ namespace Kurkku.Messages
         private void registerHandshake()
         {
             m_Events[IncomingEvents.VersionCheckMessageEvent] = new VersionCheckMessageEvent();
+            m_Events[IncomingEvents.InitCryptoMessageEvent] = new InitCryptoMessageEvent();
+            m_Events[IncomingEvents.GenerateSecretKeyMessageEvent] = new GenerateSecretKeyMessageEvent();
+            m_Events[IncomingEvents.SSOTicketMessageEvent] = new SSOTicketMessageEvent();
+            m_Events[IncomingEvents.LandingViewMessageEvent] = new LandingViewMessageEvent();
+
         }
 
         #endregion

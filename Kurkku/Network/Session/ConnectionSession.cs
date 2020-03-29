@@ -1,5 +1,7 @@
 ﻿using DotNetty.Transport.Channels;
 using Kurkku.Game.Player;
+using Kurkku.Messages;
+using Kurkku.Messages.Incoming.Handshake;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -60,6 +62,23 @@ namespace Kurkku.Network.Session
 
         #region Public methods
 
+        /// <summary>
+        /// Send message composer
+        /// </summary>
+        public void Send(MessageComposer composer)
+        {
+            if (!composer.Composed)
+            {
+                composer.Composed = true;
+                composer.Write();
+            }
+
+            m_Channel.WriteAndFlushAsync(composer);
+        }
+
+        /// <summary>
+        /// Kick handler
+        /// </summary>
         public virtual void Kick()
         {
             m_Channel.CloseAsync();

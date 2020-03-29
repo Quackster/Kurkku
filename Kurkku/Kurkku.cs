@@ -6,6 +6,8 @@ using System.IO;
 using System.Reflection;
 using Kurkku.Storage.Database;
 using Kurkku.Network;
+using Kurkku.Storage.Database.Access;
+using Kurkku.Storage.Database.Data;
 
 namespace Kurkku
 {
@@ -25,6 +27,14 @@ namespace Kurkku
         public static ILog Logger
         {
             get { return log; }
+        }
+
+        /// <summary>
+        /// Get the official release supported
+        /// </summary>
+        public static string ClientVersion
+        {
+            get { return "RELEASE63-201302211227-193109692"; }
         }
 
         #endregion
