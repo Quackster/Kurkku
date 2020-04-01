@@ -11,15 +11,18 @@ namespace Kurkku.Messages.Incoming.Handshake
     {
         public void Handle(Player player, Request request)
         {
-            string firstView = request.ReadString();
+            string first = request.ReadString();
 
-            if (string.IsNullOrEmpty(firstView))
+            if (string.IsNullOrEmpty(first))
+            {
+                player.Connection.Send(new LandingViewComposer("", ""));
                 return;
+            }
 
-            string header = firstView.Split(',')[1];
-            string teaser = header.Split(';')[0];
+            string value = first.Split(',')[1];
 
-            player.Connection.Send(new LandingViewComposer(header, teaser));
+            player.Connection.Send(new LandingViewComposer(value, value.Split(';')[0]));
+
             //player.Connection.Send(new LandingViewComposer("2012-11-09 19:00,hstarsa;2012-11-30 12:00,", "hstarsa"));
         }
     }

@@ -10,7 +10,7 @@ namespace Kurkku.Util
 
         public static Encoding GetEncoding()
         {
-            return Encoding.UTF8;
+            return Encoding.Default;
         }
 
         #endregion

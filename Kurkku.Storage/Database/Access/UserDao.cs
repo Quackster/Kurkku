@@ -1,9 +1,5 @@
-﻿using Kurkku.Storage.Database.Data;
-using Kurkku.Storage.Database.Models;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using Kurkku.Storage.Database.Data.Player;
 
 namespace Kurkku.Storage.Database.Access
 {
@@ -17,25 +13,16 @@ namespace Kurkku.Storage.Database.Access
                 AuthenicationTicketData ticketAlias = null;
                 PlayerData playerDataAlias = null;
 
-                var query = session.QueryOver(() => ticketAlias)
+                var row = session.QueryOver(() => ticketAlias)
                     .JoinQueryOver(() => ticketAlias.PlayerData, () => playerDataAlias)
                     .Where(() =>
                         (ticketAlias.PlayerData != null &&
                         ticketAlias.UserId == playerDataAlias.Id) &&
                         ticketAlias.ExpireDate == null || ticketAlias.ExpireDate > DateTime.Now)
-                .List();
+                .SingleOrDefault();
 
-                if (query.Count > 0)
-                {
-                    playerData = query[0].PlayerData;
-                }
-
-                /*var query = session.CreateCriteria(typeof(AuthenicationTicketData)).List<AuthenicationTicketData>();
-                
-                if (query.Count > 0)
-                {
-                    playerData = query[0].PlayerData;
-                }*/
+                if (row != null)
+                    playerData = row.PlayerData;
             }
 
             loginData = playerData;

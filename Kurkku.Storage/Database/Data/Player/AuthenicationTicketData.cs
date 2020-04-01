@@ -1,10 +1,7 @@
 ﻿using FluentNHibernate.Mapping;
-using Kurkku.Storage.Database.Data;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Kurkku.Storage.Database.Models
+namespace Kurkku.Storage.Database.Data.Player
 {
     public class AuthenicationTicketMapping : ClassMap<AuthenicationTicketData>
     {
@@ -30,5 +27,13 @@ namespace Kurkku.Storage.Database.Models
                 m.References(x => x.TestData, "random");
             });*/
         }
+    }
+
+    public class AuthenicationTicketData
+    {
+        public virtual int UserId { get; set; }
+        public virtual string Ticket { get; set; }
+        public virtual DateTime? ExpireDate { get; set; }
+        public virtual PlayerData PlayerData { get; set; }
     }
 }

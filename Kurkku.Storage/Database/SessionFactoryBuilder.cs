@@ -1,6 +1,7 @@
 ﻿using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
+using NHibernate.AdoNet;
 using NHibernate.Cfg;
 using NHibernate.Driver;
 using NHibernate.Tool.hbm2ddl;
@@ -41,6 +42,12 @@ namespace Kurkku.Storage.Database
             return Fluently.Configure()
                 .Database(MySQLConfiguration.Standard.ConnectionString(connectionString))
                 .Mappings(m => m.FluentMappings.AddFromAssembly(Assembly.GetExecutingAssembly()))
+                .ExposeConfiguration(c => c.DataBaseIntegration(prop => // https://stackoverflow.com/questions/28721221/fluent-nhibernate-cant-set-the-batch-size
+                {
+                    prop.BatchSize = 50;
+                    prop.Batcher<MySqlClientBatchingBatcherFactory>();
+
+                }))
                 .BuildSessionFactory();
         }
 
