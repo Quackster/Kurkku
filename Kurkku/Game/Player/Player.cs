@@ -16,6 +16,8 @@ namespace Kurkku.Game
         private PlayerData m_PlayerData;
         private Messenger m_Messenger;
 
+        private bool m_Authenticated;
+
         #endregion
 
         #region Properties
@@ -89,6 +91,8 @@ namespace Kurkku.Game
             m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Player {m_PlayerData.Name}");
             m_Connection.Send(new AuthenticationOKComposer());
 
+            PlayerManager.Instance.AddPlayer(this);
+            m_Authenticated = true;
             return true;
         }
 
@@ -97,7 +101,8 @@ namespace Kurkku.Game
         /// </summary>
         public void Disconnect()
         {
-
+            if (m_Authenticated)
+                PlayerManager.Instance.RemovePlayer(this);
         }
 
         #endregion

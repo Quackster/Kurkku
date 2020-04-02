@@ -7,6 +7,7 @@ using System.Reflection;
 using Kurkku.Storage.Database;
 using Kurkku.Network;
 using Kurkku.Storage.Database.Access;
+using Kurkku.Game;
 
 namespace Kurkku
 {

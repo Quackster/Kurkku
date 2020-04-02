@@ -17,7 +17,8 @@ namespace Kurkku.Storage.Database.Access
                     .JoinQueryOver(() => ticketAlias.PlayerData, () => playerDataAlias)
                     .Where(() =>
                         (ticketAlias.PlayerData != null &&
-                        ticketAlias.UserId == playerDataAlias.Id) &&
+                        ticketAlias.Ticket == ssoTicket) &&
+                        (ticketAlias.UserId == playerDataAlias.Id) &&
                         ticketAlias.ExpireDate == null || ticketAlias.ExpireDate > DateTime.Now)
                 .SingleOrDefault();
 

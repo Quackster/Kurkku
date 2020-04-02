@@ -8,9 +8,15 @@ namespace Kurkku.Storage.Database.Data
         public AuthenicationTicketMapping()
         {
             Table("authentication_ticket");
-            Id(x => x.UserId, "user_id").GeneratedBy.Assigned();
+
+            CompositeId()
+                .KeyProperty(x => x.UserId, "user_id")
+                .KeyProperty(x => x.Ticket, "sso_ticket");
+
+            Map(x => x.UserId, "user_id");
             Map(x => x.Ticket, "sso_ticket");
             Map(x => x.ExpireDate, "expires_at").Nullable();
+
             References(x => x.PlayerData, "user_id").NotFound.Ignore();
 
             /*Join("user", m =>
@@ -27,6 +33,7 @@ namespace Kurkku.Storage.Database.Data
                 m.References(x => x.TestData, "random");
             });*/
         }
+
     }
 
     public class AuthenicationTicketData
@@ -35,5 +42,26 @@ namespace Kurkku.Storage.Database.Data
         public virtual string Ticket { get; set; }
         public virtual DateTime? ExpireDate { get; set; }
         public virtual PlayerData PlayerData { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            var t = obj as AuthenicationTicketData;
+
+            if (t == null)
+                return false;
+
+            if (Ticket == t.Ticket && UserId == t.UserId)
+                return true;
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

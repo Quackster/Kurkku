@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Kurkku.Game;
 using Kurkku.Messages.Headers;
 using Kurkku.Storage.Database.Data;
 
@@ -7,14 +8,14 @@ namespace Kurkku.Messages.Outoing.Messenger
     internal class InitMessengerComposer : MessageComposer
     {
         private List<MessengerCategoryData> categories;
-        private List<MessengerFriendData> friends;
+        private List<MessengerUser> friends;
 
         public override short Header
         {
             get { return OutgoingEvents.InitMessengerComposer; }
         }
 
-        public InitMessengerComposer(List<MessengerCategoryData> categories, List<MessengerFriendData> friends)
+        public InitMessengerComposer(List<MessengerCategoryData> categories, List<MessengerUser> friends)
         {
             this.categories = categories;
             this.friends = friends;
@@ -39,12 +40,12 @@ namespace Kurkku.Messages.Outoing.Messenger
             this.m_Data.Add(this.friends.Count);
             foreach (var friend in friends)
             {
-                this.m_Data.Add(friend.FriendData.Id);
-                this.m_Data.Add(friend.FriendData.Name);
+                this.m_Data.Add(friend.PlayerData.Id);
+                this.m_Data.Add(friend.PlayerData.Name);
                 this.m_Data.Add(1);
-                this.m_Data.Add(false); // is online
-                this.m_Data.Add(false); // is in room
-                this.m_Data.Add(friend.FriendData.Figure);
+                this.m_Data.Add(friend.IsOnline);
+                this.m_Data.Add(friend.InRoom);
+                this.m_Data.Add(friend.PlayerData.Figure);
                 this.m_Data.Add(1);
                 this.m_Data.Add(""); // motto
                 this.m_Data.Add(""); // real name

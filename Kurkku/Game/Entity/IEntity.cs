@@ -2,7 +2,7 @@
 
 namespace Kurkku.Game
 {
-    interface IEntity<T> where T : IEntityData
+    public interface IEntity<T> where T : IEntityData
     {
         T Data { get; }
     }
