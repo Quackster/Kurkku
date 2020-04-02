@@ -20,6 +20,7 @@ namespace Kurkku.Storage.Database.Access
                         ticketAlias.Ticket == ssoTicket) &&
                         (ticketAlias.UserId == playerDataAlias.Id) &&
                         ticketAlias.ExpireDate == null || ticketAlias.ExpireDate > DateTime.Now)
+                    .Take(1)
                 .SingleOrDefault();
 
                 if (row != null)
