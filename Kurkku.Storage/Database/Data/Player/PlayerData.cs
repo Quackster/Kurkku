@@ -1,8 +1,7 @@
 ﻿using FluentNHibernate.Mapping;
-using Kurkku.Storage.Database.Data.Entity;
 using System;
 
-namespace Kurkku.Storage.Database.Data.Player
+namespace Kurkku.Storage.Database.Data
 {
     public class PlayerDataMapping : ClassMap<PlayerData>
     {

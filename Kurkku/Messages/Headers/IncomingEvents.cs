@@ -11,5 +11,6 @@ namespace Kurkku.Messages.Headers
         public static readonly short GenerateSecretKeyMessageEvent = 3987;
         public static readonly short SSOTicketMessageEvent = 1461;
         public static readonly short LandingViewMessageEvent = 839;
+        public static readonly short InitMessengerMessageEvent = 3621;
     }
 }

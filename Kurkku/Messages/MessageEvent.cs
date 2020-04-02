@@ -1,4 +1,4 @@
-﻿using Kurkku.Game.Player;
+﻿using Kurkku.Game;
 using Kurkku.Network.Streams;
 
 namespace Kurkku.Messages

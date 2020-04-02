@@ -18,8 +18,9 @@ namespace Kurkku.Messages.Outgoing.Handshake
 
         public override void Write()
         {
-            m_Data.Add(this.secretKey);
             m_Data.Add(false);
+            m_Data.Add(false);
+            m_Data.Add(this.secretKey);
         }
     }
 }

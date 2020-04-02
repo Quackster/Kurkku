@@ -1,6 +1,7 @@
-﻿using Kurkku.Game.Player;
+﻿using Kurkku.Game;
 using Kurkku.Messages.Headers;
 using Kurkku.Messages.Incoming.Handshake;
+using Kurkku.Messages.Incoming.Messenger;
 using Kurkku.Network.Streams;
 using log4net;
 using System;
@@ -40,7 +41,10 @@ namespace Kurkku.Messages
         {
             m_Events = new Dictionary<short, MessageEvent>();
             registerHandshake();
+            registerMessenger();
+
         }
+
 
         /// <summary>
         /// Register handshake packets
@@ -53,6 +57,14 @@ namespace Kurkku.Messages
             m_Events[IncomingEvents.SSOTicketMessageEvent] = new SSOTicketMessageEvent();
             m_Events[IncomingEvents.LandingViewMessageEvent] = new LandingViewMessageEvent();
 
+        }
+        
+        /// <summary>
+        /// Register messenger packets
+        /// </summary>
+        private void registerMessenger()
+        {
+            m_Events[IncomingEvents.InitMessengerMessageEvent] = new InitMessengerMessageEvent();
         }
 
         #endregion

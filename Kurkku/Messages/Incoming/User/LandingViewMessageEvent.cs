@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Kurkku.Game.Player;
+﻿using Kurkku.Game;
 using Kurkku.Messages.Outgoing.User;
 using Kurkku.Network.Streams;
 
@@ -21,8 +18,7 @@ namespace Kurkku.Messages.Incoming.Handshake
 
             string value = first.Split(',')[1];
 
-            player.Connection.Send(new LandingViewComposer(value, value.Split(';')[0]));
-
+            //player.Connection.Send(new LandingViewComposer(value, value.Split(';')[0]));
             //player.Connection.Send(new LandingViewComposer("2012-11-09 19:00,hstarsa;2012-11-30 12:00,", "hstarsa"));
         }
     }

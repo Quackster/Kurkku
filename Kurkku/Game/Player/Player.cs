@@ -1,12 +1,11 @@
-﻿using Kurkku.Game.Entity;
-using Kurkku.Messages.Outgoing.Handshake;
+﻿using Kurkku.Messages.Outgoing.Handshake;
 using Kurkku.Network.Session;
 using Kurkku.Storage.Database.Access;
-using Kurkku.Storage.Database.Data.Player;
+using Kurkku.Storage.Database.Data;
 using log4net;
 using System.Reflection;
 
-namespace Kurkku.Game.Player
+namespace Kurkku.Game
 {
     public class Player : IEntity<PlayerData>
     {
@@ -15,6 +14,7 @@ namespace Kurkku.Game.Player
         private ILog m_Log = LogManager.GetLogger(typeof(Player));
         private ConnectionSession m_Connection;
         private PlayerData m_PlayerData;
+        private Messenger m_Messenger;
 
         #endregion
 
@@ -44,6 +44,15 @@ namespace Kurkku.Game.Player
             get { return m_PlayerData; }
         }
 
+        /// <summary>
+        /// Get messenger
+        /// </summary>
+        public Messenger Messenger
+        {
+            get { return m_Messenger; }
+        }
+
+
         #endregion
 
         #region Constructors
@@ -55,6 +64,7 @@ namespace Kurkku.Game.Player
         public Player(ConnectionSession connectionSession)
         {
             m_Connection = connectionSession;
+            m_Messenger = new Messenger(this);
             m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Connection {connectionSession.Channel.Id}");
         }
 
@@ -73,6 +83,8 @@ namespace Kurkku.Game.Player
 
             if (m_PlayerData == null)
                 return false;
+
+            m_Messenger.Init();
 
             m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Player {m_PlayerData.Name}");
             m_Connection.Send(new AuthenticationOKComposer());

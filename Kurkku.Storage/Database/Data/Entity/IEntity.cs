@@ -1,6 +1,4 @@
-﻿using Kurkku.Storage.Database.Data;
-
-namespace Kurkku.Game
+﻿namespace Kurkku.Storage.Database.Data
 {
     interface IEntity<T> where T : IEntityData
     {

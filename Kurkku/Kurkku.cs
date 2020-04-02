@@ -7,8 +7,6 @@ using System.Reflection;
 using Kurkku.Storage.Database;
 using Kurkku.Network;
 using Kurkku.Storage.Database.Access;
-using Kurkku.Storage.Database.Data;
-using Kurkku.Storage.Database.Data.Messenger;
 
 namespace Kurkku
 {
@@ -89,6 +87,10 @@ namespace Kurkku
             GameServer.Instance.InitialiseServer();
 
             GameServer.Logger.Info($"Server is now listening on port: {GameServer.Instance.IpAddress}:{GameServer.Instance.Port}!");
+        }
+
+        public class Game
+        {
         }
 
         #endregion

@@ -1,6 +1,4 @@
-﻿using Kurkku.Game.Player;
-using Kurkku.Network.Streams;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Kurkku.Messages
 {
@@ -31,7 +29,7 @@ namespace Kurkku.Messages
         /// </summary>
         public virtual short Header
         {
-            get; set;
+            get;
         }
 
         public MessageComposer()

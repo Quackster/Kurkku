@@ -60,7 +60,7 @@ namespace Kurkku.Network.Streams
         {
             this.m_Header = header;
             this.m_Buffer = buffer;
-            this.m_Buffer.WriteInt(-1);
+            this.m_Buffer.WriteInt(0);
             this.m_Buffer.WriteShort(m_Header);
         }
 
@@ -85,6 +85,15 @@ namespace Kurkku.Network.Streams
         public void writeInt(int obj)
         {
             m_Buffer.WriteInt(obj);
+        }
+
+        /// <summary>
+        /// Write short for clients
+        /// </summary>
+        /// <param name="obj">short value</param>
+        public void writeShort(short obj)
+        {
+            m_Buffer.WriteShort(obj);
         }
 
         /// <summary>

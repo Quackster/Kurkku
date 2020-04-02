@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Kurkku.Storage.Database.Data.Entity
+﻿namespace Kurkku.Storage.Database.Data
 {
     public interface IEntityData
     {

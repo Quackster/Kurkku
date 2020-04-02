@@ -1,10 +1,7 @@
 ﻿
 using FluentNHibernate.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Kurkku.Storage.Database.Data.Messenger
+namespace Kurkku.Storage.Database.Data
 {
     public class MessengerFriendMapping : ClassMap<MessengerFriendData>
     {

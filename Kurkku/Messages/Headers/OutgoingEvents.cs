@@ -12,5 +12,6 @@ namespace Kurkku.Messages.Headers
         public static readonly short ActivityPointsComposer = 1271;
         public static readonly short CreditsBalanceComposer = 3412;
         public static readonly short LandingViewComposer = 2680;
+        public static readonly short InitMessengerComposer = 1800;
     }
 }

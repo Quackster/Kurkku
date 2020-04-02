@@ -1,9 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using Kurkku.Storage.Database.Data;
 using System.Collections.Generic;
-using Kurkku.Storage.Database.Data.Messenger;
-using Kurkku.Storage.Database.Data.Player;
-using NHibernate.Linq;
 
 namespace Kurkku.Storage.Database.Access
 {
@@ -34,6 +30,18 @@ namespace Kurkku.Storage.Database.Access
                     .JoinQueryOver(() => messengerFriendAlias.FriendData, () => playerDataAlias)
                     .Where(() => messengerFriendAlias.UserId == userId)
                     .List() as List<MessengerFriendData>;
+            }
+        }
+
+        public static List<MessengerCategoryData> GetCategories(int userId)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                MessengerCategoryData messengerCategoryAlias = null;
+
+                return session.QueryOver(() => messengerCategoryAlias)
+                    .Where(() => messengerCategoryAlias.UserId == userId)
+                    .List() as List<MessengerCategoryData>;
             }
         }
     }

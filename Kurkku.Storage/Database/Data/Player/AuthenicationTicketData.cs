@@ -1,7 +1,7 @@
 ﻿using FluentNHibernate.Mapping;
 using System;
 
-namespace Kurkku.Storage.Database.Data.Player
+namespace Kurkku.Storage.Database.Data
 {
     public class AuthenicationTicketMapping : ClassMap<AuthenicationTicketData>
     {

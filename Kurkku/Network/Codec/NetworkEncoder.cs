@@ -17,18 +17,20 @@ namespace Kurkku.Network.Codec
             var buffer = Unpooled.Buffer();
             
             var response = new Response(composer.Header, buffer);
-            response.writeInt(0);
 
             foreach (var objectData in composer.Data)
             {
                 if (objectData is string)
                     response.writeString((string)objectData);
 
-                if (objectData is int)
+                if (objectData is int || objectData is uint)
                     response.writeInt((int)objectData);
 
                 if (objectData is bool)
                     response.writeBool((bool)objectData);
+
+                if (objectData is short)
+                    response.writeShort((short)objectData);
             }
 
             buffer.SetInt(0, buffer.WriterIndex - 4);

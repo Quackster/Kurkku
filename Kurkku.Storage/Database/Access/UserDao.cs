@@ -1,5 +1,5 @@
-﻿using System;
-using Kurkku.Storage.Database.Data.Player;
+﻿using Kurkku.Storage.Database.Data;
+using System;
 
 namespace Kurkku.Storage.Database.Access
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Kurkku.Game.Player;
-using Kurkku.Messages.Outgoing.Handshake;
+﻿using Kurkku.Game;
 using Kurkku.Network.Streams;
 
 namespace Kurkku.Messages.Incoming.Handshake

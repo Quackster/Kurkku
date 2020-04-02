@@ -1,10 +1,6 @@
 ﻿using DotNetty.Transport.Channels;
-using Kurkku.Game.Player;
+using Kurkku.Game;
 using Kurkku.Messages;
-using Kurkku.Messages.Incoming.Handshake;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Kurkku.Network.Session
 {

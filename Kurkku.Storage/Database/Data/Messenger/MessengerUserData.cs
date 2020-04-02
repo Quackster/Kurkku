@@ -1,11 +1,4 @@
-﻿
-using FluentNHibernate.Mapping;
-using Kurkku.Storage.Database.Data.Player;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Kurkku.Storage.Database.Data.Messenger
+﻿namespace Kurkku.Storage.Database.Data
 {
     public class MessengerUserData
     {
