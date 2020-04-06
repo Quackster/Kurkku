@@ -13,5 +13,8 @@ namespace Kurkku.Messages.Headers
         public static readonly short CreditsBalanceComposer = 3412;
         public static readonly short LandingViewComposer = 2680;
         public static readonly short InitMessengerComposer = 1800;
+        public static readonly short UserInfoComposer = 178;
+        public static readonly short WelcomeUserComposer = 2933;
+        public static readonly short UpdateMessengerComposer = 1710;
     }
 }

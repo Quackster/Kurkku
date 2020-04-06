@@ -17,6 +17,7 @@ namespace Kurkku.Storage.Database.Data
             Map(x => x.Pixels, "pixels");
             Map(x => x.JoinDate, "join_date");
             Map(x => x.LastOnline, "last_online");
+            Map(x => x.Motto, "motto");
         }
     }
 
@@ -31,5 +32,8 @@ namespace Kurkku.Storage.Database.Data
         public virtual int Pixels { get; set; }
         public virtual DateTime JoinDate { get; set; }
         public virtual DateTime LastOnline { get; set; }
+        public virtual DateTime PreviousLastOnline { get; set; }
+        public virtual string Motto { get; set; }
+        public virtual string RealName => string.Empty;
     }
 }

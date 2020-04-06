@@ -1,5 +1,8 @@
-﻿using Kurkku.Storage.Database.Access;
+﻿using Kurkku.Messages.Outoing.Messenger;
+using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
+using Kurkku.Util.Extensions;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,9 +28,20 @@ namespace Kurkku.Game
         public List<MessengerCategoryData> Categories { get; set; }
 
         /// <summary>
+        /// Get concurrent messenger update queue
+        /// </summary>
+        public ConcurrentQueue<MessengerUpdate> Queue { get; private set; }
+
+        /// <summary>
         /// Get the player for this messenger instance
         /// </summary>
         public Player Player { get; set; }
+
+        /// <summary>
+        /// Get the player as messenger user
+        /// </summary>
+        public MessengerUser MessengerUser => 
+            new MessengerUser { PlayerData = Player.Data };
 
         #endregion
 
@@ -36,6 +50,7 @@ namespace Kurkku.Game
         public Messenger(Player player)
         {
             Player = player;
+            Queue = new ConcurrentQueue<MessengerUpdate>();
         }
 
         public void Init()
@@ -60,6 +75,48 @@ namespace Kurkku.Game
             return messengerUser;
         }
 
+        /// <summary>
+        /// Queue specific messenger update
+        /// </summary>
+        /// <param name="updateType">the update type</param>
+        /// <param name="messengerUser">the messenger user</param>
+        public void QueueUpdate(MessengerUpdateType updateType, MessengerUser messengerUser)
+        {
+            Queue.Enqueue(new MessengerUpdate
+            {
+                UpdateType = updateType,
+                Friend = messengerUser
+            });
+        }
+
+        /// <summary>
+        /// Send status update to all friends
+        /// </summary>
+        public void SendStatus()
+        {
+            var onlineFriends = GetOnlineFriends();
+
+            foreach (var friend in onlineFriends)
+                friend.Player.Messenger.QueueUpdate(MessengerUpdateType.UpdateFriend, MessengerUser);
+
+
+            foreach (var friend in onlineFriends)
+            {
+                Messenger messenger = friend.Player.Messenger;
+                List<MessengerUpdate> messengerUpdates = messenger.Queue.Dequeue();
+
+                if (messengerUpdates.Count > 0)
+                    friend.Player.Connection.Send(new UpdateMessengerComposer(messenger.Categories, messengerUpdates));
+            }
+        }
+
+        /// <summary>
+        /// Get list of online friends
+        /// </summary>
+        /// <returns>the list</returns>
+        public List<MessengerUser> GetOnlineFriends() => 
+            Friends.Where(friend => friend.IsOnline).ToList();
+             
         /// <summary>
         /// Get if the user id is friends
         /// </summary>

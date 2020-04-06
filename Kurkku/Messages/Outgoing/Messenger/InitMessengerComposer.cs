@@ -23,10 +23,10 @@ namespace Kurkku.Messages.Outoing.Messenger
 
         public override void Write()
         {
-            this.m_Data.Add(1);
-            this.m_Data.Add(1);
-            this.m_Data.Add(1);
-            this.m_Data.Add(1);
+            this.m_Data.Add(900);
+            this.m_Data.Add(600);
+            this.m_Data.Add(500);
+            this.m_Data.Add(400);
             this.m_Data.Add(this.categories.Count);
 
             int i = 1;
@@ -47,9 +47,9 @@ namespace Kurkku.Messages.Outoing.Messenger
                 this.m_Data.Add(friend.InRoom);
                 this.m_Data.Add(friend.PlayerData.Figure);
                 this.m_Data.Add(0); // category id
-                this.m_Data.Add(""); // motto
-                this.m_Data.Add(""); // real name
-                this.m_Data.Add(""); // unknown??
+                this.m_Data.Add(friend.PlayerData.Motto); // motto
+                this.m_Data.Add(friend.PlayerData.RealName); // real name
+                this.m_Data.Add(friend.PlayerData.LastOnline.ToString("MM-dd-yyyy HH:mm:ss")); // unknown??
                 this.m_Data.Add(false);
                 this.m_Data.Add(false);
                 this.m_Data.Add(false);

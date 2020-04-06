@@ -2,6 +2,7 @@
 using Kurkku.Messages.Headers;
 using Kurkku.Messages.Incoming.Handshake;
 using Kurkku.Messages.Incoming.Messenger;
+using Kurkku.Messages.Incoming.User;
 using Kurkku.Network.Streams;
 using log4net;
 using System;
@@ -31,7 +32,7 @@ namespace Kurkku.Messages
             m_Events = new Dictionary<short, MessageEvent>();
             registerHandshake();
             registerMessenger();
-
+            registerUser();
         }
 
 
@@ -44,7 +45,6 @@ namespace Kurkku.Messages
             m_Events[IncomingEvents.InitCryptoMessageEvent] = new InitCryptoMessageEvent();
             m_Events[IncomingEvents.GenerateSecretKeyMessageEvent] = new GenerateSecretKeyMessageEvent();
             m_Events[IncomingEvents.SSOTicketMessageEvent] = new SSOTicketMessageEvent();
-            m_Events[IncomingEvents.LandingViewMessageEvent] = new LandingViewMessageEvent();
 
         }
         
@@ -54,6 +54,15 @@ namespace Kurkku.Messages
         private void registerMessenger()
         {
             m_Events[IncomingEvents.InitMessengerMessageEvent] = new InitMessengerMessageEvent();
+        }
+
+        /// <summary>
+        /// Register user packets
+        /// </summary>
+        private void registerUser()
+        {
+            m_Events[IncomingEvents.LandingViewMessageEvent] = new LandingViewMessageEvent();
+            m_Events[IncomingEvents.UserInfoMessageEvent] = new UserInfoMessageEvent();
         }
 
         #endregion

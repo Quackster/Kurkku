@@ -30,5 +30,30 @@ namespace Kurkku.Game
         }
 
         #endregion
+
+        #region Public methods
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            var t = obj as MessengerUser;
+
+            if (t == null)
+                return false;
+
+            if (t.PlayerData.Id == this.PlayerData.Id)
+                return true;
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        #endregion
     }
 }

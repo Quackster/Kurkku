@@ -2,7 +2,7 @@
 
 namespace Kurkku.Messages.Outgoing.User
 {
-    public class LandingViewComposer : MessageComposer
+    public class BlankComposer : MessageComposer
     {
         private string promotion;
         private string catalogueTeaser;
@@ -12,7 +12,7 @@ namespace Kurkku.Messages.Outgoing.User
             get { return OutgoingEvents.LandingViewComposer; }
         }
 
-        public LandingViewComposer(string promotion, string catalogueTeaser)
+        public BlankComposer(string promotion, string catalogueTeaser)
         {
             this.promotion = promotion;
             this.catalogueTeaser = catalogueTeaser;

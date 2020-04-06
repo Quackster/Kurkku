@@ -3,6 +3,7 @@ using Kurkku.Network.Session;
 using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
 using log4net;
+using System;
 using System.Reflection;
 
 namespace Kurkku.Game
@@ -14,8 +15,6 @@ namespace Kurkku.Game
         private ILog m_Log = LogManager.GetLogger(typeof(Player));
         private PlayerData m_PlayerData;
 
-        private bool m_Authenticated;
-
         #endregion
 
         #region Properties
@@ -23,22 +22,32 @@ namespace Kurkku.Game
         /// <summary>
         /// Get the connection session
         /// </summary>
-        public ConnectionSession Connection { get; set; }
+        public ConnectionSession Connection { get; private set; }
 
         /// <summary>
         /// Get the logging
         /// </summary>
-        public ILog Log { get; set; }
+        public ILog Log => m_Log;
 
         /// <summary>
         /// Get entity data
         /// </summary>
-        public PlayerData Data { get; set; }
+        public PlayerData Data => m_PlayerData;
+
+        /// <summary>
+        /// Get the player statistics
+        /// </summary>
+        public PlayerStatisticsData Statistics { get; private set; }
 
         /// <summary>
         /// Get messenger
         /// </summary>
-        public Messenger Messenger { get; set; }
+        public Messenger Messenger { get; private set; }
+
+        /// <summary>
+        /// Whether the player has logged in or not
+        /// </summary>
+        public bool Authenticated { get; private set; }
 
 
         #endregion
@@ -52,7 +61,10 @@ namespace Kurkku.Game
         public Player(ConnectionSession connectionSession)
         {
             Connection = connectionSession;
+
             Messenger = new Messenger(this);
+            Statistics = new PlayerStatisticsData();
+            
             m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Connection {connectionSession.Channel.Id}");
         }
 
@@ -72,13 +84,21 @@ namespace Kurkku.Game
             if (m_PlayerData == null)
                 return false;
 
-            Messenger.Init();
+
 
             m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Player {m_PlayerData.Name}");
             Connection.Send(new AuthenticationOKComposer());
 
+            m_PlayerData.PreviousLastOnline = m_PlayerData.LastOnline;
+            m_PlayerData.LastOnline = DateTime.Now;
+            UserDao.Update(m_PlayerData);
+
             PlayerManager.Instance.AddPlayer(this);
-            m_Authenticated = true;
+            Authenticated = true;
+
+            Messenger.Init();
+            Messenger.SendStatus();
+
             return true;
         }
 
@@ -87,8 +107,15 @@ namespace Kurkku.Game
         /// </summary>
         public void Disconnect()
         {
-            if (m_Authenticated)
-                PlayerManager.Instance.RemovePlayer(this);
+            if (!Authenticated)
+                return;
+
+            PlayerManager.Instance.RemovePlayer(this);
+
+            Messenger.SendStatus();
+
+            m_PlayerData.LastOnline = DateTime.Now;
+            UserDao.Update(m_PlayerData);
         }
 
         #endregion
