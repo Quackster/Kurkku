@@ -8,7 +8,6 @@ namespace Kurkku.Network.Streams
     {
         #region Fields
 
-        private short m_Header;
         private IByteBuffer m_Buffer;
 
         #endregion
@@ -18,10 +17,7 @@ namespace Kurkku.Network.Streams
         /// <summary>
         /// Get the message header
         /// </summary>
-        public short Header
-        {
-            get { return m_Header; }
-        }
+        public short Header { get; private set; }
 
         /// <summary>
         /// Get whether the length has been set
@@ -58,10 +54,10 @@ namespace Kurkku.Network.Streams
         /// <param name="buffer"></param>
         public Response(short header, IByteBuffer buffer)
         {
-            this.m_Header = header;
+            this.Header = header;
             this.m_Buffer = buffer;
             this.m_Buffer.WriteInt(0);
-            this.m_Buffer.WriteShort(m_Header);
+            this.m_Buffer.WriteShort(Header);
         }
 
         #endregion

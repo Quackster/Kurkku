@@ -12,9 +12,7 @@ namespace Kurkku.Game
         #region Fields
 
         private ILog m_Log = LogManager.GetLogger(typeof(Player));
-        private ConnectionSession m_Connection;
         private PlayerData m_PlayerData;
-        private Messenger m_Messenger;
 
         private bool m_Authenticated;
 
@@ -25,34 +23,22 @@ namespace Kurkku.Game
         /// <summary>
         /// Get the connection session
         /// </summary>
-        public ConnectionSession Connection
-        {
-            get { return m_Connection; }
-        }
+        public ConnectionSession Connection { get; set; }
 
         /// <summary>
         /// Get the logging
         /// </summary>
-        public ILog Log
-        {
-            get { return m_Log; }
-        }
+        public ILog Log { get; set; }
 
         /// <summary>
         /// Get entity data
         /// </summary>
-        public PlayerData Data
-        {
-            get { return m_PlayerData; }
-        }
+        public PlayerData Data { get; set; }
 
         /// <summary>
         /// Get messenger
         /// </summary>
-        public Messenger Messenger
-        {
-            get { return m_Messenger; }
-        }
+        public Messenger Messenger { get; set; }
 
 
         #endregion
@@ -65,8 +51,8 @@ namespace Kurkku.Game
         /// <param name="channel">the channel</param>
         public Player(ConnectionSession connectionSession)
         {
-            m_Connection = connectionSession;
-            m_Messenger = new Messenger(this);
+            Connection = connectionSession;
+            Messenger = new Messenger(this);
             m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Connection {connectionSession.Channel.Id}");
         }
 
@@ -86,10 +72,10 @@ namespace Kurkku.Game
             if (m_PlayerData == null)
                 return false;
 
-            m_Messenger.Init();
+            Messenger.Init();
 
             m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Player {m_PlayerData.Name}");
-            m_Connection.Send(new AuthenticationOKComposer());
+            Connection.Send(new AuthenticationOKComposer());
 
             PlayerManager.Instance.AddPlayer(this);
             m_Authenticated = true;

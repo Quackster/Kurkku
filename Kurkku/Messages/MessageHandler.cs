@@ -15,20 +15,9 @@ namespace Kurkku.Messages
         #region Fields
 
         private static readonly ILog m_Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private static readonly MessageHandler m_MessageHandler = new MessageHandler();
         private Dictionary<short, MessageEvent> m_Events;
 
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Get the singleton instance
-        /// </summary>
-        public static MessageHandler Instance
-        {
-            get { return m_MessageHandler; }
-        }
+        public static readonly MessageHandler Instance = new MessageHandler();
 
         #endregion
 

@@ -9,8 +9,6 @@ namespace Kurkku.Network.Session
         #region Fields
 
         private bool m_Disconnected;
-        private IChannel m_Channel;
-        private Player m_Player;
 
         #endregion
 
@@ -19,27 +17,17 @@ namespace Kurkku.Network.Session
         /// <summary>
         /// Gets the player channel.
         /// </summary>
-        public IChannel Channel
-        {
-            get { return m_Channel; }
-        }
+        public IChannel Channel { get; private set; }
 
         /// <summary>
         /// Get the ip address of the player connected.
         /// </summary>
-        public string IpAddress
-        {
-            get { return m_Channel.RemoteAddress.ToString().Split(':')[3].Replace("]", ""); }
-        }
+        public string IpAddress => Channel.RemoteAddress.ToString().Split(':')[3].Replace("]", "");
 
         /// <summary>
         /// Get player instance
         /// </summary>
-        public Player Player
-        {
-            get { return m_Player; }
-        }
-
+        public Player Player { get; private set; }
         #endregion
 
         #region Constructors
@@ -50,8 +38,8 @@ namespace Kurkku.Network.Session
         /// <param name="channel">the channel</param>
         public ConnectionSession(IChannel channel)
         {
-            m_Channel = channel;
-            m_Player = new Player(this);
+            Channel = channel;
+            Player = new Player(this);
         }
 
         #endregion
@@ -69,7 +57,7 @@ namespace Kurkku.Network.Session
                 composer.Write();
             }
 
-            m_Channel.WriteAndFlushAsync(composer);
+            Channel.WriteAndFlushAsync(composer);
         }
 
         /// <summary>
@@ -77,7 +65,7 @@ namespace Kurkku.Network.Session
         /// </summary>
         public virtual void Kick()
         {
-            m_Channel.CloseAsync();
+            Channel.CloseAsync();
         }
 
         /// <summary>
@@ -89,7 +77,7 @@ namespace Kurkku.Network.Session
                 return;
 
             m_Disconnected = true;
-            m_Player.Disconnect();
+            Player.Disconnect();
         }
 
         #endregion

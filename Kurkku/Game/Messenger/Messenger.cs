@@ -7,48 +7,27 @@ namespace Kurkku.Game
 {
     public class Messenger
     {
-        #region Fields
-
-        private Player m_Player;
-        private List<MessengerUser> m_Requests;
-        private List<MessengerUser> m_Friends;
-        private List<MessengerCategoryData> m_Categories;
-
-        #endregion
-
         #region Properties
 
         /// <summary>
         /// Get friend requests
         /// </summary>
-        public List<MessengerUser> Requests
-        {
-            get { return m_Requests; }
-        }
+        public List<MessengerUser> Requests { get; set; }
 
         /// <summary>
         /// Get friends
         /// </summary>
-        public List<MessengerUser> Friends
-        {
-            get { return m_Friends; }
-        }
+        public List<MessengerUser> Friends { get; set; }
 
         /// <summary>
         /// Get categories
         /// </summary>
-        public List<MessengerCategoryData> Categories
-        {
-            get { return m_Categories; }
-        }
+        public List<MessengerCategoryData> Categories { get; set; }
 
         /// <summary>
         /// Get the player for this messenger instance
         /// </summary>
-        public Player Player
-        {
-            get { return m_Player; }
-        }
+        public Player Player { get; set; }
 
         #endregion
 
@@ -56,14 +35,14 @@ namespace Kurkku.Game
 
         public Messenger(Player player)
         {
-            m_Player = player;
+            Player = player;
         }
 
         public void Init()
         {
-            m_Friends = MessengerDao.GetFriends(m_Player.Data.Id).Select(data => Wrap(data)).ToList();
-            m_Requests = MessengerDao.GetRequests(m_Player.Data.Id).Select(data => Wrap(data)).ToList();
-            m_Categories = MessengerDao.GetCategories(m_Player.Data.Id);
+            Friends = MessengerDao.GetFriends(Player.Data.Id).Select(data => Wrap(data)).ToList();
+            Requests = MessengerDao.GetRequests(Player.Data.Id).Select(data => Wrap(data)).ToList();
+            Categories = MessengerDao.GetCategories(Player.Data.Id);
         }
 
         /// <summary>
@@ -87,7 +66,7 @@ namespace Kurkku.Game
         /// <param name="userId">the user id</param>
         /// <returns>true if successful</returns>
         public bool HasFriend(int userId) => 
-            m_Friends.Count(friend => friend.PlayerData.Id == userId) > 0;
+            Friends.Count(friend => friend.PlayerData.Id == userId) > 0;
 
         /// <summary>
         /// Get the user id as friend instance
@@ -95,7 +74,7 @@ namespace Kurkku.Game
         /// <param name="userId">the user id</param>
         /// <returns>user data instance if is friend</returns>
         public MessengerUser GetFriend(int userId) =>
-            m_Friends.FirstOrDefault(friend => friend.PlayerData.Id == userId);
+            Friends.FirstOrDefault(friend => friend.PlayerData.Id == userId);
 
         /// <summary>
         /// Get if the user id has requested user
@@ -103,7 +82,7 @@ namespace Kurkku.Game
         /// <param name="userId">the user id</param>
         /// <returns>true if successful</returns>
         public bool HasRequest(int userId) =>
-            m_Requests.Count(requester => requester.PlayerData.Id == userId) > 0;
+            Requests.Count(requester => requester.PlayerData.Id == userId) > 0;
 
         /// <summary>
         /// Get the user id as request instance
@@ -111,7 +90,7 @@ namespace Kurkku.Game
         /// <param name="userId">the user id</param>
         /// <returns>user data instance if is requester</returns>
         public MessengerUser GetRequest(int userId) =>
-            m_Requests.FirstOrDefault(friend => friend.PlayerData.Id == userId);
+            Requests.FirstOrDefault(friend => friend.PlayerData.Id == userId);
 
         #endregion
     }

@@ -46,7 +46,7 @@ namespace Kurkku.Messages.Outoing.Messenger
                 this.m_Data.Add(friend.IsOnline);
                 this.m_Data.Add(friend.InRoom);
                 this.m_Data.Add(friend.PlayerData.Figure);
-                this.m_Data.Add(1);
+                this.m_Data.Add(0); // category id
                 this.m_Data.Add(""); // motto
                 this.m_Data.Add(""); // real name
                 this.m_Data.Add(""); // unknown??

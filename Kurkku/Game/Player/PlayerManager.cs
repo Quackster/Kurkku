@@ -8,10 +8,7 @@ namespace Kurkku.Game
     {
         #region Fields
 
-        private ConcurrentDictionary<int, Player> _PlayerIds;
-        private ConcurrentDictionary<string, Player> _PlayerNames;
-
-        public static PlayerManager Instance = new PlayerManager();
+        public static readonly PlayerManager Instance = new PlayerManager();
 
         #endregion
 
@@ -20,22 +17,19 @@ namespace Kurkku.Game
         /// <summary>
         /// Get dictionary of players with id's as keys
         /// </summary>
-        public ConcurrentDictionary<int, Player> PlayerIds
-        {
-            get { return _PlayerIds; }
-        }
+        public ConcurrentDictionary<int, Player> PlayerIds { get; private set; }
 
         /// <summary>
         /// Get dictionary of players with names as keys
         /// </summary>
-        public ConcurrentDictionary<string, Player> PlayerNames
-        {
-            get { return _PlayerNames; }
-        }
+        public ConcurrentDictionary<string, Player> PlayerNames { get; private set; }
 
+        /// <summary>
+        /// Get the list of online players
+        /// </summary>
         public List<Player> Players
         {
-            get { return _PlayerIds.Values.ToList(); }
+            get => PlayerIds.Values.ToList();
         }
 
         #endregion
@@ -44,8 +38,8 @@ namespace Kurkku.Game
 
         public PlayerManager()
         {
-            _PlayerIds = new ConcurrentDictionary<int, Player>();
-            _PlayerNames = new ConcurrentDictionary<string, Player>();
+            PlayerIds = new ConcurrentDictionary<int, Player>();
+            PlayerNames = new ConcurrentDictionary<string, Player>();
         }
 
         #endregion
@@ -58,8 +52,8 @@ namespace Kurkku.Game
         /// <param name="player">remove the player</param>
         public void AddPlayer(Player player)
         {
-            _PlayerIds.TryAdd(player.Data.Id, player);
-            _PlayerNames.TryAdd(player.Data.Name.ToLower(), player);
+            PlayerIds.TryAdd(player.Data.Id, player);
+            PlayerNames.TryAdd(player.Data.Name.ToLower(), player);
         }
 
         /// <summary>
@@ -68,8 +62,8 @@ namespace Kurkku.Game
         /// <param name="player">remove the player</param>
         public void RemovePlayer(Player player)
         {
-            _PlayerIds.Remove(player.Data.Id, out _);
-            _PlayerNames.Remove(player.Data.Name.ToLower(), out _);
+            PlayerIds.Remove(player.Data.Id, out _);
+            PlayerNames.Remove(player.Data.Name.ToLower(), out _);
         }
 
         /// <summary>
@@ -79,10 +73,10 @@ namespace Kurkku.Game
         /// <returns></returns>
         public Player GetPlayerByName(string username)
         {
-            if (_PlayerNames.ContainsKey(username.ToLower()))
+            if (PlayerNames.ContainsKey(username.ToLower()))
             {
                 Player player;
-                _PlayerNames.TryGetValue(username.ToLower(), out player);
+                PlayerNames.TryGetValue(username.ToLower(), out player);
                 return player;
             }
 
@@ -96,10 +90,10 @@ namespace Kurkku.Game
         /// <returns></returns>
         public Player GetPlayerById(int id)
         {
-            if (_PlayerIds.ContainsKey(id))
+            if (PlayerIds.ContainsKey(id))
             {
                 Player player;
-                _PlayerIds.TryGetValue(id, out player);
+                PlayerIds.TryGetValue(id, out player);
                 return player;
             }
 
