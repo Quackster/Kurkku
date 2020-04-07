@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Kurkku.Game
 {
-    public class Player : IEntity<PlayerData>
+    public class Player : IEntity
     {
         #region Fields
 
@@ -18,6 +18,16 @@ namespace Kurkku.Game
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Get room entity
+        /// </summary>
+        public RoomEntity RoomEntity { get; private set; }
+
+        /// <summary>
+        /// Get entity data
+        /// </summary>
+        public IEntityData Data => (IEntityData)m_PlayerData;
 
         /// <summary>
         /// Get the connection session
@@ -32,7 +42,7 @@ namespace Kurkku.Game
         /// <summary>
         /// Get entity data
         /// </summary>
-        public PlayerData Data => m_PlayerData;
+        public PlayerData Details => m_PlayerData;
 
         /// <summary>
         /// Get the player statistics
@@ -43,6 +53,11 @@ namespace Kurkku.Game
         /// Get messenger
         /// </summary>
         public Messenger Messenger { get; private set; }
+
+        /// <summary>
+        /// Get room player
+        /// </summary>
+        public RoomPlayer RoomUser => (RoomPlayer)RoomEntity;
 
         /// <summary>
         /// Whether the player has logged in or not
@@ -61,8 +76,11 @@ namespace Kurkku.Game
         public Player(ConnectionSession connectionSession)
         {
             Connection = connectionSession;
+            RoomEntity = new RoomPlayer(this);
 
-            Messenger = new Messenger(this);
+            var t = RoomEntity;
+            var val = t.test();
+            
             Statistics = new PlayerStatisticsData();
             
             m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Connection {connectionSession.Channel.Id}");
@@ -84,8 +102,6 @@ namespace Kurkku.Game
             if (m_PlayerData == null)
                 return false;
 
-
-
             m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Player {m_PlayerData.Name}");
             Connection.Send(new AuthenticationOKComposer());
 
@@ -96,7 +112,7 @@ namespace Kurkku.Game
             PlayerManager.Instance.AddPlayer(this);
             Authenticated = true;
 
-            Messenger.Init();
+            Messenger = new Messenger(this);
             Messenger.SendStatus();
 
             return true;
