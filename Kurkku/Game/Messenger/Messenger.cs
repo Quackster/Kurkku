@@ -110,6 +110,9 @@ namespace Kurkku.Game
             }
         }
 
+        /// <summary>
+        /// Get the list of all online friends
+        /// </summary>
         public List<MessengerUser> GetOnlineFriends() => 
             Friends.Where(friend => friend.IsOnline).ToList();
              
