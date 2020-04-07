@@ -23,38 +23,46 @@ namespace Kurkku.Messages.Outoing.Messenger
 
         public override void Write()
         {
-            this.m_Data.Add(this.categories.Count);
+            m_Data.Add(categories.Count);
 
             int i = 1;
             foreach (var category in categories)
             {
-                this.m_Data.Add(i);
-                this.m_Data.Add(category.Label);
+                m_Data.Add(i);
+                m_Data.Add(category.Label);
                 i++;
             }
 
-            this.m_Data.Add(this.updates.Count);
+            m_Data.Add(updates.Count);
             foreach (var messengerUpdate in updates)
             {
-                this.m_Data.Add((int)messengerUpdate.UpdateType);
-                this.m_Data.Add(messengerUpdate.Friend.PlayerData.Id);
+                m_Data.Add((int)messengerUpdate.UpdateType);
 
-                if (messengerUpdate.UpdateType == MessengerUpdateType.AddFriend ||
-                    messengerUpdate.UpdateType == MessengerUpdateType.UpdateFriend)
+                switch(messengerUpdate.UpdateType)
                 {
-                    this.m_Data.Add(messengerUpdate.Friend.PlayerData.Name);
-                    this.m_Data.Add(1);
-                    this.m_Data.Add(messengerUpdate.Friend.IsOnline);
-                    this.m_Data.Add(messengerUpdate.Friend.InRoom);
-                    this.m_Data.Add(messengerUpdate.Friend.PlayerData.Figure);
-                    this.m_Data.Add(0); // category id
-                    this.m_Data.Add(messengerUpdate.Friend.PlayerData.Motto); // motto
-                    this.m_Data.Add(messengerUpdate.Friend.PlayerData.RealName); // real name
-                    this.m_Data.Add(messengerUpdate.Friend.PlayerData.LastOnline.ToString("MM-dd-yyyy HH:mm:ss")); // unknown??
-                    this.m_Data.Add(false);
-                    this.m_Data.Add(false);
-                    this.m_Data.Add(false);
-                    this.m_Data.Add((short)0); // relationship status
+                    case MessengerUpdateType.AddFriend:
+                    case MessengerUpdateType.RemoveFriend:
+                        {
+                            m_Data.Add(messengerUpdate.Friend.PlayerData.Id);
+                            break;
+                        }
+                    case MessengerUpdateType.UpdateFriend:
+                        {
+                            m_Data.Add(messengerUpdate.Friend.PlayerData.Name);
+                            m_Data.Add(1);
+                            m_Data.Add(messengerUpdate.Friend.IsOnline);
+                            m_Data.Add(messengerUpdate.Friend.InRoom);
+                            m_Data.Add(messengerUpdate.Friend.PlayerData.Figure);
+                            m_Data.Add(0); // category id
+                            m_Data.Add(messengerUpdate.Friend.PlayerData.Motto); // motto
+                            m_Data.Add(messengerUpdate.Friend.PlayerData.RealName); // real name
+                            m_Data.Add(messengerUpdate.Friend.PlayerData.LastOnline.ToString("MM-dd-yyyy HH:mm:ss")); // unknown??
+                            m_Data.Add(false);
+                            m_Data.Add(false);
+                            m_Data.Add(false);
+                            m_Data.Add((short)0); // relationship status
+                            break;
+                        }
                 }
             }
         }
