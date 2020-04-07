@@ -8,6 +8,7 @@ using Kurkku.Storage.Database;
 using Kurkku.Network;
 using Kurkku.Storage.Database.Access;
 using Kurkku.Game;
+using Kurkku.Storage.Database.Data;
 
 namespace Kurkku
 {
@@ -52,6 +53,28 @@ namespace Kurkku
             try
             {
                 tryDatabaseConnection();
+
+                /*using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+                {
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        var random = new Random();
+
+                        for (int i = 0; i < 50; i++)
+                        {
+                            var test = new TestData
+                            {
+                                Id = i + 1,
+                                Test = Convert.ToString(random.Next())
+                            };
+
+                            session.SaveOrUpdate(test);
+                        }
+
+                        transaction.Commit();
+                    }
+                }*/
+
                 tryCreateServer();
             }
             catch (Exception ex)
