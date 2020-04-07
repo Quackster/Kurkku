@@ -12,7 +12,7 @@ namespace Kurkku.Messages.Incoming.Handshake
 
             if (string.IsNullOrEmpty(first))
             {
-                player.Connection.Send(new BlankComposer("", ""));
+                player.Send(new BlankComposer("", ""));
                 return;
             }
 

@@ -14,8 +14,8 @@ namespace Kurkku.Messages.Incoming.User
             if (!player.Authenticated)
                 return;
 
-            player.Connection.Send(new UserInfoComposer(player));
-            player.Connection.Send(new WelcomeUserComposer());
+            player.Send(new UserInfoComposer(player));
+            player.Send(new WelcomeUserComposer());
         }
     }
 }

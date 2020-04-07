@@ -1,4 +1,5 @@
-﻿using Kurkku.Messages.Outgoing.Handshake;
+﻿using Kurkku.Messages;
+using Kurkku.Messages.Outgoing.Handshake;
 using Kurkku.Network.Session;
 using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
@@ -84,10 +85,7 @@ namespace Kurkku.Game
             if (m_PlayerData == null)
                 return false;
 
-
-
             m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Player {m_PlayerData.Name}");
-            Connection.Send(new AuthenticationOKComposer());
 
             m_PlayerData.PreviousLastOnline = m_PlayerData.LastOnline;
             m_PlayerData.LastOnline = DateTime.Now;
@@ -99,7 +97,16 @@ namespace Kurkku.Game
             Messenger.Init();
             Messenger.SendStatus();
 
+            Send(new AuthenticationOKComposer());
             return true;
+        }
+
+        /// <summary>
+        /// Send message composer
+        /// </summary>
+        public void Send(MessageComposer composer)
+        {
+            Connection.Send(composer);
         }
 
         /// <summary>

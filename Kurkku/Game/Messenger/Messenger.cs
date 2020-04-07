@@ -106,46 +106,22 @@ namespace Kurkku.Game
                 List<MessengerUpdate> messengerUpdates = messenger.Queue.Dequeue();
 
                 if (messengerUpdates.Count > 0)
-                    friend.Player.Connection.Send(new UpdateMessengerComposer(messenger.Categories, messengerUpdates));
+                    friend.Player.Send(new UpdateMessengerComposer(messenger.Categories, messengerUpdates));
             }
         }
 
-        /// <summary>
-        /// Get list of online friends
-        /// </summary>
-        /// <returns>the list</returns>
         public List<MessengerUser> GetOnlineFriends() => 
             Friends.Where(friend => friend.IsOnline).ToList();
              
-        /// <summary>
-        /// Get if the user id is friends
-        /// </summary>
-        /// <param name="userId">the user id</param>
-        /// <returns>true if successful</returns>
         public bool HasFriend(int userId) => 
             Friends.Count(friend => friend.PlayerData.Id == userId) > 0;
 
-        /// <summary>
-        /// Get the user id as friend instance
-        /// </summary>
-        /// <param name="userId">the user id</param>
-        /// <returns>user data instance if is friend</returns>
         public MessengerUser GetFriend(int userId) =>
             Friends.FirstOrDefault(friend => friend.PlayerData.Id == userId);
 
-        /// <summary>
-        /// Get if the user id has requested user
-        /// </summary>
-        /// <param name="userId">the user id</param>
-        /// <returns>true if successful</returns>
         public bool HasRequest(int userId) =>
             Requests.Count(requester => requester.PlayerData.Id == userId) > 0;
 
-        /// <summary>
-        /// Get the user id as request instance
-        /// </summary>
-        /// <param name="userId">the user id</param>
-        /// <returns>user data instance if is requester</returns>
         public MessengerUser GetRequest(int userId) =>
             Requests.FirstOrDefault(friend => friend.PlayerData.Id == userId);
 

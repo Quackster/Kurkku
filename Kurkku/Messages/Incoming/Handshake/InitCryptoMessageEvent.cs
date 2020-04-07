@@ -8,7 +8,7 @@ namespace Kurkku.Messages.Incoming.Handshake
     {
         public void Handle(Player player, Request request)
         {
-            player.Connection.Send(new InitCryptoComposer("1e9d1203d2203d3dd9ddcb192ccf0a01"));
+            player.Send(new InitCryptoComposer("1e9d1203d2203d3dd9ddcb192ccf0a01"));
         }
     }
 }
