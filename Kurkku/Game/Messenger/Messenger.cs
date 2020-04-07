@@ -51,9 +51,9 @@ namespace Kurkku.Game
         {
             Player = player;
 
-            Friends = MessengerDao.GetFriends(Player.Data.Id).Select(data => Wrap(data)).ToList();
-            Requests = MessengerDao.GetRequests(Player.Data.Id).Select(data => Wrap(data)).ToList();
-            Categories = MessengerDao.GetCategories(Player.Data.Id);
+            Friends = MessengerDao.GetFriends(Player.Details.Id).Select(data => Wrap(data)).ToList();
+            Requests = MessengerDao.GetRequests(Player.Details.Id).Select(data => Wrap(data)).ToList();
+            Categories = MessengerDao.GetCategories(Player.Details.Id);
 
             Queue = new ConcurrentQueue<MessengerUpdate>();
         }

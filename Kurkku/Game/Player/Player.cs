@@ -18,7 +18,7 @@ namespace Kurkku.Game
 
         #endregion
 
-        #region Properties
+        #region Interface properties
 
         /// <summary>
         /// Get room entity
@@ -28,7 +28,11 @@ namespace Kurkku.Game
         /// <summary>
         /// Get entity data
         /// </summary>
-        public IEntityData Data => (IEntityData)m_PlayerData;
+        public IEntityData EntityData => (IEntityData)m_PlayerData;
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// Get the connection session
@@ -41,11 +45,6 @@ namespace Kurkku.Game
         public ILog Log => m_Log;
 
         /// <summary>
-        /// Get entity data
-        /// </summary>
-        public PlayerData Details => m_PlayerData;
-
-        /// <summary>
         /// Get the player statistics
         /// </summary>
         public PlayerStatisticsData Statistics { get; private set; }
@@ -54,6 +53,11 @@ namespace Kurkku.Game
         /// Get messenger
         /// </summary>
         public Messenger Messenger { get; private set; }
+
+        /// <summary>
+        /// Get entity data
+        /// </summary>
+        public PlayerData Details => m_PlayerData;
 
         /// <summary>
         /// Get room player
@@ -77,11 +81,8 @@ namespace Kurkku.Game
         public Player(ConnectionSession connectionSession)
         {
             Connection = connectionSession;
-            RoomEntity = new RoomPlayer(this);
 
-            var t = RoomEntity;
-            var val = t.test();
-            
+            RoomEntity = new RoomPlayer(this);
             Statistics = new PlayerStatisticsData();
             
             m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Connection {connectionSession.Channel.Id}");

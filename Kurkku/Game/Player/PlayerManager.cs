@@ -52,8 +52,8 @@ namespace Kurkku.Game
         /// <param name="player">remove the player</param>
         public void AddPlayer(Player player)
         {
-            PlayerIds.TryAdd(player.Data.Id, player);
-            PlayerNames.TryAdd(player.Data.Name.ToLower(), player);
+            PlayerIds.TryAdd(player.EntityData.Id, player);
+            PlayerNames.TryAdd(player.EntityData.Name.ToLower(), player);
         }
 
         /// <summary>
@@ -62,8 +62,8 @@ namespace Kurkku.Game
         /// <param name="player">remove the player</param>
         public void RemovePlayer(Player player)
         {
-            PlayerIds.Remove(player.Data.Id, out _);
-            PlayerNames.Remove(player.Data.Name.ToLower(), out _);
+            PlayerIds.Remove(player.EntityData.Id, out _);
+            PlayerNames.Remove(player.EntityData.Name.ToLower(), out _);
         }
 
         /// <summary>
