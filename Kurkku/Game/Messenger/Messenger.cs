@@ -41,7 +41,7 @@ namespace Kurkku.Game
         /// Get the player as messenger user
         /// </summary>
         public MessengerUser MessengerUser => 
-            new MessengerUser { PlayerData = Player.Data };
+            new MessengerUser { PlayerData = Player.Details };
 
         #endregion
 
@@ -50,14 +50,12 @@ namespace Kurkku.Game
         public Messenger(Player player)
         {
             Player = player;
-            Queue = new ConcurrentQueue<MessengerUpdate>();
-        }
 
-        public void Init()
-        {
-            Friends = MessengerDao.GetFriends(Player.Data.Id).Select(data => Wrap(data)).ToList();
-            Requests = MessengerDao.GetRequests(Player.Data.Id).Select(data => Wrap(data)).ToList();
-            Categories = MessengerDao.GetCategories(Player.Data.Id);
+            Friends = MessengerDao.GetFriends(Player.Details.Id).Select(data => Wrap(data)).ToList();
+            Requests = MessengerDao.GetRequests(Player.Details.Id).Select(data => Wrap(data)).ToList();
+            Categories = MessengerDao.GetCategories(Player.Details.Id);
+
+            Queue = new ConcurrentQueue<MessengerUpdate>();
         }
 
         /// <summary>

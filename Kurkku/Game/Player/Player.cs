@@ -9,12 +9,26 @@ using System.Reflection;
 
 namespace Kurkku.Game
 {
-    public class Player : IEntity<PlayerData>
+    public class Player : IEntity
     {
         #region Fields
 
         private ILog m_Log = LogManager.GetLogger(typeof(Player));
         private PlayerData m_PlayerData;
+
+        #endregion
+
+        #region Interface properties
+
+        /// <summary>
+        /// Get room entity
+        /// </summary>
+        public RoomEntity RoomEntity { get; private set; }
+
+        /// <summary>
+        /// Get entity data
+        /// </summary>
+        public IEntityData EntityData => (IEntityData)m_PlayerData;
 
         #endregion
 
@@ -31,11 +45,6 @@ namespace Kurkku.Game
         public ILog Log => m_Log;
 
         /// <summary>
-        /// Get entity data
-        /// </summary>
-        public PlayerData Data => m_PlayerData;
-
-        /// <summary>
         /// Get the player statistics
         /// </summary>
         public PlayerStatisticsData Statistics { get; private set; }
@@ -44,6 +53,16 @@ namespace Kurkku.Game
         /// Get messenger
         /// </summary>
         public Messenger Messenger { get; private set; }
+
+        /// <summary>
+        /// Get entity data
+        /// </summary>
+        public PlayerData Details => m_PlayerData;
+
+        /// <summary>
+        /// Get room player
+        /// </summary>
+        public RoomPlayer RoomUser => (RoomPlayer)RoomEntity;
 
         /// <summary>
         /// Whether the player has logged in or not
@@ -63,7 +82,7 @@ namespace Kurkku.Game
         {
             Connection = connectionSession;
 
-            Messenger = new Messenger(this);
+            RoomEntity = new RoomPlayer(this);
             Statistics = new PlayerStatisticsData();
             
             m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Connection {connectionSession.Channel.Id}");
@@ -94,7 +113,7 @@ namespace Kurkku.Game
             PlayerManager.Instance.AddPlayer(this);
             Authenticated = true;
 
-            Messenger.Init();
+            Messenger = new Messenger(this);
             Messenger.SendStatus();
 
             Send(new AuthenticationOKComposer());

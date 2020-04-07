@@ -20,18 +20,18 @@ namespace Kurkku.Messages.Outgoing.User
 
         public override void Write()
         {
-            m_Data.Add(player.Data.Id);
-            m_Data.Add(player.Data.Name);
-            m_Data.Add(player.Data.Figure);
-            m_Data.Add(player.Data.Sex.ToUpper());
-            m_Data.Add(player.Data.Motto);
-            m_Data.Add(player.Data.RealName);
+            m_Data.Add(player.Details.Id);
+            m_Data.Add(player.Details.Name);
+            m_Data.Add(player.Details.Figure);
+            m_Data.Add(player.Details.Sex.ToUpper());
+            m_Data.Add(player.Details.Motto);
+            m_Data.Add(player.Details.RealName);
             m_Data.Add(false);
             m_Data.Add(player.Statistics.Respect);
             m_Data.Add(player.Statistics.DailyRespectPoints);
             m_Data.Add(player.Statistics.DailyPetRespectPoints);
             m_Data.Add(true);
-            m_Data.Add(player.Data.PreviousLastOnline.ToString("MM-dd-yyyy HH:mm:ss"));
+            m_Data.Add(player.Details.PreviousLastOnline.ToString("MM-dd-yyyy HH:mm:ss"));
             m_Data.Add(false);
             m_Data.Add(false);
         }
