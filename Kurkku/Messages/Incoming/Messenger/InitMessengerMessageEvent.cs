@@ -8,7 +8,7 @@ namespace Kurkku.Messages.Incoming.Messenger
     {
         public void Handle(Player player, Request request)
         {
-            player.Connection.Send(new InitMessengerComposer(
+            player.Send(new InitMessengerComposer(
                 player.Messenger.Categories, 
                 player.Messenger.Friends
             ));
