@@ -65,12 +65,10 @@ namespace Kurkku.Game
         /// <returns>the wrapped class</returns>
         public MessengerUser Wrap(MessengerUserData messengerUserData)
         {
-            var messengerUser = new MessengerUser
+            return new MessengerUser
             {
                 PlayerData = messengerUserData.FriendData
             };
-
-            return messengerUser;
         }
 
         /// <summary>
