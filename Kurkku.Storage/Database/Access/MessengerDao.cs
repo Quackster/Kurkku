@@ -1,10 +1,27 @@
 ﻿using Kurkku.Storage.Database.Data;
+using NHibernate.Criterion;
+using NHibernate.Linq;
+using System;
 using System.Collections.Generic;
 
 namespace Kurkku.Storage.Database.Access
 {
     public class MessengerDao
     {
+        public static List<PlayerData> SearchMessenger(string query)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                PlayerData playerDataAlias = null;
+
+                return session.QueryOver<PlayerData>(() => playerDataAlias)
+                    //.Where(Restrictions.On<PlayerData>(x => x.Name).IsInsensitiveLike(query, MatchMode.Start))
+                    .WhereRestrictionOn(() => playerDataAlias.Name).IsLike(query, MatchMode.Start)
+                    .Take(30)
+                    .List() as List<PlayerData>;
+            }
+        }
+
         public static List<MessengerRequestData> GetRequests(int userId)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())

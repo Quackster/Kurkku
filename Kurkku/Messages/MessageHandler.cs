@@ -54,6 +54,7 @@ namespace Kurkku.Messages
         private void registerMessenger()
         {
             m_Events[IncomingEvents.InitMessengerMessageEvent] = new InitMessengerMessageEvent();
+            m_Events[IncomingEvents.SearchMessengerEvent] = new SearchMessengerEvent();
         }
 
         /// <summary>
@@ -81,6 +82,29 @@ namespace Kurkku.Messages
                 if (m_Events.ContainsKey(request.Header))
                 {
                     var message = m_Events[request.Header];
+
+                    // Not allowed to handle once logged in
+                    if (!player.Authenticated &&
+                        !(message is VersionCheckMessageEvent ||
+                            message is InitCryptoMessageEvent ||
+                            message is GenerateSecretKeyMessageEvent ||
+                            message is SSOTicketMessageEvent))
+                    {
+                        player.Connection.Channel.CloseAsync();
+                        return;
+                    }
+
+                    // Only allowed to handle when NOT logged in
+                    if (player.Authenticated &&
+                        (message is VersionCheckMessageEvent ||
+                            message is InitCryptoMessageEvent ||
+                            message is GenerateSecretKeyMessageEvent ||
+                            message is SSOTicketMessageEvent))
+                    {
+                        player.Connection.Channel.CloseAsync();
+                        return;
+                    }
+
                     player.Log.Debug($"Message {message.GetType().Name}: {request.Header} / {request.MessageBody}");
                     message.Handle(player, request);
                 } 
