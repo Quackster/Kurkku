@@ -40,14 +40,15 @@ namespace Kurkku.Messages.Outoing.Messenger
 
                 switch(messengerUpdate.UpdateType)
                 {
-                    case MessengerUpdateType.AddFriend:
                     case MessengerUpdateType.RemoveFriend:
                         {
                             m_Data.Add(messengerUpdate.Friend.PlayerData.Id);
                             break;
                         }
+                    case MessengerUpdateType.AddFriend:
                     case MessengerUpdateType.UpdateFriend:
                         {
+                            m_Data.Add(messengerUpdate.Friend.PlayerData.Id);
                             m_Data.Add(messengerUpdate.Friend.PlayerData.Name);
                             m_Data.Add(1);
                             m_Data.Add(messengerUpdate.Friend.IsOnline);
