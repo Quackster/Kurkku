@@ -67,11 +67,11 @@ namespace Kurkku.Storage.Database.Access
 
         public static bool GetAcceptsFriendRequests(int userId)
         {
-            PlayerSettingsData settingsAlias = null;
-            PlayerData playerDataAlias = null;
-
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
+                PlayerSettingsData settingsAlias = null;
+                PlayerData playerDataAlias = null;
+
                 return session.QueryOver(() => settingsAlias)
                     .JoinEntityAlias(() => playerDataAlias, () => settingsAlias.UserId == playerDataAlias.Id)
                     .Where(() => playerDataAlias.Id == userId && settingsAlias.FriendRequestsEnabled)
