@@ -58,5 +58,49 @@ namespace Kurkku.Storage.Database.Access
                 }
             }
         }
+
+        /// <summary>
+        /// Get player by username
+        /// </summary>
+        public static PlayerData GetByName(string name)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                return session.QueryOver<PlayerData>().Where(x => x.Name == name).SingleOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// Get player by id
+        /// </summary>
+        public static PlayerData GetById(int id)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                return session.QueryOver<PlayerData>().Where(x => x.Id == id).SingleOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// Get player name by id
+        /// </summary>
+        public static string GetNameById(int id)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                return session.QueryOver<PlayerData>().Select(x => x.Name).Where(x => x.Id == id).SingleOrDefault<string>();
+            }
+        }
+
+        /// <summary>
+        /// Get player id by name
+        /// </summary>
+        public static int GetIdByName(string name)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                return session.QueryOver<PlayerData>().Select(x => x.Id).Where(x => x.Name == name).SingleOrDefault<int>();
+            }
+        }
     }
 }

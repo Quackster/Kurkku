@@ -29,6 +29,7 @@ namespace Kurkku.Storage.Database.Access
                 }
             }
         }
+
         /// <summary>
         /// Create player statistics
         /// </summary>
@@ -86,6 +87,14 @@ namespace Kurkku.Storage.Database.Access
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Get settings by user id
+        /// </summary>
+        public static object GetById(int userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

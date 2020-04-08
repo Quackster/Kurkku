@@ -53,6 +53,7 @@ namespace Kurkku.Messages
         {
             m_Events[IncomingEvents.InitMessengerMessageEvent] = new InitMessengerMessageEvent();
             m_Events[IncomingEvents.SearchMessengerEvent] = new SearchMessengerEvent();
+            m_Events[IncomingEvents.BuddyRequestMessengerEvent] = new BuddyRequestMessengerEvent();
         }
 
         /// <summary>

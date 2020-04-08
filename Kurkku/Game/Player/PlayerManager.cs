@@ -1,4 +1,6 @@
-﻿using System.Collections.Concurrent;
+﻿using Kurkku.Storage.Database.Access;
+using Kurkku.Storage.Database.Data;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -98,6 +100,45 @@ namespace Kurkku.Game
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Get data by id
+        /// </summary>
+        public PlayerData GetDataById(int userId)
+        {
+            var player = GetPlayerById(userId);
+
+            if (player != null)
+                return player.Details;
+
+            return UserDao.GetById(userId);
+        }
+
+        /// <summary>
+        /// Get data by name
+        /// </summary>
+        public PlayerData GetDataByName(int userId)
+        {
+            var player = GetPlayerById(userId);
+
+            if (player != null)
+                return player.Details;
+
+            return UserDao.GetById(userId);
+        }
+
+        /// <summary>
+        /// Get data by name
+        /// </summary>
+        public string GetName(int userId)
+        {
+            var player = GetPlayerById(userId);
+
+            if (player != null)
+                return player.Details.Name;
+
+            return UserDao.GetNameById(userId);
         }
 
         #endregion

@@ -1,6 +1,8 @@
 ﻿using Kurkku.Storage.Database.Data;
+using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
+using NHibernate.SqlCommand;
 using System;
 using System.Collections.Generic;
 
@@ -60,6 +62,20 @@ namespace Kurkku.Storage.Database.Access
                 return session.QueryOver(() => messengerCategoryAlias)
                     .Where(() => messengerCategoryAlias.UserId == userId)
                     .List() as List<MessengerCategoryData>;
+            }
+        }
+
+        public static bool AcceptsFriendRequests(int userId)
+        {
+            PlayerSettingsData settingsAlias = null;
+            PlayerData playerDataAlias = null;
+
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                return session.QueryOver(() => settingsAlias)
+                    .JoinEntityAlias(() => playerDataAlias, () => settingsAlias.UserId == playerDataAlias.Id)
+                    .Where(() => playerDataAlias.Id == userId && settingsAlias.FriendRequestsEnabled)
+                    .List().Count > 0;
             }
         }
     }
