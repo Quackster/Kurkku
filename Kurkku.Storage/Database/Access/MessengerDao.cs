@@ -65,7 +65,7 @@ namespace Kurkku.Storage.Database.Access
             }
         }
 
-        public static bool AcceptsFriendRequests(int userId)
+        public static bool GetAcceptsFriendRequests(int userId)
         {
             PlayerSettingsData settingsAlias = null;
             PlayerData playerDataAlias = null;

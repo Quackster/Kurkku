@@ -54,7 +54,6 @@ namespace Kurkku
             {
                 tryDatabaseConnection();
 
-                var id = MessengerDao.AcceptsFriendRequests(1);
                 /*using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
                 {
                     using (var transaction = session.BeginTransaction())

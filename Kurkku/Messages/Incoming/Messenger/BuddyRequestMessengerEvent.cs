@@ -18,7 +18,7 @@ namespace Kurkku.Messages.Incoming
             if (userId < 1)
                 return;
 
-            bool acceptsFriendRequests = MessengerDao.AcceptsFriendRequests(userId);
+            bool acceptsFriendRequests = MessengerDao.GetAcceptsFriendRequests(userId);
 
             if (!acceptsFriendRequests)
             {
