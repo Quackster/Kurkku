@@ -2,7 +2,7 @@
 
 namespace Kurkku.Messages.Outgoing
 {
-    public class WelcomeUserComposer : MessageComposer
+    public class BlankComposer : MessageComposer
     {
 
         public override short Header
