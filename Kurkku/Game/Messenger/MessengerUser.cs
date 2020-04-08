@@ -40,7 +40,7 @@ namespace Kurkku.Game
 
             var t = obj as MessengerUser;
 
-            if (t == null)
+            if (t == null || t.PlayerData == null || this.PlayerData == null)
                 return false;
 
             if (t.PlayerData.Id == this.PlayerData.Id)

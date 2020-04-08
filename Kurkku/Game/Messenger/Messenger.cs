@@ -65,12 +65,10 @@ namespace Kurkku.Game
         /// <returns>the wrapped class</returns>
         public MessengerUser Wrap(MessengerUserData messengerUserData)
         {
-            var messengerUser = new MessengerUser
+            return new MessengerUser
             {
                 PlayerData = messengerUserData.FriendData
             };
-
-            return messengerUser;
         }
 
         /// <summary>
@@ -108,6 +106,9 @@ namespace Kurkku.Game
             }
         }
 
+        /// <summary>
+        /// Get the list of all online friends
+        /// </summary>
         public List<MessengerUser> GetOnlineFriends() => 
             Friends.Where(friend => friend.IsOnline).ToList();
              
