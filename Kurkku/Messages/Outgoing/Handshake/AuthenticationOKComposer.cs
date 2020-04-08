@@ -1,6 +1,6 @@
 ﻿using Kurkku.Messages.Headers;
 
-namespace Kurkku.Messages.Outgoing.Handshake
+namespace Kurkku.Messages.Outgoing
 {
     public class AuthenticationOKComposer : MessageComposer
     {

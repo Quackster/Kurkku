@@ -2,7 +2,7 @@
 using Kurkku.Game;
 using Kurkku.Messages.Headers;
 
-namespace Kurkku.Messages.Outgoing.User
+namespace Kurkku.Messages.Outgoing
 {
     public class UserInfoComposer : MessageComposer
     {

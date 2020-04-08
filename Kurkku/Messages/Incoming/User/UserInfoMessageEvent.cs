@@ -1,11 +1,11 @@
 ﻿using Kurkku.Game;
-using Kurkku.Messages.Outgoing.User;
+using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Kurkku.Messages.Incoming.User
+namespace Kurkku.Messages.Incoming
 {
     class UserInfoMessageEvent : MessageEvent
     {

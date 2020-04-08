@@ -1,8 +1,6 @@
 ﻿using Kurkku.Game;
 using Kurkku.Messages.Headers;
-using Kurkku.Messages.Incoming.Handshake;
-using Kurkku.Messages.Incoming.Messenger;
-using Kurkku.Messages.Incoming.User;
+using Kurkku.Messages.Incoming;
 using Kurkku.Network.Streams;
 using log4net;
 using System;

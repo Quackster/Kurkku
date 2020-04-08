@@ -8,15 +8,16 @@ namespace Kurkku.Storage.Database.Access
 {
     public class MessengerDao
     {
-        public static List<PlayerData> SearchMessenger(string query)
+        public static List<PlayerData> SearchMessenger(string query, int ignoreUserId)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
                 PlayerData playerDataAlias = null;
 
                 return session.QueryOver<PlayerData>(() => playerDataAlias)
-                    //.Where(Restrictions.On<PlayerData>(x => x.Name).IsInsensitiveLike(query, MatchMode.Start))
+                                        //.Where(Restrictions.On<PlayerData>(x => x.Name).IsInsensitiveLike(query, MatchMode.Start))
                     .WhereRestrictionOn(() => playerDataAlias.Name).IsLike(query, MatchMode.Start)
+                    .And(() => playerDataAlias.Id != ignoreUserId)
                     .Take(30)
                     .List() as List<PlayerData>;
             }

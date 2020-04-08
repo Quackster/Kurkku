@@ -1,4 +1,4 @@
-﻿using Kurkku.Messages.Outoing.Messenger;
+﻿using Kurkku.Messages.Outoing;
 using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
 using Kurkku.Util.Extensions;
@@ -51,8 +51,8 @@ namespace Kurkku.Game
         {
             Player = player;
 
-            Friends = MessengerDao.GetFriends(Player.Details.Id).Select(data => Wrap(data)).ToList();
-            Requests = MessengerDao.GetRequests(Player.Details.Id).Select(data => Wrap(data)).ToList();
+            Friends = MessengerDao.GetFriends(Player.Details.Id).Select(data => Wrap(data.FriendData)).ToList();
+            Requests = MessengerDao.GetRequests(Player.Details.Id).Select(data => Wrap(data.FriendData)).ToList();
             Categories = MessengerDao.GetCategories(Player.Details.Id);
 
             Queue = new ConcurrentQueue<MessengerUpdate>();
@@ -63,11 +63,11 @@ namespace Kurkku.Game
         /// </summary>
         /// <param name="messengerUserData">the data to wrap</param>
         /// <returns>the wrapped class</returns>
-        public MessengerUser Wrap(MessengerUserData messengerUserData)
+        public static MessengerUser Wrap(PlayerData playerData)
         {
             return new MessengerUser
             {
-                PlayerData = messengerUserData.FriendData
+                PlayerData = playerData
             };
         }
 
@@ -95,15 +95,19 @@ namespace Kurkku.Game
             foreach (var friend in onlineFriends)
                 friend.Player.Messenger.QueueUpdate(MessengerUpdateType.UpdateFriend, MessengerUser);
 
-
             foreach (var friend in onlineFriends)
-            {
-                Messenger messenger = friend.Player.Messenger;
-                List<MessengerUpdate> messengerUpdates = messenger.Queue.Dequeue();
+                friend.Player.Messenger.ForceUpdate();
+        }
 
-                if (messengerUpdates.Count > 0)
-                    friend.Player.Send(new UpdateMessengerComposer(messenger.Categories, messengerUpdates));
-            }
+        /// <summary>
+        /// Forces update to own messenger
+        /// </summary>
+        public void ForceUpdate()
+        {
+            List<MessengerUpdate> messengerUpdates = Queue.Dequeue();
+
+            if (messengerUpdates.Count > 0)
+                Player.Send(new UpdateMessengerComposer(Categories, messengerUpdates));
         }
 
         /// <summary>

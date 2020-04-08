@@ -1,5 +1,5 @@
 ﻿using Kurkku.Messages;
-using Kurkku.Messages.Outgoing.Handshake;
+using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Session;
 using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;

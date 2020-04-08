@@ -1,8 +1,8 @@
 ﻿using Kurkku.Messages.Headers;
 
-namespace Kurkku.Messages.Outgoing.User
+namespace Kurkku.Messages.Outgoing
 {
-    public class BlankComposer : MessageComposer
+    public class LandingViewComposer : MessageComposer
     {
         private string promotion;
         private string catalogueTeaser;
@@ -12,7 +12,7 @@ namespace Kurkku.Messages.Outgoing.User
             get { return OutgoingEvents.LandingViewComposer; }
         }
 
-        public BlankComposer(string promotion, string catalogueTeaser)
+        public LandingViewComposer(string promotion, string catalogueTeaser)
         {
             this.promotion = promotion;
             this.catalogueTeaser = catalogueTeaser;

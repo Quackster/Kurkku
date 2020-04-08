@@ -1,8 +1,8 @@
 ﻿using Kurkku.Game;
-using Kurkku.Messages.Outgoing.User;
 using Kurkku.Network.Streams;
+using Kurkku.Messages.Outgoing;
 
-namespace Kurkku.Messages.Incoming.Handshake
+namespace Kurkku.Messages.Incoming
 {
     class LandingViewMessageEvent : MessageEvent
     {
@@ -12,7 +12,7 @@ namespace Kurkku.Messages.Incoming.Handshake
 
             if (string.IsNullOrEmpty(first))
             {
-                player.Send(new BlankComposer("", ""));
+                player.Send(new LandingViewComposer("", ""));
                 return;
             }
 

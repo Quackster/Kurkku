@@ -1,20 +1,31 @@
 ﻿using Kurkku.Game;
+using Kurkku.Messages.Outoing;
 using Kurkku.Network.Streams;
 using Kurkku.Storage.Database.Access;
-using System;
+using Kurkku.Storage.Database.Data;
+using Kurkku.Util.Extensions;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
-namespace Kurkku.Messages.Incoming.Messenger
+namespace Kurkku.Messages.Incoming
 {
     class SearchMessengerEvent : MessageEvent
     {
         public void Handle(Player player, Request request)
         {
-            string query = request.ReadString();
+            List<PlayerData> resultSet = MessengerDao.SearchMessenger(request.ReadString().FilterInput(), player.Details.Id);
 
-            MessengerDao.SearchMessenger(query);
-            var t = 1;
+            var friends = resultSet.Where(data => player.Messenger.HasFriend(data.Id))
+                .Select(data => new MessengerUser {
+                PlayerData = data
+            }).ToList();
+
+            var users = resultSet.Where(data => !player.Messenger.HasFriend(data.Id))
+                .Select(data => new MessengerUser {
+                PlayerData = data
+            }).ToList();
+
+            player.Send(new SearchMessengerComposer(friends, users));
         }
     }
 }

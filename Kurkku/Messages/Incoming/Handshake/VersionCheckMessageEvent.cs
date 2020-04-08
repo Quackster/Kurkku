@@ -1,7 +1,7 @@
 ﻿using Kurkku.Game;
 using Kurkku.Network.Streams;
 
-namespace Kurkku.Messages.Incoming.Handshake
+namespace Kurkku.Messages.Incoming
 {
     class VersionCheckMessageEvent : MessageEvent
     {

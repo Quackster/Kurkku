@@ -1,8 +1,8 @@
 ﻿using Kurkku.Game;
-using Kurkku.Messages.Outoing.Messenger;
+using Kurkku.Messages.Outoing;
 using Kurkku.Network.Streams;
 
-namespace Kurkku.Messages.Incoming.Messenger
+namespace Kurkku.Messages.Incoming
 {
     class InitMessengerMessageEvent : MessageEvent
     {
