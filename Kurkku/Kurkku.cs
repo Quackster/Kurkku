@@ -54,6 +54,7 @@ namespace Kurkku
             {
                 tryDatabaseConnection();
 
+                UserSettingsDao.CreateOrUpdate(out _, 1);
                 /*using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
                 {
                     using (var transaction = session.BeginTransaction())

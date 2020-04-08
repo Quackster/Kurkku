@@ -52,7 +52,7 @@ namespace Kurkku.Messages.Outoing
             m_Data.Add(user.PlayerData.Name);
             m_Data.Add(user.PlayerData.Motto);
             m_Data.Add(user.IsOnline);
-            m_Data.Add(false);
+            m_Data.Add(true);
             m_Data.Add(string.Empty);
             m_Data.Add(0);
             m_Data.Add(user.PlayerData.Figure);

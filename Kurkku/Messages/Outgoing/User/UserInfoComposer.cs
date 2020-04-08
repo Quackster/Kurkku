@@ -27,9 +27,9 @@ namespace Kurkku.Messages.Outgoing
             m_Data.Add(player.Details.Motto);
             m_Data.Add(player.Details.RealName);
             m_Data.Add(false);
-            m_Data.Add(player.Statistics.Respect);
-            m_Data.Add(player.Statistics.DailyRespectPoints);
-            m_Data.Add(player.Statistics.DailyPetRespectPoints);
+            m_Data.Add(player.Settings.Respect);
+            m_Data.Add(player.Settings.DailyRespectPoints);
+            m_Data.Add(player.Settings.DailyPetRespectPoints);
             m_Data.Add(true);
             m_Data.Add(player.Details.PreviousLastOnline.ToString("MM-dd-yyyy HH:mm:ss"));
             m_Data.Add(false);

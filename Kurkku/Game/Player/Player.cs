@@ -15,6 +15,7 @@ namespace Kurkku.Game
 
         private ILog m_Log = LogManager.GetLogger(typeof(Player));
         private PlayerData m_PlayerData;
+        private PlayerSettingsData m_Settings;
 
         #endregion
 
@@ -45,11 +46,6 @@ namespace Kurkku.Game
         public ILog Log => m_Log;
 
         /// <summary>
-        /// Get the player statistics
-        /// </summary>
-        public PlayerStatisticsData Statistics { get; private set; }
-
-        /// <summary>
         /// Get messenger
         /// </summary>
         public Messenger Messenger { get; private set; }
@@ -58,6 +54,11 @@ namespace Kurkku.Game
         /// Get entity data
         /// </summary>
         public PlayerData Details => m_PlayerData;
+
+        /// <summary>
+        /// Get player settings
+        /// </summary>
+        public PlayerSettingsData Settings => m_Settings;
 
         /// <summary>
         /// Get room player
@@ -81,10 +82,7 @@ namespace Kurkku.Game
         public Player(ConnectionSession connectionSession)
         {
             Connection = connectionSession;
-
             RoomEntity = new RoomPlayer(this);
-            Statistics = new PlayerStatisticsData();
-            
             m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Connection {connectionSession.Channel.Id}");
         }
 
@@ -105,6 +103,9 @@ namespace Kurkku.Game
                 return false;
 
             m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Player {m_PlayerData.Name}");
+            m_Log.Debug($"Player {m_PlayerData.Name} has logged in");
+
+            UserSettingsDao.CreateOrUpdate(out m_Settings, m_PlayerData.Id);
 
             m_PlayerData.PreviousLastOnline = m_PlayerData.LastOnline;
             m_PlayerData.LastOnline = DateTime.Now;

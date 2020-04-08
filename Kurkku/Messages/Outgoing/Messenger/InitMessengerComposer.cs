@@ -44,7 +44,7 @@ namespace Kurkku.Messages.Outoing
                 m_Data.Add(friend.PlayerData.Name);
                 m_Data.Add(1);
                 m_Data.Add(friend.IsOnline);
-                m_Data.Add(friend.InRoom);
+                m_Data.Add(friend.Player != null ? (friend.Player.Settings.FollowingEnabled && friend.InRoom) : false);
                 m_Data.Add(friend.PlayerData.Figure);
                 m_Data.Add(0); // category id
                 m_Data.Add(friend.PlayerData.Motto); // motto
