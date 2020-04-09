@@ -3,7 +3,7 @@ using Kurkku.Game;
 using Kurkku.Messages.Headers;
 using Kurkku.Storage.Database.Data;
 
-namespace Kurkku.Messages.Outoing
+namespace Kurkku.Messages.Outgoing
 {
     internal class InitMessengerComposer : MessageComposer
     {
@@ -23,10 +23,11 @@ namespace Kurkku.Messages.Outoing
 
         public override void Write()
         {
-            m_Data.Add(900);
-            m_Data.Add(600);
-            m_Data.Add(500);
-            m_Data.Add(400);
+            // See https://habbo.fandom.com/wiki/Benefits_of_VIP
+            m_Data.Add(300);
+            m_Data.Add(0); // HC            _SafeStr_10476():int
+            m_Data.Add(600); // HC limit         _SafeStr_10477():int
+            m_Data.Add(1100); // VIP limit        _local_2._SafeStr_10478
             m_Data.Add(categories.Count);
 
             int i = 1;

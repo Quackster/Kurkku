@@ -54,6 +54,23 @@ namespace Kurkku
             {
                 tryDatabaseConnection();
 
+                using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+                {
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        var subscription = new SubscriptionData
+                        {
+                            UserId = 1,
+                            Type = SubscriptionType.VIP,
+                            ExpireDate = DateTime.Now,
+                            SubscribedDate = DateTime.Now
+                        };
+
+                        session.SaveOrUpdate(subscription);
+                        transaction.Commit();
+                    }
+                }
+
                 /*using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
                 {
                     using (var transaction = session.BeginTransaction())

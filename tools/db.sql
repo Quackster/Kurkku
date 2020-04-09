@@ -86,6 +86,19 @@ INSERT INTO `user_settings` (`user_id`, `daily_respect_points`, `daily_respect_p
 	(1, 0, 0, 0, 1, 1);
 /*!40000 ALTER TABLE `user_settings` ENABLE KEYS */;
 
+CREATE TABLE IF NOT EXISTS `user_subscriptions` (
+  `user_id` int(11) NOT NULL,
+  `subscription_type` enum('HC','VIP') NOT NULL,
+  `subscribed_at` datetime NOT NULL,
+  `expire_at` datetime NOT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*!40000 ALTER TABLE `user_subscriptions` DISABLE KEYS */;
+INSERT INTO `user_subscriptions` (`user_id`, `subscription_type`, `subscribed_at`, `expire_at`) VALUES
+	(1, 'VIP', '2020-04-10 04:05:48', '2020-04-10 04:05:48');
+/*!40000 ALTER TABLE `user_subscriptions` ENABLE KEYS */;
+
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

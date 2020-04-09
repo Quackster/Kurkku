@@ -3,7 +3,7 @@ using Kurkku.Game;
 using Kurkku.Messages.Headers;
 using Kurkku.Storage.Database.Data;
 
-namespace Kurkku.Messages.Outoing
+namespace Kurkku.Messages.Outgoing
 {
     internal class UpdateMessengerComposer : MessageComposer
     {

@@ -18,5 +18,6 @@ namespace Kurkku.Messages.Headers
         public static readonly short WelcomeUserComposer = 2933;
         public static readonly short UpdateMessengerComposer = 1710;
         public static readonly short SearchMessengerComposer = 1788;
+        public static readonly short MessengerRequestErrorComposer = 622;
     }
 }

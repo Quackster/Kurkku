@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Kurkku.Messages.Incoming.Messenger
+namespace Kurkku.Messages.Incoming
 {
     class BlankMessageEvent : MessageEvent
     {

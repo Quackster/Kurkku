@@ -1,5 +1,5 @@
 ﻿using Kurkku.Game;
-using Kurkku.Messages.Outoing;
+using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
 
 namespace Kurkku.Messages.Incoming

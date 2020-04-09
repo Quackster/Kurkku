@@ -1,4 +1,4 @@
-﻿using Kurkku.Messages.Outoing;
+﻿using Kurkku.Messages.Outgoing;
 using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
 using Kurkku.Util.Extensions;
@@ -10,6 +10,12 @@ namespace Kurkku.Game
 {
     public class Messenger
     {
+        #region Fields
+
+        private SubscriptionData m_Subscription;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -33,9 +39,28 @@ namespace Kurkku.Game
         public ConcurrentQueue<MessengerUpdate> Queue { get; private set; }
 
         /// <summary>
+        /// Get the maximum friends allowed
+        /// </summary>
+        public int MaxFriendsAllowed
+        {
+            get
+            {
+                if (m_Subscription == null)
+                    return 300;
+
+                return m_Subscription.Type == SubscriptionType.HC ? 600 : 1100;
+            }
+        }
+
+        /// <summary>
         /// Get the player for this messenger instance
         /// </summary>
         public Player Player { get; set; }
+
+        /// <summary>
+        /// Get whether friend requests are enabled
+        /// </summary>
+        public bool FriendRequestsEnabled { get; set; }
 
         /// <summary>
         /// Get the player as messenger user
@@ -50,6 +75,40 @@ namespace Kurkku.Game
         public Messenger(Player player)
         {
             Player = player;
+            m_Subscription = player.Subscription;
+            FriendRequestsEnabled = player.Settings.FriendRequestsEnabled;
+
+            Friends = MessengerDao.GetFriends(Player.Details.Id).Select(data => Wrap(data.FriendData)).ToList();
+            Requests = MessengerDao.GetRequests(Player.Details.Id).Select(data => Wrap(data.FriendData)).ToList();
+            Categories = MessengerDao.GetCategories(Player.Details.Id);
+
+            Queue = new ConcurrentQueue<MessengerUpdate>();
+        }
+
+        #endregion
+
+        #region Static methods
+
+        public static Messenger GetMessengerData(int userId)
+        {
+            var player = PlayerManager.Instance.GetPlayerById(userId);
+
+            if (player != null)
+                return player.Messenger;
+
+            return new Messenger(userId);
+        }
+
+        #endregion
+
+        #region Methods
+
+        public Messenger(int userId)
+        {
+            Player = null;
+
+            m_Subscription = SubscriptionDao.GetSubscription(userId);
+            FriendRequestsEnabled = MessengerDao.GetAcceptsFriendRequests(userId);
 
             Friends = MessengerDao.GetFriends(Player.Details.Id).Select(data => Wrap(data.FriendData)).ToList();
             Requests = MessengerDao.GetRequests(Player.Details.Id).Select(data => Wrap(data.FriendData)).ToList();

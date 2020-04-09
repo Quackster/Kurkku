@@ -51,6 +51,25 @@ namespace Kurkku.Game
         public Messenger Messenger { get; private set; }
 
         /// <summary>
+        /// Get subscription data
+        /// </summary>
+        public SubscriptionData Subscription { get; private set; }
+
+        /// <summary>
+        /// Get whether has subscription data
+        /// </summary>
+        public bool IsSubscribed
+        {
+            get
+            {
+                if (Subscription == null)
+                    return false;
+
+                return DateTime.Now > Subscription.ExpireDate;
+            }
+        }
+
+        /// <summary>
         /// Get entity data
         /// </summary>
         public PlayerData Details => m_PlayerData;
@@ -106,18 +125,20 @@ namespace Kurkku.Game
             m_Log.Debug($"Player {m_PlayerData.Name} has logged in");
 
             UserSettingsDao.CreateOrUpdate(out m_Settings, m_PlayerData.Id);
+            PlayerManager.Instance.AddPlayer(this);
 
             m_PlayerData.PreviousLastOnline = m_PlayerData.LastOnline;
             m_PlayerData.LastOnline = DateTime.Now;
             UserDao.Update(m_PlayerData);
 
-            PlayerManager.Instance.AddPlayer(this);
-            Authenticated = true;
+            Subscription = SubscriptionDao.GetSubscription(m_PlayerData.Id);
 
             Messenger = new Messenger(this);
             Messenger.SendStatus();
 
             Send(new AuthenticationOKComposer());
+
+
             return true;
         }
 
