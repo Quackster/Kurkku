@@ -57,6 +57,7 @@ namespace Kurkku.Messages
             m_Events[IncomingEvents.AcceptRequestsMessageEvent] = new AcceptRequestsMessageEvent();
             m_Events[IncomingEvents.DeclineRequestMessageEvent] = new DeclineRequestMessageEvent();
             m_Events[IncomingEvents.RemoveFriendMessageEvent] = new RemoveFriendMessageEvent();
+            m_Events[IncomingEvents.InstantChatMessageEvent] = new InstantChatMessageEvent();
         }
 
         /// <summary>
