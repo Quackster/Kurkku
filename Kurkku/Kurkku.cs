@@ -53,45 +53,6 @@ namespace Kurkku
             try
             {
                 tryDatabaseConnection();
-
-                using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
-                {
-                    using (var transaction = session.BeginTransaction())
-                    {
-                        var subscription = new SubscriptionData
-                        {
-                            UserId = 1,
-                            Type = SubscriptionType.VIP,
-                            ExpireDate = DateTime.Now,
-                            SubscribedDate = DateTime.Now
-                        };
-
-                        session.SaveOrUpdate(subscription);
-                        transaction.Commit();
-                    }
-                }
-
-                /*using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
-                {
-                    using (var transaction = session.BeginTransaction())
-                    {
-                        var random = new Random();
-
-                        for (int i = 0; i < 50; i++)
-                        {
-                            var test = new TestData
-                            {
-                                Id = i + 1,
-                                Test = Convert.ToString(random.Next())
-                            };
-
-                            session.SaveOrUpdate(test);
-                        }
-
-                        transaction.Commit();
-                    }
-                }*/
-
                 tryCreateServer();
             }
             catch (Exception ex)

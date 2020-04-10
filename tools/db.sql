@@ -66,8 +66,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `pixels`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 2000, 0, '123', '2020-03-29 18:20:03', '2020-04-08 21:43:54'),
-	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '456', '2020-03-29 20:47:31', '2020-04-08 17:34:58'),
+	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 2000, 0, '123', '2020-03-29 18:20:03', '2020-04-10 14:00:40'),
+	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '456', '2020-03-29 20:47:31', '2020-04-10 13:48:40'),
 	(3, 'Test123', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '789', '2020-03-29 20:47:31', '2020-03-29 20:47:31');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
@@ -83,7 +83,9 @@ CREATE TABLE IF NOT EXISTS `user_settings` (
 
 /*!40000 ALTER TABLE `user_settings` DISABLE KEYS */;
 INSERT INTO `user_settings` (`user_id`, `daily_respect_points`, `daily_respect_pet_points`, `respect_points`, `friend_requests_enabled`, `following_enabled`) VALUES
-	(1, 0, 0, 0, 1, 1);
+	(1, 0, 0, 0, 1, 1),
+	(2, 0, 0, 0, 1, 1),
+	(3, 0, 0, 0, 0, 1);
 /*!40000 ALTER TABLE `user_settings` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_subscriptions` (
@@ -96,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `user_subscriptions` (
 
 /*!40000 ALTER TABLE `user_subscriptions` DISABLE KEYS */;
 INSERT INTO `user_subscriptions` (`user_id`, `subscription_type`, `subscribed_at`, `expire_at`) VALUES
-	(1, 'VIP', '2020-04-10 04:05:48', '2020-04-10 04:05:48');
+	(1, 'VIP', '2020-04-10 14:00:31', '2020-04-10 14:00:31');
 /*!40000 ALTER TABLE `user_subscriptions` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
