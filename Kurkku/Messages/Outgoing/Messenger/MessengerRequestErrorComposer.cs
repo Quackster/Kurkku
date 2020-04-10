@@ -19,6 +19,7 @@ namespace Kurkku.Messages.Outgoing
 
         public override void Write()
         {
+            m_Data.Add((int)messageRequestError); // error code if enum error specified wasn't found by client
             m_Data.Add((int)messageRequestError);
         }
     }
