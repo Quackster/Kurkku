@@ -24,5 +24,13 @@ namespace Kurkku.Util.Extensions
 
             return str;
         }
+
+        /// <summary>
+        /// Get if string is numeric
+        /// </summary>
+        public static bool IsNumeric(this string str)
+        {
+            return int.TryParse(str, out _);
+        }
     }
 }

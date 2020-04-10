@@ -7,6 +7,10 @@ namespace Kurkku.Messages.Outgoing
 {
     internal class InitMessengerComposer : MessageComposer
     {
+        private int maxNormalFriends;
+        private int maxHCFriends;
+        private int maxVIPFriends;
+
         private List<MessengerCategoryData> categories;
         private List<MessengerUser> friends;
 
@@ -15,8 +19,12 @@ namespace Kurkku.Messages.Outgoing
             get { return OutgoingEvents.InitMessengerComposer; }
         }
 
-        public InitMessengerComposer(List<MessengerCategoryData> categories, List<MessengerUser> friends)
+        public InitMessengerComposer(int maxNormalFriends, int maxHCFriends, int maxVIPFriends, List<MessengerCategoryData> categories, List<MessengerUser> friends)
         {
+            this.maxNormalFriends = maxNormalFriends;
+            this.maxHCFriends = maxHCFriends;
+            this.maxVIPFriends = maxVIPFriends;
+
             this.categories = categories;
             this.friends = friends;
         }
@@ -24,10 +32,10 @@ namespace Kurkku.Messages.Outgoing
         public override void Write()
         {
             // See https://habbo.fandom.com/wiki/Benefits_of_VIP
-            m_Data.Add(300);
-            m_Data.Add(0); // HC            _SafeStr_10476():int
-            m_Data.Add(600); // HC limit         _SafeStr_10477():int
-            m_Data.Add(1100); // VIP limit        _local_2._SafeStr_10478
+            m_Data.Add(maxNormalFriends); // HC            _SafeStr_10476():int
+            m_Data.Add(0);
+            m_Data.Add(maxHCFriends); // HC limit         _SafeStr_10477():int
+            m_Data.Add(maxVIPFriends); // VIP limit        _local_2._SafeStr_10478
             m_Data.Add(categories.Count);
 
             int i = 1;

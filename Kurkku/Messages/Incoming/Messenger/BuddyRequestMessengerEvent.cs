@@ -19,8 +19,6 @@ namespace Kurkku.Messages.Incoming
             if (targetMessenger == null)
                 return;
 
-            //bool acceptsFriendRequests = MessengerDao.GetAcceptsFriendRequests(userId);
-
             if (!targetMessenger.FriendRequestsEnabled)
             {
                 player.Send(new MessengerRequestErrorComposer(MessengerRequestError.FriendRequestsDisabled));
@@ -33,7 +31,7 @@ namespace Kurkku.Messages.Incoming
                 return;
             }
 
-            //var userSettings = UserSettingsDao.GetById(UserDao.GetByName(request.ReadString()));
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
+using Kurkku.Util.Extensions;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,8 +65,8 @@ namespace Kurkku.Game
         /// <param name="player">remove the player</param>
         public void RemovePlayer(Player player)
         {
-            PlayerIds.Remove(player.EntityData.Id, out _);
-            PlayerNames.Remove(player.EntityData.Name.ToLower(), out _);
+            PlayerIds.Remove(player.EntityData.Id);
+            PlayerNames.Remove(player.EntityData.Name.ToLower());
         }
 
         /// <summary>
@@ -75,14 +76,7 @@ namespace Kurkku.Game
         /// <returns></returns>
         public Player GetPlayerByName(string username)
         {
-            if (PlayerNames.ContainsKey(username.ToLower()))
-            {
-                Player player;
-                PlayerNames.TryGetValue(username.ToLower(), out player);
-                return player;
-            }
-
-            return null;
+            return PlayerNames.TryGetValue(username.ToLower(), out var player) ? player : null;
         }
 
         /// <summary>
@@ -92,14 +86,7 @@ namespace Kurkku.Game
         /// <returns></returns>
         public Player GetPlayerById(int id)
         {
-            if (PlayerIds.ContainsKey(id))
-            {
-                Player player;
-                PlayerIds.TryGetValue(id, out player);
-                return player;
-            }
-
-            return null;
+            return PlayerIds.TryGetValue(id, out var player) ? player : null;
         }
 
         /// <summary>

@@ -9,6 +9,9 @@ namespace Kurkku.Messages.Incoming
         public void Handle(Player player, Request request)
         {
             player.Send(new InitMessengerComposer(
+                ValueManager.Instance.GetInt("max.friends.normal"),
+                ValueManager.Instance.GetInt("max.friends.hc"),
+                ValueManager.Instance.GetInt("max.friends.vip"),
                 player.Messenger.Categories, 
                 player.Messenger.Friends
             ));

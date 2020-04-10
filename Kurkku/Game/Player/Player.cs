@@ -136,9 +136,9 @@ namespace Kurkku.Game
             Messenger = new Messenger(this);
             Messenger.SendStatus();
 
+            Authenticated = true;
+
             Send(new AuthenticationOKComposer());
-
-
             return true;
         }
 

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Kurkku.Util.Extensions
 {
-    public static class ConcurrentQueue
+    public static class ConcurrentQueueExtensions
     {
         /// <summary>
         /// Drain to a list
