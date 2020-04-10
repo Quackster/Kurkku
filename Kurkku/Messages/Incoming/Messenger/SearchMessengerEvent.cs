@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Kurkku.Messages.Incoming
 {
-    class SearchMessengerEvent : MessageEvent
+    class SearchMessageEvent : MessageEvent
     {
         public void Handle(Player player, Request request)
         {

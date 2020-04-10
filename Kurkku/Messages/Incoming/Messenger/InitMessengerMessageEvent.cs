@@ -15,6 +15,8 @@ namespace Kurkku.Messages.Incoming
                 player.Messenger.Categories, 
                 player.Messenger.Friends
             ));
+
+            player.Send(new MessengerRequestsComposer(player.Messenger.Requests));
         }
     }
 }

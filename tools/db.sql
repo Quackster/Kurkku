@@ -32,9 +32,6 @@ CREATE TABLE IF NOT EXISTS `messenger_friend` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `messenger_friend` DISABLE KEYS */;
-INSERT INTO `messenger_friend` (`user_id`, `friend_id`) VALUES
-	(1, 2),
-	(2, 1);
 /*!40000 ALTER TABLE `messenger_friend` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `messenger_request` (
@@ -43,11 +40,6 @@ CREATE TABLE IF NOT EXISTS `messenger_request` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `messenger_request` DISABLE KEYS */;
-INSERT INTO `messenger_request` (`user_id`, `friend_id`) VALUES
-	(2, 1),
-	(3, 1),
-	(1, 1),
-	(1, 4);
 /*!40000 ALTER TABLE `messenger_request` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user` (
@@ -66,9 +58,9 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `pixels`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 2000, 0, '123', '2020-03-29 18:20:03', '2020-04-10 14:00:40'),
-	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '456', '2020-03-29 20:47:31', '2020-04-10 13:48:40'),
-	(3, 'Test123', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '789', '2020-03-29 20:47:31', '2020-03-29 20:47:31');
+	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 2000, 0, '123', '2020-03-29 18:20:03', '2020-04-10 21:28:34'),
+	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '456', '2020-03-29 20:47:31', '2020-04-10 21:29:27'),
+	(3, 'Test123', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '789', '2020-03-29 20:47:31', '2020-04-10 20:37:28');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_settings` (
@@ -85,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `user_settings` (
 INSERT INTO `user_settings` (`user_id`, `daily_respect_points`, `daily_respect_pet_points`, `respect_points`, `friend_requests_enabled`, `following_enabled`) VALUES
 	(1, 0, 0, 0, 1, 1),
 	(2, 0, 0, 0, 1, 1),
-	(3, 0, 0, 0, 0, 1);
+	(3, 0, 0, 0, 1, 1);
 /*!40000 ALTER TABLE `user_settings` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_subscriptions` (

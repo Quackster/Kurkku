@@ -15,5 +15,8 @@ namespace Kurkku.Messages.Headers
         public static readonly short UserInfoMessageEvent = 2671;
         public static readonly short SearchMessengerEvent = 1903;
         public static readonly short BuddyRequestMessengerEvent = 202;
+        public static readonly short AcceptRequestsMessageEvent = 3528;
+        public static readonly short DeclineRequestMessageEvent = 1752;
+        public static readonly short RemoveFriendMessageEvent = 3055;
     }
 }

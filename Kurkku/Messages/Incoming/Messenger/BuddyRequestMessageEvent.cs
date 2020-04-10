@@ -1,11 +1,13 @@
 ﻿using Kurkku.Game;
 using Kurkku.Messages.Outgoing;
+using Kurkku.Messages.Outgoing.Messenger;
 using Kurkku.Network.Streams;
 using Kurkku.Storage.Database.Access;
+using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Messages.Incoming
 {
-    class BuddyRequestMessengerEvent : MessageEvent
+    class BuddyRequestMessageEvent : MessageEvent
     {
         public void Handle(Player player, Request request)
         {
@@ -15,8 +17,11 @@ namespace Kurkku.Messages.Incoming
                 return;
 
             var targetMessenger = Messenger.GetMessengerData(userId);
+            var targetPlayer = PlayerManager.Instance.GetPlayerById(userId);
 
-            if (targetMessenger == null)
+            if (targetMessenger == null || 
+                targetMessenger.HasFriend(player.Details.Id) || 
+                targetMessenger.HasRequest(player.Details.Id))
                 return;
 
             if (!targetMessenger.FriendRequestsEnabled)
@@ -31,7 +36,18 @@ namespace Kurkku.Messages.Incoming
                 return;
             }
 
+            var messengerRequest = new MessengerRequestData
+            {
+                FriendId = player.Details.Id,
+                UserId = userId
+            };
 
+            MessengerDao.SaveRequest(messengerRequest);
+
+            targetMessenger.Requests.Add(player.Messenger.MessengerUser);
+
+            if (targetPlayer != null)
+                targetPlayer.Send(new MessengerRequestComposer(player.Details));
         }
     }
 }

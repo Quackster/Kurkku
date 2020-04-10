@@ -52,8 +52,11 @@ namespace Kurkku.Messages
         private void registerMessenger()
         {
             m_Events[IncomingEvents.InitMessengerMessageEvent] = new InitMessengerMessageEvent();
-            m_Events[IncomingEvents.SearchMessengerEvent] = new SearchMessengerEvent();
-            m_Events[IncomingEvents.BuddyRequestMessengerEvent] = new BuddyRequestMessengerEvent();
+            m_Events[IncomingEvents.SearchMessengerEvent] = new SearchMessageEvent();
+            m_Events[IncomingEvents.BuddyRequestMessengerEvent] = new BuddyRequestMessageEvent();
+            m_Events[IncomingEvents.AcceptRequestsMessageEvent] = new AcceptRequestsMessageEvent();
+            m_Events[IncomingEvents.DeclineRequestMessageEvent] = new DeclineRequestMessageEvent();
+            m_Events[IncomingEvents.RemoveFriendMessageEvent] = new RemoveFriendMessageEvent();
         }
 
         /// <summary>

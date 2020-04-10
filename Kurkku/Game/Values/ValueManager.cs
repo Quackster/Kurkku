@@ -9,13 +9,11 @@ namespace Kurkku.Game
 
         public static readonly ValueManager Instance = new ValueManager();
 
-        private Dictionary<string, string> _clientValues;
-
         #endregion
 
         #region Properties
 
-        public Dictionary<string, string> ClientValues
+        private Dictionary<string, string> ClientValues
         {
             get; set;
         }

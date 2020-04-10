@@ -22,17 +22,17 @@ namespace Kurkku.Game
         /// <summary>
         /// Get friend requests
         /// </summary>
-        public List<MessengerUser> Requests { get; set; }
+        public List<MessengerUser> Requests { get; private set; }
 
         /// <summary>
         /// Get friends
         /// </summary>
-        public List<MessengerUser> Friends { get; set; }
+        public List<MessengerUser> Friends { get; private set; }
 
         /// <summary>
         /// Get categories
         /// </summary>
-        public List<MessengerCategoryData> Categories { get; set; }
+        public List<MessengerCategoryData> Categories { get; private set; }
 
         /// <summary>
         /// Get concurrent messenger update queue
@@ -119,6 +119,7 @@ namespace Kurkku.Game
             Queue = new ConcurrentQueue<MessengerUpdate>();
         }
 
+
         /// <summary>
         /// Wrapper around messenger user data
         /// </summary>
@@ -169,6 +170,22 @@ namespace Kurkku.Game
 
             if (messengerUpdates.Count > 0)
                 Player.Send(new UpdateMessengerComposer(Categories, messengerUpdates));
+        }
+
+        /// <summary>
+        /// Remove friend by user id
+        /// </summary>
+        public void RemoveFriend(int id)
+        {
+            Friends.RemoveAll(x => x.PlayerData.Id == id);
+        }
+
+        /// <summary>
+        /// Remove request by user id
+        /// </summary>
+        public void RemoveRequest(int id)
+        {
+            Requests.RemoveAll(x => x.PlayerData.Id == id);
         }
 
         /// <summary>

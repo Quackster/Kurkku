@@ -16,10 +16,12 @@ namespace Kurkku.Storage.Database.Data
                 .KeyProperty(x => x.UserId, "user_id")
                 .KeyProperty(x => x.FriendId, "friend_id");
 
-            Map(x => x.UserId, "user_id");
-            Map(x => x.FriendId, "friend_id");
+            Map(x => x.UserId, "user_id").Generated.Insert();
+            Map(x => x.FriendId, "friend_id").Generated.Insert();
 
-            References(x => x.FriendData, "friend_id").Not.Nullable();
+            References(x => x.FriendData, "friend_id")
+                .ReadOnly()
+                .Cascade.None();
         }
     }
 

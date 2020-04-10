@@ -17,7 +17,8 @@
             if (t == null)
                 return false;
 
-            if (FriendId == t.FriendId && UserId == t.UserId && t.FriendData != null && t.FriendData.Id == FriendId)
+            if (FriendId == t.FriendId && 
+                UserId == t.UserId)
                 return true;
 
             return false;

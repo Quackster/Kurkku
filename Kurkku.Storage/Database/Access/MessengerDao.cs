@@ -5,11 +5,16 @@ using NHibernate.Linq;
 using NHibernate.SqlCommand;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Kurkku.Storage.Database.Access
 {
     public class MessengerDao
     {
+        /// <summary>
+        /// Search messenger for names starting with the query
+        /// </summary>
+        /// <returns></returns>
         public static List<PlayerData> SearchMessenger(string query, int ignoreUserId)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
@@ -17,7 +22,7 @@ namespace Kurkku.Storage.Database.Access
                 PlayerData playerDataAlias = null;
 
                 return session.QueryOver<PlayerData>(() => playerDataAlias)
-                                        //.Where(Restrictions.On<PlayerData>(x => x.Name).IsInsensitiveLike(query, MatchMode.Start))
+                    //.Where(Restrictions.On<PlayerData>(x => x.Name).IsInsensitiveLike(query, MatchMode.Start))
                     .WhereRestrictionOn(() => playerDataAlias.Name).IsLike(query, MatchMode.Start)
                     .And(() => playerDataAlias.Id != ignoreUserId)
                     .Take(30)
@@ -25,6 +30,9 @@ namespace Kurkku.Storage.Database.Access
             }
         }
 
+        /// <summary>
+        /// Get the requests for the user
+        /// </summary>
         public static List<MessengerRequestData> GetRequests(int userId)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
@@ -39,6 +47,9 @@ namespace Kurkku.Storage.Database.Access
             }
         }
 
+        /// <summary>
+        /// Get the friends for the user
+        /// </summary>
         public static List<MessengerFriendData> GetFriends(int userId)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
@@ -53,6 +64,9 @@ namespace Kurkku.Storage.Database.Access
             }
         }
 
+        /// <summary>
+        /// Get the messenger categories for the user
+        /// </summary>
         public static List<MessengerCategoryData> GetCategories(int userId)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
@@ -65,6 +79,9 @@ namespace Kurkku.Storage.Database.Access
             }
         }
 
+        /// <summary>
+        /// Get if the user supports friend requests
+        /// </summary>
         public static bool GetAcceptsFriendRequests(int userId)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
@@ -78,5 +95,92 @@ namespace Kurkku.Storage.Database.Access
                     .List().Count > 0;
             }
         }
+
+        /// <summary>
+        /// Deletes friend requests
+        /// </summary>
+        public static void DeleteRequests(int userId, int friendId)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                session.Query<MessengerRequestData>().Where(x => 
+                    (x.FriendId == friendId && x.UserId == userId) || 
+                    (x.FriendId == userId && x.UserId == friendId))
+                .Delete();
+            }
+        }
+
+        /// <summary>
+        /// Delete all requests by user id
+        /// </summary>
+        public static void DeleteAllRequests(int userId)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                session.Query<MessengerRequestData>().Where(x =>
+                    (x.FriendId == userId || x.UserId == userId))
+                .Delete();
+            }
+        }
+
+        /// <summary>
+        /// Deletes friends
+        /// </summary>
+        public static void DeleteFriends(int userId, int friendId)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                session.Query<MessengerFriendData>().Where(x =>
+                    (x.FriendId == friendId && x.UserId == userId) ||
+                    (x.FriendId == userId && x.UserId == friendId))
+                .Delete();
+            }
+        }
+
+        /// <summary>
+        /// Save a request
+        /// </summary>
+        public static void SaveRequest(MessengerRequestData messengerRequestData)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    try
+                    {
+                        session.Save(messengerRequestData);
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Save a request
+        /// </summary>
+        public static void SaveFriend(MessengerFriendData messengerFriendData)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    try
+                    {
+                        session.Save(messengerFriendData);
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
+        }
+
+
     }
 }
