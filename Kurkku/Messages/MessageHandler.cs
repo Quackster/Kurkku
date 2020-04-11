@@ -31,6 +31,7 @@ namespace Kurkku.Messages
             registerHandshake();
             registerMessenger();
             registerUser();
+            registerNavigator();
         }
 
 
@@ -67,6 +68,14 @@ namespace Kurkku.Messages
         {
             m_Events[IncomingEvents.LandingViewMessageEvent] = new LandingViewMessageEvent();
             m_Events[IncomingEvents.UserInfoMessageEvent] = new UserInfoMessageEvent();
+        }
+
+        /// <summary>
+        /// Register navigator packets
+        /// </summary>
+        private void registerNavigator()
+        {
+            m_Events[IncomingEvents.PublicItemsMessengerEvent] = new PublicItemsMessengerEvent();
         }
 
         #endregion

@@ -23,5 +23,6 @@ namespace Kurkku.Messages.Headers
         public static readonly short MessengerRequestsComposer = 3540;
         public static readonly short InstantChatComposer = 2747;
         public static readonly short InstantChatErrorComposer = 3945;
+        public static readonly short PublicItemsComposer = 1969;
     }
 }
