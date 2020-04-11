@@ -35,6 +35,9 @@ namespace Kurkku.Messages.Incoming
                 targetMessenger.Friends.Add(messenger.MessengerUser);
                 messenger.Friends.Add(targetFriend);
 
+                targetMessenger.RemoveRequest(player.Details.Id);
+                messenger.RemoveRequest(userId);
+
                 var targetPlayer = PlayerManager.Instance.GetPlayerById(userId);
 
                 if (targetPlayer != null) 
