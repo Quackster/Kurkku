@@ -20,6 +20,7 @@ namespace Kurkku.Messages.Headers
         public static readonly short RemoveFriendMessageEvent = 3055;
         public static readonly short InstantChatMessageEvent = 1582;
         public static readonly short OfficialRoomsMessageEvent = 1582;
-        public static readonly short PublicItemsMessengerEvent = 2603;
+        public static readonly short PublicItemsMessengerEvent = 3754;
+        public static readonly short UserFlatsMessengerEvent = 1904;
     }
 }
