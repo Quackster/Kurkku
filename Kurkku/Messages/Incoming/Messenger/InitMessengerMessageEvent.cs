@@ -1,6 +1,7 @@
 ﻿using Kurkku.Game;
 using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
+using Kurkku.Storage.Database.Access;
 
 namespace Kurkku.Messages.Incoming
 {
@@ -17,6 +18,16 @@ namespace Kurkku.Messages.Incoming
             ));
 
             player.Send(new MessengerRequestsComposer(player.Messenger.Requests));
+
+            var unreadMessages = MessengerDao.GetUneadMessages(player.Details.Id);
+
+            if (unreadMessages.Count > 0)
+            {
+                foreach (var unreadMessage in unreadMessages)
+                    player.Send(new InstantChatComposer(unreadMessage.FriendId, unreadMessage.Message));
+
+                MessengerDao.SetReadMessages(player.Details.Id);
+            }
         }
     }
 }

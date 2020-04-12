@@ -13,6 +13,7 @@ namespace Kurkku.Messages.Headers
         public static readonly short LandingViewMessageEvent = 839;
         public static readonly short InitMessengerMessageEvent = 3621;
         public static readonly short UserInfoMessageEvent = 2671;
+        public static readonly short UserInfoMessageEvent2 = 2671;
         public static readonly short SearchMessengerEvent = 1903;
         public static readonly short BuddyRequestMessengerEvent = 202;
         public static readonly short AcceptRequestsMessageEvent = 3528;

@@ -181,6 +181,48 @@ namespace Kurkku.Storage.Database.Access
             }
         }
 
+        /// <summary>
+        /// Save a message
+        /// </summary>
+        public static void SaveMessage(MessengerChatData messengerChatData)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    try
+                    {
+                        session.Save(messengerChatData);
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
+        }
 
+        /// <summary>
+        /// Deletes friend requests
+        /// </summary>
+        public static void SetReadMessages(int userId)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                session.Query<MessengerChatData>().Where(x => x.FriendId == userId && !x.IsRead).Update(x => new MessengerChatData { IsRead = true });
+            }
+        }
+
+        /// <summary>
+        /// Deletes friend requests
+        /// </summary>
+        public static List<MessengerChatData> GetUneadMessages(int userId)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                return session.QueryOver<MessengerChatData>().Where(x => x.FriendId == userId && !x.IsRead).List() as List<MessengerChatData>;
+            }
+        }
     }
 }

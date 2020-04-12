@@ -53,7 +53,7 @@ namespace Kurkku.Messages.Outgoing
                             m_Data.Add(1);
                             m_Data.Add(messengerUpdate.Friend.IsOnline);
                             m_Data.Add(messengerUpdate.Friend.InRoom);
-                            m_Data.Add(messengerUpdate.Friend.PlayerData.Figure);
+                            m_Data.Add(messengerUpdate.Friend.IsOnline ? messengerUpdate.Friend.PlayerData.Figure : "");
                             m_Data.Add(0); // category id
                             m_Data.Add(messengerUpdate.Friend.PlayerData.Motto); // motto
                             m_Data.Add(messengerUpdate.Friend.PlayerData.RealName); // real name
