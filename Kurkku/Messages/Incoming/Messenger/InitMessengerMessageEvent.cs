@@ -24,7 +24,7 @@ namespace Kurkku.Messages.Incoming
             if (unreadMessages.Count > 0)
             {
                 foreach (var unreadMessage in unreadMessages)
-                    player.Send(new InstantChatComposer(unreadMessage.FriendId, unreadMessage.Message));
+                    player.Send(new InstantChatComposer(unreadMessage.UserId, unreadMessage.Message));
 
                 MessengerDao.SetReadMessages(player.Details.Id);
             }
