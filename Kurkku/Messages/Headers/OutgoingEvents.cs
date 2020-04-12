@@ -24,5 +24,8 @@ namespace Kurkku.Messages.Headers
         public static readonly short InstantChatComposer = 2747;
         public static readonly short InstantChatErrorComposer = 3945;
         public static readonly short PublicItemsComposer = 1969;
+        public static readonly short FlatListComposer = 1019;
+        public static readonly short UserFlatCatsComposer = 224;
+        public static readonly short AvailabilityStatusComposer = 2326;
     }
 }

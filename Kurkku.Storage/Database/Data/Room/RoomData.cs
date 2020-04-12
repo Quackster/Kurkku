@@ -10,8 +10,10 @@ namespace Kurkku.Storage.Database.Data
         {
             Table("room");
             Id(x => x.Id, "id");
+            Map(x => x.OwnerId, "owner_id");
             Map(x => x.Name, "name");
             Map(x => x.Description, "description");
+            Map(x => x.CategoryId, "category_id");
             Map(x => x.Status, "status");
             Map(x => x.Password, "password");
             Map(x => x.Model, "model");
@@ -30,6 +32,11 @@ namespace Kurkku.Storage.Database.Data
                 .ReadOnly()
                 .Cascade.None()
                 .NotFound.Ignore();
+
+            References(x => x.Category, "category_id")
+                .ReadOnly()
+                .Cascade.None()
+                .NotFound.Ignore();
         }
     }
 
@@ -42,6 +49,7 @@ namespace Kurkku.Storage.Database.Data
         public virtual int OwnerId { get; set; }
         public virtual string Name { get; set; }
         public virtual string Description { get; set; }
+        public virtual int CategoryId { get; set; }
         public virtual RoomStatus Status { get; set; }
         public virtual string Password { get; set; }
         public virtual string Model { get; set; }
@@ -56,7 +64,7 @@ namespace Kurkku.Storage.Database.Data
         public virtual int WallThickness { get; set; }
         public virtual int FloorThickness { get; set; }
         public virtual PlayerData OwnerData { get; set; }
-        public virtual int Category => 1;
+        public virtual NavigatorCategoryData Category { get; set; }
 
         public virtual int Rating => 0;
 

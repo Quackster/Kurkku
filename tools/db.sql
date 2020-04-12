@@ -72,6 +72,7 @@ CREATE TABLE IF NOT EXISTS `room` (
   `owner_id` int(11) NOT NULL,
   `name` mediumtext NOT NULL,
   `description` mediumtext NOT NULL,
+  `category_id` int(11) NOT NULL DEFAULT 14,
   `status` enum('OPEN','CLOSED','PASSWORD') NOT NULL DEFAULT 'OPEN',
   `password` text NOT NULL DEFAULT '',
   `model` varchar(7) NOT NULL DEFAULT '',
@@ -89,10 +90,38 @@ CREATE TABLE IF NOT EXISTS `room` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
-INSERT INTO `room` (`id`, `owner_id`, `name`, `description`, `status`, `password`, `model`, `ccts`, `wallpaper`, `floor`, `landscape`, `allow_pets`, `allow_pets_eat`, `allow_walkthrough`, `hidewall`, `wall_thickness`, `floor_thickness`) VALUES
-	(1, 1, 'Sandbox', 'Sandbox testing', 'OPEN', '', 'model_a', '', '0', '0', '0', 1, 1, 0, 0, 1, 1),
-	(2, -1, 'Sandbox', 'Sandbox testing', 'OPEN', '', 'model_a', '', '0', '0', '0', 1, 1, 0, 0, 1, 1);
+INSERT INTO `room` (`id`, `owner_id`, `name`, `description`, `category_id`, `status`, `password`, `model`, `ccts`, `wallpaper`, `floor`, `landscape`, `allow_pets`, `allow_pets_eat`, `allow_walkthrough`, `hidewall`, `wall_thickness`, `floor_thickness`) VALUES
+	(1, -1, 'Sandbox', 'Sandbox testing', 1, 'OPEN', '', 'model_a', '', '0', '0', '0', 1, 1, 0, 0, 1, 1),
+	(2, 1, 'My Room', 'Sandbox testing', 5, 'OPEN', '', 'model_a', '', '0', '0', '0', 1, 1, 0, 0, 1, 1);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `room_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `caption` varchar(100) CHARACTER SET latin1 NOT NULL,
+  `enabled` tinyint(1) NOT NULL DEFAULT 1,
+  `min_rank` int(11) NOT NULL DEFAULT 1,
+  `trading_allowed` tinyint(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+
+/*!40000 ALTER TABLE `room_category` DISABLE KEYS */;
+INSERT INTO `room_category` (`id`, `caption`, `enabled`, `min_rank`, `trading_allowed`) VALUES
+	(1, 'Staff Rooms', 1, 4, 1),
+	(2, 'Competition Category', 1, 1, 1),
+	(3, 'unused competition category', 1, 1, 1),
+	(4, 'Themed & RPG Rooms', 1, 1, 0),
+	(5, 'Restaurant, Bar & Night Club Rooms', 1, 1, 0),
+	(6, 'Club & Group Rooms', 1, 1, 1),
+	(7, 'Chat, Chill & Discussion Rooms', 1, 1, 1),
+	(8, 'Maze & Theme Park Rooms', 1, 1, 1),
+	(9, 'Trading & Shopping Rooms', 1, 1, 1),
+	(10, 'Gaming & Race Rooms', 1, 1, 1),
+	(11, 'Hair Salons & Modelling Rooms', 1, 1, 0),
+	(12, 'Help Centre, Guide & Service Rooms', 1, 1, 0),
+	(13, 'School, Daycare & Adoption Rooms', 1, 1, 0),
+	(14, 'All Other Rooms', 1, 1, 1),
+	(15, 'No Category', 1, 1, 1);
+/*!40000 ALTER TABLE `room_category` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -110,8 +139,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `pixels`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 2000, 0, '123', '2020-03-29 18:20:03', '2020-04-11 22:59:25'),
-	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '456', '2020-03-29 20:47:31', '2020-04-11 22:59:52'),
+	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 2000, 0, '123', '2020-03-29 18:20:03', '2020-04-12 14:07:21'),
+	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '456', '2020-03-29 20:47:31', '2020-04-11 23:11:42'),
 	(3, 'Test123', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '789', '2020-03-29 20:47:31', '2020-04-10 20:37:28'),
 	(4, 'Test456', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '789', '2020-03-29 20:47:31', '2020-04-10 20:37:28');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;

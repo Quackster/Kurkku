@@ -9,11 +9,11 @@ using System.Linq;
 
 namespace Kurkku.Messages.Incoming
 {
-    class PublicItemsMessengerEvent : MessageEvent
+    class PublicItemsMessageEvent : MessageEvent
     {
         public void Handle(Player player, Request request)
         {
-            player.Send(new PublicItemsComposer(RoomDao.GetPublicItems()));
+            player.Send(new PublicItemsComposer(NavigatorDao.GetPublicItems()));
         }
     }
 }

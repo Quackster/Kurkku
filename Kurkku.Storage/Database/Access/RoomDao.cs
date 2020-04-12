@@ -8,21 +8,14 @@ namespace Kurkku.Storage.Database.Access
     {
 
         /// <summary>
-        /// Get list of public items
+        /// Get the list of users' own rooms
         /// </summary>
-        public static List<PublicItemData> GetPublicItems()
-        {
-            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
-            {
-                return session.QueryOver<PublicItemData>().List() as List<PublicItemData>;//.Where(x => x.Room != null).ToList();
-            }
-        }
-
         public static List<RoomData> GetUserRooms(int userId)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
-                return session.QueryOver<RoomData>().Where(x => x.OwnerId == userId).List() as List<RoomData>;
+                RoomData roomDataAlias = null;
+                return session.QueryOver<RoomData>(() => roomDataAlias).Where(() => roomDataAlias.OwnerId == userId).List() as List<RoomData>;
             }
         }
     }

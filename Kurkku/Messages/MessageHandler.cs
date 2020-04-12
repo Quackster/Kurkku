@@ -75,7 +75,9 @@ namespace Kurkku.Messages
         /// </summary>
         private void registerNavigator()
         {
-            m_Events[IncomingEvents.PublicItemsMessengerEvent] = new PublicItemsMessengerEvent();
+            m_Events[IncomingEvents.PublicItemsMessageEvent] = new PublicItemsMessageEvent();
+            m_Events[IncomingEvents.UserFlatsMessageEvent] = new UserFlatsMessageEvent();
+            m_Events[IncomingEvents.UserFlatsCatsMessageEvent] = new UserFlatCatsMessageEvent();
         }
 
         #endregion

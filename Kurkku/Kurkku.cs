@@ -53,7 +53,6 @@ namespace Kurkku
             try
             {
                 tryDatabaseConnection();
-                var items = RoomDao.GetPublicItems();
                 tryCreateServer();
             }
             catch (Exception ex)

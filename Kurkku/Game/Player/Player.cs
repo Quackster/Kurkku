@@ -139,6 +139,8 @@ namespace Kurkku.Game
             Authenticated = true;
 
             Send(new AuthenticationOKComposer());
+            Send(new AvailabilityStatusComposer());
+
             return true;
         }
 

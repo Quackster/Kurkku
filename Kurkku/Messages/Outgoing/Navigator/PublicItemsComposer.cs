@@ -51,7 +51,7 @@ namespace Kurkku.Messages.Outgoing
                 messageComposer.Data.Add(true); // is open
 
             if (publicItem.BannerType == BannerType.FLAT)
-                RoomInfoComposer.Compose(messageComposer, publicItem.Room, false);
+                RoomInfoComposer.Compose(messageComposer, publicItem.Room);
 
             if (publicItem.BannerType == BannerType.PUBLIC_FLAT)
             {
