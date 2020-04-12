@@ -13,7 +13,7 @@ namespace Kurkku.Messages.Incoming
     {
         public void Handle(Player player, Request request)
         {
-            player.Send(new PublicItemsComposer(PublicItemManager.Instance.GetFirstItems()));
+            player.Send(new PublicItemsComposer(RoomDao.GetPublicItems()));
         }
     }
 }

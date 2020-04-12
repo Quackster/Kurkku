@@ -9,14 +9,14 @@ namespace Kurkku.Messages.Outgoing
 {
     class PublicItemsComposer : MessageComposer
     {
-        public List<PublicItem> publicItems;
+        public List<PublicItemData> publicItems;
 
         public override short Header
         {
             get { return OutgoingEvents.PublicItemsComposer; }
         }
 
-        public PublicItemsComposer(List<PublicItem> publicItems)
+        public PublicItemsComposer(List<PublicItemData> publicItems)
         {
             this.publicItems = publicItems;
         }
@@ -32,35 +32,35 @@ namespace Kurkku.Messages.Outgoing
             m_Data.Add(0);
         }
         
-        public static void Compose(MessageComposer messageComposer, PublicItem publicItem)
+        public static void Compose(MessageComposer messageComposer, PublicItemData publicItem)
         {
-            messageComposer.Data.Add(publicItem.Data.BannerId);
-            messageComposer.Data.Add(publicItem.Data.BannerType != BannerType.PUBLIC_FLAT ? publicItem.Data.Label : string.Empty);
-            messageComposer.Data.Add(publicItem.Data.Description);
-            messageComposer.Data.Add((int)publicItem.Data.ImageType);
-            messageComposer.Data.Add(publicItem.Data.BannerType != BannerType.PUBLIC_FLAT ? publicItem.Data.Label : string.Empty);
-            messageComposer.Data.Add(publicItem.Data.Image);
-            messageComposer.Data.Add(publicItem.Data.ParentId);
-            messageComposer.Data.Add(publicItem.Data.Room != null ? publicItem.Data.Room.UsersNow : 0);
-            messageComposer.Data.Add((int)publicItem.Data.BannerType);
+            messageComposer.Data.Add(publicItem.BannerId);
+            messageComposer.Data.Add(publicItem.BannerType != BannerType.PUBLIC_FLAT ? publicItem.Label : string.Empty);
+            messageComposer.Data.Add(publicItem.Description);
+            messageComposer.Data.Add((int)publicItem.ImageType);
+            messageComposer.Data.Add(publicItem.BannerType != BannerType.PUBLIC_FLAT ? publicItem.Label : string.Empty);
+            messageComposer.Data.Add(publicItem.Image);
+            messageComposer.Data.Add(publicItem.ParentId);
+            messageComposer.Data.Add(publicItem.Room != null ? publicItem.Room.UsersNow : 0);
+            messageComposer.Data.Add((int)publicItem.BannerType);
 
-            if (publicItem.Data.BannerType == BannerType.TAG)
+            if (publicItem.BannerType == BannerType.TAG)
                 messageComposer.Data.Add(string.Empty); // Tag to search
 
-            if (publicItem.Data.BannerType == BannerType.CATEGORY)
+            if (publicItem.BannerType == BannerType.CATEGORY)
                 messageComposer.Data.Add(true); // is open
 
-            if (publicItem.Data.BannerType == BannerType.FLAT)
-                RoomInfoComposer.Compose(messageComposer, publicItem.Data.Room, false);
+            if (publicItem.BannerType == BannerType.FLAT)
+                RoomInfoComposer.Compose(messageComposer, publicItem.Room, false);
 
-            if (publicItem.Data.BannerType == BannerType.PUBLIC_FLAT)
+            if (publicItem.BannerType == BannerType.PUBLIC_FLAT)
             {
-                messageComposer.Data.Add(publicItem.Data.ImageType == ImageType.INTERNAL ? publicItem.Data.Image : "");
+                messageComposer.Data.Add(publicItem.ImageType == ImageType.INTERNAL ? publicItem.Image : "");
                 messageComposer.Data.Add(0);
                 messageComposer.Data.Add(0);
-                messageComposer.Data.Add(publicItem.Data.Room.Description);
-                messageComposer.Data.Add(publicItem.Data.Room.UsersMax);
-                messageComposer.Data.Add(publicItem.Data.Room.Id);
+                messageComposer.Data.Add(publicItem.Room.Description);
+                messageComposer.Data.Add(publicItem.Room.UsersMax);
+                messageComposer.Data.Add(publicItem.Room.Id);
             }
         }
     }
