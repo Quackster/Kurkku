@@ -24,5 +24,7 @@ namespace Kurkku.Messages.Headers
         public static readonly short PublicItemsMessageEvent = 3754;
         public static readonly short UserFlatsMessageEvent = 1907;
         public static readonly short UserFlatsCatsMessageEvent = 1272;
+        public static readonly short CanCreateRoomMessageEvent = 2274;
+        public static readonly short ScrGetUserInfoMessageEvent = 2999;
     }
 }

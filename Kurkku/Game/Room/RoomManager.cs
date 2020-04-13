@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
 using Kurkku.Util.Extensions;
 
 namespace Kurkku.Game
 {
-    public class RoomManager
+    public class RoomManager : ILoadable
     {
         #region Fields
 
@@ -18,6 +20,7 @@ namespace Kurkku.Game
         #region Properties
 
         public ConcurrentDictionary<int, Room> Rooms { get; private set; }
+        public List<RoomModel> RoomModels { get; private set; }
 
         #endregion
 
@@ -26,6 +29,11 @@ namespace Kurkku.Game
         public RoomManager()
         {
             Rooms = new ConcurrentDictionary<int, Room>();
+        }
+
+        public void Load()
+        {
+            RoomModels = RoomDao.GetModels().Select(x => new RoomModel(x)).ToList();
         }
 
         #endregion

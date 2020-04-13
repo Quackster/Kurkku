@@ -53,6 +53,7 @@ namespace Kurkku
             try
             {
                 tryDatabaseConnection();
+                tryGameData();
                 tryCreateServer();
             }
             catch (Exception ex)
@@ -76,6 +77,16 @@ namespace Kurkku
             log.Warn("Attempting to connect to MySQL database");
             SessionFactoryBuilder.Instance.InitialiseSessionFactory(ServerConfig.Instance.ConnectionString);
             log.Info("Connection using Fluid NHibernate is successful!");
+        }
+
+        /// <summary>
+        /// Load game data
+        /// </summary>
+        private static void tryGameData()
+        {
+            ValueManager.Instance.Load();
+            RoomManager.Instance.Load();
+            NavigatorManager.Instance.Load();
         }
 
         /// <summary>

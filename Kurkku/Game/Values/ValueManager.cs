@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Kurkku.Game
 {
-    public class ValueManager
+    public class ValueManager : ILoadable
     {
         #region Fields
 
@@ -22,7 +22,7 @@ namespace Kurkku.Game
 
         #region Constructors
 
-        public ValueManager()
+        public void Load()
         {
             SetDefaultValues();
         }
@@ -37,6 +37,8 @@ namespace Kurkku.Game
             ClientValues["max.friends.normal"] = "300";
             ClientValues["max.friends.hc"] = "600";
             ClientValues["max.friends.vip"] = "1100";
+            ClientValues["max.rooms.allowed"] = "100";
+            ClientValues["max.rooms.allowed.subscribed"] = "200";
         }
 
 

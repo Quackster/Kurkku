@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Kurkku.Game
 {
-    public class NavigatorManager
+    public class NavigatorManager : ILoadable
     {
         #region Fields
 
@@ -22,7 +22,7 @@ namespace Kurkku.Game
 
         #region Constructors
 
-        public NavigatorManager()
+        public void Load()
         {
             Categories = NavigatorDao.GetCategories();
         }

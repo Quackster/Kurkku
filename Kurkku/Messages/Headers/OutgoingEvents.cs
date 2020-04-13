@@ -27,5 +27,7 @@ namespace Kurkku.Messages.Headers
         public static readonly short FlatListComposer = 1019;
         public static readonly short UserFlatCatsComposer = 224;
         public static readonly short AvailabilityStatusComposer = 2326;
+        public static readonly short CanCreateRoomComposer = 3710;
+        public static readonly short ScrSendUserInfoComposer = 319;
     }
 }
