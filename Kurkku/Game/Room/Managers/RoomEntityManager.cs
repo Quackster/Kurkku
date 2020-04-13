@@ -9,13 +9,23 @@ namespace Kurkku.Game.Managers
 {
     public class RoomEntityManager
     {
+        #region Fields
+
         private Room room;
         private int instanceCounter;
+
+        #endregion
+
+        #region Constructors
 
         public RoomEntityManager(Room room)
         {
             this.room = room;
         }
+
+        #endregion
+
+        #region Private methods
 
         /// <summary>
         /// Generate instance ID for new entity that entered room
@@ -25,6 +35,13 @@ namespace Kurkku.Game.Managers
             return instanceCounter++;
         }
 
+        #endregion
+
+        #region Public methods
+
+        /// <summary>
+        /// Enter room handler, used when user clicks room to enter
+        /// </summary>
         public void EnterRoom(IEntity entity, Position entryPosition = null)
         {
             SilentlyEntityRoom(entity, entryPosition);
@@ -34,9 +51,11 @@ namespace Kurkku.Game.Managers
 
             player.Send(new RoomReadyComposer(room.Data.Model, room.Data.Id));
 
-
         }
 
+        /// <summary>
+        /// Silently enter room handler for every other entity type
+        /// </summary>
         public void SilentlyEntityRoom(IEntity entity, Position entryPosition = null)
         {
             if (entity.RoomEntity.Room != null)
@@ -62,6 +81,9 @@ namespace Kurkku.Game.Managers
             }
         }
 
+        /// <summary>
+        /// Leave room handler, called when user leaves room, clicks another room, re-enters room, and disconnects
+        /// </summary>
         public void LeaveRoom(IEntity entity, bool hotelView = false)
         {
             room.Entities.Remove(entity.RoomEntity.InstanceId);
@@ -78,5 +100,7 @@ namespace Kurkku.Game.Managers
                 player.Messenger.SendStatus();
             }
         }
+
+        #endregion
     }
 }
