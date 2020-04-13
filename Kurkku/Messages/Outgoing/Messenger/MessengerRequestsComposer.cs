@@ -6,6 +6,7 @@ namespace Kurkku.Messages.Outgoing
     public class MessengerRequestsComposer : IMessageComposer
     {
         private List<MessengerUser> requests;
+
         public MessengerRequestsComposer(List<MessengerUser> requests)
         {
             this.requests = requests;
