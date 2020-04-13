@@ -49,9 +49,11 @@ namespace Kurkku.Game
                 if (m_Subscription == null)
                     return ValueManager.Instance.GetInt("max.friends.normal");
 
-                return m_Subscription.Type == SubscriptionType.HC ?
+                /*return m_Subscription.Type == SubscriptionType.HC ?
                     ValueManager.Instance.GetInt("max.friends.hc") :
-                    ValueManager.Instance.GetInt("max.friends.vip");
+                    ValueManager.Instance.GetInt("max.friends.vip");*/
+
+                return ValueManager.Instance.GetInt("max.friends.hc");
             }
         }
 
