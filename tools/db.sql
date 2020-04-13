@@ -35,6 +35,10 @@ CREATE TABLE IF NOT EXISTS `messenger_chat_history` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `messenger_chat_history` DISABLE KEYS */;
+INSERT INTO `messenger_chat_history` (`user_id`, `friend_id`, `message`, `has_read`, `messaged_at`) VALUES
+	(1, 2, 'test', 1, '2020-04-13 14:45:21'),
+	(2, 1, 'hey bitch lol', 1, '2020-04-13 14:45:25'),
+	(2, 1, 'sup bish', 1, '2020-04-13 23:19:57');
 /*!40000 ALTER TABLE `messenger_chat_history` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `messenger_friend` (
@@ -47,7 +51,9 @@ INSERT INTO `messenger_friend` (`user_id`, `friend_id`) VALUES
 	(1, 3),
 	(3, 1),
 	(1, 4),
-	(4, 1);
+	(4, 1),
+	(1, 2),
+	(2, 1);
 /*!40000 ALTER TABLE `messenger_friend` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `messenger_request` (
@@ -71,9 +77,6 @@ CREATE TABLE IF NOT EXISTS `navigator_official_rooms` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `navigator_official_rooms` DISABLE KEYS */;
-INSERT INTO `navigator_official_rooms` (`banner_id`, `parent_id`, `banner_type`, `room_id`, `image_type`, `label`, `description`, `image_url`) VALUES
-	(1, 0, 'CATEGORY', 0, 'INTERNAL', 'Promoted Rooms', 'desc 1', 'officialrooms_hq/quest_aztec.png'),
-	(2, 1, 'FLAT', 1, 'EXTERNAL', 'Test 123', 'desc 2', 'officialrooms_hq/events_1.png');
 /*!40000 ALTER TABLE `navigator_official_rooms` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `room` (
@@ -88,23 +91,22 @@ CREATE TABLE IF NOT EXISTS `room` (
   `password` text NOT NULL DEFAULT '',
   `model` varchar(7) NOT NULL DEFAULT '',
   `ccts` text NOT NULL DEFAULT '',
-  `wallpaper` varchar(5) NOT NULL DEFAULT '0',
-  `floor` varchar(5) NOT NULL,
-  `landscape` varchar(5) NOT NULL DEFAULT '0',
+  `wallpaper` int(11) NOT NULL DEFAULT 0,
+  `floor` int(11) NOT NULL DEFAULT 0,
+  `landscape` int(11) NOT NULL DEFAULT 0,
   `rating` int(11) NOT NULL DEFAULT 0,
   `allow_pets` tinyint(1) NOT NULL DEFAULT 1,
   `allow_pets_eat` tinyint(1) NOT NULL DEFAULT 1,
   `allow_walkthrough` tinyint(1) NOT NULL DEFAULT 0,
   `hidewall` tinyint(1) NOT NULL DEFAULT 0,
-  `wall_thickness` tinyint(3) NOT NULL DEFAULT 1,
-  `floor_thickness` tinyint(3) NOT NULL DEFAULT 1,
+  `wall_thickness` tinyint(3) NOT NULL DEFAULT 0,
+  `floor_thickness` tinyint(3) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
 INSERT INTO `room` (`id`, `owner_id`, `name`, `description`, `category_id`, `visitors_now`, `visitors_max`, `status`, `password`, `model`, `ccts`, `wallpaper`, `floor`, `landscape`, `rating`, `allow_pets`, `allow_pets_eat`, `allow_walkthrough`, `hidewall`, `wall_thickness`, `floor_thickness`) VALUES
-	(1, -1, 'Sandbox', 'Sandbox testing', 1, 0, 25, 'OPEN', '', 'model_a', '', '0', '0', '0', 0, 1, 1, 0, 0, 1, 1),
-	(2, 1, 'My Room', 'Sandbox testing', 14, 0, 25, 'OPEN', '', 'model_a', '', '0', '0', '0', 33, 1, 1, 0, 0, 1, 1);
+	(1, 1, 'My Room', 'Sandbox testing', 1, 2, 25, 'OPEN', '', 'model_h', '', 0, 0, 0, 0, 1, 1, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `room_category` (
@@ -191,8 +193,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `pixels`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 2000, 0, '123', '2020-03-29 18:20:03', '2020-04-13 14:06:58'),
-	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '456', '2020-03-29 20:47:31', '2020-04-12 16:52:52'),
+	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 2000, 0, '123', '2020-03-29 18:20:03', '2020-04-13 23:18:41'),
+	(2, 'Test', 'hd-180-1.hr-100-.ch-260-62.lg-275-64.ha-1008-.ea-1402-.ca-1806-73', 'M', 1, 0, 0, '456', '2020-03-29 20:47:31', '2020-04-13 23:18:43'),
 	(3, 'Test123', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '789', '2020-03-29 20:47:31', '2020-04-10 20:37:28'),
 	(4, 'Test456', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '789', '2020-03-29 20:47:31', '2020-04-10 20:37:28');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
