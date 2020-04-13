@@ -72,7 +72,9 @@ namespace Kurkku.Game.Managers
                 room.Data.UsersNow--;
                 RoomDao.SaveRoom(room.Data);
 
-                player.Send(new CloseConnectionComposer());
+                if (hotelView)
+                    player.Send(new CloseConnectionComposer());
+                
                 player.Messenger.SendStatus();
             }
         }
