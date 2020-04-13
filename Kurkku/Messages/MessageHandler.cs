@@ -129,6 +129,7 @@ namespace Kurkku.Messages
             Events[IncomingEvents.UserFlatsMessageEvent] = new UserFlatsMessageEvent();
             Events[IncomingEvents.UserFlatsCatsMessageEvent] = new UserFlatCatsMessageEvent();
             Events[IncomingEvents.CanCreateRoomMessageEvent] = new CanCreateRoomMessageEvent();
+            Events[IncomingEvents.PopularFlatsMessengerEvent] = new PopularFlatsMessengerEvent();
         }
 
         /// <summary>

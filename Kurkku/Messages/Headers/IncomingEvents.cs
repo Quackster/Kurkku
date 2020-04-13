@@ -33,5 +33,6 @@ namespace Kurkku.Messages.Headers
         public static readonly short GetRoomEntryDataMessageEvent = 329;
         public static readonly short GetGuestRoomMessageEvent = 634;
         public static readonly short QuitMessageEvent = 549;
+        public static readonly short PopularFlatsMessengerEvent = 512;
     }
 }

@@ -117,6 +117,8 @@ namespace Kurkku.Game.Managers
         public void LeaveRoom(IEntity entity, bool hotelView = false)
         {
             room.Entities.Remove(entity.RoomEntity.InstanceId);
+            room.Send(new UserRemoveComposer(entity.RoomEntity.InstanceId));
+
             entity.RoomEntity.Reset();
 
             if (entity is Player player)
