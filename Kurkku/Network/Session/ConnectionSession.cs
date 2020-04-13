@@ -57,7 +57,11 @@ namespace Kurkku.Network.Session
                 composer.Write();
             }
 
-            Channel.WriteAndFlushAsync(composer);
+            try
+            {
+                Channel.WriteAndFlushAsync(composer);
+            }
+            catch { }
         }
 
         /// <summary>

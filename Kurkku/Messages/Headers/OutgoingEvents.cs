@@ -35,5 +35,8 @@ namespace Kurkku.Messages.Headers
         public static readonly short HeightMapComposer = 3942;
         public static readonly short FloorHeightMapComposer = 2443;
         public static readonly short CloseConnectionComposer = 1256;
+        public static readonly short RoomPropertyComposer = 2993;
+        public static readonly short YouAreControllerComposer = 8;
+        public static readonly short YouAreOwnerMessageEvent = 1812;
     }
 }

@@ -14,7 +14,7 @@ namespace Kurkku.Messages
     {
         #region Fields
 
-        private static readonly ILog m_Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public static readonly MessageHandler Instance = new MessageHandler();
 
@@ -61,11 +61,12 @@ namespace Kurkku.Messages
 
             foreach (var composer in messageComposers)
             {
-                var composerName = composer.Name;
-                var composerField = outgoingEventType.GetField(composerName);
+                var composerField = outgoingEventType.GetField(composer.Name);
 
                 if (composerField != null)
-                    Composers[composerName] = Convert.ToInt16(composerField.GetValue(null));
+                    Composers[composer.Name] = Convert.ToInt16(composerField.GetValue(null));
+                else
+                    log.Error($"Composer {composer.Name} has no header defined");
             }
         }
 
@@ -74,8 +75,8 @@ namespace Kurkku.Messages
         /// </summary>
         internal short? GetComposerId(IMessageComposer composer)
         {
-            short header = 0;
-            
+            short header;
+
             if (Composers.TryGetValue(composer.GetType().Name, out header))
                 return header;
 
@@ -181,17 +182,17 @@ namespace Kurkku.Messages
                         return;
                     }
 
-                    player.Log.Debug($"Message {message.GetType().Name}: {request.Header} / {request.MessageBody}");
+                    player.Log.Debug($"RECEIVED {message.GetType().Name}: {request.Header} / {request.MessageBody}");
                     message.Handle(player, request);
                 } 
                 else
                 {
-                    player.Log.Debug($"Unregistered message: {request.Header} / {request.MessageBody}");
+                    player.Log.Debug($"Unknown: {request.Header} / {request.MessageBody}");
                 }
             }
             catch (Exception ex)
             {
-                m_Log.Error("Error occurred: ", ex);
+                log.Error("Error occurred: ", ex);
             }
         }
 

@@ -54,9 +54,9 @@ namespace Kurkku.Storage.Database.Data
         public virtual string Password { get; set; }
         public virtual string Model { get; set; }
         public virtual string CCTs { get; set; }
-        public virtual string Wallpaper { get; set; }
-        public virtual string Floor { get; set; }
-        public virtual string Landscape { get; set; }
+        public virtual int Wallpaper { get; set; }
+        public virtual int Floor { get; set; }
+        public virtual int Landscape { get; set; }
         public virtual bool AllowPets { get; set; }
         public virtual bool AllowPetsEat { get; set; }
         public virtual bool AllowWalkthrough { get; set; }

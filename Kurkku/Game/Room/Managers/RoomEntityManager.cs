@@ -2,7 +2,7 @@
 using Kurkku.Storage.Database.Access;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using Kurkku.Util.Extensions;
 
 namespace Kurkku.Game.Managers
@@ -40,6 +40,16 @@ namespace Kurkku.Game.Managers
         #region Public methods
 
         /// <summary>
+        /// Select entities where it's assignable by entity type
+        /// </summary>
+        public List<T> GetEntities<T>()
+        {
+            return room.Entities
+                .Where(x => x.Value.GetType().IsAssignableFrom(typeof(T)))
+                .Select(x => x.Value).Cast<T>().ToList();
+        }
+
+        /// <summary>
         /// Enter room handler, used when user clicks room to enter
         /// </summary>
         public void EnterRoom(IEntity entity, Position entryPosition = null)
@@ -51,6 +61,25 @@ namespace Kurkku.Game.Managers
 
             player.Send(new RoomReadyComposer(room.Data.Model, room.Data.Id));
 
+            if (room.Data.Wallpaper > 0)
+                player.Send(new RoomPropertyComposer("wallpaper", Convert.ToString(room.Data.Wallpaper)));
+
+            if (room.Data.Floor > 0)
+                player.Send(new RoomPropertyComposer("floor", Convert.ToString(room.Data.Floor)));
+
+            player.Send(new RoomPropertyComposer("landscape", Convert.ToString(room.Data.Wallpaper)));
+            
+            if (!room.Data.IsPublicRoom)
+            {
+                if (room.HasRights(player.Details.Id, true))
+                {
+                    player.Send(new YouAreOwnerMessageEvent());
+                    player.Send(new YouAreControllerComposer(4));
+                }
+
+                if (room.HasRights(player.Details.Id))
+                    player.Send(new YouAreControllerComposer(1));
+            }
         }
 
         /// <summary>
@@ -69,6 +98,7 @@ namespace Kurkku.Game.Managers
             entity.RoomEntity.InstanceId = GenerateInstanceId();
             entity.RoomEntity.Position = (entryPosition ?? room.Model.Door);
 
+            room.Entities.TryAdd(GenerateInstanceId(), new Bot());
             room.Entities.TryAdd(entity.RoomEntity.InstanceId, entity);
 
             if (entity is Player player)
@@ -99,6 +129,8 @@ namespace Kurkku.Game.Managers
                 
                 player.Messenger.SendStatus();
             }
+
+            room.TryDispose();
         }
 
         #endregion

@@ -34,9 +34,34 @@ namespace Kurkku.Game
         /// <summary>
         /// Wrap the retrieved database data with a room instance >:)
         /// </summary>
-        internal static Room Wrap(RoomData roomData)
+        public static Room Wrap(RoomData roomData)
         {
             return new Room(roomData);
+        }
+
+        /// <summary>
+        /// Get if the user has rights
+        /// </summary>
+        public bool HasRights(int userId, bool checkOwner = false)
+        {
+            if (checkOwner)
+                if (Data.OwnerId == userId)
+                    return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// Try and dispose, only if it has 0 players active.
+        /// </summary>
+        public void TryDispose()
+        {
+            var playerList = EntityManager.GetEntities<Player>();
+
+            if (playerList.Any())
+                return;
+
+            RoomManager.Instance.RemoveRoom(Data.Id);
         }
 
         #endregion
