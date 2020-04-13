@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Kurkku.Messages.Headers
+﻿namespace Kurkku.Messages.Headers
 {
     public class IncomingEvents
     {

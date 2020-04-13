@@ -1,5 +1,4 @@
 ﻿using FluentNHibernate.Mapping;
-using System;
 
 namespace Kurkku.Storage.Database.Data
 {

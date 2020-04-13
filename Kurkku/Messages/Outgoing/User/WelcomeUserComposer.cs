@@ -1,6 +1,4 @@
-﻿using Kurkku.Messages.Headers;
-
-namespace Kurkku.Messages.Outgoing
+﻿namespace Kurkku.Messages.Outgoing
 {
     public class WelcomeUserComposer : IMessageComposer
     {

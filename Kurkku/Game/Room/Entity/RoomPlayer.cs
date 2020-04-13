@@ -1,9 +1,4 @@
-﻿using Kurkku.Storage.Database.Data;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Kurkku.Game
+﻿namespace Kurkku.Game
 {
     public class RoomPlayer : RoomEntity
     {

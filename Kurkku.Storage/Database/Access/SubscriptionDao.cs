@@ -1,11 +1,6 @@
 ﻿
 using Kurkku.Storage.Database.Data;
-using NHibernate;
-using NHibernate.Criterion;
-using NHibernate.Linq;
-using NHibernate.SqlCommand;
 using System;
-using System.Collections.Generic;
 
 namespace Kurkku.Storage.Database.Access
 {

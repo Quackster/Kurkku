@@ -2,8 +2,6 @@
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
-using NHibernate.SqlCommand;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 

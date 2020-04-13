@@ -8,7 +8,6 @@ using Kurkku.Storage.Database;
 using Kurkku.Network;
 using Kurkku.Storage.Database.Access;
 using Kurkku.Game;
-using Kurkku.Storage.Database.Data;
 using Kurkku.Messages;
 
 namespace Kurkku

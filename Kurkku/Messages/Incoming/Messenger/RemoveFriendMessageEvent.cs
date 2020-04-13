@@ -1,9 +1,6 @@
 ﻿using Kurkku.Game;
-using Kurkku.Messages.Outgoing;
-using Kurkku.Messages.Outgoing.Messenger;
 using Kurkku.Network.Streams;
 using Kurkku.Storage.Database.Access;
-using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Messages.Incoming
 {

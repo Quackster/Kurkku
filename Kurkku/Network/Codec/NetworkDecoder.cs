@@ -3,9 +3,7 @@ using DotNetty.Codecs;
 using DotNetty.Transport.Channels;
 using Kurkku.Network.Streams;
 using Kurkku.Util;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Kurkku.Network
 {

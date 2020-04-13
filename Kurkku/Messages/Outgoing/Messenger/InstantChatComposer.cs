@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using Kurkku.Game;
-using Kurkku.Messages.Headers;
-using Kurkku.Storage.Database.Data;
-
-namespace Kurkku.Messages.Outgoing
+﻿namespace Kurkku.Messages.Outgoing
 {
     public class InstantChatComposer : IMessageComposer
     {

@@ -1,6 +1,5 @@
 ﻿using DotNetty.Transport.Channels;
 using Kurkku.Network.Codec;
-using System;
 
 namespace Kurkku.Network
 {

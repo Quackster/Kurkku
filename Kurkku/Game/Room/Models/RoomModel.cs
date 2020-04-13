@@ -1,7 +1,5 @@
 ﻿using Kurkku.Storage.Database.Data;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Kurkku.Util.Extensions;
 
 namespace Kurkku.Game

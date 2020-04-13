@@ -1,11 +1,4 @@
-﻿
-
-using Kurkku.Game;
-using Kurkku.Messages.Headers;
-using Kurkku.Storage.Database.Data;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Messages.Outgoing
 {

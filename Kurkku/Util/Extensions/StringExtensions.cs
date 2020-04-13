@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Kurkku.Util.Extensions
+﻿namespace Kurkku.Util.Extensions
 {
     public static class StringExtensions
     {

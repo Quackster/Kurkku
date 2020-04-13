@@ -1,6 +1,5 @@
 ﻿using Kurkku.Game;
 using Kurkku.Util.Extensions;
-using System;
 using System.Collections.Generic;
 
 namespace Kurkku.Messages.Outgoing

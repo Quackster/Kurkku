@@ -1,8 +1,6 @@
 ﻿using DotNetty.Buffers;
 using Kurkku.Util;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Kurkku.Network.Streams
 {

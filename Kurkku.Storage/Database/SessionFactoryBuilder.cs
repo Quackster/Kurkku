@@ -1,14 +1,7 @@
 ﻿using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
-using NHibernate.AdoNet;
-using NHibernate.Cfg;
-using NHibernate.Driver;
-using NHibernate.Tool.hbm2ddl;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace Kurkku.Storage.Database
 {
