@@ -214,15 +214,14 @@ INSERT INTO `user_settings` (`user_id`, `daily_respect_points`, `daily_respect_p
 
 CREATE TABLE IF NOT EXISTS `user_subscriptions` (
   `user_id` int(11) NOT NULL,
-  `subscription_type` enum('HC','VIP') NOT NULL,
   `subscribed_at` datetime NOT NULL,
   `expire_at` datetime NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user_subscriptions` DISABLE KEYS */;
-INSERT INTO `user_subscriptions` (`user_id`, `subscription_type`, `subscribed_at`, `expire_at`) VALUES
-	(1, 'VIP', '2020-04-10 14:00:31', '2020-04-10 14:00:31');
+INSERT INTO `user_subscriptions` (`user_id`, `subscribed_at`, `expire_at`) VALUES
+	(1, '2020-04-10 14:00:31', '2020-04-10 14:00:31');
 /*!40000 ALTER TABLE `user_subscriptions` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
