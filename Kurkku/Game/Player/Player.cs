@@ -160,6 +160,9 @@ namespace Kurkku.Game
             if (!Authenticated)
                 return;
 
+            if (RoomEntity.Room != null)
+                RoomEntity.Room.EntityManager.LeaveRoom(this);
+
             PlayerManager.Instance.RemovePlayer(this);
 
             Messenger.SendStatus();

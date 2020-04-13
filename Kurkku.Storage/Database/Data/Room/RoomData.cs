@@ -14,6 +14,8 @@ namespace Kurkku.Storage.Database.Data
             Map(x => x.Name, "name");
             Map(x => x.Description, "description");
             Map(x => x.CategoryId, "category_id");
+            Map(x => x.UsersNow, "visitors_now");
+            Map(x => x.UsersMax, "visitors_max");
             Map(x => x.Status, "status");
             Map(x => x.Password, "password");
             Map(x => x.Model, "model");
@@ -43,9 +45,6 @@ namespace Kurkku.Storage.Database.Data
 
     public class RoomData
     {
-        public virtual int UsersNow => 0;
-        public virtual int UsersMax => 0;
-
         public virtual int Id { get; set; }
         public virtual int OwnerId { get; set; }
         public virtual string Name { get; set; }
@@ -68,6 +67,8 @@ namespace Kurkku.Storage.Database.Data
         public virtual NavigatorCategoryData Category { get; set; }
         public virtual int Rating { get; set; }
         public virtual bool IsPublicRoom => OwnerData == null;
+        public virtual int UsersNow { get; set; }
+        public virtual int UsersMax { get; set; }
     }
 
     public enum RoomStatus

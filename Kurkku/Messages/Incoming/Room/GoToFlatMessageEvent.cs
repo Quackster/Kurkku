@@ -18,8 +18,7 @@ namespace Kurkku.Messages.Incoming
             if (room == null)
                 return;
 
-            player.RoomUser.Room = room;
-            player.Send(new RoomReadyComposer(room.Data.Model, room.Data.Id));
+            room.EntityManager.EnterRoom(player);
         }
     }
 }

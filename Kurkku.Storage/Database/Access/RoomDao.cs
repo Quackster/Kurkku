@@ -1,4 +1,6 @@
 ﻿using Kurkku.Storage.Database.Data;
+using NHibernate.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -50,6 +52,39 @@ namespace Kurkku.Storage.Database.Access
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
                 return session.QueryOver<RoomData>().Where(x => x.Id == roomId).Take(1).SingleOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// Save room data
+        /// </summary>
+        public static void SaveRoom(RoomData data)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    try
+                    {
+                        session.Update(data);
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Reset all visitors
+        /// </summary>
+        public static void ResetVisitorCounts()
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                session.Query<RoomData>().Where(x => x.UsersNow > 0).Update(x => new RoomData { UsersNow = 0 });
             }
         }
     }

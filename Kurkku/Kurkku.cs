@@ -87,6 +87,8 @@ namespace Kurkku
             ValueManager.Instance.Load();
             RoomManager.Instance.Load();
             NavigatorManager.Instance.Load();
+
+            RoomDao.ResetVisitorCounts();
         }
 
         /// <summary>

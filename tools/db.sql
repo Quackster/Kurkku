@@ -82,6 +82,8 @@ CREATE TABLE IF NOT EXISTS `room` (
   `name` mediumtext NOT NULL,
   `description` mediumtext NOT NULL,
   `category_id` int(11) NOT NULL DEFAULT 14,
+  `visitors_now` int(11) NOT NULL DEFAULT 0,
+  `visitors_max` int(11) NOT NULL DEFAULT 25,
   `status` enum('OPEN','CLOSED','PASSWORD') NOT NULL DEFAULT 'OPEN',
   `password` text NOT NULL DEFAULT '',
   `model` varchar(7) NOT NULL DEFAULT '',
@@ -97,12 +99,12 @@ CREATE TABLE IF NOT EXISTS `room` (
   `wall_thickness` tinyint(3) NOT NULL DEFAULT 1,
   `floor_thickness` tinyint(3) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
-INSERT INTO `room` (`id`, `owner_id`, `name`, `description`, `category_id`, `status`, `password`, `model`, `ccts`, `wallpaper`, `floor`, `landscape`, `rating`, `allow_pets`, `allow_pets_eat`, `allow_walkthrough`, `hidewall`, `wall_thickness`, `floor_thickness`) VALUES
-	(1, -1, 'Sandbox', 'Sandbox testing', 1, 'OPEN', '', 'model_a', '', '0', '0', '0', 0, 1, 1, 0, 0, 1, 1),
-	(2, 1, 'My Room', 'Sandbox testing', 14, 'OPEN', '', 'model_a', '', '0', '0', '0', 33, 1, 1, 0, 0, 1, 1);
+INSERT INTO `room` (`id`, `owner_id`, `name`, `description`, `category_id`, `visitors_now`, `visitors_max`, `status`, `password`, `model`, `ccts`, `wallpaper`, `floor`, `landscape`, `rating`, `allow_pets`, `allow_pets_eat`, `allow_walkthrough`, `hidewall`, `wall_thickness`, `floor_thickness`) VALUES
+	(1, -1, 'Sandbox', 'Sandbox testing', 1, 0, 25, 'OPEN', '', 'model_a', '', '0', '0', '0', 0, 1, 1, 0, 0, 1, 1),
+	(2, 1, 'My Room', 'Sandbox testing', 14, 0, 25, 'OPEN', '', 'model_a', '', '0', '0', '0', 33, 1, 1, 0, 0, 1, 1);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `room_category` (
@@ -189,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `pixels`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 2000, 0, '123', '2020-03-29 18:20:03', '2020-04-13 11:01:54'),
+	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 2000, 0, '123', '2020-03-29 18:20:03', '2020-04-13 14:06:58'),
 	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '456', '2020-03-29 20:47:31', '2020-04-12 16:52:52'),
 	(3, 'Test123', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '789', '2020-03-29 20:47:31', '2020-04-10 20:37:28'),
 	(4, 'Test456', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '789', '2020-03-29 20:47:31', '2020-04-10 20:37:28');

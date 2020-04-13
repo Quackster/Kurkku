@@ -17,6 +17,7 @@ namespace Kurkku.Game
         public string Heightmap { get; private set; }
 
         public RoomModelData Data { get; set; }
+        public Position Door => new Position(Data.DoorX, Data.DoorY, Data.DoorZ, Data.DoorDirection, Data.DoorDirection);
 
         #endregion
 
