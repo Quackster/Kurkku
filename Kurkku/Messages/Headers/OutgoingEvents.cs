@@ -29,5 +29,10 @@ namespace Kurkku.Messages.Headers
         public static readonly short AvailabilityStatusComposer = 2326;
         public static readonly short CanCreateRoomComposer = 3710;
         public static readonly short ScrSendUserInfoComposer = 319;
+        public static readonly short RoomReadyComposer = 206;
+        public static readonly short OpenConnectionComposer = 400;
+        public static readonly short FurnitureAliasesComposer = 1456;
+        public static readonly short HeightMapComposer = 3942;
+        public static readonly short FloorHeightMapComposer = 2443;
     }
 }

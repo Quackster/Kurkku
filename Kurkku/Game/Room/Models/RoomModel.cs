@@ -56,7 +56,7 @@ namespace Kurkku.Game
                     {
                         TileStates[x, y] = TileState.OPEN;
                         TileHeights[x, y] = double.Parse(tile);
-                    } 
+                    }
                     else
                     {
                         TileStates[x, y] = TileState.CLOSED;
@@ -68,9 +68,13 @@ namespace Kurkku.Game
                     {
                         TileStates[x, y] = TileState.OPEN;
                         TileHeights[x, y] = Data.DoorZ;
-                    }
 
-                    Heightmap += tile;
+                        Heightmap += Convert.ToString(Data.DoorZ);
+                    }
+                    else
+                    {
+                        Heightmap += tile;
+                    }
                 }
 
                 Heightmap += "\r";

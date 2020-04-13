@@ -27,7 +27,7 @@ namespace Kurkku.Messages
         /// <summary>
         /// Get the header for the message
         /// </summary>
-        public virtual short Header
+        public abstract short Header
         {
             get;
         }

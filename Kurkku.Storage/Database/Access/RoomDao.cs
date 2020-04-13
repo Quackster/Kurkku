@@ -30,11 +30,26 @@ namespace Kurkku.Storage.Database.Access
             }
         }
 
+        /// <summary>
+        /// Get the room model data
+        /// </summary>
+        /// <returns></returns>
         public static List<RoomModelData> GetModels()
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
                 return session.QueryOver<RoomModelData>().List() as List<RoomModelData>;
+            }
+        }
+
+        /// <summary>
+        /// Get data for room
+        /// </summary>
+        public static RoomData GetRoomData(int roomId)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                return session.QueryOver<RoomData>().Where(x => x.Id == roomId).Take(1).SingleOrDefault();
             }
         }
     }

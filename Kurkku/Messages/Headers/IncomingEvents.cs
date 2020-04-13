@@ -26,5 +26,10 @@ namespace Kurkku.Messages.Headers
         public static readonly short UserFlatsCatsMessageEvent = 1272;
         public static readonly short CanCreateRoomMessageEvent = 2274;
         public static readonly short ScrGetUserInfoMessageEvent = 2999;
+        public static readonly short OpenFlatConnectionMessageEvent = 2807;
+        public static readonly short GetHabboGroupBadgesMessageEvent = 2327;
+        public static readonly short GetFurnitureAliasesMessageEvent = 3443;
+        public static readonly short GoToFlatMessageEvent = 3320;
+        public static readonly short GetRoomEntryDataMessageEvent = 329;
     }
 }

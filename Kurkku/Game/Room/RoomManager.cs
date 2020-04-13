@@ -71,6 +71,24 @@ namespace Kurkku.Game
         }
 
         /// <summary>
+        /// Get room instance, else return newly created instance if room exists
+        /// </summary>
+        public Room GetRoom(int roomId)
+        {
+
+            if (Rooms.TryGetValue(roomId, out var room))
+                return room;
+
+            var data = RoomDao.GetRoomData(roomId);
+
+            if (data != null) {
+                return new Room(data);
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Replace the room data retrieved from the database with actual room instances
         /// </summary>
         public List<Room> ReplaceQueryRooms(List<RoomData> roomsFromDatabase)

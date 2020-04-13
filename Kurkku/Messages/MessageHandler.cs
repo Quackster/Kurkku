@@ -32,6 +32,7 @@ namespace Kurkku.Messages
             registerMessenger();
             registerUser();
             registerNavigator();
+            registerRoom();
         }
 
 
@@ -80,6 +81,17 @@ namespace Kurkku.Messages
             m_Events[IncomingEvents.UserFlatsMessageEvent] = new UserFlatsMessageEvent();
             m_Events[IncomingEvents.UserFlatsCatsMessageEvent] = new UserFlatCatsMessageEvent();
             m_Events[IncomingEvents.CanCreateRoomMessageEvent] = new CanCreateRoomMessageEvent();
+        }
+
+        /// <summary>
+        /// Register room packets
+        /// </summary>
+        private void registerRoom()
+        {
+            m_Events[IncomingEvents.OpenFlatConnectionMessageEvent] = new OpenFlatConnectionMessageEvent();
+            m_Events[IncomingEvents.GoToFlatMessageEvent] = new GoToFlatMessageEvent();
+            m_Events[IncomingEvents.GetFurnitureAliasesMessageEvent] = new GetFurnitureAliasesMessageEvent();
+            m_Events[IncomingEvents.GetRoomEntryDataMessageEvent] = new GetRoomEntryDataMessageComposer();
         }
 
         #endregion
