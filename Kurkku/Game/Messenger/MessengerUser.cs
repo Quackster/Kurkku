@@ -24,10 +24,7 @@ namespace Kurkku.Game
             get { return Player != null; }
         }
 
-        public bool InRoom
-        {
-            get { return false; }
-        }
+        public bool InRoom => (Player != null ? Player.RoomUser.Room != null : false);
 
         #endregion
 

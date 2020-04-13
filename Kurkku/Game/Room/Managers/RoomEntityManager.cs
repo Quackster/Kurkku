@@ -32,6 +32,8 @@ namespace Kurkku.Game.Managers
                 return;
 
             player.Send(new RoomReadyComposer(room.Data.Model, room.Data.Id));
+
+
         }
 
         public void SilentlyEntityRoom(IEntity entity, Position entryPosition = null)

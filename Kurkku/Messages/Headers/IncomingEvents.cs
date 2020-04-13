@@ -31,5 +31,6 @@ namespace Kurkku.Messages.Headers
         public static readonly short GetFurnitureAliasesMessageEvent = 3443;
         public static readonly short GoToFlatMessageEvent = 3320;
         public static readonly short GetRoomEntryDataMessageEvent = 329;
+        public static readonly short GetGuestRoomMessageEvent = 634;
     }
 }
