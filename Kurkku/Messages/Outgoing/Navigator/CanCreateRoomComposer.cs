@@ -3,15 +3,10 @@ using Kurkku.Messages.Headers;
 
 namespace Kurkku
 {
-    public class CanCreateRoomComposer : MessageComposer
+    public class CanCreateRoomComposer : IMessageComposer
     {
         private bool hasReachedLimit;
         private int maxRooms;
-
-        public override short Header
-        {
-            get { return OutgoingEvents.CanCreateRoomComposer; }
-        }
 
         public CanCreateRoomComposer(bool hasReachedLimit, int maxRooms)
         {

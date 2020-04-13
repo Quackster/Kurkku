@@ -3,18 +3,13 @@ using Kurkku.Messages.Headers;
 
 namespace Kurkku.Messages.Outgoing
 {
-    public class UserInfoComposer : MessageComposer
+    public class UserInfoComposer : IMessageComposer
     {
         private Player player;
 
         public UserInfoComposer(Player player)
         {
             this.player = player;
-        }
-
-        public override short Header
-        {
-            get { return OutgoingEvents.UserInfoComposer; }
         }
 
         public override void Write()

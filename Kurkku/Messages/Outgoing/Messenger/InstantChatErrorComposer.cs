@@ -5,16 +5,11 @@ using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Messages.Outgoing
 {
-    public class InstantChatErrorComposer : MessageComposer
+    public class InstantChatErrorComposer : IMessageComposer
     {
         private InstantChatError instantChatError;
         private int userId;
         private string message = string.Empty;
-
-        public override short Header
-        {
-            get { return OutgoingEvents.InstantChatErrorComposer; }
-        }
 
         public InstantChatErrorComposer(InstantChatError instantChatError, int userId)
         {

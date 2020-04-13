@@ -5,11 +5,8 @@ using System.Text;
 
 namespace Kurkku.Messages.Outgoing
 {
-    class RoomReadyComposer : MessageComposer
+    public class RoomReadyComposer : IMessageComposer
     {
-        public override short Header => 
-            OutgoingEvents.RoomReadyComposer;
-
         private string modelName;
         private int roomId;
 

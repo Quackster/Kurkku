@@ -13,7 +13,7 @@ namespace Kurkku.Game
     {
         #region Fields
 
-        private SubscriptionData m_Subscription;
+        private SubscriptionData subscription;
 
         #endregion
 
@@ -46,7 +46,7 @@ namespace Kurkku.Game
         {
             get
             {
-                if (m_Subscription == null)
+                if (subscription == null)
                     return ValueManager.Instance.GetInt("max.friends.normal");
 
                 /*return m_Subscription.Type == SubscriptionType.HC ?
@@ -80,14 +80,14 @@ namespace Kurkku.Game
         public Messenger(Player player)
         {
             Player = player;
-            m_Subscription = player.Subscription;
+            subscription = player.Subscription;
             FriendRequestsEnabled = player.Settings.FriendRequestsEnabled;
             LoadMessengerData(player.Details.Id);
         }
 
         public Messenger(int userId)
         {
-            m_Subscription = SubscriptionDao.GetSubscription(userId);
+            subscription = SubscriptionDao.GetSubscription(userId);
             FriendRequestsEnabled = MessengerDao.GetAcceptsFriendRequests(userId);
             LoadMessengerData(userId);
         }

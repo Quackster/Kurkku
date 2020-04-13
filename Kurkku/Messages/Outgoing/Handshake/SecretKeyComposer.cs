@@ -2,14 +2,9 @@
 
 namespace Kurkku.Messages.Outgoing
 {
-    public class SecretKeyComposer : MessageComposer
+    public class SecretKeyComposer : IMessageComposer
     {
         private string publicKey;
-
-        public override short Header
-        {
-            get { return OutgoingEvents.SecretKeyComposer; }
-        }
 
         public SecretKeyComposer(string publicKey)
         {

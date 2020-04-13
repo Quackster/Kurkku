@@ -9,6 +9,7 @@ using Kurkku.Network;
 using Kurkku.Storage.Database.Access;
 using Kurkku.Game;
 using Kurkku.Storage.Database.Data;
+using Kurkku.Messages;
 
 namespace Kurkku
 {
@@ -87,6 +88,7 @@ namespace Kurkku
             ValueManager.Instance.Load();
             RoomManager.Instance.Load();
             NavigatorManager.Instance.Load();
+            MessageHandler.Instance.Load();
 
             RoomDao.ResetVisitorCounts();
         }

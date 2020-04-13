@@ -5,7 +5,7 @@ using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Messages.Outgoing
 {
-    public class InstantChatComposer : MessageComposer
+    public class InstantChatComposer : IMessageComposer
     {
         private int fromId;
         private string message;
@@ -15,12 +15,6 @@ namespace Kurkku.Messages.Outgoing
             this.fromId = fromId;
             this.message = message;
         }
-
-        public override short Header
-        {
-            get { return OutgoingEvents.InstantChatComposer; }
-        }
-
         public override void Write()
         {
             m_Data.Add(fromId);

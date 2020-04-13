@@ -5,34 +5,81 @@ using Kurkku.Network.Streams;
 using log4net;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Kurkku.Messages
 {
-    public class MessageHandler
+    public class MessageHandler : ILoadable
     {
         #region Fields
 
         private static readonly ILog m_Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private Dictionary<short, MessageEvent> m_Events;
 
         public static readonly MessageHandler Instance = new MessageHandler();
 
         #endregion
 
+        #region Properties
+
+        private Dictionary<short, MessageEvent> Events { get; }
+        private Dictionary<string, short> Composers { get; }
+
+
+        #endregion
+
         #region Constructors
 
-        /// <summary>
-        /// Get the message handler instance
-        /// </summary>
         public MessageHandler()
         {
-            m_Events = new Dictionary<short, MessageEvent>();
+            Events = new Dictionary<short, MessageEvent>();
+            Composers = new Dictionary<string, short>();
+        }
+
+        public void Load()
+        {
             registerHandshake();
             registerMessenger();
             registerUser();
             registerNavigator();
             registerRoom();
+            
+            ResolveComposers();
+        }
+
+        /// <summary>
+        /// Resolve composers, instead of assigning to every composer file, associate by file name instead
+        /// </summary>
+        public void ResolveComposers()
+        {
+            Type outgoingEventType = typeof(OutgoingEvents);
+
+            var type = typeof(IMessageComposer);
+            var messageComposers = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => type.IsAssignableFrom(p) && p != type);
+
+            foreach (var composer in messageComposers)
+            {
+                var composerName = composer.Name;
+                var composerField = outgoingEventType.GetField(composerName);
+
+                if (composerField != null)
+                    Composers[composerName] = Convert.ToInt16(composerField.GetValue(null));
+            }
+        }
+
+        /// <summary>
+        /// Get composer id for type
+        /// </summary>
+        internal short? GetComposerId(IMessageComposer composer)
+        {
+            short header = 0;
+            
+            if (Composers.TryGetValue(composer.GetType().Name, out header))
+                return header;
+
+            return null;
         }
 
 
@@ -41,10 +88,10 @@ namespace Kurkku.Messages
         /// </summary>
         private void registerHandshake()
         {
-            m_Events[IncomingEvents.VersionCheckMessageEvent] = new VersionCheckMessageEvent();
-            m_Events[IncomingEvents.InitCryptoMessageEvent] = new InitCryptoMessageEvent();
-            m_Events[IncomingEvents.GenerateSecretKeyMessageEvent] = new GenerateSecretKeyMessageEvent();
-            m_Events[IncomingEvents.SSOTicketMessageEvent] = new SSOTicketMessageEvent();
+            Events[IncomingEvents.VersionCheckMessageEvent] = new VersionCheckMessageEvent();
+            Events[IncomingEvents.InitCryptoMessageEvent] = new InitCryptoMessageEvent();
+            Events[IncomingEvents.GenerateSecretKeyMessageEvent] = new GenerateSecretKeyMessageEvent();
+            Events[IncomingEvents.SSOTicketMessageEvent] = new SSOTicketMessageEvent();
 
         }
         
@@ -53,13 +100,13 @@ namespace Kurkku.Messages
         /// </summary>
         private void registerMessenger()
         {
-            m_Events[IncomingEvents.InitMessengerMessageEvent] = new InitMessengerMessageEvent();
-            m_Events[IncomingEvents.SearchMessengerEvent] = new SearchMessageEvent();
-            m_Events[IncomingEvents.BuddyRequestMessengerEvent] = new BuddyRequestMessageEvent();
-            m_Events[IncomingEvents.AcceptRequestsMessageEvent] = new AcceptRequestsMessageEvent();
-            m_Events[IncomingEvents.DeclineRequestMessageEvent] = new DeclineRequestMessageEvent();
-            m_Events[IncomingEvents.RemoveFriendMessageEvent] = new RemoveFriendMessageEvent();
-            m_Events[IncomingEvents.InstantChatMessageEvent] = new InstantChatMessageEvent();
+            Events[IncomingEvents.InitMessengerMessageEvent] = new InitMessengerMessageEvent();
+            Events[IncomingEvents.SearchMessengerEvent] = new SearchMessageEvent();
+            Events[IncomingEvents.BuddyRequestMessengerEvent] = new BuddyRequestMessageEvent();
+            Events[IncomingEvents.AcceptRequestsMessageEvent] = new AcceptRequestsMessageEvent();
+            Events[IncomingEvents.DeclineRequestMessageEvent] = new DeclineRequestMessageEvent();
+            Events[IncomingEvents.RemoveFriendMessageEvent] = new RemoveFriendMessageEvent();
+            Events[IncomingEvents.InstantChatMessageEvent] = new InstantChatMessageEvent();
         }
 
         /// <summary>
@@ -67,9 +114,9 @@ namespace Kurkku.Messages
         /// </summary>
         private void registerUser()
         {
-            m_Events[IncomingEvents.LandingViewMessageEvent] = new LandingViewMessageEvent();
-            m_Events[IncomingEvents.UserInfoMessageEvent] = new UserInfoMessageEvent();
-            m_Events[IncomingEvents.ScrGetUserInfoMessageEvent] = new ScrGetUserInfoMessageEvent();
+            Events[IncomingEvents.LandingViewMessageEvent] = new LandingViewMessageEvent();
+            Events[IncomingEvents.UserInfoMessageEvent] = new UserInfoMessageEvent();
+            Events[IncomingEvents.ScrGetUserInfoMessageEvent] = new ScrGetUserInfoMessageEvent();
         }
 
         /// <summary>
@@ -77,10 +124,10 @@ namespace Kurkku.Messages
         /// </summary>
         private void registerNavigator()
         {
-            m_Events[IncomingEvents.PublicItemsMessageEvent] = new PublicItemsMessageEvent();
-            m_Events[IncomingEvents.UserFlatsMessageEvent] = new UserFlatsMessageEvent();
-            m_Events[IncomingEvents.UserFlatsCatsMessageEvent] = new UserFlatCatsMessageEvent();
-            m_Events[IncomingEvents.CanCreateRoomMessageEvent] = new CanCreateRoomMessageEvent();
+            Events[IncomingEvents.PublicItemsMessageEvent] = new PublicItemsMessageEvent();
+            Events[IncomingEvents.UserFlatsMessageEvent] = new UserFlatsMessageEvent();
+            Events[IncomingEvents.UserFlatsCatsMessageEvent] = new UserFlatCatsMessageEvent();
+            Events[IncomingEvents.CanCreateRoomMessageEvent] = new CanCreateRoomMessageEvent();
         }
 
         /// <summary>
@@ -88,11 +135,11 @@ namespace Kurkku.Messages
         /// </summary>
         private void registerRoom()
         {
-            m_Events[IncomingEvents.OpenFlatConnectionMessageEvent] = new OpenFlatConnectionMessageEvent();
-            m_Events[IncomingEvents.GoToFlatMessageEvent] = new GoToFlatMessageEvent();
-            m_Events[IncomingEvents.GetFurnitureAliasesMessageEvent] = new GetFurnitureAliasesMessageEvent();
-            m_Events[IncomingEvents.GetRoomEntryDataMessageEvent] = new GetRoomEntryDataMessageComposer();
-            m_Events[IncomingEvents.QuitMessageEvent] = new QuitMessageEvent();
+            Events[IncomingEvents.OpenFlatConnectionMessageEvent] = new OpenFlatConnectionMessageEvent();
+            Events[IncomingEvents.GoToFlatMessageEvent] = new GoToFlatMessageEvent();
+            Events[IncomingEvents.GetFurnitureAliasesMessageEvent] = new GetFurnitureAliasesMessageEvent();
+            Events[IncomingEvents.GetRoomEntryDataMessageEvent] = new GetRoomEntryDataMessageComposer();
+            Events[IncomingEvents.QuitMessageEvent] = new QuitMessageEvent();
         }
 
         #endregion
@@ -108,9 +155,9 @@ namespace Kurkku.Messages
         {
             try
             {
-                if (m_Events.ContainsKey(request.Header))
+                if (Events.ContainsKey(request.Header))
                 {
-                    var message = m_Events[request.Header];
+                    var message = Events[request.Header];
 
                     // Not allowed to handle once logged in
                     if (!player.Authenticated &&

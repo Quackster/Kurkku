@@ -6,7 +6,7 @@ using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Messages.Outgoing
 {
-    internal class SearchMessengerComposer : MessageComposer
+    internal class SearchMessengerComposer : IMessageComposer
     {
         private List<MessengerUser> friends;
         private List<MessengerUser> users;
@@ -17,24 +17,8 @@ namespace Kurkku.Messages.Outgoing
             this.users = users;
         }
 
-        public override short Header
-        {
-            get { return OutgoingEvents.SearchMessengerComposer; }
-        }
-
         public override void Write()
         {
-            /*
-             *             reply.AppendInt32(this.userID);
-             reply.AppendString(this.username);
-             reply.AppendString(this.motto);
-             bool b = SwiftEmuEnvironment.GetGame().GetClientManager().GetClient(this.userID) != null;
-             reply.AppendBoolean(b);
-             reply.AppendBoolean(false);
-             reply.AppendString(string.Empty);
-             reply.AppendInt32(0);
-             reply.AppendString(this.look);
-             reply.AppendString(this.last_online);*/
             m_Data.Add(friends.Count);
 
             foreach (var user in friends)

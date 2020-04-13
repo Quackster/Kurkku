@@ -6,10 +6,8 @@ using System.Text;
 
 namespace Kurkku.Messages.Outgoing
 {
-    class CloseConnectionComposer : MessageComposer
+    class CloseConnectionComposer : IMessageComposer
     {
-        public override short Header => OutgoingEvents.CloseConnectionComposer;
-
         public override void Write()
         {
 

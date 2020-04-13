@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Kurkku.Messages.Outgoing
 {
-    class OpenConnectionComposer : MessageComposer
+    class OpenConnectionComposer : IMessageComposer
     {
         private int roomId;
         private int categoryId;
@@ -15,9 +15,6 @@ namespace Kurkku.Messages.Outgoing
             this.roomId = roomId;
             this.categoryId = categoryId;
         }
-
-        public override short Header => 
-            OutgoingEvents.OpenConnectionComposer;
 
         public override void Write()
         {

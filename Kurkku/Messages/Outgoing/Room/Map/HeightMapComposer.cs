@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Kurkku.Messages.Outgoing
 {
-    class HeightMapComposer : MessageComposer
+    class HeightMapComposer : IMessageComposer
     {
         private string heightmap;
 
@@ -13,9 +13,6 @@ namespace Kurkku.Messages.Outgoing
         {
             this.heightmap = heightmap;
         }
-
-        public override short Header => 
-            OutgoingEvents.HeightMapComposer;
 
         public override void Write()
         {

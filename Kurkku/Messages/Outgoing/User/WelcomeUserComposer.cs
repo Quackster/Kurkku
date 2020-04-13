@@ -2,14 +2,8 @@
 
 namespace Kurkku.Messages.Outgoing
 {
-    public class WelcomeUserComposer : MessageComposer
+    public class WelcomeUserComposer : IMessageComposer
     {
-
-        public override short Header
-        {
-            get { return OutgoingEvents.WelcomeUserComposer; }
-        }
-
         public override void Write()
         {
             m_Data.Add(0);

@@ -9,14 +9,9 @@ using System.Text;
 
 namespace Kurkku.Messages.Outgoing
 {
-    class RoomInfoComposer : MessageComposer
+    class RoomInfoComposer : IMessageComposer
     {
         public RoomData roomData;
-
-        public override short Header
-        {
-            get { return OutgoingEvents.PublicItemsComposer; }
-        }
 
         public RoomInfoComposer(RoomData room)
         {
@@ -28,7 +23,7 @@ namespace Kurkku.Messages.Outgoing
 
         }
 
-        public static void Compose(MessageComposer messageComposer, RoomData room)
+        public static void Compose(IMessageComposer messageComposer, RoomData room)
         {
             messageComposer.Data.Add(room.Id);
             messageComposer.Data.Add(room.Name);

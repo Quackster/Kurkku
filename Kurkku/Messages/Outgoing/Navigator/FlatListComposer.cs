@@ -6,15 +6,10 @@ using System.Text;
 
 namespace Kurkku.Messages.Outgoing
 {
-    class FlatListComposer : MessageComposer
+    class FlatListComposer : IMessageComposer
     {
         private int signifier;
         private List<Room> roomList;
-
-        public override short Header
-        {
-            get { return OutgoingEvents.FlatListComposer; }
-        }
 
         public FlatListComposer(int signifier, List<Room> roomList)
         {

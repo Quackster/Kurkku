@@ -49,7 +49,7 @@ namespace Kurkku.Network.Session
         /// <summary>
         /// Send message composer
         /// </summary>
-        public void Send(MessageComposer composer)
+        public void Send(IMessageComposer composer)
         {
             if (!composer.Composed)
             {

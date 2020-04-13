@@ -7,14 +7,9 @@ using System.Text;
 
 namespace Kurkku.Messages.Outgoing
 {
-    class PublicItemsComposer : MessageComposer
+    class PublicItemsComposer : IMessageComposer
     {
         public List<PublicItemData> publicItems;
-
-        public override short Header
-        {
-            get { return OutgoingEvents.PublicItemsComposer; }
-        }
 
         public PublicItemsComposer(List<PublicItemData> publicItems)
         {
@@ -32,7 +27,7 @@ namespace Kurkku.Messages.Outgoing
             m_Data.Add(0);
         }
         
-        public static void Compose(MessageComposer messageComposer, PublicItemData publicItem)
+        public static void Compose(IMessageComposer messageComposer, PublicItemData publicItem)
         {
             messageComposer.Data.Add(publicItem.BannerId);
             messageComposer.Data.Add(publicItem.BannerType != BannerType.PUBLIC_FLAT ? publicItem.Label : string.Empty);

@@ -2,13 +2,8 @@
 
 namespace Kurkku.Messages.Outgoing
 {
-    internal class ScrSendUserInfoComposer : MessageComposer
+    internal class ScrSendUserInfoComposer : IMessageComposer
     {
-        public override short Header
-        {
-            get { return OutgoingEvents.ScrSendUserInfoComposer; }
-        }
-
         public override void Write()
         {
             m_Data.Add("habbo_club"); // Which product/widget to assign the value

@@ -2,13 +2,8 @@
 
 namespace Kurkku.Messages.Outgoing
 {
-    public class AuthenticationOKComposer : MessageComposer
+    public class AuthenticationOKComposer : IMessageComposer
     {
-        public override short Header
-        {
-            get { return OutgoingEvents.AuthenticationOKComposer; }
-        }
-
         public override void Write()
         {
             

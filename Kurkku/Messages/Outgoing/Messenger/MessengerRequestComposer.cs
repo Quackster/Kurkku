@@ -6,14 +6,9 @@ using System.Text;
 
 namespace Kurkku.Messages.Outgoing.Messenger
 {
-    class MessengerRequestComposer : MessageComposer
+    class MessengerRequestComposer : IMessageComposer
     {
         private PlayerData m_PlayerData;
-
-        public override short Header
-        {
-            get { return OutgoingEvents.MessengerRequestComposer; }
-        }
 
         public MessengerRequestComposer(PlayerData playerData)
         {

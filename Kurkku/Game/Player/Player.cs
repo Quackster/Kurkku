@@ -13,9 +13,9 @@ namespace Kurkku.Game
     {
         #region Fields
 
-        private ILog m_Log = LogManager.GetLogger(typeof(Player));
-        private PlayerData m_PlayerData;
-        private PlayerSettingsData m_Settings;
+        private ILog log = LogManager.GetLogger(typeof(Player));
+        private PlayerData playerData;
+        private PlayerSettingsData settings;
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace Kurkku.Game
         /// <summary>
         /// Get entity data
         /// </summary>
-        public IEntityData EntityData => (IEntityData)m_PlayerData;
+        public IEntityData EntityData => (IEntityData)playerData;
 
         #endregion
 
@@ -43,7 +43,7 @@ namespace Kurkku.Game
         /// <summary>
         /// Get the logging
         /// </summary>
-        public ILog Log => m_Log;
+        public ILog Log => log;
 
         /// <summary>
         /// Get messenger
@@ -72,12 +72,12 @@ namespace Kurkku.Game
         /// <summary>
         /// Get entity data
         /// </summary>
-        public PlayerData Details => m_PlayerData;
+        public PlayerData Details => playerData;
 
         /// <summary>
         /// Get player settings
         /// </summary>
-        public PlayerSettingsData Settings => m_Settings;
+        public PlayerSettingsData Settings => settings;
 
         /// <summary>
         /// Get room player
@@ -102,7 +102,7 @@ namespace Kurkku.Game
         {
             Connection = connectionSession;
             RoomEntity = new RoomPlayer(this);
-            m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Connection {connectionSession.Channel.Id}");
+            log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Connection {connectionSession.Channel.Id}");
         }
 
         #endregion
@@ -116,22 +116,22 @@ namespace Kurkku.Game
         /// <returns></returns>
         public bool TryLogin(string ssoTicket)
         {
-            UserDao.Login(out m_PlayerData, ssoTicket);
+            UserDao.Login(out playerData, ssoTicket);
 
-            if (m_PlayerData == null)
+            if (playerData == null)
                 return false;
 
-            m_Log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Player {m_PlayerData.Name}");
-            m_Log.Debug($"Player {m_PlayerData.Name} has logged in");
+            log = LogManager.GetLogger(Assembly.GetExecutingAssembly(), $"Player {playerData.Name}");
+            log.Debug($"Player {playerData.Name} has logged in");
 
-            UserSettingsDao.CreateOrUpdate(out m_Settings, m_PlayerData.Id);
+            UserSettingsDao.CreateOrUpdate(out settings, playerData.Id);
             PlayerManager.Instance.AddPlayer(this);
 
-            m_PlayerData.PreviousLastOnline = m_PlayerData.LastOnline;
-            m_PlayerData.LastOnline = DateTime.Now;
-            UserDao.Update(m_PlayerData);
+            playerData.PreviousLastOnline = playerData.LastOnline;
+            playerData.LastOnline = DateTime.Now;
+            UserDao.Update(playerData);
 
-            Subscription = SubscriptionDao.GetSubscription(m_PlayerData.Id);
+            Subscription = SubscriptionDao.GetSubscription(playerData.Id);
 
             Messenger = new Messenger(this);
             Messenger.SendStatus();
@@ -147,7 +147,7 @@ namespace Kurkku.Game
         /// <summary>
         /// Send message composer
         /// </summary>
-        public void Send(MessageComposer composer)
+        public void Send(IMessageComposer composer)
         {
             Connection.Send(composer);
         }
@@ -167,8 +167,8 @@ namespace Kurkku.Game
 
             Messenger.SendStatus();
 
-            m_PlayerData.LastOnline = DateTime.Now;
-            UserDao.Update(m_PlayerData);
+            playerData.LastOnline = DateTime.Now;
+            UserDao.Update(playerData);
         }
 
         #endregion

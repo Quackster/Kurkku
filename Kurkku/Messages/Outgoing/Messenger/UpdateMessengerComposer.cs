@@ -5,15 +5,10 @@ using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Messages.Outgoing
 {
-    internal class UpdateMessengerComposer : MessageComposer
+    internal class UpdateMessengerComposer : IMessageComposer
     {
         private List<MessengerCategoryData> categories;
         private List<MessengerUpdate> updates;
-
-        public override short Header
-        {
-            get { return OutgoingEvents.UpdateMessengerComposer; }
-        }
 
         public UpdateMessengerComposer(List<MessengerCategoryData> categories, List<MessengerUpdate> updates)
         {

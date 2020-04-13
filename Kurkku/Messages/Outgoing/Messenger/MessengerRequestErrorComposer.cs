@@ -3,15 +3,9 @@ using Kurkku.Messages.Headers;
 
 namespace Kurkku.Messages.Outgoing
 {
-    class MessengerRequestErrorComposer : MessageComposer
+    class MessengerRequestErrorComposer : IMessageComposer
     {
         private MessengerRequestError messageRequestError;
-
-        public override short Header
-        {
-            get { return OutgoingEvents.MessengerRequestErrorComposer; }
-        }
-
         public MessengerRequestErrorComposer(MessengerRequestError messageRequestError)
         {
             this.messageRequestError = messageRequestError;

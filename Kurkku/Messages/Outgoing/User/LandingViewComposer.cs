@@ -2,16 +2,10 @@
 
 namespace Kurkku.Messages.Outgoing
 {
-    public class LandingViewComposer : MessageComposer
+    public class LandingViewComposer : IMessageComposer
     {
         private string promotion;
         private string catalogueTeaser;
-
-        public override short Header
-        {
-            get { return OutgoingEvents.LandingViewComposer; }
-        }
-
         public LandingViewComposer(string promotion, string catalogueTeaser)
         {
             this.promotion = promotion;

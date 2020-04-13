@@ -10,13 +10,17 @@ using Kurkku.Network.Streams;
 
 namespace Kurkku.Network.Codec
 {
-    internal class NetworkEncoder : MessageToMessageEncoder<MessageComposer>
+    internal class NetworkEncoder : MessageToMessageEncoder<IMessageComposer>
     {
-        protected override void Encode(IChannelHandlerContext ctx, MessageComposer composer, List<object> output)
+        protected override void Encode(IChannelHandlerContext ctx, IMessageComposer composer, List<object> output)
         {
+            short? header = MessageHandler.Instance.GetComposerId(composer);
+
+            if (header == null)
+                throw new NullReferenceException($"No header found for composer class {composer.GetType().Name}");
+
             var buffer = Unpooled.Buffer();
-            
-            var response = new Response(composer.Header, buffer);
+            var response = new Response(header.Value, buffer);
 
             foreach (var objectData in composer.Data)
             {

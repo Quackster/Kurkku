@@ -7,14 +7,9 @@ using System.Text;
 
 namespace Kurkku.Messages.Outgoing
 {
-    class UserFlatCatsComposer : MessageComposer
+    class UserFlatCatsComposer : IMessageComposer
     {
         public List<NavigatorCategoryData> categories;
-
-        public override short Header
-        {
-            get { return OutgoingEvents.UserFlatCatsComposer; }
-        }
 
         public UserFlatCatsComposer(List<NavigatorCategoryData> categories)
         {

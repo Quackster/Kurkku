@@ -5,15 +5,10 @@ using System.Text;
 
 namespace Kurkku.Messages.Outgoing
 {
-    class AvailabilityStatusComposer : MessageComposer
+    class AvailabilityStatusComposer : IMessageComposer
     {
         private bool isOpen;
         private bool isTradingEnded;
-
-        public override short Header
-        {
-            get { return OutgoingEvents.AvailabilityStatusComposer; }
-        }
 
         public AvailabilityStatusComposer()
         {

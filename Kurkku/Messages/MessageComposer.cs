@@ -2,7 +2,7 @@
 
 namespace Kurkku.Messages
 {
-    public abstract class MessageComposer
+    public abstract class IMessageComposer
     {
         protected List<object> m_Data;
         protected bool m_Composed;
@@ -24,15 +24,7 @@ namespace Kurkku.Messages
             set { m_Composed = value; }
         }
 
-        /// <summary>
-        /// Get the header for the message
-        /// </summary>
-        public abstract short Header
-        {
-            get;
-        }
-
-        public MessageComposer()
+        public IMessageComposer()
         {
             m_Data = new List<object>();
         }

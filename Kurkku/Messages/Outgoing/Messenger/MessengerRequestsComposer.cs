@@ -4,15 +4,9 @@ using Kurkku.Messages.Headers;
 
 namespace Kurkku.Messages.Outgoing
 {
-    public class MessengerRequestsComposer : MessageComposer
+    public class MessengerRequestsComposer : IMessageComposer
     {
         private List<MessengerUser> requests;
-
-        public override short Header
-        {
-            get { return OutgoingEvents.MessengerRequestsComposer; }
-        }
-
         public MessengerRequestsComposer(List<MessengerUser> requests)
         {
             this.requests = requests;

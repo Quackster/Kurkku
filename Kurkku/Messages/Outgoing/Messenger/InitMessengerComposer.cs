@@ -5,7 +5,7 @@ using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Messages.Outgoing
 {
-    internal class InitMessengerComposer : MessageComposer
+    internal class InitMessengerComposer : IMessageComposer
     {
         private int maxNormalFriends;
         private int maxHCFriends;
@@ -13,11 +13,6 @@ namespace Kurkku.Messages.Outgoing
 
         private List<MessengerCategoryData> categories;
         private List<MessengerUser> friends;
-
-        public override short Header
-        {
-            get { return OutgoingEvents.InitMessengerComposer; }
-        }
 
         public InitMessengerComposer(int maxNormalFriends, int maxHCFriends, int maxVIPFriends, List<MessengerCategoryData> categories, List<MessengerUser> friends)
         {
