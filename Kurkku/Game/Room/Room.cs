@@ -14,7 +14,7 @@ namespace Kurkku.Game
         public RoomData Data { get; }
         public RoomEntityManager EntityManager { get; }
         public RoomModel Model => RoomManager.Instance.RoomModels.FirstOrDefault(x => x.Data.Model == Data.Model);
-        public ConcurrentBag<IEntity> Entities { get; }
+        public ConcurrentDictionary<int, IEntity> Entities { get; }
 
         #endregion
 
@@ -23,7 +23,7 @@ namespace Kurkku.Game
         public Room(RoomData data)
         {
             Data = data;
-            Entities = new ConcurrentBag<IEntity>();
+            Entities = new ConcurrentDictionary<int, IEntity>();
             EntityManager = new RoomEntityManager(this);
         }
 

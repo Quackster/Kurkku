@@ -3,6 +3,7 @@ using Kurkku.Storage.Database.Access;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Kurkku.Util.Extensions;
 
 namespace Kurkku.Game.Managers
 {
@@ -49,7 +50,7 @@ namespace Kurkku.Game.Managers
             entity.RoomEntity.InstanceId = GenerateInstanceId();
             entity.RoomEntity.Position = (entryPosition ?? room.Model.Door);
 
-            room.Entities.Add(entity);
+            room.Entities.TryAdd(entity.RoomEntity.InstanceId, entity);
 
             if (entity is Player player)
             {
@@ -63,10 +64,16 @@ namespace Kurkku.Game.Managers
 
         public void LeaveRoom(IEntity entity, bool hotelView = false)
         {
+            room.Entities.Remove(entity.RoomEntity.InstanceId);
+            entity.RoomEntity.Reset();
+
             if (entity is Player player)
             {
                 room.Data.UsersNow--;
                 RoomDao.SaveRoom(room.Data);
+
+                player.Send(new CloseConnectionComposer());
+                player.Messenger.SendStatus();
             }
         }
     }

@@ -34,5 +34,6 @@ namespace Kurkku.Messages.Headers
         public static readonly short FurnitureAliasesComposer = 1456;
         public static readonly short HeightMapComposer = 3942;
         public static readonly short FloorHeightMapComposer = 2443;
+        public static readonly short CloseConnectionComposer = 1256;
     }
 }

@@ -92,6 +92,7 @@ namespace Kurkku.Messages
             m_Events[IncomingEvents.GoToFlatMessageEvent] = new GoToFlatMessageEvent();
             m_Events[IncomingEvents.GetFurnitureAliasesMessageEvent] = new GetFurnitureAliasesMessageEvent();
             m_Events[IncomingEvents.GetRoomEntryDataMessageEvent] = new GetRoomEntryDataMessageComposer();
+            m_Events[IncomingEvents.QuitMessageEvent] = new QuitMessageEvent();
         }
 
         #endregion

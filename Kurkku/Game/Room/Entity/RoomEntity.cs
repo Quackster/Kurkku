@@ -25,6 +25,7 @@ namespace Kurkku.Game
             Goal = null;
             Next = null;
             InstanceId = -1;
+            Room = null;
         }
     }
 }
