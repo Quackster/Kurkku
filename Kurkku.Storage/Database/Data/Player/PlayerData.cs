@@ -35,5 +35,7 @@ namespace Kurkku.Storage.Database.Data
         public virtual DateTime PreviousLastOnline { get; set; }
         public virtual string Motto { get; set; }
         public virtual string RealName => string.Empty;
+
+        public virtual int AchievementPoints => 0;
     }
 }

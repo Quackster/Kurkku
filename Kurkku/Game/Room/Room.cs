@@ -1,4 +1,6 @@
 ﻿using Kurkku.Game.Managers;
+using Kurkku.Messages;
+using Kurkku.Messages.Outgoing;
 using Kurkku.Storage.Database.Data;
 using System;
 using System.Collections.Concurrent;
@@ -62,6 +64,15 @@ namespace Kurkku.Game
                 return;
 
             RoomManager.Instance.RemoveRoom(Data.Id);
+        }
+
+        /// <summary>
+        /// Send packet to entire player list in room
+        /// </summary>
+        public void Send(IMessageComposer composer)
+        {
+            foreach (var player in EntityManager.GetEntities<Player>())
+                player.Send(composer);
         }
 
         #endregion

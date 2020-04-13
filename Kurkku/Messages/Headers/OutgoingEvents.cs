@@ -38,5 +38,7 @@ namespace Kurkku.Messages.Headers
         public static readonly short RoomPropertyComposer = 2993;
         public static readonly short YouAreControllerComposer = 8;
         public static readonly short YouAreOwnerMessageEvent = 1812;
+        public static readonly short RoomVisualizationSettingsComposer = 752;
+        public static readonly short UsersComposer = 610;
     }
 }

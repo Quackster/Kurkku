@@ -3,7 +3,7 @@ using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Kurkku.Messages.Incoming
 {
@@ -19,6 +19,9 @@ namespace Kurkku.Messages.Incoming
 
             player.Send(new HeightMapComposer(roomModel.Heightmap));
             player.Send(new FloorHeightMapComposer(roomModel.Heightmap));
+            player.Send(new RoomVisualizationSettingsComposer(room.Data.FloorThickness, room.Data.WallThickness, room.Data.IsHidingWall));
+
+            room.Send(new UsersComposer(room.EntityManager.GetEntities<IEntity>()));
         }
     }
 }

@@ -84,7 +84,18 @@ namespace Kurkku.Storage.Database.Access
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
-                session.Query<RoomData>().Where(x => x.UsersNow > 0).Update(x => new RoomData { UsersNow = 0 });
+                session.Query<RoomData>().Where(x => x.UsersNow > 0 || x.UsersNow < 0).Update(x => new RoomData { UsersNow = 0 });
+            }
+        }
+
+        /// <summary>
+        /// Update users count
+        /// </summary>
+        public static void SetVisitorCount(int roomId, int visitorsNow)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                session.Query<RoomData>().Where(x => x.Id == roomId).Update(x => new RoomData { UsersNow = visitorsNow });
             }
         }
     }

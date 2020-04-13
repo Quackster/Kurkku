@@ -45,7 +45,7 @@ namespace Kurkku.Game.Managers
         public List<T> GetEntities<T>()
         {
             return room.Entities
-                .Where(x => x.Value.GetType().IsAssignableFrom(typeof(T)))
+                .Where(x => x.Value.GetType().IsAssignableFrom(typeof(T)) || x.Value.GetType().GetInterfaces().Contains(typeof(T)))
                 .Select(x => x.Value).Cast<T>().ToList();
         }
 
@@ -98,7 +98,7 @@ namespace Kurkku.Game.Managers
             entity.RoomEntity.InstanceId = GenerateInstanceId();
             entity.RoomEntity.Position = (entryPosition ?? room.Model.Door);
 
-            room.Entities.TryAdd(GenerateInstanceId(), new Bot());
+            room.Send(new UsersComposer(List.Create<IEntity>(entity)));
             room.Entities.TryAdd(entity.RoomEntity.InstanceId, entity);
 
             if (entity is Player player)
@@ -107,7 +107,7 @@ namespace Kurkku.Game.Managers
                 player.Messenger.SendStatus();
 
                 room.Data.UsersNow++;
-                RoomDao.SaveRoom(room.Data);
+                RoomDao.SetVisitorCount(room.Data.Id, room.Data.UsersNow);
             }
         }
 
@@ -122,7 +122,7 @@ namespace Kurkku.Game.Managers
             if (entity is Player player)
             {
                 room.Data.UsersNow--;
-                RoomDao.SaveRoom(room.Data);
+                RoomDao.SetVisitorCount(room.Data.Id, room.Data.UsersNow);
 
                 if (hotelView)
                     player.Send(new CloseConnectionComposer());
