@@ -136,6 +136,23 @@ namespace Kurkku.Game.Managers
             room.Entities.Remove(entity.RoomEntity.InstanceId);
             room.Send(new UserRemoveComposer(entity.RoomEntity.InstanceId));
 
+            // Remove entity from their current position
+            var currentTile = entity.RoomEntity.Position.GetTile(room);
+
+            if (currentTile != null)
+                currentTile.RemoveEntity(entity);
+
+            // Remove entity from their next position (if they were walking)
+            var nextPosition = entity.RoomEntity.Next;
+
+            if (nextPosition != null)
+            {
+                var nextTile = nextPosition.GetTile(room);
+
+                if (nextTile != null)
+                    nextTile.RemoveEntity(entity);
+            }
+
             entity.RoomEntity.Reset();
 
             if (entity is Player player)

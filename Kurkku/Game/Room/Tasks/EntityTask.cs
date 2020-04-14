@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using Kurkku.Util.Extensions;
 using Kurkku.Messages.Outgoing;
+using System.Linq;
 
 namespace Kurkku.Game
 {
@@ -75,16 +76,30 @@ namespace Kurkku.Game
                     entity.RoomEntity.Position.X = entity.RoomEntity.Next.X;
                     entity.RoomEntity.Position.Y = entity.RoomEntity.Next.Y;
                     entity.RoomEntity.Position.Z = room.Model.TileHeights[entity.RoomEntity.Position.X, entity.RoomEntity.Position.Y];
-
-
-                    Console.WriteLine("Position: " + entity.RoomEntity.Position);
-                    Console.WriteLine("Next: " + entity.RoomEntity.Next);
                 }
 
                 if (entity.RoomEntity.PathList.Count > 0)
                 {
                     Position next = entity.RoomEntity.PathList[0];
                     entity.RoomEntity.PathList.Remove(next);
+
+                    var previousTile = entity.RoomEntity.CurrentTile;
+
+                    if (previousTile != null)
+                        previousTile.RemoveEntity(entity);
+
+                    RoomTile nextTile = next.GetTile(room);
+
+                    if (nextTile == null || !RoomTile.IsValidTile(room, entity, next, 
+                        lastStep: !entity.RoomEntity.PathList.Any()))
+                    {
+                        entity.RoomEntity.PathList.Clear();
+                        ProcessUser(entity);
+                        entity.RoomEntity.Move(goal.X, goal.Y);
+                        return;
+                    }
+
+                    nextTile.AddEntity(entity);
 
                     int rotation = Rotation.CalculateDirection(position.X, position.Y, next.X, next.Y);
                     double height = room.Model.TileHeights[next.X, next.Y];
@@ -96,7 +111,6 @@ namespace Kurkku.Game
                     entity.RoomEntity.Position.Rotation = rotation;
                     entity.RoomEntity.AddStatus("mv", string.Format("{0},{1},{2}", next.X, next.Y, height.ToClientValue()));
                     entity.RoomEntity.Next = next;
-
                 }
                 else
                 {
