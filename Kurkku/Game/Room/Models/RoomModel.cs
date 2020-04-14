@@ -80,6 +80,21 @@ namespace Kurkku.Game
             }
         }
 
+        /// <summary>
+        /// Get if the position is an actual tile
+        /// </summary>
+        /// <param name="Position">the position</param>
+        /// <returns>true, if successful</returns>
+        public bool IsTile(Position Position)
+        {
+            if (Position.X >= 0 && Position.Y >= 0 && Position.X < this.MapSizeX && Position.Y < this.MapSizeY)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         #endregion
     }
 

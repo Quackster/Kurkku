@@ -36,5 +36,6 @@
         public static readonly short RoomVisualizationSettingsComposer = 752;
         public static readonly short UsersComposer = 610;
         public static readonly short UserRemoveComposer = 3359;
+        public static readonly short UsersStatusComposer = 1387;
     }
 }

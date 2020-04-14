@@ -101,6 +101,9 @@ namespace Kurkku.Game.Managers
             room.Send(new UsersComposer(List.Create<IEntity>(entity)));
             room.Entities.TryAdd(entity.RoomEntity.InstanceId, entity);
 
+            if (!room.IsActive)
+                TryInitialise();
+
             if (entity is Player player)
             {
                 // We're in room, yayyy >:)
@@ -109,6 +112,20 @@ namespace Kurkku.Game.Managers
                 room.Data.UsersNow++;
                 RoomDao.SetVisitorCount(room.Data.Id, room.Data.UsersNow);
             }
+        }
+
+        /// <summary>
+        /// Try initialize room to start
+        /// </summary>
+        private void TryInitialise()
+        {
+            if (room.IsActive)
+                return;
+
+            room.TaskManager.StartTasks();
+
+            room.Mapping.RegenerateMap();
+            room.IsActive = true;
         }
 
         /// <summary>

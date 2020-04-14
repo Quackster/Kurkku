@@ -12,8 +12,11 @@ namespace Kurkku.Game
 
         public RoomData Data { get; }
         public RoomEntityManager EntityManager { get; }
+        public RoomTaskManager TaskManager { get; }
+        public RoomMapping Mapping { get; set; }
         public RoomModel Model => RoomManager.Instance.RoomModels.FirstOrDefault(x => x.Data.Model == Data.Model);
         public ConcurrentDictionary<int, IEntity> Entities { get; }
+        public bool IsActive { get; set; }
 
         #endregion
 
@@ -24,6 +27,8 @@ namespace Kurkku.Game
             Data = data;
             Entities = new ConcurrentDictionary<int, IEntity>();
             EntityManager = new RoomEntityManager(this);
+            Mapping = new RoomMapping(this);
+            TaskManager = new RoomTaskManager(this);
         }
 
         #endregion
@@ -37,6 +42,10 @@ namespace Kurkku.Game
         {
             return new Room(roomData);
         }
+
+        #endregion
+
+        #region Private methods
 
         /// <summary>
         /// Get if the user has rights
@@ -60,7 +69,10 @@ namespace Kurkku.Game
             if (playerList.Any())
                 return;
 
+            TaskManager.StopTasks();
             RoomManager.Instance.RemoveRoom(Data.Id);
+
+            IsActive = false;
         }
 
         /// <summary>

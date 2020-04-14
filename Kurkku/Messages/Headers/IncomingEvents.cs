@@ -30,5 +30,6 @@
         public static readonly short GetGuestRoomMessageEvent = 634;
         public static readonly short QuitMessageEvent = 549;
         public static readonly short PopularFlatsMessengerEvent = 512;
+        public static readonly short WalkMessageEvent = 2600;
     }
 }

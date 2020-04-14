@@ -43,7 +43,7 @@ namespace Kurkku.Messages
             registerUser();
             registerNavigator();
             registerRoom();
-            
+            registerRoomUser();
             ResolveComposers();
         }
 
@@ -142,6 +142,15 @@ namespace Kurkku.Messages
             Events[IncomingEvents.GetFurnitureAliasesMessageEvent] = new GetFurnitureAliasesMessageEvent();
             Events[IncomingEvents.GetRoomEntryDataMessageEvent] = new GetRoomEntryDataMessageComposer();
             Events[IncomingEvents.QuitMessageEvent] = new QuitMessageEvent();
+            Events[IncomingEvents.WalkMessageEvent] = new WalkMessageEvent();
+        }
+
+        /// <summary>
+        /// Register room packets
+        /// </summary>
+        private void registerRoomUser()
+        {
+            Events[IncomingEvents.WalkMessageEvent] = new WalkMessageEvent();
         }
 
         #endregion

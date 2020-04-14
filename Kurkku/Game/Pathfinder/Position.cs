@@ -2,13 +2,26 @@
 
 namespace Kurkku.Game
 {
-    public class Position : ICloneable
+    public class Position
     {
         public int X;
         public int Y;
         public double Z;
         public int BodyRotation;
         public int HeadRotation;
+
+        public int Rotation
+        {
+            get
+            {
+                return BodyRotation;
+            }
+            set
+            {
+                BodyRotation = value;
+                HeadRotation = value;
+            }
+        }
 
         public Position() : this(0, 0, 0)
         {
@@ -37,12 +50,19 @@ namespace Kurkku.Game
             BodyRotation = bodyRotation;
         }
 
-        /**
-         * Checks if current tile touches target tile
-         */
+        /// <summary>
+        /// Get current tile by supplying room instance
+        /// </summary>
+        public RoomTile GetTile(Room room)
+        {
+            if (!room.Model.IsTile(this))
+                return null;
+
+            return room.Mapping.Tiles[X, Y];
+        }
         public bool Touches(Position position)
         {
-            return GetDistance(position) <= 2;
+            return GetDistanceSquared(position) <= 2;
         }
 
         public Position Add(Position other)
@@ -55,25 +75,17 @@ namespace Kurkku.Game
             return new Position(other.X - X, other.Y - Y, other.Z - Z);
         }
 
-        public int GetDistance(Position point)
+        public int GetDistanceSquared(Position point)
         {
             int dx = X - point.X;
             int dy = Y - point.Y;
 
-            return (dx * dx) + (dy * dy);
-        }
-
-        public double GetDistanceSquared(Position point)
-        {
-            int dx = X - point.X;
-            int dy = Y - point.Y;
-
-            return Math.Sqrt((dx * dx) + (dy * dy));
+            return (int)Math.Sqrt((dx * dx) + (dy * dy));
         }
 
         public Position GetSquareInFront()
         {
-            Position square = (Position)Clone();
+            Position square = Copy();
 
             if (BodyRotation == 0)
             {
@@ -118,7 +130,7 @@ namespace Kurkku.Game
 
         public Position GetSquareBehind()
         {
-            Position square = (Position)Clone();
+            Position square = Copy();
 
             if (BodyRotation == 0)
             {
@@ -162,7 +174,7 @@ namespace Kurkku.Game
 
         public Position GetSquareRight()
         {
-            Position square = (Position)Clone();
+            Position square = Copy();
 
             if (BodyRotation == 0)
             {
@@ -206,7 +218,7 @@ namespace Kurkku.Game
 
         public Position GetSquareLeft()
         {
-            Position square = (Position)Clone();
+            Position square = Copy();
 
             if (BodyRotation == 0)
             {
@@ -248,7 +260,42 @@ namespace Kurkku.Game
             return square;
         }
 
-        public object Clone()
+        public static bool operator ==(Position one, Position two)
+        {
+            if (one is null && two is null)
+                return true;
+
+            if (one is Position && two is Position)
+                return one.Equals(two);
+
+            return false;
+        }
+
+        public static bool operator !=(Position one, Position two)
+        {
+            if (one is null && !(two is null))
+                return true;
+
+            if (!(one is null) && two is null)
+                return true;
+
+            if (one is Position && two is Position)
+                return !one.Equals(two);
+
+            return false;
+        }
+
+        public static Position operator +(Position one, Position two)
+        {
+            return one.Copy().Add(two);
+        }
+
+        public static Position operator -(Position one, Position two)
+        {
+            return new Position(one.X - two.X, one.Y - two.Y);
+        }
+
+        public Position Copy()
         {
             return new Position(X, Y, Z, HeadRotation, BodyRotation);
         }
@@ -272,6 +319,11 @@ namespace Kurkku.Game
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"[X: {X}, Y: {Y}, Z: {Z}, HeadRotation: {HeadRotation}, BodyRotation: {BodyRotation}]";
         }
     }
 }
