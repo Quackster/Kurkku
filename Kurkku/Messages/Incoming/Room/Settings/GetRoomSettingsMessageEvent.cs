@@ -16,7 +16,7 @@ namespace Kurkku.Messages.Incoming
             if (room == null || !room.IsOwner(player.Details.Id))
                 return;
 
-            player.Send(new RoomSettingsDataComposer(room.Data));
+            player.Send(new RoomSettingsDataComposer(room));
         }
     }
 }

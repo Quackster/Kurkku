@@ -1,39 +1,44 @@
-﻿using Kurkku.Storage.Database.Data;
+﻿using Kurkku.Game;
+using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Messages.outoing
 {
     internal class RoomSettingsDataComposer : IMessageComposer
     {
-        private RoomData data;
+        private Room room;
 
-        public RoomSettingsDataComposer(RoomData data)
+        public RoomSettingsDataComposer(Room room)
         {
-            this.data = data;
+            this.room = room;
         }
 
         public override void Write()
         {
-            m_Data.Add(data.Id);
-            m_Data.Add(data.Name);
-            m_Data.Add(data.Description);
-            m_Data.Add((int)data.Status);
-            m_Data.Add(data.Category.Id);
-            m_Data.Add(data.UsersMax);
-            m_Data.Add(data.UsersNow); // what the fuck is this??
-            m_Data.Add(0); // what the fuck is this??
+            m_Data.Add(room.Data.Id);
+            m_Data.Add(room.Data.Name);
+            m_Data.Add(room.Data.Description);
+            m_Data.Add((int)room.Data.Status);
+            m_Data.Add(room.Data.Category.Id);
+            m_Data.Add(room.Data.UsersMax);
+            m_Data.Add(((room.Model.MapSizeX * room.Model.MapSizeY) > 100) ? 50 : 25); // what the fuck is this??
             m_Data.Add(0); // Tags
             m_Data.Add(0);
-
-            m_Data.Add(data.AllowPets ? 1 : 0); 
-            m_Data.Add(data.AllowPetsEat ? 1 : 0);
-            m_Data.Add(data.AllowWalkthrough ? 1 : 0);
-            m_Data.Add(data.IsHidingWall ? 1 : 0);
-            m_Data.Add(data.WallThickness);
-            m_Data.Add(data.FloorThickness);
-            m_Data.Add(0);
-            m_Data.Add(0);
-            m_Data.Add(0);
-            m_Data.Add(0);
+            m_Data.Add(1); // Trade settings
+            m_Data.Add(room.Data.AllowPets ? 1 : 0);
+            m_Data.Add(room.Data.AllowPetsEat ? 1 : 0);
+            m_Data.Add(room.Data.AllowWalkthrough ? 1 : 0);
+            m_Data.Add(room.Data.IsHidingWall ? 0 : 1);
+            m_Data.Add(room.Data.WallThickness);
+            m_Data.Add(room.Data.FloorThickness);
+            m_Data.Add(1);
+            m_Data.Add(1);
+            m_Data.Add(1);
+            //m_Data.Add(room.Data.AllowPets ? 1 : 0); 
+            //m_Data.Add(room.Data.AllowPetsEat ? 1 : 0);
+            //m_Data.Add(room.Data.AllowWalkthrough ? 1 : 0);
+            //m_Data.Add(room.Data.IsHidingWall ? 1 : 0);
+            //m_Data.Add(room.Data.WallThickness);
+            //m_Data.Add(room.Data.FloorThickness);
 
         }
     }
