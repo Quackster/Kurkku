@@ -77,6 +77,28 @@ namespace Kurkku.Storage.Database.Access
         }
 
         /// <summary>
+        /// New room data
+        /// </summary>
+        public static void NewRoom(RoomData data)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    try
+                    {
+                        session.Save(data);
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Reset all visitors
         /// </summary>
         public static void ResetVisitorCounts()

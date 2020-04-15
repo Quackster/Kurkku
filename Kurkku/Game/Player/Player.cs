@@ -65,7 +65,7 @@ namespace Kurkku.Game
                 if (Subscription == null)
                     return false;
 
-                return DateTime.Now > Subscription.ExpireDate;
+                return Subscription.ExpireDate > DateTime.Now;
             }
         }
 
@@ -140,6 +140,7 @@ namespace Kurkku.Game
 
             Send(new AuthenticationOKComposer());
             Send(new AvailabilityStatusComposer());
+            Send(new UserRightsMessageComposer(IsSubscribed ? 2 : 0, playerData.Rank));
 
             return true;
         }
