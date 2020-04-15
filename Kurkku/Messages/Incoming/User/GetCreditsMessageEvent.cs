@@ -4,11 +4,11 @@ using Kurkku.Network.Streams;
 
 namespace Kurkku.Messages.Incoming
 {
-    class ScrGetUserInfoMessageEvent : MessageEvent
+    class GetCreditsMessageEvent : MessageEvent
     {
         public void Handle(Player player, Request request)
         {
-            player.Send(new ScrSendUserInfoComposer(player.Subscription));
+            player.Send(new CreditsBalanceComposer(player.Details.Credits));
         }
     }
 }

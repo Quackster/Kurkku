@@ -118,6 +118,7 @@ namespace Kurkku.Messages
             Events[IncomingEvents.LandingViewMessageEvent] = new LandingViewMessageEvent();
             Events[IncomingEvents.UserInfoMessageEvent] = new UserInfoMessageEvent();
             Events[IncomingEvents.ScrGetUserInfoMessageEvent] = new ScrGetUserInfoMessageEvent();
+            Events[IncomingEvents.GetCreditsMessageEvent] = new GetCreditsMessageEvent();
         }
 
         /// <summary>
@@ -130,6 +131,7 @@ namespace Kurkku.Messages
             Events[IncomingEvents.UserFlatsCatsMessageEvent] = new UserFlatCatsMessageEvent();
             Events[IncomingEvents.CanCreateRoomMessageEvent] = new CanCreateRoomMessageEvent();
             Events[IncomingEvents.PopularFlatsMessengerEvent] = new PopularFlatsMessengerEvent();
+            Events[IncomingEvents.CreateRoomMessageEvent] = new CreateRoomMessageEvent();
         }
 
         /// <summary>

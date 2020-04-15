@@ -15,7 +15,7 @@ namespace Kurkku.Storage.Database.Access
 
                 return session.QueryOver(() => subscriptionDataAlias)
                     .Where(() => subscriptionDataAlias.UserId == userId)
-                    .And(() => DateTime.Now > subscriptionDataAlias.ExpireDate)
+                    .And(() => subscriptionDataAlias.ExpireDate > DateTime.Now)
                     .List().Count > 0;
             }
         }
@@ -28,7 +28,7 @@ namespace Kurkku.Storage.Database.Access
 
                 return session.QueryOver(() => subscriptionDataAlias)
                     .Where(() => subscriptionDataAlias.UserId == userId)
-                    .And(() => DateTime.Now > subscriptionDataAlias.ExpireDate).SingleOrDefault();
+                    .And(() =>subscriptionDataAlias.ExpireDate > DateTime.Now ).SingleOrDefault();
             }
         }
 

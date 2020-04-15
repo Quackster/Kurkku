@@ -1,23 +1,13 @@
-﻿using System;
-
-namespace Kurkku.Util.Extensions
+﻿namespace Kurkku.Util.Extensions
 {
-    public static class DoubleExtensions
+    public static class IntExtensions
     {
-        /// <summary>
-        /// Convert double for Habbo client
-        /// </summary>
-        public static string ToClientValue(this double value)
-        {
-            return String.Format("{0:0.0}", value);
-        }
-
         /// <summary>
         /// Return an integer - as seconds, to an array of days, hours, minutes and seconds
         /// </summary>
-        public static int[] SecondsToTimeUnits(this double num)
+        public static int[] SecondsToTimeUnits(this int num)
         {
-            int n = (int)num;
+            int n = num;
             int day = n / (24 * 3600);
 
             n = n % (24 * 3600);
