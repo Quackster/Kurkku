@@ -4,7 +4,7 @@ using Kurkku.Storage.Database.Access;
 
 namespace Kurkku.Messages.Incoming
 {
-    public class DeclineRequestMessageEvent : MessageEvent
+    public class DeclineRequestMessageEvent : IMessageEvent
     {
         public void Handle(Player player, Request request)
         {

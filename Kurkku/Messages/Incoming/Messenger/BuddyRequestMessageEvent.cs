@@ -7,7 +7,7 @@ using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Messages.Incoming
 {
-    class BuddyRequestMessageEvent : MessageEvent
+    class BuddyRequestMessageEvent : IMessageEvent
     {
         public void Handle(Player player, Request request)
         {

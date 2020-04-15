@@ -4,7 +4,7 @@ using Kurkku.Messages.Outgoing;
 
 namespace Kurkku.Messages.Incoming
 {
-    public class UserFlatCatsMessageEvent : MessageEvent
+    public class UserFlatCatsMessageEvent : IMessageEvent
     {
         public void Handle(Player player, Request request)
         {

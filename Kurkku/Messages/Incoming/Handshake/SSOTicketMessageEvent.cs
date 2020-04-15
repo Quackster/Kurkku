@@ -3,7 +3,7 @@ using Kurkku.Network.Streams;
 
 namespace Kurkku.Messages.Incoming
 {
-    class SSOTicketMessageEvent : MessageEvent
+    class SSOTicketMessageEvent : IMessageEvent
     {
         public void Handle(Player player, Request request)
         {

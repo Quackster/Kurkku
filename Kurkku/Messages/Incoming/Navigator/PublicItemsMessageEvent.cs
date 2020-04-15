@@ -5,7 +5,7 @@ using Kurkku.Storage.Database.Access;
 
 namespace Kurkku.Messages.Incoming
 {
-    class PublicItemsMessageEvent : MessageEvent
+    class PublicItemsMessageEvent : IMessageEvent
     {
         public void Handle(Player player, Request request)
         {

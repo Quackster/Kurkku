@@ -39,5 +39,7 @@
         public static readonly short UsersStatusComposer = 1387;
         public static readonly short RoomInfoComposer = 2456;
         public static readonly short RoomMuteSettingsComposer = 2132;
+        public static readonly short FollowBuddyErrorComposer = 809;
+        public static readonly short RoomForwardComposer = 1959;
     }
 }

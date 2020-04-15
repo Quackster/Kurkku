@@ -3,7 +3,7 @@ using Kurkku.Network.Streams;
 
 namespace Kurkku.Messages.Incoming
 {
-    class VersionCheckMessageEvent : MessageEvent
+    class VersionCheckMessageEvent : IMessageEvent
     {
         public void Handle(Player player, Request request)
         {

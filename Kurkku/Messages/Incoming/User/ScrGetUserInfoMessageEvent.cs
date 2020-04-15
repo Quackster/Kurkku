@@ -4,7 +4,7 @@ using Kurkku.Network.Streams;
 
 namespace Kurkku.Messages.Incoming
 {
-    class ScrGetUserInfoMessageEvent : MessageEvent
+    class ScrGetUserInfoMessageEvent : IMessageEvent
     {
         public void Handle(Player player, Request request)
         {

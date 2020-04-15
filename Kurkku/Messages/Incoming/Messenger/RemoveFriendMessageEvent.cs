@@ -4,7 +4,7 @@ using Kurkku.Storage.Database.Access;
 
 namespace Kurkku.Messages.Incoming
 {
-    class RemoveFriendMessageEvent : MessageEvent
+    class RemoveFriendMessageEvent : IMessageEvent
     {
         public void Handle(Player player, Request request)
         {

@@ -4,7 +4,7 @@ using Kurkku.Network.Streams;
 
 namespace Kurkku.Messages.Incoming
 {
-    class GetCreditsMessageEvent : MessageEvent
+    class GetCreditsMessageEvent : IMessageEvent
     {
         public void Handle(Player player, Request request)
         {

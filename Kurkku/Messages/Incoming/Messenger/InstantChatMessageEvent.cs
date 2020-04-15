@@ -7,7 +7,7 @@ using Kurkku.Util.Extensions;
 
 namespace Kurkku.Messages.Incoming
 {
-    class InstantChatMessageEvent : MessageEvent
+    class InstantChatMessageEvent : IMessageEvent
     {
         public void Handle(Player player, Request request)
         {

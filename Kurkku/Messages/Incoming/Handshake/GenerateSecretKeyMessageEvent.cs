@@ -4,7 +4,7 @@ using Kurkku.Network.Streams;
 
 namespace Kurkku.Messages.Incoming
 {
-    class GenerateSecretKeyMessageEvent : MessageEvent
+    class GenerateSecretKeyMessageEvent : IMessageEvent
     {
         public void Handle(Player player, Request request)
         {

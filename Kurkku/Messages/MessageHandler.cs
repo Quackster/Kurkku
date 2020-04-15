@@ -22,7 +22,7 @@ namespace Kurkku.Messages
 
         #region Properties
 
-        private Dictionary<short, MessageEvent> Events { get; }
+        private Dictionary<short, IMessageEvent> Events { get; }
         private Dictionary<string, short> Composers { get; }
 
 
@@ -32,7 +32,7 @@ namespace Kurkku.Messages
 
         public MessageHandler()
         {
-            Events = new Dictionary<short, MessageEvent>();
+            Events = new Dictionary<short, IMessageEvent>();
             Composers = new Dictionary<string, short>();
         }
 
@@ -109,6 +109,7 @@ namespace Kurkku.Messages
             Events[IncomingEvents.DeclineRequestMessageEvent] = new DeclineRequestMessageEvent();
             Events[IncomingEvents.RemoveFriendMessageEvent] = new RemoveFriendMessageEvent();
             Events[IncomingEvents.InstantChatMessageEvent] = new InstantChatMessageEvent();
+            Events[IncomingEvents.FollowFriendMessageEvent] = new FollowFriendMessageEvent();
         }
 
         /// <summary>
@@ -146,6 +147,7 @@ namespace Kurkku.Messages
             Events[IncomingEvents.GetRoomEntryDataMessageEvent] = new GetRoomEntryDataMessageComposer();
             Events[IncomingEvents.QuitMessageEvent] = new QuitMessageEvent();
             Events[IncomingEvents.WalkMessageEvent] = new WalkMessageEvent();
+            Events[IncomingEvents.GetGuestRoomMessageEvent] = new GetGuestRoomMessageEvent();
         }
 
         /// <summary>

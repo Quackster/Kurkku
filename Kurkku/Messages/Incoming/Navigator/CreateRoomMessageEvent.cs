@@ -3,7 +3,7 @@ using Kurkku.Network.Streams;
 
 namespace Kurkku.Messages.Incoming
 {
-    public class CreateRoomMessageEvent : MessageEvent
+    public class CreateRoomMessageEvent : IMessageEvent
     {
         public void Handle(Player player, Request request)
         {
