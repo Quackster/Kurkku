@@ -43,5 +43,6 @@
         public static readonly short RoomForwardComposer = 1959;
         public static readonly short UserRightsMessageComposer = 325;
         public static readonly short FlatCreatedComposer = 2897;
+        public static readonly short RoomEntryInfoComposer = 1873;
     }
 }

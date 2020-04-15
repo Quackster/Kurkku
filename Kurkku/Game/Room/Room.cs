@@ -1,6 +1,7 @@
 ﻿using Kurkku.Game.Managers;
 using Kurkku.Messages;
 using Kurkku.Storage.Database.Data;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,18 @@ namespace Kurkku.Game
 
             return false;
         }
+
+        /// <summary>
+        /// Get if the user is owner
+        /// </summary>
+        public bool IsOwner(int userId)
+        {
+            if (Data.OwnerId == userId)
+                return true;
+
+            return false;
+        }
+
 
         /// <summary>
         /// Try and dispose, only if it has 0 players active.
