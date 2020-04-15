@@ -98,7 +98,6 @@ namespace Kurkku.Game.Managers
             entity.RoomEntity.InstanceId = GenerateInstanceId();
             entity.RoomEntity.Position = (entryPosition ?? room.Model.Door);
 
-            room.Send(new UsersComposer(List.Create<IEntity>(entity)));
             room.Entities.TryAdd(entity.RoomEntity.InstanceId, entity);
 
             if (!room.IsActive)
@@ -111,6 +110,11 @@ namespace Kurkku.Game.Managers
 
                 room.Data.UsersNow++;
                 RoomDao.SetVisitorCount(room.Data.Id, room.Data.UsersNow);
+            }
+            else
+            {
+                // For 'Player' to show, see GetRoomEntryDataMessageComposer.cs line 21
+                room.Send(new UsersComposer(List.Create(entity)));
             }
         }
 

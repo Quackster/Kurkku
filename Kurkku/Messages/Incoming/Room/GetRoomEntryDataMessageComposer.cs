@@ -1,6 +1,7 @@
 ﻿using Kurkku.Game;
 using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
+using System.Collections.Generic;
 
 namespace Kurkku.Messages.Incoming
 {
@@ -18,7 +19,19 @@ namespace Kurkku.Messages.Incoming
             player.Send(new FloorHeightMapComposer(roomModel.Heightmap));
             player.Send(new RoomVisualizationSettingsComposer(room.Data.FloorThickness, room.Data.WallThickness, room.Data.IsHidingWall));
 
-            room.Send(new UsersComposer(room.EntityManager.GetEntities<IEntity>()));
+            room.Send(new UsersComposer(List.Create<IEntity>(player)));
+            room.Send(new UsersStatusComposer(List.Create<IEntity>(player)));
+
+            player.Send(new UsersComposer(room.EntityManager.GetEntities<IEntity>()));
+            player.Send(new UsersStatusComposer(room.EntityManager.GetEntities<IEntity>()));
+
+            /*
+                    player.send(new USER_OBJECTS(room.getEntities()));
+        room.send(new USER_OBJECTS(player), List.of(player));
+        player.send(new USER_STATUSES(room.getEntities()));
+        */
+
+
         }
     }
 }

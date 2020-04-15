@@ -46,21 +46,12 @@ namespace Kurkku.Game
             // Return true always... otherwise the user will be stuck
             if (entity.RoomEntity.Position == position)
                 return true;
-
-            if (room.Data.AllowWalkthrough)
-            {
-                if (lastStep)
-                {
-                    if (tile.Entities.Count(x => x.Value != entity) > 0)
-                        return false;
-                }
-            }
-            else
-            {
+            
+            // If the room doesn't allow walking through users OR it's the last step, then check if a user that IS NOT you is on the tile
+            if (!room.Data.AllowWalkthrough || lastStep)
                 if (tile.Entities.Count(x => x.Value != entity) > 0)
                     return false;
-            }
-
+            
             return true;
         }
 

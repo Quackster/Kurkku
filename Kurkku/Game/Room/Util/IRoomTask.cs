@@ -35,7 +35,7 @@ namespace Kurkku.Game
             if (Task == null)
                 return;
 
-            Task.Change(Timeout.Infinite, Timeout.Infinite);
+            Task.Dispose();
             Task = null;
         }
 

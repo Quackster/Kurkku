@@ -2,6 +2,7 @@
 using Kurkku.Messages;
 using Kurkku.Storage.Database.Data;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Kurkku.Game
@@ -78,9 +79,12 @@ namespace Kurkku.Game
         /// <summary>
         /// Send packet to entire player list in room
         /// </summary>
-        public void Send(IMessageComposer composer)
+        public void Send(IMessageComposer composer, List<Player> specificUsers = null)
         {
-            foreach (var player in EntityManager.GetEntities<Player>())
+            if (specificUsers == null)
+                specificUsers = EntityManager.GetEntities<Player>();
+
+            foreach (var player in specificUsers)
                 player.Send(composer);
         }
 
