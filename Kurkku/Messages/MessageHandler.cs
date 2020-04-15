@@ -164,6 +164,7 @@ namespace Kurkku.Messages
         private void registerRoomSettings()
         {
             Events[IncomingEvents.ToggleRoomMuteMessageEvent] = new ToggleRoomMuteMessageEvent();
+            Events[IncomingEvents.GetRoomSettingsMessageEvent] = new GetRoomSettingsMessageEvent();
         }
 
         #endregion

@@ -35,5 +35,6 @@
         public static readonly short GetCreditsMessageEvent = 2101;
         public static readonly short ToggleRoomMuteMessageEvent = 574;
         public static readonly short FollowFriendMessageEvent = 1177;
+        public static readonly short GetRoomSettingsMessageEvent = 1102;
     }
 }
