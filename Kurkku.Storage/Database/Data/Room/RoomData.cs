@@ -68,6 +68,7 @@ namespace Kurkku.Storage.Database.Data
         public virtual bool IsPublicRoom => OwnerData == null;
         public virtual int UsersNow { get; set; }
         public virtual int UsersMax { get; set; }
+        public virtual bool IsMuted { get; set; }
     }
 
     public enum RoomStatus

@@ -33,5 +33,6 @@
         public static readonly short WalkMessageEvent = 2600;
         public static readonly short CreateRoomMessageEvent = 9;
         public static readonly short GetCreditsMessageEvent = 2101;
+        public static readonly short ToggleRoomMuteMessageEvent = 574;
     }
 }

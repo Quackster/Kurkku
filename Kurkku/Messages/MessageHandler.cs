@@ -38,12 +38,13 @@ namespace Kurkku.Messages
 
         public void Load()
         {
-            registerHandshake();
-            registerMessenger();
-            registerUser();
-            registerNavigator();
-            registerRoom();
-            registerRoomUser();
+            RegisterHandshake();
+            RegisterMessenger();
+            RegisterUser();
+            RegisterNavigator();
+            RegisterRoom();
+            RegisterRoomUser();
+            registerRoomSettings();
             ResolveComposers();
         }
 
@@ -87,7 +88,7 @@ namespace Kurkku.Messages
         /// <summary>
         /// Register handshake packets
         /// </summary>
-        private void registerHandshake()
+        private void RegisterHandshake()
         {
             Events[IncomingEvents.VersionCheckMessageEvent] = new VersionCheckMessageEvent();
             Events[IncomingEvents.InitCryptoMessageEvent] = new InitCryptoMessageEvent();
@@ -99,7 +100,7 @@ namespace Kurkku.Messages
         /// <summary>
         /// Register messenger packets
         /// </summary>
-        private void registerMessenger()
+        private void RegisterMessenger()
         {
             Events[IncomingEvents.InitMessengerMessageEvent] = new InitMessengerMessageEvent();
             Events[IncomingEvents.SearchMessengerEvent] = new SearchMessageEvent();
@@ -113,7 +114,7 @@ namespace Kurkku.Messages
         /// <summary>
         /// Register user packets
         /// </summary>
-        private void registerUser()
+        private void RegisterUser()
         {
             Events[IncomingEvents.LandingViewMessageEvent] = new LandingViewMessageEvent();
             Events[IncomingEvents.UserInfoMessageEvent] = new UserInfoMessageEvent();
@@ -124,7 +125,7 @@ namespace Kurkku.Messages
         /// <summary>
         /// Register navigator packets
         /// </summary>
-        private void registerNavigator()
+        private void RegisterNavigator()
         {
             Events[IncomingEvents.PublicItemsMessageEvent] = new PublicItemsMessageEvent();
             Events[IncomingEvents.UserFlatsMessageEvent] = new UserFlatsMessageEvent();
@@ -137,7 +138,7 @@ namespace Kurkku.Messages
         /// <summary>
         /// Register room packets
         /// </summary>
-        private void registerRoom()
+        private void RegisterRoom()
         {
             Events[IncomingEvents.OpenFlatConnectionMessageEvent] = new OpenFlatConnectionMessageEvent();
             Events[IncomingEvents.GoToFlatMessageEvent] = new GoToFlatMessageEvent();
@@ -150,9 +151,17 @@ namespace Kurkku.Messages
         /// <summary>
         /// Register room packets
         /// </summary>
-        private void registerRoomUser()
+        private void RegisterRoomUser()
         {
             Events[IncomingEvents.WalkMessageEvent] = new WalkMessageEvent();
+        }
+
+        /// <summary>
+        /// Register room setting packets
+        /// </summary>
+        private void registerRoomSettings()
+        {
+            Events[IncomingEvents.ToggleRoomMuteMessageEvent] = new ToggleRoomMuteMessageEvent();
         }
 
         #endregion
