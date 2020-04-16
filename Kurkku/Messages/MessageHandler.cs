@@ -148,6 +148,8 @@ namespace Kurkku.Messages
             Events[IncomingEvents.QuitMessageEvent] = new QuitMessageEvent();
             Events[IncomingEvents.WalkMessageEvent] = new WalkMessageEvent();
             Events[IncomingEvents.GetGuestRoomMessageEvent] = new GetGuestRoomMessageEvent();
+            Events[IncomingEvents.GetPublicRoomMessageEvent] = new GetPublicRoomMessageEvent();
+            Events[IncomingEvents.LoadPublicRoomMessageEvent] = new LoadPublicRoomMessageEvent();
         }
 
         /// <summary>

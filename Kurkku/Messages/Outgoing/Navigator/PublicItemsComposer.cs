@@ -46,10 +46,21 @@ namespace Kurkku.Messages.Outgoing
 
             if (publicItem.BannerType == BannerType.PUBLIC_FLAT)
             {
-                messageComposer.Data.Add(publicItem.ImageType == ImageType.INTERNAL ? publicItem.Image : "");
+                /*
+                public function _SafeStr_3944(k:_SafeStr_2170)
+                {
+                    this._SafeStr_10591 = k.readString();
+                    this._SafeStr_10175 = k.readInt();
+                    this._SafeStr_10592 = k.readInt();
+                    this._SafeStr_10174 = k.readString();
+                    this._SafeStr_10658 = k.readInt();
+                    this._SafeStr_10173 = k.readInt();
+                }
+                */
+                messageComposer.Data.Add(publicItem.Description);
                 messageComposer.Data.Add(0);
-                messageComposer.Data.Add(0);
-                messageComposer.Data.Add(publicItem.Room.Description);
+                messageComposer.Data.Add(publicItem.DescriptionEntry);
+                messageComposer.Data.Add(publicItem.Room.CCTs);
                 messageComposer.Data.Add(publicItem.Room.UsersMax);
                 messageComposer.Data.Add(publicItem.Room.Id);
             }

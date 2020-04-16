@@ -14,6 +14,7 @@ namespace Kurkku.Storage.Database.Data
             Map(x => x.ImageType, "image_type");
             Map(x => x.Label, "label");
             Map(x => x.Description, "description");
+            Map(x => x.DescriptionEntry, "description_entry");
             Map(x => x.Image, "image_url");
 
             References(x => x.Room, "room_id").NotFound.Ignore();
@@ -29,6 +30,7 @@ namespace Kurkku.Storage.Database.Data
         public virtual ImageType ImageType { get; set; }
         public virtual string Label { get; set; }
         public virtual string Description { get; set; }
+        public virtual int DescriptionEntry { get; set; }
         public virtual string Image { get; set; }
 
         public virtual RoomData Room { get; set; }

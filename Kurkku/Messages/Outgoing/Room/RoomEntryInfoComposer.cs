@@ -25,7 +25,7 @@ namespace Kurkku.Messages.Outgoing
             else
             {
                 m_Data.Add(roomData.Description);
-                m_Data.Add(false);
+                m_Data.Add(roomData.Id);
             }
         }
     }
