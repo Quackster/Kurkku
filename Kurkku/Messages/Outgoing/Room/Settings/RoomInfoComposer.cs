@@ -20,7 +20,7 @@ namespace Kurkku.Messages.Outgoing
             Data.Add(isLoading);
             Data.Add(roomData.Id);
             Data.Add(roomData.Name);
-            Data.Add(roomData.IsPublicRoom);
+            Data.Add(false); // TODO: Owner name hidden
             Data.Add(roomData.OwnerId);
             Data.Add(roomData.OwnerData == null ? string.Empty : roomData.OwnerData.Name);
             Data.Add((int)roomData.Status);
