@@ -8,7 +8,7 @@ namespace Kurkku.Util
 
         public static Encoding GetEncoding()
         {
-            return Encoding.Default;
+            return Encoding.GetEncoding("ISO-8859-1");
         }
 
         #endregion

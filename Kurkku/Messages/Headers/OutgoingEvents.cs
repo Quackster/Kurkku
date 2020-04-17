@@ -46,5 +46,9 @@
         public static readonly short RoomEntryInfoComposer = 1873;
         public static readonly short RoomSettingsDataComposer = 3367;
         public static readonly short PublicRoomCastsComposer = 16;
+        public static readonly short CataloguePagesComposer = 3845;
+        public static readonly short AllowancesComposer = 709;
+        public static readonly short ActivityPointNotificationComposer = 1271;
+        public static readonly short CataloguePageComposer = 3379;
     }
 }

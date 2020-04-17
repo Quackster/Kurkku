@@ -139,6 +139,7 @@ namespace Kurkku.Game
             Authenticated = true;
 
             Send(new AuthenticationOKComposer());
+            Send(new ActivityPointNotificationComposer());
             Send(new AvailabilityStatusComposer());
             Send(new UserRightsMessageComposer(IsSubscribed ? 2 : 0, playerData.Rank));
 

@@ -38,5 +38,7 @@
         public static readonly short GetRoomSettingsMessageEvent = 1102;
         public static readonly short GetPublicRoomMessageEvent = 3897;
         public static readonly short LoadPublicRoomMessageEvent = 3583;
+        public static readonly short OpenCatalogueMessageEvent = 3071;
+        public static readonly short GetCataloguePageMessageEvent = 1777;
     }
 }

@@ -13,6 +13,7 @@ namespace Kurkku.Messages.Incoming
 
             player.Send(new UserInfoComposer(player));
             player.Send(new WelcomeUserComposer());
+            player.Send(new AllowancesComposer());
         }
     }
 }

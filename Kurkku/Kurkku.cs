@@ -10,6 +10,7 @@ using Kurkku.Storage.Database.Access;
 using Kurkku.Game;
 using Kurkku.Messages;
 using System.Threading;
+using System.Linq;
 
 namespace Kurkku
 {
@@ -87,6 +88,7 @@ namespace Kurkku
         {
             ValueManager.Instance.Load();
             RoomManager.Instance.Load();
+            CatalogueManager.Instance.Load();
             NavigatorManager.Instance.Load();
             MessageHandler.Instance.Load();
 

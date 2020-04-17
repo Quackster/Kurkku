@@ -1,6 +1,7 @@
 ﻿using Kurkku.Game;
 using Kurkku.Messages.Headers;
 using Kurkku.Messages.Incoming;
+using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
 using log4net;
 using System;
@@ -44,7 +45,8 @@ namespace Kurkku.Messages
             RegisterNavigator();
             RegisterRoom();
             RegisterRoomUser();
-            registerRoomSettings();
+            RegisterRoomSettings();
+            RegisterCatalogue();
             ResolveComposers();
         }
 
@@ -163,10 +165,19 @@ namespace Kurkku.Messages
         /// <summary>
         /// Register room setting packets
         /// </summary>
-        private void registerRoomSettings()
+        private void RegisterRoomSettings()
         {
             Events[IncomingEvents.ToggleRoomMuteMessageEvent] = new ToggleRoomMuteMessageEvent();
             Events[IncomingEvents.GetRoomSettingsMessageEvent] = new GetRoomSettingsMessageEvent();
+        }
+
+        /// <summary>
+        /// Register packets for catalogue
+        /// </summary>
+        private void RegisterCatalogue()
+        {
+            Events[IncomingEvents.OpenCatalogueMessageEvent] = new OpenCatalogueMessageEvent();
+            Events[IncomingEvents.GetCataloguePageMessageEvent] = new GetCataloguePageMessageEvent();
         }
 
         #endregion
