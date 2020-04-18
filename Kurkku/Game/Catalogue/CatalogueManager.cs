@@ -1,5 +1,6 @@
 ﻿using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,11 +25,24 @@ namespace Kurkku.Game
         public void Load()
         {
             Pages = CatalogueDao.GetPages();
+            DeserialisePageData();
         }
 
         #endregion
 
         #region Public methods
+
+        /// <summary>
+        /// Convert JSON arrays to list of images and strings
+        /// </summary>
+        public void DeserialisePageData()
+        {
+            foreach (var page in Pages)
+            {
+                page.Images = JsonConvert.DeserializeObject<List<string>>(page.ImagesData);
+                page.Texts = JsonConvert.DeserializeObject<List<string>>(page.TextsData);
+            }
+        }
 
         /// <summary>
         /// Get applicable pages for parent id
@@ -40,7 +54,7 @@ namespace Kurkku.Game
             if (!hasClub)
                 pages = pages.Where(x => !x.IsClubOnly).ToList();
 
-            return pages;
+            return pages.OrderBy(x => x.OrderId).ToList();
         }
         
         /// <summary>
