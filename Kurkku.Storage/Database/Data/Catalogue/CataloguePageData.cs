@@ -9,7 +9,7 @@ namespace Kurkku.Storage.Database.Data
     {
         public CataloguePageMapping()
         {
-            Table("catalog_pages");
+            Table("catalogue_pages");
             Id(x => x.Id, "id");
             Map(x => x.ParentId, "parent_id");
             Map(x => x.OrderId, "order_id");
