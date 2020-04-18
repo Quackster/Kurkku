@@ -9,9 +9,6 @@ using Kurkku.Network;
 using Kurkku.Storage.Database.Access;
 using Kurkku.Game;
 using Kurkku.Messages;
-using System.Threading;
-using System.Linq;
-using Kurkku.Storage.Database.Data;
 
 namespace Kurkku
 {

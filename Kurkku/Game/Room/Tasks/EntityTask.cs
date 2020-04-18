@@ -1,8 +1,6 @@
 ﻿using log4net;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using Kurkku.Util.Extensions;
 using Kurkku.Messages.Outgoing;
 using System.Linq;

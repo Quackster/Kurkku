@@ -1,5 +1,4 @@
 ﻿using Kurkku.Game;
-using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Messages.Outgoing
 {

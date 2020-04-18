@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Kurkku.Util.Extensions;
+﻿using System.Collections.Generic;
 using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Game

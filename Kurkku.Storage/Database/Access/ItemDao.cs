@@ -1,8 +1,5 @@
 ﻿using Kurkku.Storage.Database.Data;
-using NHibernate.Linq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Kurkku.Storage.Database.Access
 {
