@@ -2487,7 +2487,7 @@ CREATE TABLE IF NOT EXISTS `item_definitions` (
   `allowed_rotations` tinytext NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2307 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=2301 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 /*!40000 ALTER TABLE `item_definitions` DISABLE KEYS */;
 INSERT INTO `item_definitions` (`id`, `sprite`, `name`, `description`, `sprite_id`, `length`, `width`, `top_height`, `max_status`, `behaviour`, `interactor`, `is_tradable`, `is_recyclable`, `drink_ids`, `rental_time`, `allowed_rotations`) VALUES
