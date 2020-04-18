@@ -9,7 +9,6 @@ namespace Kurkku.Game
 
         public CataloguePageData Data { get; }
         public List<CatalogueItem> Items => CatalogueManager.Instance.GetItems(Data.Id);
-
         public List<string> Images { get; internal set; }
         public List<string> Texts { get; internal set; }
 

@@ -1,4 +1,6 @@
 ﻿using Kurkku.Storage.Database.Data;
+using System;
+using System.Collections.Generic;
 
 namespace Kurkku.Game
 {
@@ -7,6 +9,20 @@ namespace Kurkku.Game
         #region Properties
 
         public ItemDefinitionData Data { get; }
+        public List<ItemBehaviour> Behaviours { get; }
+        public object Type
+        {
+            get
+            {
+                if (Behaviours.Contains(ItemBehaviour.WALL_ITEM))
+                    return "i";
+
+                if (Behaviours.Contains(ItemBehaviour.EFFECT))
+                    return "e";
+
+                return "s";
+            }
+        }
 
         #endregion
 
@@ -15,6 +31,31 @@ namespace Kurkku.Game
         public ItemDefinition(ItemDefinitionData data)
         {
             Data = data;
+            Behaviours = new List<ItemBehaviour>();
+            ParseBehaviours();
+        }
+
+        #endregion
+
+        #region Public methods
+
+        /// <summary>
+        /// Parse behaviour string
+        /// </summary>
+        private void ParseBehaviours()
+        {
+            foreach (string behaviourData in Data.Behaviour.Split(','))
+            {
+                try
+                {
+                    ItemBehaviour behaviour = (ItemBehaviour) Enum.Parse(typeof(ItemBehaviour), behaviourData.ToUpper());
+                    Behaviours.Add(behaviour);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
         }
 
         #endregion

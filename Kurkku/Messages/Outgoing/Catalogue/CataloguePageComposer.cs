@@ -26,7 +26,31 @@ namespace Kurkku.Messages.Outgoing
             foreach (var text in page.Texts)
                 m_Data.Add(text);
 
-            m_Data.Add(0);
+            m_Data.Add(page.Items.Count);
+
+            foreach (CatalogueItem item in page.Items)
+            {
+                m_Data.Add(item.Data.Id);
+                m_Data.Add(item.Data.SaleCode);
+                m_Data.Add(item.Data.PriceCoins);
+                m_Data.Add(item.Data.PricePixels);
+                m_Data.Add(0);
+                m_Data.Add(false);
+                m_Data.Add(item.Packages.Count);
+                
+                foreach (CataloguePackage package in item.Packages)
+                {
+                    m_Data.Add(package.Definition.Type);
+                    m_Data.Add(package.Definition.Data.SpriteId);
+                    m_Data.Add("#FF97BA,#FF97BA"); // extra data
+                    m_Data.Add(package.Data.Amount);
+                    m_Data.Add(0);
+                }
+
+                m_Data.Add(false);
+                m_Data.Add(false);
+            }
+
             m_Data.Add(-1);
             m_Data.Add(false);
         }

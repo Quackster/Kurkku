@@ -79,9 +79,9 @@ namespace Kurkku.Game
         /// <summary>
         /// Get package by catalogue item sale code
         /// </summary>
-        public CataloguePackage GetPackage(string saleCode)
+        public List<CataloguePackage> GetPackages(string saleCode)
         {
-            return Packages.Where(x => x.Data.SaleCode == saleCode).FirstOrDefault();
+            return Packages.Where(x => x.Data.SaleCode == saleCode).ToList();
         }
 
         #endregion

@@ -1,5 +1,6 @@
 ﻿using Kurkku.Util.Extensions;
 using Kurkku.Storage.Database.Data;
+using System.Collections.Generic;
 
 namespace Kurkku.Game
 {
@@ -9,8 +10,24 @@ namespace Kurkku.Game
 
         public CatalogueItemData Data { get; }
         public ItemDefinition Definition => ItemManager.Instance.GetDefinition(Data.DefinitionId);
-        public CataloguePackage Package => CatalogueManager.Instance.GetPackage(Data.SaleCode);
         public int[] PageIds { get; }
+        public List<CataloguePackage> Packages
+        {
+            get
+            {
+                if (Data.IsPackage)
+                    return CatalogueManager.Instance.GetPackages(Data.SaleCode);
+
+                return List.Create(new CataloguePackage(new CataloguePackageData
+                {
+                    Id = Data.Id,
+                    SaleCode = Data.SaleCode,
+                    DefinitionId = Data.DefinitionId,
+                    SpecialSpriteId = Data.SpecialSpriteId,
+                    Amount = Data.Amount
+                }));
+            }
+        }
 
         #endregion
 
