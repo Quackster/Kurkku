@@ -13,7 +13,7 @@ namespace Kurkku.Messages.Outgoing
         {
             var cataloguePage = CatalogueManager.Instance.GetPage(request.ReadInt());
 
-            if (cataloguePage == null || !cataloguePage.IsNavigatable)
+            if (cataloguePage == null || !cataloguePage.Data.IsNavigatable)
                 return;
 
             player.Send(new CataloguePageComposer(cataloguePage));

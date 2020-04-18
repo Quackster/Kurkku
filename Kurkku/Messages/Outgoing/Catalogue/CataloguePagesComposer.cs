@@ -10,7 +10,7 @@ namespace Kurkku.Messages.Outgoing
     {
         private int rank;
         private bool hasClub;
-        private List<CataloguePageData> parentPages;
+        private List<CataloguePage> parentPages;
 
         public CataloguePagesComposer(int rank, bool hasClub)
         {
@@ -38,9 +38,9 @@ namespace Kurkku.Messages.Outgoing
             m_Data.Add(true);
         }
 
-        private void RecursiveIndexNode(CataloguePageData parentTab)
+        private void RecursiveIndexNode(CataloguePage parentTab)
         {
-            var childTabs = CatalogueManager.Instance.GetPages(parentTab.Id, rank, hasClub);
+            var childTabs = CatalogueManager.Instance.GetPages(parentTab.Data.Id, rank, hasClub);
             m_Data.Add(childTabs.Count);
 
             foreach (var childTab in childTabs)
@@ -50,14 +50,14 @@ namespace Kurkku.Messages.Outgoing
             }
         }
 
-        private void AppendIndexNode(CataloguePageData childTab)
+        private void AppendIndexNode(CataloguePage childTab)
         {
             m_Data.Add(true);
-            m_Data.Add(childTab.IconColour);
-            m_Data.Add(childTab.IconImage);
-            m_Data.Add(childTab.Id);
-            m_Data.Add(childTab.Caption.ToLower().Replace(" ", "_"));
-            m_Data.Add(childTab.Caption);
+            m_Data.Add(childTab.Data.IconColour);
+            m_Data.Add(childTab.Data.IconImage);
+            m_Data.Add(childTab.Data.Id);
+            m_Data.Add(childTab.Data.Caption.ToLower().Replace(" ", "_"));
+            m_Data.Add(childTab.Data.Caption);
         }
     }
 }

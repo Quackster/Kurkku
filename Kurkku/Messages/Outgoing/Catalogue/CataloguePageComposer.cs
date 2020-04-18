@@ -1,20 +1,21 @@
-﻿using Kurkku.Storage.Database.Data;
+﻿using Kurkku.Game;
+using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Messages.Outgoing
 {
     internal class CataloguePageComposer : IMessageComposer
     {
-        private CataloguePageData page;
+        private CataloguePage page;
 
-        public CataloguePageComposer(CataloguePageData page)
+        public CataloguePageComposer(CataloguePage page)
         {
             this.page = page;
         }
 
         public override void Write()
         {
-            m_Data.Add(page.Id);
-            m_Data.Add(page.Layout);
+            m_Data.Add(page.Data.Id);
+            m_Data.Add(page.Data.Layout);
 
             m_Data.Add(page.Images.Count);
 

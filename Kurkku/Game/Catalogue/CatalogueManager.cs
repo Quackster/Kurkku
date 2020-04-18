@@ -16,7 +16,7 @@ namespace Kurkku.Game
 
         #region Properties
 
-        public List<CataloguePageData> Pages;
+        public List<CataloguePage> Pages;
         public List<CatalogueItem> Items;
         public List<CataloguePackage> Packages;
 
@@ -26,7 +26,7 @@ namespace Kurkku.Game
 
         public void Load()
         {
-            Pages = CatalogueDao.GetPages();
+            Pages = CatalogueDao.GetPages().Select(x => new CataloguePage(x)).ToList();
             Items = CatalogueDao.GetItems().Select(x => new CatalogueItem(x)).ToList();
             Packages = CatalogueDao.GetPackages().Select(x => new CataloguePackage(x)).ToList();
             DeserialisePageData();
@@ -43,30 +43,30 @@ namespace Kurkku.Game
         {
             foreach (var page in Pages)
             {
-                page.Images = JsonConvert.DeserializeObject<List<string>>(page.ImagesData);
-                page.Texts = JsonConvert.DeserializeObject<List<string>>(page.TextsData);
+                page.Images = JsonConvert.DeserializeObject<List<string>>(page.Data.ImagesData);
+                page.Texts = JsonConvert.DeserializeObject<List<string>>(page.Data.TextsData);
             }
         }
 
         /// <summary>
         /// Get applicable pages for parent id
         /// </summary>
-        public List<CataloguePageData> GetPages(int parentId, int rank, bool hasClub)
+        public List<CataloguePage> GetPages(int parentId, int rank, bool hasClub)
         {
-            var pages = Pages.Where(x => x.ParentId == parentId && x.IsEnabled && rank >= x.MinRank).ToList();
+            var pages = Pages.Where(x => x.Data.ParentId == parentId && x.Data.IsEnabled && rank >= x.Data.MinRank).ToList();
 
             if (!hasClub)
-                pages = pages.Where(x => !x.IsClubOnly).ToList();
+                pages = pages.Where(x => !x.Data.IsClubOnly).ToList();
 
-            return pages.OrderBy(x => x.OrderId).ToList();
+            return pages.OrderBy(x => x.Data.OrderId).ToList();
         }
 
         /// <summary>
         /// Get page by page id
         /// </summary>
-        public CataloguePageData GetPage(int pageId)
+        public CataloguePage GetPage(int pageId)
         {
-            return Pages.Where(x => x.Id == pageId).FirstOrDefault();
+            return Pages.Where(x => x.Data.Id == pageId).FirstOrDefault();
         }
 
         /// <summary>
