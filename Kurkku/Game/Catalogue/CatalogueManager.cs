@@ -17,6 +17,8 @@ namespace Kurkku.Game
         #region Properties
 
         public List<CataloguePageData> Pages;
+        public List<CatalogueItem> Items;
+        public List<CataloguePackage> Packages;
 
         #endregion
 
@@ -25,6 +27,8 @@ namespace Kurkku.Game
         public void Load()
         {
             Pages = CatalogueDao.GetPages();
+            Items = CatalogueDao.GetItems().Select(x => new CatalogueItem(x)).ToList();
+            Packages = CatalogueDao.GetPackages().Select(x => new CataloguePackage(x)).ToList();
             DeserialisePageData();
         }
 
@@ -49,20 +53,36 @@ namespace Kurkku.Game
         /// </summary>
         public List<CataloguePageData> GetPages(int parentId, int rank, bool hasClub)
         {
-            var pages = Pages.Where(x => x.ParentId == parentId && x.IsEnabled).ToList();
+            var pages = Pages.Where(x => x.ParentId == parentId && x.IsEnabled && rank >= x.MinRank).ToList();
 
             if (!hasClub)
                 pages = pages.Where(x => !x.IsClubOnly).ToList();
 
             return pages.OrderBy(x => x.OrderId).ToList();
         }
-        
+
         /// <summary>
         /// Get page by page id
         /// </summary>
         public CataloguePageData GetPage(int pageId)
         {
             return Pages.Where(x => x.Id == pageId).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Get applicable items for page id
+        /// </summary>
+        public List<CatalogueItem> GetItems(int pageId)
+        {
+            return Items.Where(x => x.PageIds.Contains(pageId)).OrderBy(x => x.Data.OrderId).ToList();
+        }
+
+        /// <summary>
+        /// Get package by catalogue item sale code
+        /// </summary>
+        public CataloguePackage GetPackage(string saleCode)
+        {
+            return Packages.Where(x => x.Data.SaleCode == saleCode).FirstOrDefault();
         }
 
         #endregion

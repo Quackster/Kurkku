@@ -11,6 +11,7 @@ using Kurkku.Game;
 using Kurkku.Messages;
 using System.Threading;
 using System.Linq;
+using Kurkku.Storage.Database.Data;
 
 namespace Kurkku
 {
@@ -91,6 +92,7 @@ namespace Kurkku
             CatalogueManager.Instance.Load();
             NavigatorManager.Instance.Load();
             MessageHandler.Instance.Load();
+            ItemManager.Instance.Load();
 
             RoomDao.ResetVisitorCounts();
         }

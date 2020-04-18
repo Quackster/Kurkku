@@ -23,5 +23,21 @@ namespace Kurkku.Storage.Database.Access
                 return session.QueryOver<CataloguePageData>().List() as List<CataloguePageData>;
             }
         }
+
+        public static List<CatalogueItemData> GetItems()
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                return session.QueryOver<CatalogueItemData>().List() as List<CatalogueItemData>;
+            }
+        }
+
+        public static List<CataloguePackageData> GetPackages()
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                return session.QueryOver<CataloguePackageData>().List() as List<CataloguePackageData>;
+            }
+        }
     }
 }

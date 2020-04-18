@@ -1,4 +1,6 @@
-﻿namespace Kurkku.Util.Extensions
+﻿using System.Linq;
+
+namespace Kurkku.Util.Extensions
 {
     public static class StringExtensions
     {
@@ -27,6 +29,14 @@
         public static bool IsNumeric(this string str)
         {
             return int.TryParse(str, out _);
+        }
+
+        /// <summary>
+        /// Convert delimetered string to int array
+        /// </summary>
+        public static int[] ToIntArray(this string value, char separator)
+        {
+            return value.Split(separator).Select(i => int.Parse(i)).ToArray();
         }
     }
 }
