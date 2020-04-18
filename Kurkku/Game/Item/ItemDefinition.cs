@@ -58,6 +58,14 @@ namespace Kurkku.Game
             }
         }
 
+        /// <summary>
+        /// Get if definition has behaviour
+        /// </summary>
+        public bool HasBehaviour(ItemBehaviour behaviour)
+        {
+            return Behaviours.Contains(behaviour);
+        }
+
         #endregion
     }
 }

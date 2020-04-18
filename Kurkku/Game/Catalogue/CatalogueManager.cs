@@ -73,7 +73,7 @@ namespace Kurkku.Game
         /// </summary>
         public List<CatalogueItem> GetItems(int pageId)
         {
-            return Items.Where(x => x.PageIds.Contains(pageId)).OrderBy(x => x.Data.OrderId).ToList();
+            return Items.Where(x => x.PageIds.Contains(pageId) && !x.Data.IsHidden && x.Definition != null).OrderBy(x => x.Data.OrderId).ToList();
         }
 
         /// <summary>

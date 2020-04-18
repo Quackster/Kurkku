@@ -1,4 +1,5 @@
 ﻿using Kurkku.Game;
+using System;
 
 namespace Kurkku.Messages.Outgoing
 {
@@ -42,7 +43,7 @@ namespace Kurkku.Messages.Outgoing
                 {
                     m_Data.Add(package.Definition.Type);
                     m_Data.Add(package.Definition.Data.SpriteId);
-                    m_Data.Add("#FF97BA,#FF97BA"); // extra data
+                    m_Data.Add(package.Data.SpecialSpriteId); // extra data
                     m_Data.Add(package.Data.Amount);
                     m_Data.Add(0);
                 }
