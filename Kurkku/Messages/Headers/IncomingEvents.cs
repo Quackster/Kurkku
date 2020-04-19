@@ -41,6 +41,6 @@
         public static readonly short OpenCatalogueMessageEvent = 3071;
         public static readonly short GetCataloguePageMessageEvent = 1777;
         public static readonly short GetPromotableRoomsMessageEvent = 225;
-        public static readonly short GetCatalogRoomPromotionMessageEvent = 2773;
+        public static readonly short PurchaseItemMessageEvent = 1416;
     }
 }

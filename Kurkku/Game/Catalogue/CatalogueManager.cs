@@ -63,9 +63,14 @@ namespace Kurkku.Game
         /// <summary>
         /// Get page by page id
         /// </summary>
-        public CataloguePage GetPage(int pageId)
+        public CataloguePage GetPage(int pageId, int rank = 7, bool hasClub = true)
         {
-            return Pages.Where(x => x.Data.Id == pageId).FirstOrDefault();
+            var page = Pages.Where(x => x.Data.Id == pageId && x.Data.IsEnabled && x.Data.IsNavigatable && rank >= x.Data.MinRank).FirstOrDefault();
+
+            if (page.Data.IsClubOnly && !hasClub)
+                return null;
+
+            return page;
         }
 
         /// <summary>

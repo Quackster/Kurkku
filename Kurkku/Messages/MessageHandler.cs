@@ -187,7 +187,7 @@ namespace Kurkku.Messages
         {
             Events[IncomingEvents.OpenCatalogueMessageEvent] = new OpenCatalogueMessageEvent();
             Events[IncomingEvents.GetCataloguePageMessageEvent] = new GetCataloguePageMessageEvent();
-            Events[IncomingEvents.GetCatalogRoomPromotionMessageEvent] = new GetCatalogRoomPromotionMessageEvent();
+            Events[IncomingEvents.PurchaseItemMessageEvent] = new PurchaseItemMessageEvent();
         }
 
         #endregion

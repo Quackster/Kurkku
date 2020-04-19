@@ -51,5 +51,6 @@
         public static readonly short ActivityPointNotificationComposer = 1271;
         public static readonly short CataloguePageComposer = 3379;
         public static readonly short PromotableRoomsMessageComposer = 78;
+        public static readonly short CatalogItemDiscountComposer = 366;
     }
 }

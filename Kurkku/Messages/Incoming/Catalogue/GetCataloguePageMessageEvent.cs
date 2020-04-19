@@ -7,12 +7,13 @@ namespace Kurkku.Messages.Outgoing
     {
         public void Handle(Player player, Request request)
         {
-            var cataloguePage = CatalogueManager.Instance.GetPage(request.ReadInt());
+            var cataloguePage = CatalogueManager.Instance.GetPage(request.ReadInt(), player.Details.Rank, player.IsSubscribed);
 
-            if (cataloguePage == null || !cataloguePage.Data.IsNavigatable)
+            if (cataloguePage == null)
                 return;
 
             player.Send(new CataloguePageComposer(cataloguePage));
+            player.Send(new CatalogItemDiscountComposer());
         }
     }
 }

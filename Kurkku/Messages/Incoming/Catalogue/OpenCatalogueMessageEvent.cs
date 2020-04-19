@@ -9,6 +9,7 @@ namespace Kurkku.Messages.Incoming
         public void Handle(Player player, Request request)
         {
             player.Send(new CataloguePagesComposer(player.Details.Rank, player.IsSubscribed));
+            player.Send(new CatalogItemDiscountComposer());
         }
     }
 }

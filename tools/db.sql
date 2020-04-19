@@ -2550,6 +2550,29 @@ INSERT INTO `catalogue_pages` (`id`, `parent_id`, `order_id`, `min_rank`, `is_na
 	(138, -1, 3000, 1, 0, 1, 0, 'Furni By Theme', 'furni_by_theme', 64, 2, '', '[]', '[]');
 /*!40000 ALTER TABLE `catalogue_pages` ENABLE KEYS */;
 
+CREATE TABLE IF NOT EXISTS `item` (
+  `id` varchar(250) NOT NULL,
+  `order_id` int(11) NOT NULL DEFAULT -1,
+  `user_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL DEFAULT 0,
+  `definition_id` int(11) NOT NULL,
+  `x` varchar(255) NOT NULL DEFAULT '0',
+  `y` varchar(255) NOT NULL DEFAULT '0',
+  `z` varchar(255) NOT NULL DEFAULT '0',
+  `wall_position` varchar(255) NOT NULL DEFAULT '',
+  `rotation` int(11) NOT NULL DEFAULT 0,
+  `custom_data` longtext NOT NULL,
+  `expire_time` bigint(11) NOT NULL DEFAULT -1,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `room_id` (`room_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*!40000 ALTER TABLE `item` DISABLE KEYS */;
+/*!40000 ALTER TABLE `item` ENABLE KEYS */;
+
 CREATE TABLE IF NOT EXISTS `item_definitions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sprite` varchar(50) DEFAULT NULL,
@@ -4905,7 +4928,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `pixels`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'hr-100-61.hd-180-1.ch-3050-64-62.sh-3252-82-62.cc-3153-62-82.lg-270-62', 'M', 7, 2000, 0, '123', '2020-03-29 18:20:03', '2020-04-19 18:54:31'),
+	(1, 'Alex', 'hr-100-61.hd-180-1.ch-3050-64-62.sh-3252-82-62.cc-3153-62-82.lg-270-62', 'M', 7, 2000, 0, '123', '2020-03-29 18:20:03', '2020-04-20 01:37:17'),
 	(2, 'Test', 'hd-180-1.hr-100-.ch-260-62.lg-275-64.ha-1008-.ea-1402-.ca-1806-73', 'M', 1, 0, 0, '456', '2020-03-29 20:47:31', '2020-04-15 20:48:07'),
 	(3, 'Test123', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '789', '2020-03-29 20:47:31', '2020-04-10 20:37:28'),
 	(4, 'Test456', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '789', '2020-03-29 20:47:31', '2020-04-10 20:37:28');
