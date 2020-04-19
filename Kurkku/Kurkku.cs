@@ -10,6 +10,7 @@ using Kurkku.Storage.Database.Access;
 using Kurkku.Game;
 using Kurkku.Messages;
 using Kurkku.Util.Extensions;
+using System.Threading;
 
 namespace Kurkku
 {
@@ -121,6 +122,11 @@ namespace Kurkku
             GameServer.Instance.InitialiseServer();
 
             GameServer.Logger.Info($"Server is now listening on port: {GameServer.Instance.IpAddress}:{GameServer.Instance.Port}!");
+
+            while (true)
+            {
+                Thread.Sleep(100);
+            }
         }
 
         public class Game
