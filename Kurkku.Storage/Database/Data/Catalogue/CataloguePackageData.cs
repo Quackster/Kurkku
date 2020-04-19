@@ -12,6 +12,7 @@ namespace Kurkku.Storage.Database.Data
             Map(x => x.ParentId, "parent_id");
             Map(x => x.OrderId, "order_id");
             Map(x => x.Caption, "caption");
+            Map(x => x.PageLink, "page_link");
             Map(x => x.MinRank, "min_rank");
             Map(x => x.IconColour, "icon_colour");
             Map(x => x.IconImage, "icon_image");
@@ -30,6 +31,7 @@ namespace Kurkku.Storage.Database.Data
         public virtual int ParentId { get; set; }
         public virtual int OrderId { get; set; }
         public virtual string Caption { get; set; }
+        public virtual string PageLink { get; set; }
         public virtual int MinRank { get; set; }
         public virtual int IconColour { get; set; }
         public virtual int IconImage { get; set; }

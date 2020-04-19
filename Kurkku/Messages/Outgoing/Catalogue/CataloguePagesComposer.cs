@@ -53,7 +53,7 @@ namespace Kurkku.Messages.Outgoing
             m_Data.Add(childTab.Data.IconColour);
             m_Data.Add(childTab.Data.IconImage);
             m_Data.Add(childTab.Data.Id);
-            m_Data.Add(childTab.Data.Caption.ToLower().Replace(" ", "_"));
+            m_Data.Add(childTab.Data.PageLink);
             m_Data.Add(childTab.Data.Caption);
         }
     }

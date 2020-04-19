@@ -43,6 +43,7 @@ namespace Kurkku.Messages
             RegisterMessenger();
             RegisterUser();
             RegisterNavigator();
+            RegisterEvents();
             RegisterRoom();
             RegisterRoomUser();
             RegisterRoomSettings();
@@ -139,6 +140,14 @@ namespace Kurkku.Messages
         }
 
         /// <summary>
+        /// Register event handling
+        /// </summary>
+        private void RegisterEvents()
+        {
+            Events[IncomingEvents.GetPromotableRoomsMessageEvent] = new GetPromotableRoomsMessageEvent();
+        }
+
+        /// <summary>
         /// Register room packets
         /// </summary>
         private void RegisterRoom()
@@ -178,6 +187,7 @@ namespace Kurkku.Messages
         {
             Events[IncomingEvents.OpenCatalogueMessageEvent] = new OpenCatalogueMessageEvent();
             Events[IncomingEvents.GetCataloguePageMessageEvent] = new GetCataloguePageMessageEvent();
+            Events[IncomingEvents.GetCatalogRoomPromotionMessageEvent] = new GetCatalogRoomPromotionMessageEvent();
         }
 
         #endregion
