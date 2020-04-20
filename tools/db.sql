@@ -4853,7 +4853,7 @@ CREATE TABLE IF NOT EXISTS `room` (
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
 INSERT INTO `room` (`id`, `owner_id`, `name`, `description`, `category_id`, `visitors_now`, `visitors_max`, `status`, `password`, `model`, `ccts`, `wallpaper`, `floor`, `landscape`, `rating`, `allow_pets`, `allow_pets_eat`, `allow_walkthrough`, `hidewall`, `wall_thickness`, `floor_thickness`) VALUES
 	(1, 0, 'Welcome Lobby', 'welcome_lounge', 15, 0, 25, 'OPEN', '', 'newbie_lobby', 'hh_room_nlobby', 0, 0, 0, 0, 1, 1, 1, 0, 0, 0),
-	(2, 1, 'test creation lolz', '', 6, 0, 25, 'OPEN', '', 'model_t', '', 0, 0, 0, 0, 1, 1, 0, 0, 0, 0),
+	(2, 1, 'test creation lolz', '', 6, 1, 25, 'OPEN', '', 'model_t', '', 0, 0, 0, 0, 1, 1, 0, 0, 0, 0),
 	(3, 1, 'testing again', '', 14, 0, 25, 'OPEN', '', 'model_b', '', 0, 0, 0, 0, 1, 1, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
@@ -4942,7 +4942,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `pixels`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'hr-100-61.hd-180-1.ch-3050-64-62.sh-3252-82-62.cc-3153-62-82.lg-270-62', 'M', 7, 2000, 0, '123', '2020-03-29 18:20:03', '2020-04-20 20:34:37'),
+	(1, 'Alex', 'hr-100-61.hd-180-1.ch-3050-64-62.sh-3252-82-62.cc-3153-62-82.lg-270-62', 'M', 7, 2000, 0, '123', '2020-03-29 18:20:03', '2020-04-21 02:18:05'),
 	(2, 'Test', 'hd-180-1.hr-100-.ch-260-62.lg-275-64.ha-1008-.ea-1402-.ca-1806-73', 'M', 1, 0, 0, '456', '2020-03-29 20:47:31', '2020-04-15 20:48:07'),
 	(3, 'Test123', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '789', '2020-03-29 20:47:31', '2020-04-10 20:37:28'),
 	(4, 'Test456', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 0, 0, '789', '2020-03-29 20:47:31', '2020-04-10 20:37:28');

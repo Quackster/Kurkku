@@ -42,5 +42,9 @@
         public static readonly short GetCataloguePageMessageEvent = 1777;
         public static readonly short GetPromotableRoomsMessageEvent = 225;
         public static readonly short PurchaseItemMessageEvent = 1416;
+        public static readonly short StartTypingMessageEvent = 678;
+        public static readonly short StopTypingMessageEvent = 1236;
+        public static readonly short ChatMessageMessageEvent = 2275;
+        public static readonly short ShoutMessageMessageEvent = 1454;
     }
 }

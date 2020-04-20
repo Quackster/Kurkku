@@ -47,6 +47,7 @@ namespace Kurkku.Game
         private void RegisterTasks()
         {
             Tasks.Add(new EntityTask(room));
+            Tasks.Add(new MaintenanceTask(room));
         }
 
         /// <summary>

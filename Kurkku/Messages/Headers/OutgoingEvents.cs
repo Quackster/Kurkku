@@ -52,5 +52,8 @@
         public static readonly short CataloguePageComposer = 3379;
         public static readonly short PromotableRoomsMessageComposer = 78;
         public static readonly short CatalogItemDiscountComposer = 366;
+        public static readonly short TypingStatusComposer = 3218;
+        public static readonly short ChatMessageComposer = 1510;
+        public static readonly short ShoutMessageComposer = 2408;
     }
 }

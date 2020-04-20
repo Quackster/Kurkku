@@ -9,7 +9,6 @@ using Kurkku.Network;
 using Kurkku.Storage.Database.Access;
 using Kurkku.Game;
 using Kurkku.Messages;
-using Kurkku.Util.Extensions;
 using System.Threading;
 
 namespace Kurkku
@@ -88,8 +87,8 @@ namespace Kurkku
         {
             ValueManager.Instance.Load();
             ItemManager.Instance.Load();
-            RoomManager.Instance.Load();
             CatalogueManager.Instance.Load();
+            RoomManager.Instance.Load();
             NavigatorManager.Instance.Load();
             MessageHandler.Instance.Load();
 
