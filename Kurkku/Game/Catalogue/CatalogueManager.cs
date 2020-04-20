@@ -67,6 +67,9 @@ namespace Kurkku.Game
         {
             var page = Pages.Where(x => x.Data.Id == pageId && x.Data.IsEnabled && x.Data.IsNavigatable && rank >= x.Data.MinRank).FirstOrDefault();
 
+            if (page == null)
+                return null;
+
             if (page.Data.IsClubOnly && !hasClub)
                 return null;
 
