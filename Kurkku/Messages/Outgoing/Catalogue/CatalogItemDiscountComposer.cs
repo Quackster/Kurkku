@@ -1,16 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Messages.Outgoing
 {
     class CatalogItemDiscountComposer : IMessageComposer
     {
+        private CatalogueDiscountData discount;
+
+        public CatalogItemDiscountComposer(CatalogueDiscountData discount)
+        {
+            this.discount = discount;
+        }
+
         public override void Write()
         {
-            m_Data.Add(100); // The discount / bulk buy limit
-            m_Data.Add(5); // A - "Buy A get B free"
-            m_Data.Add(2); // B
+            m_Data.Add(discount.PurchaseLimit); // The discount / bulk buy limit
+            m_Data.Add(discount.ItemCountRequired); // A - "Buy A get B free"
+            m_Data.Add(discount.ItemCountFree); // B
             m_Data.Add(0);
             m_Data.Add(0);//Count
             /*{
