@@ -49,7 +49,7 @@ namespace Kurkku.Messages.Outgoing
                 }
 
                 m_Data.Add(false);
-                m_Data.Add(true);
+                m_Data.Add(item.AllowBulkPurchase);
             }
 
             m_Data.Add(-1);

@@ -36,5 +36,13 @@ namespace Kurkku.Storage.Database.Access
                 return session.QueryOver<CataloguePackageData>().List() as List<CataloguePackageData>;
             }
         }
+
+        public static List<CatalogueDiscountData> GetDiscounts()
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                return session.QueryOver<CatalogueDiscountData>().List() as List<CatalogueDiscountData>;
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace Kurkku.Game
         public CatalogueItemData Data { get; }
         public ItemDefinition Definition => ItemManager.Instance.GetDefinition(Data.DefinitionId);
         public int[] PageIds { get; }
+        public bool AllowBulkPurchase { get; set; }
         public List<CataloguePackage> Packages
         {
             get
@@ -37,6 +38,7 @@ namespace Kurkku.Game
         {
             Data = data;
             PageIds = Data.PageId.ToIntArray(',');
+            AllowBulkPurchase = data.AllowBulkPurchase;
         }
 
         #endregion

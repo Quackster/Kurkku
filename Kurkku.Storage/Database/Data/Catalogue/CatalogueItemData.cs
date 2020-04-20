@@ -18,6 +18,7 @@ namespace Kurkku.Storage.Database.Data
             Map(x => x.DefinitionId, "definition_id");
             Map(x => x.SpecialSpriteId, "item_specialspriteid");
             Map(x => x.IsPackage, "is_package");
+            Map(x => x.AllowBulkPurchase, "allow_bulk_purchase");
         }
     }
 
@@ -34,5 +35,6 @@ namespace Kurkku.Storage.Database.Data
         public virtual int DefinitionId { get; set; }
         public virtual string SpecialSpriteId { get; set; }
         public virtual bool IsPackage { get; set; }
+        public virtual bool AllowBulkPurchase { get; set; }
     }
 }

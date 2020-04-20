@@ -1,5 +1,7 @@
 ﻿using Kurkku.Storage.Database.Access;
+using Kurkku.Storage.Database.Data;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,6 +20,7 @@ namespace Kurkku.Game
         public List<CataloguePage> Pages;
         public List<CatalogueItem> Items;
         public List<CataloguePackage> Packages;
+        public List<CatalogueDiscountData> Discounts;
 
         #endregion
 
@@ -28,6 +31,7 @@ namespace Kurkku.Game
             Pages = CatalogueDao.GetPages().Select(x => new CataloguePage(x)).ToList();
             Items = CatalogueDao.GetItems().Select(x => new CatalogueItem(x)).ToList();
             Packages = CatalogueDao.GetPackages().Select(x => new CataloguePackage(x)).ToList();
+            Discounts = CatalogueDao.GetDiscounts();
             DeserialisePageData();
         }
 
@@ -44,6 +48,14 @@ namespace Kurkku.Game
             {
                 page.Images = JsonConvert.DeserializeObject<List<string>>(page.Data.ImagesData);
                 page.Texts = JsonConvert.DeserializeObject<List<string>>(page.Data.TextsData);
+
+                var bestDiscount = GetBestDiscount(page.Data.Id);
+
+                if (bestDiscount == null)
+                {
+                    foreach (var item in GetItems(page.Data.Id))
+                        item.AllowBulkPurchase = false;
+                }
             }
         }
 
@@ -82,6 +94,21 @@ namespace Kurkku.Game
         public List<CatalogueItem> GetItems(int pageId)
         {
             return Items.Where(x => x.PageIds.Contains(pageId) && !x.Data.IsHidden && x.Definition != null).OrderBy(x => x.Data.OrderId).ToList();
+        }
+
+        /// <summary>
+        /// Get the best discount in the list of discounts by page id
+        /// </summary>
+        public CatalogueDiscountData GetBestDiscount(int pageId)
+        {
+            var discounts = Discounts.Where(x => x.PageId == pageId && x.ExpireDate > DateTime.Now).ToList();
+
+            if (!discounts.Any())
+                return null;
+
+            return discounts
+                .Where(x => x.ItemCountRequired > 0 && x.ItemCountFree > 0)
+                .OrderByDescending(x => x.ItemCountFree / x.ItemCountRequired).FirstOrDefault();
         }
 
         /// <summary>
