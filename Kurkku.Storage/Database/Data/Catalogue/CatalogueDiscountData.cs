@@ -20,8 +20,8 @@ namespace Kurkku.Storage.Database.Data
     {
         public virtual int PageId { get; set; }
         public virtual int PurchaseLimit { get; set; }
-        public virtual int ItemCountRequired { get; set; }
-        public virtual int ItemCountFree { get; set; }
+        public virtual decimal ItemCountRequired { get; set; }
+        public virtual decimal ItemCountFree { get; set; }
         public virtual DateTime ExpireDate { get; set; }
     }
 }

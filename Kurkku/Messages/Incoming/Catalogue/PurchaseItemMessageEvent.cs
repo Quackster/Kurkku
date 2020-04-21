@@ -14,12 +14,28 @@ namespace Kurkku.Messages.Incoming
             if (cataloguePage == null)
                 return;
 
-            var catalogueItem = cataloguePage.Items.FirstOrDefault(x => x.Data.Id == request.ReadInt());
+            int itemId = request.ReadInt();
+            var catalogueItem = cataloguePage.Items.Where(x => x.Data.Id == itemId).FirstOrDefault();
 
             if (catalogueItem == null)
                 return;
 
-            Console.WriteLine(catalogueItem.Definition.Data.Name);
+            string extraData = request.ReadString();
+            int amount = request.ReadInt();
+
+            var discount = CatalogueManager.Instance.GetBestDiscount(cataloguePage.Data.Id);
+            
+            Console.WriteLine("extra data: " + extraData);
+            Console.WriteLine("amount: " + amount);
+
+            decimal amountToCharge = catalogueItem.Data.PriceCoins * amount;
+
+            if (catalogueItem.AllowBulkPurchase && discount != null)
+            {
+                decimal percentageSaved = (decimal)(discount.ItemCountFree / discount.ItemCountRequired);
+                int amountSaved = (int)Math.Ceiling(percentageSaved * amountToCharge);
+                int newAmount = (int)(amountToCharge - amountSaved);
+            }
         }
     }
 }
