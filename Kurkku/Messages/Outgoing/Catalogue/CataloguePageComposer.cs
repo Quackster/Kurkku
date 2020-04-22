@@ -33,7 +33,7 @@ namespace Kurkku.Messages.Outgoing
                 m_Data.Add(item.Data.Id);
                 m_Data.Add(item.Data.SaleCode);
                 m_Data.Add(item.Data.PriceCoins);
-                m_Data.Add(item.Data.PricePixels);
+                m_Data.Add(item.Data.PriceSeasonal);
                 m_Data.Add(0);
                 m_Data.Add(false);
                 m_Data.Add(item.Packages.Count);

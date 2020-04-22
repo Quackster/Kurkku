@@ -22,51 +22,33 @@ namespace Kurkku.Messages.Incoming
 
             string extraData = request.ReadString();
             int amount = request.ReadInt();
+            int amountToCharge = catalogueItem.Data.PriceCoins * amount;
 
+            // Credits to Alejandro from Morningstar xoxo
             var discount = CatalogueManager.Instance.GetBestDiscount(cataloguePage.Data.Id);
-            
-            Console.WriteLine("extra data: " + extraData);
-            Console.WriteLine("amount: " + amount);
-
-            /*
-            private function _SafeStr_12512():void
-            {
-	            var _local_3:int;
-	            var _local_4:int;
-	            this._SafeStr_12508 = new Map();
-	            var k:int = 1;
-	            var _local_2:int;
-	            while (k <= 100) {
-		            _local_3 = this._SafeStr_5446.utils._SafeStr_6452(true, 1, k);
-		            _local_4 = (k - _local_3);
-		            if ((((_local_4 > _local_2)) && ((this._SafeStr_5446.utils._SafeStr_6860.indexOf(k) == -1)))){
-			            this._SafeStr_12508.add(k, _local_4);
-			            _local_2 = _local_4;
-		            };
-		            k++;
-	            };
-            }
-
-            private function _SafeStr_12514(k:TimerEvent):void
-            {
-	            if (this._SafeStr_12510 > 0){
-		            this._SafeStr_12510 = (this._SafeStr_12510 - 0.1);
-		            if (this._SafeStr_12510 < 0){
-			            this._SafeStr_12510 = 0;
-		            };
-		            this._SafeStr_4607.findChildByName("promo_text_effect").blend = this._SafeStr_12510;
-	            };
-            }
-            */
-
-            decimal amountToCharge = catalogueItem.Data.PriceCoins * amount;
 
             if (catalogueItem.AllowBulkPurchase && discount != null)
             {
-                decimal percentageSaved = (decimal)(discount.ItemCountFree / discount.ItemCountRequired);
-                int amountSaved = (int)Math.Ceiling(percentageSaved * amountToCharge);
-                int newAmount = (int)(amountToCharge - amountSaved);
+                decimal basicDiscount = amount / discount.DiscountBatchSize;
+                decimal bonusDiscount = 0;
+
+                if (basicDiscount > discount.MinimumDiscountForBonus)
+                    if (amount % discount.DiscountBatchSize == discount.DiscountBatchSize - 1)
+                        bonusDiscount = 1;
+
+
+                int totalDiscountedItems = ((int)basicDiscount * (int)discount.DiscountAmountPerBatch) + (int)bonusDiscount;
             }
+
+            /*int amountToCharge = catalogueItem.Data.PriceCoins * amount;
+
+            if (catalogueItem.AllowBulkPurchase && discount != null)
+            {
+                decimal percentageSaved = discount.DiscountAmountPerBatch / discount.DiscountBatchSize;
+                decimal amountSaved = amountToCharge * percentageSaved;
+
+                int newAmount = (int)(amountToCharge - amountSaved);
+            }*/
         }
     }
 }

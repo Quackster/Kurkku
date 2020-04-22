@@ -10,8 +10,8 @@ namespace Kurkku.Storage.Database.Data
             Table("catalogue_discounts");
             Id(x => x.PageId, "page_id");
             Map(x => x.PurchaseLimit, "purchase_limit");
-            Map(x => x.ItemCountRequired, "item_count_required");
-            Map(x => x.ItemCountFree, "item_count_free");
+            Map(x => x.DiscountBatchSize, "item_count_required");
+            Map(x => x.DiscountAmountPerBatch, "item_count_free");
             Map(x => x.ExpireDate, "expire_at");
         }
     }
@@ -20,8 +20,9 @@ namespace Kurkku.Storage.Database.Data
     {
         public virtual int PageId { get; set; }
         public virtual int PurchaseLimit { get; set; }
-        public virtual decimal ItemCountRequired { get; set; }
-        public virtual decimal ItemCountFree { get; set; }
+        public virtual decimal DiscountBatchSize { get; set; }
+        public virtual decimal DiscountAmountPerBatch { get; set; }
+        public virtual decimal MinimumDiscountForBonus => 1;
         public virtual DateTime ExpireDate { get; set; }
     }
 }

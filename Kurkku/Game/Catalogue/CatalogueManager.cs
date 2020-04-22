@@ -107,8 +107,8 @@ namespace Kurkku.Game
                 return null;
 
             return discounts
-                .Where(x => x.ItemCountRequired > 0 && x.ItemCountFree > 0)
-                .OrderByDescending(x => x.ItemCountFree / x.ItemCountRequired).FirstOrDefault();
+                .Where(x => x.DiscountBatchSize > 0 && x.DiscountAmountPerBatch > 0)
+                .OrderByDescending(x => x.DiscountAmountPerBatch / x.DiscountBatchSize).FirstOrDefault();
         }
 
         /// <summary>
