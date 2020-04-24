@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Kurkku.Game;
+using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
+using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Messages.Incoming
 {
@@ -22,7 +24,6 @@ namespace Kurkku.Messages.Incoming
 
             string extraData = request.ReadString();
             int amount = request.ReadInt();
-            int amountToCharge = catalogueItem.Data.PriceCoins * amount;
 
             // Credits to Alejandro from Morningstar xoxo
             var discount = CatalogueManager.Instance.GetBestDiscount(cataloguePage.Data.Id);
@@ -44,10 +45,35 @@ namespace Kurkku.Messages.Incoming
 
 
                 int totalDiscountedItems = ((int)basicDiscount * (int)discount.DiscountAmountPerBatch) + (int)bonusDiscount;
-                amountToCharge = Math.Max(0, catalogueItem.Data.PriceCoins * (amount - totalDiscountedItems));
+
+                // Override the amount with how much we saved >:)
+                amount = (amount - totalDiscountedItems);
             }
 
-            // Check if user has correct currency amount
+            // Calculate new price for both credits and seasonal furniture
+            int priceCoins = catalogueItem.Data.PriceCoins * amount;
+            int priceSeasonal = catalogueItem.Data.PriceSeasonal * amount;
+
+            // Continue standard purchase
+            if (priceCoins > player.Details.Credits)
+            {
+                player.Send(new NoCreditsComposer(true, false));
+                return;
+            }
+
+            if (priceSeasonal > player.CurrencyDetails.GetBalance(catalogueItem.Data.SeasonalType))
+            {
+                player.Send(new NoCreditsComposer(false, true, catalogueItem.Data.SeasonalType));
+                return;
+            }
+
+            // Update credits of user
+            if (priceCoins > 0)
+            {
+                player.CurrencyDetails.ModifyCredits(-priceCoins);
+            }
+
+
         }
     }
 }

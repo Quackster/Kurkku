@@ -1,4 +1,5 @@
-﻿using Kurkku.Storage.Database.Access;
+﻿using Kurkku.Messages.Outgoing;
+using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Kurkku.Game
         #region Properties
 
         private Player player;
-        private Dictionary<SeasonalCurrencyType, int> currencies;
+        public Dictionary<SeasonalCurrencyType, int> Currencies;
 
         #endregion
 
@@ -20,7 +21,7 @@ namespace Kurkku.Game
         public CurrencyManager(Player player, List<CurrencyData> currencies)
         {
             this.player = player;
-            this.currencies = currencies.ToDictionary(x => x.SeasonalType, x => x.Balance);
+            this.Currencies = currencies.ToDictionary(x => x.SeasonalType, x => x.Balance < 0 ? 0 : x.Balance);
         }
 
         #endregion
@@ -32,7 +33,7 @@ namespace Kurkku.Game
         /// </summary>
         public int GetBalance(SeasonalCurrencyType currencyType)
         {
-            return currencies.TryGetValue(currencyType, out var balance) ? balance : 0;
+            return Currencies.TryGetValue(currencyType, out var balance) ? balance : 0;
         }
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace Kurkku.Game
         /// </summary>
         public void SetBalance(SeasonalCurrencyType currencyType, int newBalance)
         {
-            currencies[currencyType] = newBalance;
+            Currencies[currencyType] = newBalance;
         }
 
         /// <summary>
@@ -48,7 +49,7 @@ namespace Kurkku.Game
         /// </summary>
         public void AddBalance(SeasonalCurrencyType currencyType, int newBalance)
         {
-            currencies[currencyType] = CurrencyDao.GetCurrency(player.Details.Id, currencyType).Balance + newBalance;
+            Currencies[currencyType] = CurrencyDao.GetCurrency(player.Details.Id, currencyType).Balance + newBalance;
         }
 
         /// <summary>
@@ -56,11 +57,20 @@ namespace Kurkku.Game
         /// </summary>
         public void Save()
         {
-            List<CurrencyData> currencyList = currencies
+            List<CurrencyData> currencyList = Currencies
                 .Select(kvp => new CurrencyData { UserId = player.Details.Id, SeasonalType = kvp.Key, Balance = kvp.Value })
                 .ToList();
 
             CurrencyDao.SaveCurrencies(currencyList);
+        }
+
+        /// <summary>
+        /// Refresh user credits from db but also override them
+        /// </summary>
+        public void ModifyCredits(int creditsChanged)
+        {
+            player.Details.Credits = CurrencyDao.SaveCredits(player.Details.Id, creditsChanged);
+            player.Send(new CreditsBalanceComposer(player.Details.Credits));
         }
 
         #endregion

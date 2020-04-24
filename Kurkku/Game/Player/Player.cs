@@ -87,7 +87,7 @@ namespace Kurkku.Game
         /// <summary>
         /// Get currency manager for user
         /// </summary>
-        public CurrencyManager Currencies { get; set; }
+        public CurrencyManager CurrencyDetails { get; set; }
 
         /// <summary>
         /// Whether the player has logged in or not
@@ -138,10 +138,9 @@ namespace Kurkku.Game
             UserDao.SaveLastOnline(playerData);
 
             Subscription = SubscriptionDao.GetSubscription(playerData.Id);
-
-            Currencies = new CurrencyManager(this, CurrencyDao.GetCurrencies(playerData.Id));
-            Currencies.AddBalance(SeasonalCurrencyType.DUCKETS, 10);
-            Currencies.Save();
+            CurrencyDetails = new CurrencyManager(this, CurrencyDao.GetCurrencies(playerData.Id));
+            //Currencies.AddBalance(SeasonalCurrencyType.DUCKETS, 10);
+            //Currencies.Save();
 
             Messenger = new Messenger(this);
             Messenger.SendStatus();
@@ -149,7 +148,7 @@ namespace Kurkku.Game
             Authenticated = true;
 
             Send(new AuthenticationOKComposer());
-            Send(new ActivityPointNotificationComposer());
+            Send(new ActivityPointNotificationComposer(CurrencyDetails.Currencies));
             Send(new AvailabilityStatusComposer());
             Send(new UserRightsMessageComposer(IsSubscribed ? 2 : 0, playerData.Rank));
 

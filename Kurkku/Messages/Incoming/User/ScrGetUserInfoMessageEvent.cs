@@ -9,7 +9,6 @@ namespace Kurkku.Messages.Incoming
         public void Handle(Player player, Request request)
         {
             player.Send(new ScrSendUserInfoComposer(player.Subscription));
-            player.Send(new ActivityPointNotificationComposer());
         }
     }
 }

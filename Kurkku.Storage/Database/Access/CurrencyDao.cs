@@ -1,4 +1,5 @@
 ﻿using Kurkku.Storage.Database.Data;
+using NHibernate.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,6 +91,18 @@ namespace Kurkku.Storage.Database.Access
                         transaction.Rollback();
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Get singular currency for user straight from database
+        /// </summary>
+        public static int SaveCredits(int userId, int creditsChanged)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                session.Query<PlayerData>().Where(x => x.Id == userId).Update(x => new PlayerData { Credits = x.Credits + creditsChanged });
+                return session.QueryOver<PlayerData>().Where(x => x.Id == userId).Select(x => x.Credits).SingleOrDefault<int>();
             }
         }
     }

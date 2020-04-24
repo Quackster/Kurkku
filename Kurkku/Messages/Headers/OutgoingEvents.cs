@@ -55,5 +55,6 @@
         public static readonly short TypingStatusComposer = 3218;
         public static readonly short ChatMessageComposer = 1510;
         public static readonly short ShoutMessageComposer = 2408;
+        public static readonly short NoCreditsComposer = 874;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Kurkku.Messages;
 
-namespace Kurkku
+namespace Kurkku.Messages.Outgoing
 {
     public class CanCreateRoomComposer : IMessageComposer
     {
