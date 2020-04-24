@@ -32,23 +32,22 @@ namespace Kurkku.Messages.Incoming
                 decimal basicDiscount = amount / discount.DiscountBatchSize;
                 decimal bonusDiscount = 0;
 
-                if (basicDiscount > discount.MinimumDiscountForBonus)
+                if (basicDiscount >= discount.MinimumDiscountForBonus)
+                {
                     if (amount % discount.DiscountBatchSize == discount.DiscountBatchSize - 1)
+                    {
                         bonusDiscount = 1;
+                    }
+
+                    bonusDiscount += basicDiscount - discount.MinimumDiscountForBonus;
+                }
 
 
                 int totalDiscountedItems = ((int)basicDiscount * (int)discount.DiscountAmountPerBatch) + (int)bonusDiscount;
+                amountToCharge = Math.Max(0, catalogueItem.Data.PriceCoins * (amount - totalDiscountedItems));
             }
 
-            /*int amountToCharge = catalogueItem.Data.PriceCoins * amount;
-
-            if (catalogueItem.AllowBulkPurchase && discount != null)
-            {
-                decimal percentageSaved = discount.DiscountAmountPerBatch / discount.DiscountBatchSize;
-                decimal amountSaved = amountToCharge * percentageSaved;
-
-                int newAmount = (int)(amountToCharge - amountSaved);
-            }*/
+            // Check if user has correct currency amount
         }
     }
 }

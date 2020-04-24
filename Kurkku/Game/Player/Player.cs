@@ -85,6 +85,11 @@ namespace Kurkku.Game
         public RoomPlayer RoomUser => (RoomPlayer)RoomEntity;
 
         /// <summary>
+        /// Get currency manager for user
+        /// </summary>
+        public CurrencyManager Currencies { get; set; }
+
+        /// <summary>
         /// Whether the player has logged in or not
         /// </summary>
         public bool Authenticated { get; private set; }
@@ -129,9 +134,14 @@ namespace Kurkku.Game
 
             playerData.PreviousLastOnline = playerData.LastOnline;
             playerData.LastOnline = DateTime.Now;
-            UserDao.Update(playerData);
+
+            UserDao.SaveLastOnline(playerData);
 
             Subscription = SubscriptionDao.GetSubscription(playerData.Id);
+
+            Currencies = new CurrencyManager(this, CurrencyDao.GetCurrencies(playerData.Id));
+            Currencies.AddBalance(SeasonalCurrencyType.DUCKETS, 10);
+            Currencies.Save();
 
             Messenger = new Messenger(this);
             Messenger.SendStatus();
@@ -170,7 +180,7 @@ namespace Kurkku.Game
             Messenger.SendStatus();
 
             playerData.LastOnline = DateTime.Now;
-            UserDao.Update(playerData);
+            UserDao.SaveLastOnline(playerData);
         }
 
         #endregion

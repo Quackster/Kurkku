@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Kurkku.Storage.Database.Access;
@@ -104,7 +105,16 @@ namespace Kurkku.Game
 
             return rooms;
         }
- 
+
+        /// <summary>
+        /// Sort rooms suitable for navigator display
+        /// </summary>
+        public static List<Room> SortRooms(List<Room> list)
+        {
+            return list.OrderByDescending(x => x.Data.Rating)
+                        .ThenByDescending(x => x.Data.UsersNow).ToList();
+        }
+
         #endregion
     }
 }
