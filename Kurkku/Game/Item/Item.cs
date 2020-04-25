@@ -25,6 +25,9 @@ namespace Kurkku.Game
             Id = ItemManager.Instance.GenerateId();
         }
 
+        public string ExtraData => Interactor.GetExtraData();
+       
+
         #endregion
     }
 }

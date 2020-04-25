@@ -13,7 +13,7 @@ namespace Kurkku.Game
         public ItemDefinitionData Data { get; }
         public InteractorType InteractorType { get; }
         public List<ItemBehaviour> Behaviours { get; }
-        public object Type
+        public string Type
         {
             get
             {

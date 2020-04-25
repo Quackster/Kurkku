@@ -34,6 +34,8 @@ namespace Kurkku.Game
             Packages = CatalogueDao.GetPackages().Select(i => new CataloguePackage(i, Items.FirstOrDefault(x => x.Data.SaleCode == i.SaleCode))).ToList();
             Discounts = CatalogueDao.GetDiscounts();
             DeserialisePageData();
+
+            var test = Items.Where(x => x.Data.IsPackage).ToList();
         }
 
         #endregion
@@ -69,11 +71,8 @@ namespace Kurkku.Game
             ItemDao.CreateItems(purchaseQueue);
 
             // Convert item data to item instance
-            List<Item> userItems 
+            List<Item> items 
                 = purchaseQueue.Select(x => new Item(x)).ToList();
-
-            Dictionary<int, FurniListNotificationType> notificationTypes
-                = userItems.ToDictionary(x => x.Id, x => FurniListNotificationType.GENERIC); // TODO: Change for bots and pets etc in future
 
             var player = PlayerManager.Instance.GetPlayerById(userId);
 
@@ -81,7 +80,12 @@ namespace Kurkku.Game
                 return;
 
             player.Send(new PurchaseOKComposer(catalogueItem));
-            player.Send(new FurniListNotificationComposer(notificationTypes));
+
+            foreach (var item in items)
+                player.Inventory.Add(item);
+
+            player.Send(new FurniListNotificationComposer(items));
+            player.Send(new FurniListUpdateComposer());
         }
 
         /// <summary>
@@ -126,7 +130,10 @@ namespace Kurkku.Game
             if (serializeable != null)
                 itemData.ExtraData = JsonConvert.SerializeObject(serializeable);
             else
-                itemData.ExtraData = "0";
+                itemData.ExtraData = "";
+
+            if (!string.IsNullOrEmpty(cataloguePackage.Data.SpecialSpriteId))
+                itemData.ExtraData = cataloguePackage.Data.SpecialSpriteId;
 
             return itemData;
         }
@@ -185,7 +192,7 @@ namespace Kurkku.Game
         /// </summary>
         public List<CatalogueItem> GetItems(int pageId)
         {
-            return Items.Where(x => x.PageIds.Contains(pageId) && !x.Data.IsHidden && x.Definition != null).OrderBy(x => x.Data.OrderId).ToList();
+            return Items.Where(x => x.PageIds.Contains(pageId) && !x.Data.IsHidden).OrderBy(x => x.Data.OrderId).ToList();
         }
 
         /// <summary>

@@ -24,7 +24,7 @@ namespace Kurkku.Messages.Incoming
             if (catalogueItem == null)
                 return;
 
-            if (catalogueItem.Definition.HasBehaviour(ItemBehaviour.EFFECT))
+            if (catalogueItem.Definition != null && catalogueItem.Definition.HasBehaviour(ItemBehaviour.EFFECT))
                 return; // Effects disabled for now
 
             string extraData = request.ReadString().FilterInput(false);

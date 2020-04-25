@@ -46,5 +46,6 @@
         public static readonly short StopTypingMessageEvent = 1236;
         public static readonly short ChatMessageMessageEvent = 2275;
         public static readonly short ShoutMessageMessageEvent = 1454;
+        public static readonly short InventoryMessageEvent = 2297;
     }
 }

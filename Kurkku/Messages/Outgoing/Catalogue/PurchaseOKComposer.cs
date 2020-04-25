@@ -8,16 +8,16 @@ namespace Kurkku.Messages.Outgoing
 {
     public class PurchaseOKComposer : IMessageComposer
     {
-        private CatalogueItem offer;
+        private CatalogueItem item;
 
         public PurchaseOKComposer(CatalogueItem offer)
         {
-            this.offer = offer;
+            this.item = offer;
         }
 
         public override void Write()
         {
-            SerialiseOffer(this, this.offer);
+            SerialiseOffer(this, item);
         }
 
         internal static void SerialiseOffer(IMessageComposer composer, CatalogueItem item)
@@ -36,10 +36,10 @@ namespace Kurkku.Messages.Outgoing
                 composer.Data.Add(package.Definition.Data.SpriteId);
                 composer.Data.Add(package.Data.SpecialSpriteId); // extra data
                 composer.Data.Add(package.Data.Amount);
-                composer.Data.Add(0);
+                composer.Data.Add(false);
             }
 
-            composer.Data.Add(false);
+            composer.Data.Add(0);
             composer.Data.Add(item.AllowBulkPurchase);
         }
     }

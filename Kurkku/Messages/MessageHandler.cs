@@ -48,6 +48,7 @@ namespace Kurkku.Messages
             RegisterRoomUser();
             RegisterRoomSettings();
             RegisterCatalogue();
+            RegisterItems();
             ResolveComposers();
 
             /*
@@ -59,6 +60,14 @@ namespace Kurkku.Messages
 
             // chat packet
             // [2020-04-21 01:17:28,284] DEBUG  Player Alex - Unknown: 2275 / [0][4]test[0][0][0][0][0][0][0][0]
+        }
+
+        /// <summary>
+        /// Register item handlers
+        /// </summary>
+        public void RegisterItems()
+        {
+            Events[IncomingEvents.InventoryMessageEvent] = new InventoryMessageEvent();
         }
 
         /// <summary>

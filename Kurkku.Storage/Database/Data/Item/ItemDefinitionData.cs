@@ -19,6 +19,8 @@ namespace Kurkku.Storage.Database.Data
             Map(x => x.Interactor, "interactor");
             Map(x => x.IsTradable, "is_tradable");
             Map(x => x.IsRecyclable, "is_recyclable");
+            Map(x => x.IsStackable, "is_stackable");
+            Map(x => x.IsSellable, "is_sellable");
             Map(x => x.DrinkIds, "drink_ids");
         }
     }
@@ -37,6 +39,8 @@ namespace Kurkku.Storage.Database.Data
         public virtual string Interactor { get; set; }
         public virtual bool IsTradable { get; set; }
         public virtual bool IsRecyclable { get; set; }
+        public virtual bool IsStackable { get; set; }
+        public virtual bool IsSellable { get; set; }
         public virtual string DrinkIds { get; set; }
     }
 }

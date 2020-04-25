@@ -12,5 +12,7 @@ namespace Kurkku.Game
         {
             Item = item;
         }
+
+        public abstract string GetExtraData();
     }
 }

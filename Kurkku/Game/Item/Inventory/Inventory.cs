@@ -33,6 +33,14 @@ namespace Kurkku.Game
             this.Items = new ConcurrentDictionary<int, Item>(ItemDao.GetUserItems(player.Details.Id).Select(x => new Item(x)).ToDictionary(x => x.Id, x => x)); 
         }
 
+        /// <summary>
+        /// Add item to inventory
+        /// </summary>
+        public void Add(Item item, bool alertNewItem = false, bool forceUpdate = false)
+        {
+            this.Items.TryAdd(item.Id, item);
+        }
+
         #endregion
 
 

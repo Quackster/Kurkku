@@ -10,5 +10,10 @@ namespace Kurkku.Game
         {
 
         }
+
+        public override string GetExtraData()
+        {
+            return Item.Data.ExtraData;
+        }
     }
 }
