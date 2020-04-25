@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Kurkku.Messages.Outgoing
 {
-    class ActivityPointNotificationComposer : IMessageComposer
+    class ActivityPointsComposer : IMessageComposer
     {
         private Dictionary<SeasonalCurrencyType, int> currencies;
 
-        public ActivityPointNotificationComposer(Dictionary<SeasonalCurrencyType, int> currencies)
+        public ActivityPointsComposer(Dictionary<SeasonalCurrencyType, int> currencies)
         {
             this.currencies = currencies;
         }

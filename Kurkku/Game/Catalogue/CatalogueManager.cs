@@ -40,6 +40,14 @@ namespace Kurkku.Game
         #region Public methods
 
         /// <summary>
+        /// Handle item purchase
+        /// </summary>
+        public void Purchase(int userId, int amount, string extraData, long datePurchase)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Convert JSON arrays to list of images and strings
         /// </summary>
         public void DeserialisePageData()

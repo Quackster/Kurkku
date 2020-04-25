@@ -8,7 +8,8 @@ namespace Kurkku.Messages.Incoming
     {
         public void Handle(Player player, Request request)
         {
-            player.Send(new CreditsBalanceComposer(player.Details.Credits));
+            player.CurrencyDetails.UpdateCredits();
+            player.CurrencyDetails.UpdateCurrencies();
         }
     }
 }

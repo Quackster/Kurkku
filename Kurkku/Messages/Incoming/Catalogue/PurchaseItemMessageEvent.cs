@@ -4,6 +4,8 @@ using Kurkku.Game;
 using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
 using Kurkku.Storage.Database.Data;
+using Kurkku.Util;
+using Kurkku.Util.Extensions;
 
 namespace Kurkku.Messages.Incoming
 {
@@ -22,6 +24,9 @@ namespace Kurkku.Messages.Incoming
             if (catalogueItem == null)
                 return;
 
+            if (catalogueItem.Definition.HasBehaviour(ItemBehaviour.EFFECT))
+                return; // Effects disabled for now
+
             string extraData = request.ReadString();
             int amount = request.ReadInt();
 
@@ -36,9 +41,7 @@ namespace Kurkku.Messages.Incoming
                 if (basicDiscount >= discount.MinimumDiscountForBonus)
                 {
                     if (amount % discount.DiscountBatchSize == discount.DiscountBatchSize - 1)
-                    {
                         bonusDiscount = 1;
-                    }
 
                     bonusDiscount += basicDiscount - discount.MinimumDiscountForBonus;
                 }
@@ -71,9 +74,18 @@ namespace Kurkku.Messages.Incoming
             if (priceCoins > 0)
             {
                 player.CurrencyDetails.ModifyCredits(-priceCoins);
+                player.CurrencyDetails.UpdateCredits();
             }
 
+            // Update seasonal currency
+            if (priceSeasonal > 0)
+            {
+                player.CurrencyDetails.AddBalance(catalogueItem.Data.SeasonalType, -priceSeasonal);
+                player.CurrencyDetails.UpdateCurrency(catalogueItem.Data.SeasonalType, false);
+                player.CurrencyDetails.SaveCurrencies();
+            }
 
+            CatalogueManager.Instance.Purchase(catalogueItem.Data.Id, amount, extraData, DateUtil.GetUnixTimestamp());
         }
     }
 }

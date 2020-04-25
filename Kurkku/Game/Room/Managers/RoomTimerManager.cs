@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kurkku.Util;
+using System;
 
 namespace Kurkku.Game
 {
@@ -42,7 +43,7 @@ namespace Kurkku.Game
         /// </summary>
         public void StartSpeechBubbleTimer()
         {
-            SpeechBubbleDate = DateTimeOffset.Now.ToUnixTimeSeconds() + ValueManager.Instance.GetInt("timer.speech.bubble");
+            SpeechBubbleDate = DateUtil.GetUnixTimestamp() + ValueManager.Instance.GetInt("timer.speech.bubble");
         }
 
         #endregion

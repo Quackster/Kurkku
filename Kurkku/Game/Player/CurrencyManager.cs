@@ -53,24 +53,49 @@ namespace Kurkku.Game
         }
 
         /// <summary>
+        /// Refresh user credits from db but also override them
+        /// </summary>
+        public void ModifyCredits(int creditsChanged)
+        {
+            player.Details.Credits = CurrencyDao.SaveCredits(player.Details.Id, creditsChanged);
+        }
+
+        /// <summary>
+        /// Update curencies on client side
+        /// </summary>
+        public void UpdateCurrencies()
+        {
+            player.Send(new ActivityPointsComposer(Currencies));
+        }
+
+        /// <summary>
+        /// Updates singular currency on client side
+        /// </summary>
+        public void UpdateCurrency(SeasonalCurrencyType seasonalCurrency, bool notify = true)
+        {
+            if (Currencies.TryGetValue(seasonalCurrency, out var balance))
+                player.Send(new ActivityPointsNotificationComposer(seasonalCurrency, balance, notify));
+        }
+
+
+        /// <summary>
+        /// Update curencies on client side
+        /// </summary>
+        public void UpdateCredits()
+        {
+            player.Send(new CreditsBalanceComposer(player.Details.Credits));
+        }
+
+        /// <summary>
         /// Save list of currencies for user
         /// </summary>
-        public void Save()
+        public void SaveCurrencies()
         {
             List<CurrencyData> currencyList = Currencies
                 .Select(kvp => new CurrencyData { UserId = player.Details.Id, SeasonalType = kvp.Key, Balance = kvp.Value })
                 .ToList();
 
             CurrencyDao.SaveCurrencies(currencyList);
-        }
-
-        /// <summary>
-        /// Refresh user credits from db but also override them
-        /// </summary>
-        public void ModifyCredits(int creditsChanged)
-        {
-            player.Details.Credits = CurrencyDao.SaveCredits(player.Details.Id, creditsChanged);
-            player.Send(new CreditsBalanceComposer(player.Details.Credits));
         }
 
         #endregion

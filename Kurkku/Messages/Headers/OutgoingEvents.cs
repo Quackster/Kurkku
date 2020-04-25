@@ -5,7 +5,6 @@
         public static readonly short InitCryptoComposer = 889;
         public static readonly short SecretKeyComposer = 3489;
         public static readonly short AuthenticationOKComposer = 2008;
-        public static readonly short ActivityPointsComposer = 1271;
         public static readonly short CreditsBalanceComposer = 3412;
         public static readonly short LandingViewComposer = 2680;
         public static readonly short InitMessengerComposer = 1800;
@@ -48,7 +47,8 @@
         public static readonly short PublicRoomCastsComposer = 16;
         public static readonly short CataloguePagesComposer = 3845;
         public static readonly short AllowancesComposer = 709;
-        public static readonly short ActivityPointNotificationComposer = 1271;
+        public static readonly short ActivityPointsComposer = 1271;
+        public static readonly short ActivityPointsNotificationComposer = 2822;
         public static readonly short CataloguePageComposer = 3379;
         public static readonly short PromotableRoomsMessageComposer = 78;
         public static readonly short CatalogItemDiscountComposer = 366;
