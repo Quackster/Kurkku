@@ -1,5 +1,4 @@
 ﻿using Kurkku.Storage.Database.Data;
-using System.Collections.Generic;
 
 namespace Kurkku.Messages.Outgoing
 {

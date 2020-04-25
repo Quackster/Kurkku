@@ -5,6 +5,9 @@ namespace Kurkku.Storage.Database.Access
 {
     public class ItemDao
     {
+        /// <summary>
+        /// Get list of all definition data
+        /// </summary>
         public static List<ItemDefinitionData> GetDefinitions()
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
@@ -13,14 +16,32 @@ namespace Kurkku.Storage.Database.Access
             }
         }
 
+        /// <summary>
+        /// Get list of all item data for user inventory
+        /// </summary>
         public static List<ItemData> GetUserItems(int userId)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
-                return session.QueryOver<ItemData>().List() as List<ItemData>;
+                return session.QueryOver<ItemData>().Where(x => x.OwnerId == userId && x.RoomId == 0).List() as List<ItemData>;
             }
         }
 
+        /// <summary>
+        /// Get room items
+        /// </summary>
+        public static List<ItemData> GetRoomItems(int roomId)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                return session.QueryOver<ItemData>().Where(x => x.RoomId == roomId).List() as List<ItemData>;
+            }
+        }
+
+        /// <summary>
+        /// Save item definition
+        /// </summary>
+        /// <param name="itemDefinition"></param>
         public static void SaveDefinition(ItemDefinitionData itemDefinition)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
@@ -40,6 +61,32 @@ namespace Kurkku.Storage.Database.Access
             }
         }
 
+        /// <summary>
+        /// Save item data
+        /// </summary>
+        public static void SaveItem(ItemData itemData)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    try
+                    {
+                        session.Update(itemData);
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Create item data and refresh it
+        /// </summary>
         public static void CreateItems(List<ItemData> items)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())

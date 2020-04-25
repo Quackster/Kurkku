@@ -63,14 +63,6 @@ namespace Kurkku.Messages
         }
 
         /// <summary>
-        /// Register item handlers
-        /// </summary>
-        public void RegisterItems()
-        {
-            Events[IncomingEvents.InventoryMessageEvent] = new InventoryMessageEvent();
-        }
-
-        /// <summary>
         /// Resolve composers, instead of assigning to every composer file, associate by file name instead
         /// </summary>
         public void ResolveComposers()
@@ -211,6 +203,17 @@ namespace Kurkku.Messages
             Events[IncomingEvents.OpenCatalogueMessageEvent] = new OpenCatalogueMessageEvent();
             Events[IncomingEvents.GetCataloguePageMessageEvent] = new GetCataloguePageMessageEvent();
             Events[IncomingEvents.PurchaseItemMessageEvent] = new PurchaseItemMessageEvent();
+        }
+
+        /// <summary>
+        /// Register item handlers
+        /// </summary>
+        public void RegisterItems()
+        {
+            Events[IncomingEvents.InventoryMessageEvent] = new InventoryMessageEvent();
+            Events[IncomingEvents.PlaceItemMessageEvent] = new PlaceItemMessageEvent();
+            Events[IncomingEvents.RemoveItemMessageEvent] = new RemoveItemMessageEvent();
+
         }
 
         #endregion

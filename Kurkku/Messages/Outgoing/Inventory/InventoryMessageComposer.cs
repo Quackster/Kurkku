@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using Kurkku.Game;
 
 namespace Kurkku.Messages.Outgoing
@@ -20,46 +21,51 @@ namespace Kurkku.Messages.Outgoing
 
             foreach (var item in items.Values)
             {
-                m_Data.Add(item.Id);
-                m_Data.Add(item.Definition.Type.ToUpper());
-                m_Data.Add(item.Id);
-                m_Data.Add(item.Definition.Data.SpriteId);
+                Serialize(this, item);
+            }
+        }
 
-                switch (item.Definition.Data.Sprite)
-                {
-                    case "landscape":
-                        m_Data.Add(4);
-                        break;
-                    case "wallpaper":
-                        m_Data.Add(2);
-                        break;
-                    case "floor":
-                        m_Data.Add(3);
-                        break;
-                    case "poster":
-                        m_Data.Add(6);
-                        break;
-                    default:
-                        m_Data.Add(1);
-                        break;
-                }
+        public static void Serialize(IMessageComposer composer, Item item)
+        {
+            composer.Data.Add(item.Id);
+            composer.Data.Add(item.Definition.Type.ToUpper());
+            composer.Data.Add(item.Id);
+            composer.Data.Add(item.Definition.Data.SpriteId);
 
-                m_Data.Add(0); // ??
-                m_Data.Add(item.ExtraData);
-                m_Data.Add(item.Definition.Data.IsRecyclable);
-                m_Data.Add(item.Definition.Data.IsTradable);
-                m_Data.Add(item.Definition.Data.IsStackable);
-                m_Data.Add(item.Definition.Data.IsSellable);
+            switch (item.Definition.Data.Sprite)
+            {
+                case "landscape":
+                    composer.Data.Add(4);
+                    break;
+                case "wallpaper":
+                    composer.Data.Add(2);
+                    break;
+                case "floor":
+                    composer.Data.Add(3);
+                    break;
+                case "poster":
+                    composer.Data.Add(6);
+                    break;
+                default:
+                    composer.Data.Add(1);
+                    break;
+            }
 
-                m_Data.Add(-1);
-                m_Data.Add(true);
-                m_Data.Add(-1);
+            composer.Data.Add(0); // ??
+            composer.Data.Add(item.ExtraData);
+            composer.Data.Add(item.Definition.Data.IsRecyclable);
+            composer.Data.Add(item.Definition.Data.IsTradable);
+            composer.Data.Add(item.Definition.Data.IsStackable);
+            composer.Data.Add(item.Definition.Data.IsSellable);
 
-                if (!item.Definition.HasBehaviour(ItemBehaviour.WALL_ITEM))
-                {
-                    m_Data.Add("");
-                    m_Data.Add(0); // todo: sprite code for wrapping
-                }
+            composer.Data.Add(-1);
+            composer.Data.Add(true);
+            composer.Data.Add(-1);
+
+            if (!item.Definition.HasBehaviour(ItemBehaviour.WALL_ITEM))
+            {
+                composer.Data.Add("");
+                composer.Data.Add(0); // todo: sprite code for wrapping
             }
         }
     }

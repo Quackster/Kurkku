@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Kurkku.Game
 {
-    public class RoomTaskManager
+    public class RoomTaskManager : ILoadable
     {
         #region Fields
 
@@ -32,7 +32,7 @@ namespace Kurkku.Game
         /// <summary>
         /// Start all registered tasks
         /// </summary>
-        public void StartTasks()
+        public void Load()
         {
             if (!Tasks.Any())
                 RegisterTasks();

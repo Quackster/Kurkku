@@ -82,7 +82,7 @@ namespace Kurkku.Game
             player.Send(new PurchaseOKComposer(catalogueItem));
 
             foreach (var item in items)
-                player.Inventory.Add(item);
+                player.Inventory.AddItem(item);
 
             player.Send(new FurniListNotificationComposer(items));
             player.Send(new FurniListUpdateComposer());

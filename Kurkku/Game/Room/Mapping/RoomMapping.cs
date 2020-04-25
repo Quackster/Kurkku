@@ -1,6 +1,9 @@
-﻿namespace Kurkku.Game
+﻿using Kurkku.Messages.Outgoing;
+using System;
+
+namespace Kurkku.Game
 {
-    public class RoomMapping
+    public class RoomMapping : ILoadable
     {
         #region Fields
 
@@ -27,7 +30,10 @@
 
         #region Public methods
 
-        public void RegenerateMap()
+        /// <summary>
+        /// Regenerate the room map
+        /// </summary>
+        public void Load()
         {
             Tiles = new RoomTile[model.MapSizeX, model.MapSizeY];
 
@@ -43,6 +49,90 @@
                     );
                 }
             }
+
+            foreach (var item in room.ItemManager.Items.Values)
+            {
+                if (item.Definition.HasBehaviour(ItemBehaviour.WALL_ITEM))
+                    continue;
+
+                foreach (Position position in AffectedTile.GetAffectedTiles(item))
+                {
+                    var tile = position.GetTile(room);
+
+                    if (tile == null)
+                        continue;
+
+                    tile.AddItem(item);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Add item to map handler
+        /// </summary>
+        internal void AddItem(Item item, Position position, Player player = null)
+        {
+            RoomTile tile = position.GetTile(room);
+
+            if (tile == null)
+                return;
+
+            position.Z = tile.TileHeight;
+
+            item.Position = position;
+            item.Data.X = position.X;
+            item.Data.Y = position.Y;
+            item.Data.Z = position.Z;
+            item.Data.Rotation = position.Rotation;
+            item.Data.RoomId = room.Data.Id;
+            item.Save();
+
+            foreach (var affectedPosition in AffectedTile.GetAffectedTiles(item))
+            {
+                var roomTile = affectedPosition.GetTile(room);
+
+                if (roomTile == null)
+                    continue;
+
+                roomTile.AddItem(item);
+            }
+
+            room.ItemManager.AddItem(item);
+            room.Send(new FloorItemComposer(item));
+        }
+
+
+        /// <summary>
+        /// Remove item handler
+        /// </summary>
+        public void RemoveItem(Item item, Player player)
+        {
+            RoomTile tile = item.Position.GetTile(room);
+
+            if (tile == null)
+                return;
+
+
+            foreach (var affectedPosition in AffectedTile.GetAffectedTiles(item))
+            {
+                var roomTile = affectedPosition.GetTile(room);
+
+                if (roomTile == null)
+                    continue;
+
+                roomTile.RemoveItem(item);
+            }
+
+            item.Position = new Position();
+            item.Data.X = item.Position.X;
+            item.Data.Y = item.Position.Y;
+            item.Data.Z = item.Position.Z;
+            item.Data.Rotation = item.Position.Rotation;
+            item.Data.RoomId = 0;
+            item.Save();
+
+            room.ItemManager.RemoveItem(item);
+            room.Send(new RemoveFloorItemComposer(item));
         }
 
         #endregion

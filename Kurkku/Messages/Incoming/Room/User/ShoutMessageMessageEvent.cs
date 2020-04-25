@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Kurkku.Util.Extensions;
+﻿using Kurkku.Util.Extensions;
 using Kurkku.Game;
 using Kurkku.Network.Streams;
 

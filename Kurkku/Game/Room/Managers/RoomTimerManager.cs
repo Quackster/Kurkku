@@ -1,5 +1,4 @@
 ﻿using Kurkku.Util;
-using System;
 
 namespace Kurkku.Game
 {

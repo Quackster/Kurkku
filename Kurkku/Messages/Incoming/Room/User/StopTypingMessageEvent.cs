@@ -1,5 +1,4 @@
-﻿using System;
-using Kurkku.Game;
+﻿using Kurkku.Game;
 using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
 

@@ -47,5 +47,7 @@
         public static readonly short ChatMessageMessageEvent = 2275;
         public static readonly short ShoutMessageMessageEvent = 1454;
         public static readonly short InventoryMessageEvent = 2297;
+        public static readonly short PlaceItemMessageEvent = 2696;
+        public static readonly short RemoveItemMessageEvent = 1019;
     }
 }

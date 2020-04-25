@@ -2576,7 +2576,7 @@ CREATE TABLE IF NOT EXISTS `item` (
   `z` varchar(255) NOT NULL DEFAULT '0',
   `wall_position` varchar(255) NOT NULL DEFAULT '',
   `rotation` int(11) NOT NULL DEFAULT 0,
-  `custom_data` longtext NOT NULL,
+  `custom_data` longtext NOT NULL DEFAULT '',
   `expire_time` bigint(11) NOT NULL DEFAULT -1,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -2586,6 +2586,17 @@ CREATE TABLE IF NOT EXISTS `item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*!40000 ALTER TABLE `item` DISABLE KEYS */;
+INSERT INTO `item` (`id`, `order_id`, `user_id`, `room_id`, `definition_id`, `x`, `y`, `z`, `wall_position`, `rotation`, `custom_data`, `expire_time`, `created_at`, `updated_at`) VALUES
+	('00c22fad-a882-489d-bb36-6c40060b6786', 0, 1, 0, 1516, '0', '0', '0', '', 0, '', -1, '2020-04-26 00:09:52', '2020-04-26 02:27:39'),
+	('61019ca4-4cb4-42e7-a4f2-7dd8a3f960ed', 0, 1, 2, 733, '8', '12', '0', '', 2, '', -1, '2020-04-26 00:09:11', '2020-04-26 02:18:40'),
+	('7c07cdcb-7b4a-436d-a09a-59d150e75599', 0, 1, 0, 84, '0', '0', '0', '', 0, '', -1, '2020-04-25 21:09:23', '2020-04-26 02:27:23'),
+	('91ed027f-3bc4-474f-9a0d-acc806c8c531', 0, 1, 0, 251, '0', '0', '0', '', 0, '513', -1, '2020-04-25 21:09:28', '2020-04-25 21:09:28'),
+	('9aa2c6f2-113d-4799-9cc6-7f164ba187d9', 0, 1, 2, 1128, '10', '12', '0', '', 0, '', -1, '2020-04-26 00:08:58', '2020-04-26 02:23:17'),
+	('ad19b278-5366-4eba-b03c-413377718237', 0, 1, 2, 1184, '9', '6', '0', '', 0, '', -1, '2020-04-26 00:09:46', '2020-04-26 02:23:26'),
+	('e05ec640-cf94-4a6d-86e9-c74e818e321e', 0, 1, 2, 2171, '2', '5', '1', '', 0, '', -1, '2020-04-26 00:09:17', '2020-04-26 02:27:35'),
+	('e6e3c7c4-e794-4410-8166-8c231e199a07', 0, 1, 0, 1561, '0', '0', '0', '', 0, '', -1, '2020-04-26 00:09:40', '2020-04-26 02:27:28'),
+	('f1dc9d3e-631f-4a05-bbfc-c8a6260a045d', 0, 1, 0, 1519, '0', '0', '0', '', 0, '', -1, '2020-04-26 00:09:54', '2020-04-26 02:27:42'),
+	('u678678678678678767868678', 0, 2, 0, 739, '8', '11', '0', '', 0, '', -1, '2020-04-25 21:09:23', '2020-04-26 01:28:06');
 /*!40000 ALTER TABLE `item` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `item_definitions` (
@@ -4846,7 +4857,7 @@ CREATE TABLE IF NOT EXISTS `room` (
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
 INSERT INTO `room` (`id`, `owner_id`, `name`, `description`, `category_id`, `visitors_now`, `visitors_max`, `status`, `password`, `model`, `ccts`, `wallpaper`, `floor`, `landscape`, `rating`, `allow_pets`, `allow_pets_eat`, `allow_walkthrough`, `hidewall`, `wall_thickness`, `floor_thickness`, `is_owner_hidden`) VALUES
 	(1, 0, 'Welcome Lobby', 'welcome_lounge', 15, 0, 25, 'OPEN', '', 'newbie_lobby', 'hh_room_nlobby', 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0),
-	(2, 1, '123', '', 6, 0, 25, 'OPEN', '', 'model_g', '', 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0),
+	(2, 1, '123', '', 6, 1, 25, 'OPEN', '', 'model_g', '', 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0),
 	(3, 1, 'test room', '', 14, 0, 25, 'OPEN', '', 'model_b', '', 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
@@ -4931,9 +4942,12 @@ CREATE TABLE IF NOT EXISTS `user` (
   `join_date` datetime NOT NULL DEFAULT current_timestamp(),
   `last_online` datetime NOT NULL DEFAULT current_timestamp(),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `pixels`, `motto`, `join_date`, `last_online`) VALUES
+	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999966, 0, '', '2020-04-25 21:07:53', '2020-04-26 02:27:17'),
+	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999990, 0, '', '2020-04-25 21:07:53', '2020-04-25 21:09:04');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_seasonal_currencies` (
@@ -4943,6 +4957,14 @@ CREATE TABLE IF NOT EXISTS `user_seasonal_currencies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user_seasonal_currencies` DISABLE KEYS */;
+INSERT INTO `user_seasonal_currencies` (`user_id`, `seasonal_type`, `balance`) VALUES
+	(1, 'PUMPKINS', 0),
+	(1, 'PEANUTS', 0),
+	(1, 'STARS', 0),
+	(1, 'CLOUDS', 0),
+	(1, 'DIAMONDS', 0),
+	(1, 'DUCKETS', 0),
+	(1, 'LOYALTY_POINTS', 0);
 /*!40000 ALTER TABLE `user_seasonal_currencies` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_settings` (
@@ -4956,6 +4978,8 @@ CREATE TABLE IF NOT EXISTS `user_settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user_settings` DISABLE KEYS */;
+INSERT INTO `user_settings` (`user_id`, `daily_respect_points`, `daily_respect_pet_points`, `respect_points`, `friend_requests_enabled`, `following_enabled`) VALUES
+	(1, 0, 0, 0, 1, 1);
 /*!40000 ALTER TABLE `user_settings` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_subscriptions` (

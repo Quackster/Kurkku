@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Kurkku.Game;
 using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
-using Kurkku.Storage.Database.Data;
 using Kurkku.Util;
 using Kurkku.Util.Extensions;
 
@@ -26,6 +24,12 @@ namespace Kurkku.Messages.Incoming
 
             if (catalogueItem.Definition != null && catalogueItem.Definition.HasBehaviour(ItemBehaviour.EFFECT))
                 return; // Effects disabled for now
+
+            if (catalogueItem.Definition != null && (
+                catalogueItem.Definition.InteractorType == InteractorType.TELEPORTER || 
+                catalogueItem.Definition.InteractorType == InteractorType.ROOMDIMMER ||
+                catalogueItem.Definition.InteractorType == InteractorType.TROPHY))
+                return; // Teleporters, trophies & moodlights disabled for now until coded
 
             string extraData = request.ReadString().FilterInput(false);
             int amount = request.ReadInt();

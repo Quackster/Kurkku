@@ -27,6 +27,7 @@ namespace Kurkku.Messages.Incoming
             player.Send(new UsersStatusComposer(room.EntityManager.GetEntities<IEntity>()));
 
             player.Send(new RoomInfoComposer(room.Data, true, false)); // false, true));
+            player.Send(new FloorItemsComposer(room.ItemManager.Items));
 
             /*
                     player.send(new USER_OBJECTS(room.getEntities()));
