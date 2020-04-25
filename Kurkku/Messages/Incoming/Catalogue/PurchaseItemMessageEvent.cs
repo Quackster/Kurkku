@@ -27,10 +27,11 @@ namespace Kurkku.Messages.Incoming
             if (catalogueItem.Definition.HasBehaviour(ItemBehaviour.EFFECT))
                 return; // Effects disabled for now
 
-            string extraData = request.ReadString();
+            string extraData = request.ReadString().FilterInput(false);
             int amount = request.ReadInt();
 
             // Credits to Alejandro from Morningstar xoxo
+            int totalDiscountedItems = 0;
             var discount = CatalogueManager.Instance.GetBestDiscount(cataloguePage.Data.Id);
 
             if (catalogueItem.AllowBulkPurchase && discount != null)
@@ -47,15 +48,12 @@ namespace Kurkku.Messages.Incoming
                 }
 
 
-                int totalDiscountedItems = ((int)basicDiscount * (int)discount.DiscountAmountPerBatch) + (int)bonusDiscount;
-
-                // Override the amount with how much we saved >:)
-                amount = (amount - totalDiscountedItems);
+                totalDiscountedItems = ((int)basicDiscount * (int)discount.DiscountAmountPerBatch) + (int)bonusDiscount;
             }
 
             // Calculate new price for both credits and seasonal furniture
-            int priceCoins = catalogueItem.Data.PriceCoins * amount;
-            int priceSeasonal = catalogueItem.Data.PriceSeasonal * amount;
+            int priceCoins = catalogueItem.Data.PriceCoins * (amount - totalDiscountedItems);
+            int priceSeasonal = catalogueItem.Data.PriceSeasonal * (amount - totalDiscountedItems);
 
             // Continue standard purchase
             if (priceCoins > player.Details.Credits)
@@ -64,7 +62,7 @@ namespace Kurkku.Messages.Incoming
                 return;
             }
 
-            if (priceSeasonal > player.CurrencyDetails.GetBalance(catalogueItem.Data.SeasonalType))
+            if (priceSeasonal > player.Currency.GetBalance(catalogueItem.Data.SeasonalType))
             {
                 player.Send(new NoCreditsComposer(false, true, catalogueItem.Data.SeasonalType));
                 return;
@@ -73,19 +71,19 @@ namespace Kurkku.Messages.Incoming
             // Update credits of user
             if (priceCoins > 0)
             {
-                player.CurrencyDetails.ModifyCredits(-priceCoins);
-                player.CurrencyDetails.UpdateCredits();
+                player.Currency.ModifyCredits(-priceCoins);
+                player.Currency.UpdateCredits();
             }
 
             // Update seasonal currency
             if (priceSeasonal > 0)
             {
-                player.CurrencyDetails.AddBalance(catalogueItem.Data.SeasonalType, -priceSeasonal);
-                player.CurrencyDetails.UpdateCurrency(catalogueItem.Data.SeasonalType, false);
-                player.CurrencyDetails.SaveCurrencies();
+                player.Currency.AddBalance(catalogueItem.Data.SeasonalType, -priceSeasonal);
+                player.Currency.UpdateCurrency(catalogueItem.Data.SeasonalType, false);
+                player.Currency.SaveCurrencies();
             }
 
-            CatalogueManager.Instance.Purchase(catalogueItem.Data.Id, amount, extraData, DateUtil.GetUnixTimestamp());
+            CatalogueManager.Instance.Purchase(player.Details.Id, catalogueItem.Data.Id, amount, extraData, DateUtil.GetUnixTimestamp());
         }
     }
 }

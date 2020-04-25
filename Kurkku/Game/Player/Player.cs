@@ -87,7 +87,12 @@ namespace Kurkku.Game
         /// <summary>
         /// Get currency manager for user
         /// </summary>
-        public CurrencyManager CurrencyDetails { get; set; }
+        public CurrencyManager Currency { get; set; }
+
+        /// <summary>
+        /// Get inventory instance for user
+        /// </summary>
+        public Inventory Inventory { get; set; }
 
         /// <summary>
         /// Whether the player has logged in or not
@@ -130,17 +135,20 @@ namespace Kurkku.Game
             log.Debug($"Player {playerData.Name} has logged in");
 
             UserSettingsDao.CreateOrUpdate(out settings, playerData.Id);
-            PlayerManager.Instance.AddPlayer(this);
 
             playerData.PreviousLastOnline = playerData.LastOnline;
             playerData.LastOnline = DateTime.Now;
 
             UserDao.SaveLastOnline(playerData);
+            PlayerManager.Instance.AddPlayer(this);
 
             Subscription = SubscriptionDao.GetSubscription(playerData.Id);
-            CurrencyDetails = new CurrencyManager(this, CurrencyDao.GetCurrencies(playerData.Id));
-            //Currencies.AddBalance(SeasonalCurrencyType.DUCKETS, 10);
-            //Currencies.Save();
+
+            Currency = new CurrencyManager(this);
+            Currency.Load();
+
+            Inventory = new Inventory(this);
+            Inventory.Load();
 
             Messenger = new Messenger(this);
             Messenger.SendStatus();

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Kurkku.Game
 {
-    public class CurrencyManager
+    public class CurrencyManager : ILoadable
     {
         #region Properties
 
@@ -18,10 +18,14 @@ namespace Kurkku.Game
 
         #region Constructor
 
-        public CurrencyManager(Player player, List<CurrencyData> currencies)
+        public CurrencyManager(Player player)
         {
             this.player = player;
-            this.Currencies = currencies.ToDictionary(x => x.SeasonalType, x => x.Balance < 0 ? 0 : x.Balance);
+        }
+
+        public void Load()
+        {
+            this.Currencies = CurrencyDao.GetCurrencies(player.Details.Id).ToDictionary(x => x.SeasonalType, x => x.Balance < 0 ? 0 : x.Balance);
         }
 
         #endregion

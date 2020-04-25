@@ -26,7 +26,7 @@ namespace Kurkku.Game
                     DefinitionId = Data.DefinitionId,
                     SpecialSpriteId = Data.SpecialSpriteId,
                     Amount = Data.Amount
-                }));
+                }, this));
             }
         }
 

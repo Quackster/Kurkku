@@ -86,6 +86,7 @@ namespace Kurkku
         private static void tryGameData()
         {
             ValueManager.Instance.Load();
+            InteractionManager.Instance.Load();
             ItemManager.Instance.Load();
             CatalogueManager.Instance.Load();
             RoomManager.Instance.Load();

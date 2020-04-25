@@ -1,4 +1,5 @@
-﻿using Kurkku.Storage.Database.Access;
+﻿using Kurkku.Messages.Outgoing;
+using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
 using Newtonsoft.Json;
 using System;
@@ -30,7 +31,7 @@ namespace Kurkku.Game
         {
             Pages = CatalogueDao.GetPages().Select(x => new CataloguePage(x)).ToList();
             Items = CatalogueDao.GetItems().Select(x => new CatalogueItem(x)).ToList();
-            Packages = CatalogueDao.GetPackages().Select(x => new CataloguePackage(x)).ToList();
+            Packages = CatalogueDao.GetPackages().Select(i => new CataloguePackage(i, Items.FirstOrDefault(x => x.Data.SaleCode == i.SaleCode))).ToList();
             Discounts = CatalogueDao.GetDiscounts();
             DeserialisePageData();
         }
@@ -42,9 +43,92 @@ namespace Kurkku.Game
         /// <summary>
         /// Handle item purchase
         /// </summary>
-        public void Purchase(int userId, int amount, string extraData, long datePurchase)
+        public void Purchase(int userId, int itemId, int amount, string extraData, long datePurchase)
         {
-            throw new NotImplementedException();
+            CatalogueItem catalogueItem = Items.FirstOrDefault(x => x.Data.Id == itemId);
+
+            if (catalogueItem == null)
+                return;
+
+            List<ItemData> purchaseQueue = new List<ItemData>();
+
+            for (int i = 0; i < amount; i++)
+            {
+                foreach (var cataloguePackage in catalogueItem.Packages)
+                {
+                    ItemData itemData = GenerateItemData(userId, cataloguePackage, extraData, datePurchase);
+
+                    if (itemData == null)
+                        continue;
+
+                    purchaseQueue.Add(itemData);
+                }
+            }
+
+            // Bulk create items
+            ItemDao.CreateItems(purchaseQueue);
+
+            // Convert item data to item instance
+            List<Item> userItems 
+                = purchaseQueue.Select(x => new Item(x)).ToList();
+
+            Dictionary<int, FurniListNotificationType> notificationTypes
+                = userItems.ToDictionary(x => x.Id, x => FurniListNotificationType.GENERIC); // TODO: Change for bots and pets etc in future
+
+            var player = PlayerManager.Instance.GetPlayerById(userId);
+
+            if (player == null)
+                return;
+
+            player.Send(new PurchaseOKComposer(catalogueItem));
+            player.Send(new FurniListNotificationComposer(notificationTypes));
+        }
+
+        /// <summary>
+        /// Generate item data for purchasing item
+        /// </summary>
+        private ItemData GenerateItemData(int userId, CataloguePackage cataloguePackage, string extraData, long datePurchase)
+        {
+            ItemDefinition definition = ItemManager.Instance.GetDefinition(cataloguePackage.Definition.Data.Id);
+
+            if (definition == null)
+                return null;
+            
+            ItemData itemData = new ItemData();
+            itemData.OwnerId = userId;
+            itemData.DefinitionId = cataloguePackage.Definition.Data.Id;
+
+            object serializeable = null;
+
+            switch (definition.InteractorType)
+            {
+                case InteractorType.POST_IT:
+                    {
+                        serializeable = new StickieExtraData
+                        {
+                            StickiesLeft = 20,
+                            Message = null
+                        };
+                    }
+                    break;
+                case InteractorType.TROPHY:
+                    {
+                        serializeable = new TrophyExtraData
+                        {
+                            UserId = userId,
+                            Message = extraData,
+                            Date = datePurchase
+                        };
+                    }
+                    break;
+            }
+
+            if (serializeable != null)
+                itemData.ExtraData = JsonConvert.SerializeObject(serializeable);
+            else
+                itemData.ExtraData = "0";
+
+            return itemData;
         }
 
         /// <summary>

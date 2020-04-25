@@ -56,5 +56,9 @@
         public static readonly short ChatMessageComposer = 1510;
         public static readonly short ShoutMessageComposer = 2408;
         public static readonly short NoCreditsComposer = 874;
+        public static readonly short FurniListNotificationComposer = 469;
+        public static readonly short FurniListUpdateComposer = 1507;
+        public static readonly short FurniListAddComposer = 27;
+        public static readonly short PurchaseOKComposer = 2434;
     }
 }
