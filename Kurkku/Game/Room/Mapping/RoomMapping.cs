@@ -144,10 +144,12 @@ namespace Kurkku.Game
                 if (newTile == null)
                     return;
 
+                position.Z = newTile.TileHeight;
+
                 item.Position = position;
                 item.Data.X = position.X;
                 item.Data.Y = position.Y;
-                item.Data.Z = newTile.TileHeight;
+                item.Data.Z = position.Z;
                 item.Data.Rotation = position.Rotation;
 
                 // Move item to new tile

@@ -31,6 +31,29 @@ namespace Kurkku.Game
         #region Public methods
 
         /// <summary>
+        /// Get whether the item is walkable
+        /// </summary>
+        public bool IsWalkable(Position position)
+        {
+            if (Definition.HasBehaviour(ItemBehaviour.IS_WALKABLE))
+                return true;
+
+            if (Definition.HasBehaviour(ItemBehaviour.SOLID_SINGLE_TILE))
+                return Position != position;
+
+            if (Definition.InteractorType == InteractorType.CHAIR)
+                return true;
+
+            if (Definition.InteractorType == InteractorType.BED)
+                return true;
+
+            if (Definition.InteractorType == InteractorType.GATE || Definition.InteractorType == InteractorType.ONE_WAY_GATE)
+                return Interactor.GetExtraData().Equals("1");
+
+            return false;
+        }
+
+        /// <summary>
         /// Get total height for furni, which is floor z axis, plus height of furni
         /// </summary>
         public double Height => Definition.Data.TopHeight + Position.Z;

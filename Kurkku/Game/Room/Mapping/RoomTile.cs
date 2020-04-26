@@ -62,7 +62,10 @@ namespace Kurkku.Game
                     return false;
 
             if (tile.HighestItem != null)
-                return false;
+            {
+                if (!tile.HighestItem.IsWalkable(position))
+                    return false;
+            }
             
             return true;
         }
