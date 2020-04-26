@@ -1,6 +1,6 @@
 # Kurkku
 
-A private Habbo Hotel server designed for emulating the 2013 version of Habbo. The SWF release it currently uses is RELEASE63-201302211227-193109692 but this may be subject to change in the future.
+A private Habbo Hotel server designed for emulating the 2013 version of Habbo written in C# using .NET Core. The SWF release it currently uses is RELEASE63-201302211227-193109692 but this may be subject to change in the future.
  
 Kurkku uses DotNetty for asynchronous TCP sockets and networking. Fluid NHibernate for quick and easy database access and SQL queries on the fly without having to manually write queries and Newtonsoft.Json for JSON serializing and deserializing for various custom item attributes. 
 
@@ -15,7 +15,51 @@ Kurkku uses DotNetty for asynchronous TCP sockets and networking. Fluid NHiberna
 - User information retrieval
 - Seasonal currency support
 
-... more TBA soon
+**Messenger**
+
+- Add friend
+- Remove friend
+- Send friend request
+- Remove friend request
+- Accept friend request
+- Instant message friend
+- Update friend status when logging in/out/entering rooms
+- Follow friend
+
+**Rooms**
+
+- Promotable room display supported
+- Random promotion to display on other navigator tabs
+- Enter room
+- Walk in room
+- Leave room
+- Multiple user support in room
+- Chatting in room
+- Item walking collision
+- Allow walkthrough user setting (can't save settings yet)
+
+**Catalogue**
+
+- Catalogue discounts
+- Purchase items (including bulk purchase and discount calculation)
+- Trophy purchase supported
+- Post-its supported
+- Seasonal currency supported
+
+**Items**
+
+- Place floor items
+- Place wall items
+- Move floor items
+- Move wall items
+- Pick up floor items
+- Pickup wall items
+
+**Special Item Interactions**
+
+- Place stickies/post-its
+- Modify post-it
+- View trophy message in room
  
 # Screenshot
 
