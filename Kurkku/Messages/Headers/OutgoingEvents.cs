@@ -65,5 +65,10 @@
         public static readonly short FurniListRemoveComposer = 238;
         public static readonly short FurniListAddComposer = 27;
         public static readonly short RemoveFloorItemComposer = 1891;
+        public static readonly short WallItemComposer = 1382;
+        public static readonly short WallItemsComposer = 1348;
+        public static readonly short RemoveWallItemComposer = 1317;
+        public static readonly short UpdateWallItemComposer = 893;
+        public static readonly short UpdateFloorItemComposer = 3510;
     }
 }

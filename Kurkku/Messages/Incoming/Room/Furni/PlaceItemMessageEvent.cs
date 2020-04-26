@@ -31,8 +31,8 @@ namespace Kurkku.Messages.Incoming
 
             if (item.Definition.HasBehaviour(ItemBehaviour.WALL_ITEM))
             {
-                // TODO: Wall items later
-                return;
+                var wallPosition = $"{placementData[1]} {placementData[2]} {placementData[3]}";
+                room.Mapping.AddItem(item, wallPosition: wallPosition, player: player);
             }
             else
             {

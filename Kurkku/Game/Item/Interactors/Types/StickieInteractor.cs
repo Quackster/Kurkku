@@ -9,7 +9,7 @@
 
         }
 
-        public override object GetExtraData()
+        public override object GetExtraData(bool inventoryView = false)
         {
             if (NeedsExtraDataUpdate)
             {

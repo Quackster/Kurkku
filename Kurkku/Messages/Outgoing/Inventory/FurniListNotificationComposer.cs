@@ -32,7 +32,6 @@ namespace Kurkku.Messages.Outgoing
                 }
                 else
                 {
-
                     notifications[FurniListNotificationType.GENERIC_FLOOR].Add(item.Id);
                 }
             }

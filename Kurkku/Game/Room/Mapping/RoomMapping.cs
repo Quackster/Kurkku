@@ -70,35 +70,101 @@ namespace Kurkku.Game
         /// <summary>
         /// Add item to map handler
         /// </summary>
-        internal void AddItem(Item item, Position position, Player player = null)
+        internal void AddItem(Item item, Position position = null, string wallPosition = null, Player player = null)
         {
-            RoomTile tile = position.GetTile(room);
+            if (item.Definition.HasBehaviour(ItemBehaviour.WALL_ITEM))
+            {
+                item.Data.WallPosition = wallPosition;
+                room.Send(new WallItemComposer(item));
+            }
+            else
+            {
+                RoomTile tile = position.GetTile(room);
 
-            if (tile == null)
-                return;
+                if (tile == null)
+                    return;
 
-            position.Z = tile.TileHeight;
+                position.Z = tile.TileHeight;
 
-            item.Position = position;
-            item.Data.X = position.X;
-            item.Data.Y = position.Y;
-            item.Data.Z = position.Z;
-            item.Data.Rotation = position.Rotation;
+                item.Position = position;
+                item.Data.X = position.X;
+                item.Data.Y = position.Y;
+                item.Data.Z = position.Z;
+                item.Data.Rotation = position.Rotation;
+
+                room.Send(new FloorItemComposer(item));
+
+                foreach (var affectedPosition in AffectedTile.GetAffectedTiles(item))
+                {
+                    var roomTile = affectedPosition.GetTile(room);
+
+                    if (roomTile == null)
+                        continue;
+
+                    roomTile.AddItem(item);
+                }
+            }
+
             item.Data.RoomId = room.Data.Id;
             item.Save();
 
-            foreach (var affectedPosition in AffectedTile.GetAffectedTiles(item))
+            room.ItemManager.AddItem(item);
+        }
+
+        /// <summary>
+        /// Move item handler
+        /// </summary>
+        internal void MoveItem(Item item, Position position = null, string wallPosition = null)
+        {
+            if (item.Definition.HasBehaviour(ItemBehaviour.WALL_ITEM))
             {
-                var roomTile = affectedPosition.GetTile(room);
+                item.Data.WallPosition = wallPosition;
+                room.Send(new UpdateWallItemComposer(item));
+            }
+            else
+            {
+                var oldTile = item.Position.GetTile(room);
 
-                if (roomTile == null)
-                    continue;
+                if (oldTile == null)
+                    return;
 
-                roomTile.AddItem(item);
+                // Move item from tile
+                foreach (var affectedPosition in AffectedTile.GetAffectedTiles(item))
+                {
+                    var roomTile = affectedPosition.GetTile(room);
+
+                    if (roomTile == null)
+                        continue;
+
+                    roomTile.RemoveItem(item);
+                }
+
+                var newTile = position.GetTile(room);
+
+                if (newTile == null)
+                    return;
+
+                item.Position = position;
+                item.Data.X = position.X;
+                item.Data.Y = position.Y;
+                item.Data.Z = newTile.TileHeight;
+                item.Data.Rotation = position.Rotation;
+
+                // Move item to new tile
+                foreach (var affectedPosition in AffectedTile.GetAffectedTiles(item))
+                {
+                    var roomTile = affectedPosition.GetTile(room);
+
+                    if (roomTile == null)
+                        continue;
+
+                    roomTile.AddItem(item);
+                }
+
+                room.Send(new UpdateFloorItemComposer(item));
             }
 
-            room.ItemManager.AddItem(item);
-            room.Send(new FloorItemComposer(item));
+            item.Save();
         }
 
 
@@ -128,11 +194,19 @@ namespace Kurkku.Game
             item.Data.Y = item.Position.Y;
             item.Data.Z = item.Position.Z;
             item.Data.Rotation = item.Position.Rotation;
+
+            if (item.Definition.HasBehaviour(ItemBehaviour.WALL_ITEM))
+            {
+                room.Send(new RemoveWallItemComposer(item));
+                item.Data.WallPosition = string.Empty;
+            }
+            else
+                room.Send(new RemoveFloorItemComposer(item));
+
             item.Data.RoomId = 0;
             item.Save();
 
             room.ItemManager.RemoveItem(item);
-            room.Send(new RemoveFloorItemComposer(item));
         }
 
         #endregion

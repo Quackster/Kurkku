@@ -2,9 +2,9 @@
 {
     public abstract class Interactor
     {
-        protected Item Item { get; }
         protected bool NeedsExtraDataUpdate { get; set; }
         protected string ExtraData { get; set; }
+        public Item Item { get; }
         public virtual ExtraDataType ExtraDataType { get; }
 
         protected Interactor(Item item)
@@ -13,6 +13,6 @@
             NeedsExtraDataUpdate = true;
         }
 
-        public virtual object GetExtraData() { return Item.Data.ExtraData; }
+        public virtual object GetExtraData(bool inventoryView = false) { return Item.Data.ExtraData; }
     }
 }

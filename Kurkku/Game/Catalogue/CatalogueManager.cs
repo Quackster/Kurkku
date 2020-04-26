@@ -111,7 +111,7 @@ namespace Kurkku.Game
                         serializeable = new StickieExtraData
                         {
                             StickiesLeft = 20,
-                            Message = null
+                            Message = string.Empty
                         };
                     }
                     break;

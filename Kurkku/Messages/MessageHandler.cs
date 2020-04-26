@@ -213,6 +213,8 @@ namespace Kurkku.Messages
             Events[IncomingEvents.InventoryMessageEvent] = new InventoryMessageEvent();
             Events[IncomingEvents.PlaceItemMessageEvent] = new PlaceItemMessageEvent();
             Events[IncomingEvents.RemoveItemMessageEvent] = new RemoveItemMessageEvent();
+            Events[IncomingEvents.MoveFloorItemMessageEvent] = new MoveFloorItemMessageEvent();
+            Events[IncomingEvents.MoveWallItemMessageEvent] = new MoveWallItemMessageEvent();
 
         }
 

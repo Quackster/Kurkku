@@ -49,5 +49,7 @@
         public static readonly short InventoryMessageEvent = 2297;
         public static readonly short PlaceItemMessageEvent = 2696;
         public static readonly short RemoveItemMessageEvent = 1019;
+        public static readonly short MoveFloorItemMessageEvent = 1757;
+        public static readonly short MoveWallItemMessageEvent = 1897;
     }
 }
