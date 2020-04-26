@@ -47,8 +47,7 @@ namespace Kurkku.Messages.Outgoing
             composer.Data.Add(item.Position.Rotation);
             composer.Data.Add(item.Position.Z.ToClientValue());
             composer.Data.Add(0);
-            composer.Data.Add(0);
-            composer.Data.Add(item.ExtraData);
+            ExtraDataManager.Instance.WriteExtraData(composer, item.Interactor);
             composer.Data.Add(-1);
             composer.Data.Add(item.Definition.Data.MaxStatus > 1 ? 1 : 0);
         }

@@ -66,7 +66,7 @@ namespace Kurkku.Game
                     ItemBehaviour behaviour = (ItemBehaviour) Enum.Parse(typeof(ItemBehaviour), behaviourData.ToUpper());
                     Behaviours.Add(behaviour);
                 }
-                catch (Exception ex) 
+                catch 
                 {
                     //recreateBehaviour = true;
                     Console.WriteLine("Could not parse behaviour: " + Data.Id + " / " + behaviourData);

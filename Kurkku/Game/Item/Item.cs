@@ -31,11 +31,6 @@ namespace Kurkku.Game
         #region Public methods
 
         /// <summary>
-        /// Get extra data for items
-        /// </summary>
-        public string ExtraData => Interactor.GetExtraData();
-
-        /// <summary>
         /// Get total height for furni, which is floor z axis, plus height of furni
         /// </summary>
         public double Height => Definition.Data.TopHeight + Position.Z;
