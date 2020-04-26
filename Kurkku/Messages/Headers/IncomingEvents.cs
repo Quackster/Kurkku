@@ -51,5 +51,6 @@
         public static readonly short RemoveItemMessageEvent = 1019;
         public static readonly short MoveFloorItemMessageEvent = 1757;
         public static readonly short MoveWallItemMessageEvent = 1897;
+        public static readonly short PlaceStickieMessageEvent = 361;
     }
 }

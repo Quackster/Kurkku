@@ -7,11 +7,10 @@ using Kurkku.Network.Streams;
 
 namespace Kurkku.Messages.Incoming
 {
-    class RemoveItemMessageEvent : IMessageEvent
+    class PlaceStickieMessageEvent : IMessageEvent
     {
         public void Handle(Player player, Request request)
         {
-            request.ReadInt();
             int itemId = request.ReadInt();
 
             if (player.RoomUser.Room == null)
@@ -19,19 +18,19 @@ namespace Kurkku.Messages.Incoming
 
             Room room = player.RoomUser.Room;
 
-            if (room == null)
+            if (room == null || !room.HasRights(player.Details.Id))
                 return;
 
-            Item item = room.ItemManager.GetItem(itemId);
+            Item item = player.Inventory.GetItem(itemId);
 
-            if (item == null || item.Data.OwnerId != player.Details.Id) // TODO: Staff check
+            if (item == null)
                 return;
 
-            room.Mapping.RemoveItem(item, player: player);
-            player.Inventory.AddItem(item);
+            string wallPosition = request.ReadString();
+            room.Mapping.AddItem(item, wallPosition: wallPosition);
 
-            player.Send(new FurniListAddComposer(item));
-            //player.Send(new FurniListUpdateComposer());
+            player.Inventory.RemoveItem(item);
+            player.Send(new FurniListRemoveComposer(item.Id));
         }
     }
 }

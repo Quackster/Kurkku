@@ -58,9 +58,9 @@ namespace Kurkku.Messages.Outgoing
             composer.Data.Add(item.Definition.Data.IsStackable);
             composer.Data.Add(item.Definition.Data.IsSellable);
 
-            composer.Data.Add(-1);
-            composer.Data.Add(true);
-            composer.Data.Add(-1);
+            composer.Data.Add(-1); // timer
+            composer.Data.Add(false); // hasRentPeriodStarted():Boolean
+            composer.Data.Add(-1); // embed room id
 
             if (!item.Definition.HasBehaviour(ItemBehaviour.WALL_ITEM))
             {

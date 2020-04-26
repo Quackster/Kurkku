@@ -215,6 +215,7 @@ namespace Kurkku.Messages
             Events[IncomingEvents.RemoveItemMessageEvent] = new RemoveItemMessageEvent();
             Events[IncomingEvents.MoveFloorItemMessageEvent] = new MoveFloorItemMessageEvent();
             Events[IncomingEvents.MoveWallItemMessageEvent] = new MoveWallItemMessageEvent();
+            Events[IncomingEvents.PlaceStickieMessageEvent] = new PlaceStickieMessageEvent();
 
         }
 

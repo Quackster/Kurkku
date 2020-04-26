@@ -1,4 +1,6 @@
-﻿namespace Kurkku.Game
+﻿using Newtonsoft.Json;
+
+namespace Kurkku.Game
 {
     public class StickieInteractor : Interactor
     {
@@ -9,14 +11,22 @@
 
         }
 
+        public override object GetJsonObject()
+        {
+            return JsonConvert.DeserializeObject<StickieExtraData>(Item.Data.ExtraData);
+        }
+
         public override object GetExtraData(bool inventoryView = false)
         {
             if (NeedsExtraDataUpdate)
             {
+                var stickieData = (StickieExtraData)GetJsonObject();
 
+                ExtraDataInventoryView = stickieData.Colour.ToString();
+                ExtraData = stickieData.Colour.ToString();
             }
 
-            return "";
+            return inventoryView ? ExtraDataInventoryView : ExtraData;
         }
     }
 }

@@ -85,7 +85,7 @@ namespace Kurkku.Storage.Database.Access
 
 
         /// <summary>
-        /// Create item data and refresh it
+        /// Create items and refresh it
         /// </summary>
         public static void CreateItems(List<ItemData> items)
         {
@@ -102,6 +102,29 @@ namespace Kurkku.Storage.Database.Access
 
                         foreach (var itemData in items)
                             session.Refresh(itemData);
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Create item and refresh it
+        /// </summary>
+        public static void CreateItem(ItemData item)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    try
+                    {
+                        session.Save(item);
+                        transaction.Commit();
+                        session.Refresh(item);
                     }
                     catch
                     {

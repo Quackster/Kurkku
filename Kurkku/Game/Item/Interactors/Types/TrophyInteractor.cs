@@ -13,12 +13,17 @@ namespace Kurkku.Game
 
         }
 
+        public override object GetJsonObject()
+        {
+            return JsonConvert.DeserializeObject<TrophyExtraData>(Item.Data.ExtraData);
+        }
+
         public override object GetExtraData(bool inventoryView = false)
         {
             if (NeedsExtraDataUpdate)
             {
                 NeedsExtraDataUpdate = false;
-                var trophyData = JsonConvert.DeserializeObject<TrophyExtraData>(Item.Data.ExtraData);
+                var trophyData = (TrophyExtraData)GetJsonObject();
 
                 StringBuilder builder = new StringBuilder();
                 builder.Append(PlayerManager.Instance.GetName(trophyData.UserId));

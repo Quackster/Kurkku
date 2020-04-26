@@ -58,12 +58,12 @@ namespace Kurkku.Game
             {
                 foreach (var cataloguePackage in catalogueItem.Packages)
                 {
-                    ItemData itemData = GenerateItemData(userId, cataloguePackage, extraData, datePurchase);
+                    var dataList = GenerateItemData(userId, cataloguePackage, extraData, datePurchase);
 
-                    if (itemData == null)
+                    if (!dataList.Any())
                         continue;
 
-                    purchaseQueue.Add(itemData);
+                    purchaseQueue.AddRange(dataList);
                 }
             }
 
@@ -91,17 +91,16 @@ namespace Kurkku.Game
         /// <summary>
         /// Generate item data for purchasing item
         /// </summary>
-        private ItemData GenerateItemData(int userId, CataloguePackage cataloguePackage, string extraData, long datePurchase)
+        private List<ItemData> GenerateItemData(int userId, CataloguePackage cataloguePackage, string userInputMessage, long datePurchase)
         {
+            List<ItemData> items = new List<ItemData>();
+
             ItemDefinition definition = ItemManager.Instance.GetDefinition(cataloguePackage.Definition.Data.Id);
 
             if (definition == null)
                 return null;
-            
-            ItemData itemData = new ItemData();
-            itemData.OwnerId = userId;
-            itemData.DefinitionId = cataloguePackage.Definition.Data.Id;
 
+            int itemsToGenerate = 1;
             object serializeable = null;
 
             switch (definition.InteractorType)
@@ -110,9 +109,11 @@ namespace Kurkku.Game
                     {
                         serializeable = new StickieExtraData
                         {
-                            StickiesLeft = 20,
-                            Message = string.Empty
+                            Message = string.Empty,
+                            Colour = "FFFF33"
                         };
+
+                        itemsToGenerate = 20;
                     }
                     break;
                 case InteractorType.TROPHY:
@@ -120,22 +121,32 @@ namespace Kurkku.Game
                         serializeable = new TrophyExtraData
                         {
                             UserId = userId,
-                            Message = extraData,
+                            Message = userInputMessage,
                             Date = datePurchase
                         };
                     }
                     break;
             }
 
+            var extraData = string.Empty;
+
             if (serializeable != null)
-                itemData.ExtraData = JsonConvert.SerializeObject(serializeable);
-            else
-                itemData.ExtraData = "";
+                extraData = JsonConvert.SerializeObject(serializeable);
 
             if (!string.IsNullOrEmpty(cataloguePackage.Data.SpecialSpriteId))
-                itemData.ExtraData = cataloguePackage.Data.SpecialSpriteId;
+                extraData = cataloguePackage.Data.SpecialSpriteId;
 
-            return itemData;
+
+            for (int i = 0; i < itemsToGenerate; i++)
+            {
+                ItemData itemData = new ItemData();
+                itemData.OwnerId = userId;
+                itemData.DefinitionId = cataloguePackage.Definition.Data.Id;
+                itemData.ExtraData = extraData;
+                items.Add(itemData);
+            }
+
+            return items;
         }
 
         /// <summary>
