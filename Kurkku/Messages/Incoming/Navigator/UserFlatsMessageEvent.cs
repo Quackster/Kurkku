@@ -9,8 +9,11 @@ namespace Kurkku.Messages.Incoming
     {
         public void Handle(Player player, Request request)
         {
-            var roomList = RoomManager.Instance.ReplaceQueryRooms(RoomDao.GetUserRooms(player.Details.Id));
-            player.Send(new FlatListComposer(2, roomList));
+            var roomList = RoomManager.SortRooms(
+                RoomManager.Instance.ReplaceQueryRooms(RoomDao.GetUserRooms(player.Details.Id))
+            );
+
+            player.Send(new FlatListComposer(2, roomList, null));
         }
     }
 }

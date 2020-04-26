@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using Kurkku.Messages.Outgoing;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace Kurkku.Game
@@ -14,6 +15,7 @@ namespace Kurkku.Game
         public int InstanceId { get; set; }
         public bool NeedsUpdate { get; set; }
         public int RoomId => Room != null ? Room.Data.Id : 0;
+        public RoomTimerManager TimerManager { get; set; }
 
         /// <summary>
         /// Get the status handling, the value is the value string and the time it was added.
@@ -23,6 +25,7 @@ namespace Kurkku.Game
         public RoomEntity(IEntity entity)
         {
             Entity = entity;
+            TimerManager = new RoomTimerManager();
         }
 
         /// <summary>
@@ -36,6 +39,55 @@ namespace Kurkku.Game
             Next = null;
             InstanceId = -1;
             Room = null;
+            TimerManager.Reset();
+        }
+
+        /// <summary>
+        /// Chat message handling
+        /// </summary>
+        public void Talk(ChatMessageType chatMessageType, string chatMsg, int colourId = 0, List<Player> recieveMessages = null)
+        {
+            if (recieveMessages == null)
+                recieveMessages = Room.EntityManager.GetEntities<Player>();
+
+            // Send talk message to room
+            foreach (Player player in recieveMessages)
+            {
+                switch (chatMessageType)
+                {
+                    case ChatMessageType.SHOUT:
+                        player.Send(new ShoutMessageComposer(InstanceId, chatMsg, colourId, GetChatGesture(chatMsg)));
+                        break;
+                    case ChatMessageType.CHAT:
+                        player.Send(new ChatMessageComposer(InstanceId, chatMsg, colourId, GetChatGesture(chatMsg)));
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get chat gesture for message
+        /// </summary>
+        private int GetChatGesture(string chatMsg)
+        {
+            chatMsg = chatMsg.ToLower();
+
+            if (chatMsg.Contains(":)") || chatMsg.Contains(":d") || chatMsg.Contains("=]") ||
+                chatMsg.Contains("=d") || chatMsg.Contains(":>"))
+            {
+                return 1;
+            }
+
+            if (chatMsg.Contains(">:(") || chatMsg.Contains(":@"))
+                return 2;
+
+            if (chatMsg.Contains(":o"))
+                return 3;
+
+            if (chatMsg.Contains(":(") || chatMsg.Contains("=[") || chatMsg.Contains(":'(") || chatMsg.Contains("='["))
+                return 4;
+
+            return 0;
         }
 
         /// <summary>

@@ -15,9 +15,9 @@ namespace Kurkku.Messages.Outgoing
 
         public override void Write()
         {
-            m_Data.Add(!roomData.IsPublicRoom);
+            m_Data.Add(roomData.IsPrivateRoom);
 
-            if (!roomData.IsPublicRoom)
+            if (roomData.IsPrivateRoom)
             {
                 m_Data.Add(roomData.Id);
                 m_Data.Add(isOwner);

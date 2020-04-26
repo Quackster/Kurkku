@@ -29,6 +29,7 @@ namespace Kurkku.Storage.Database.Data
             Map(x => x.WallThickness, "wall_thickness").Generated.Insert();
             Map(x => x.FloorThickness, "floor_thickness").Generated.Insert();
             Map(x => x.Rating, "rating").Generated.Insert();
+            Map(x => x.IsOwnerHidden, "is_owner_hidden");
 
             References(x => x.OwnerData, "owner_id")
                 .ReadOnly()
@@ -65,10 +66,12 @@ namespace Kurkku.Storage.Database.Data
         public virtual PlayerData OwnerData { get; set; }
         public virtual NavigatorCategoryData Category { get; set; }
         public virtual int Rating { get; set; }
-        public virtual bool IsPublicRoom => OwnerData == null;
+        public virtual bool IsPrivateRoom => OwnerId > 0;
+        public virtual bool IsPublicRoom => OwnerId == 0;
         public virtual int UsersNow { get; set; }
         public virtual int UsersMax { get; set; }
         public virtual bool IsMuted { get; set; }
+        public virtual bool IsOwnerHidden { get; set; }
     }
 
     public enum RoomStatus

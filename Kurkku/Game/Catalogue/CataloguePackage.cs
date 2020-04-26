@@ -7,6 +7,7 @@ namespace Kurkku.Game
         #region Properties
 
         public CataloguePackageData Data { get; }
+        public CatalogueItem CatalogueItem { get; }
         public ItemDefinition Definition => ItemManager.Instance.GetDefinition(Data.DefinitionId);
         public int[] PageIds { get; }
 
@@ -14,7 +15,7 @@ namespace Kurkku.Game
 
         #region Constructors
 
-        public CataloguePackage(CataloguePackageData data)
+        public CataloguePackage(CataloguePackageData data, CatalogueItem catalogueItem)
         {
             Data = data;
         }

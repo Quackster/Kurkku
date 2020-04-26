@@ -2,6 +2,7 @@
 using Kurkku.Storage.Database.Data;
 using System.Collections.Generic;
 using System.Linq;
+using Kurkku.Util.Extensions;
 
 namespace Kurkku.Game
 {
@@ -36,6 +37,24 @@ namespace Kurkku.Game
         public List<NavigatorCategoryData> GetCategories(int rank)
         {
             return Categories.Where(x => (rank >= x.MinimumRank)).ToList();
+        }
+
+        #endregion
+
+        #region Promotion
+
+        /// <summary>
+        /// Get a random popular promotion
+        /// </summary>
+        /// <returns></returns>
+        public PublicItemData GetPopularPromotion()
+        {
+            var publicItemsList = NavigatorDao.GetPublicItems().Where(x => x.Room != null && x.Room.UsersNow > 0).ToList();
+
+            if (publicItemsList.Count > 0)
+                return publicItemsList.PickRandom();
+
+            return null;
         }
 
         #endregion

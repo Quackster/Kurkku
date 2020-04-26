@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Kurkku.Util.Extensions;
 
-namespace Kurkku.Game.Managers
+namespace Kurkku.Game
 {
     public class RoomEntityManager
     {
@@ -77,7 +77,7 @@ namespace Kurkku.Game.Managers
                     player.Send(new YouAreControllerComposer(4));
                 }
 
-                if (room.HasRights(player.Details.Id))
+                if (room.HasRights(player.Details.Id, false))
                     player.Send(new YouAreControllerComposer(1));
             }
         }
@@ -126,9 +126,9 @@ namespace Kurkku.Game.Managers
             if (room.IsActive)
                 return;
 
-            room.TaskManager.StartTasks();
-
-            room.Mapping.RegenerateMap();
+            room.ItemManager.Load();
+            room.TaskManager.Load();
+            room.Mapping.Load();
             room.IsActive = true;
         }
 

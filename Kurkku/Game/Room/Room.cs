@@ -14,6 +14,7 @@ namespace Kurkku.Game
         public RoomData Data { get; }
         public RoomEntityManager EntityManager { get; }
         public RoomTaskManager TaskManager { get; }
+        public RoomItemManager ItemManager { get; }
         public RoomMapping Mapping { get; set; }
         public RoomModel Model => RoomManager.Instance.RoomModels.FirstOrDefault(x => x.Data.Model == Data.Model);
         public ConcurrentDictionary<int, IEntity> Entities { get; }
@@ -30,6 +31,7 @@ namespace Kurkku.Game
             EntityManager = new RoomEntityManager(this);
             Mapping = new RoomMapping(this);
             TaskManager = new RoomTaskManager(this);
+            ItemManager = new RoomItemManager(this);
         }
 
         #endregion
@@ -51,7 +53,7 @@ namespace Kurkku.Game
         /// <summary>
         /// Get if the user has rights
         /// </summary>
-        public bool HasRights(int userId, bool checkOwner = false)
+        public bool HasRights(int userId, bool checkOwner = true)
         {
             if (checkOwner)
                 if (Data.OwnerId == userId)

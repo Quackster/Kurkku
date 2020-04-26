@@ -1,5 +1,7 @@
 ﻿using Kurkku.Storage.Database.Data;
+using NHibernate.Linq;
 using System;
+using System.Linq;
 
 namespace Kurkku.Storage.Database.Access
 {
@@ -100,6 +102,17 @@ namespace Kurkku.Storage.Database.Access
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
                 return session.QueryOver<PlayerData>().Select(x => x.Id).Where(x => x.Name == name).SingleOrDefault<int>();
+            }
+        }
+
+        /// <summary>
+        /// Update last online for the last online
+        /// </summary>
+        public static void SaveLastOnline(PlayerData playerData)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                session.Query<PlayerData>().Where(x => x.Id == playerData.Id).Update(x => new PlayerData { LastOnline = playerData.LastOnline });
             }
         }
     }

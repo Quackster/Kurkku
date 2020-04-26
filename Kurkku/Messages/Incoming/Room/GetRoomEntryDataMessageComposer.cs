@@ -28,6 +28,9 @@ namespace Kurkku.Messages.Incoming
 
             player.Send(new RoomInfoComposer(room.Data, true, false)); // false, true));
 
+            player.Send(new FloorItemsComposer(room.ItemManager.Items));
+            player.Send(new WallItemsComposer(room.ItemManager.Items));
+
             /*
                     player.send(new USER_OBJECTS(room.getEntities()));
         room.send(new USER_OBJECTS(player), List.of(player));

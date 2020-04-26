@@ -13,7 +13,11 @@ namespace Kurkku.Messages.Outgoing
                 return;
 
             player.Send(new CataloguePageComposer(cataloguePage));
-            player.Send(new CatalogItemDiscountComposer());
+
+            var discount = CatalogueManager.Instance.GetBestDiscount(cataloguePage.Data.Id);
+
+            if (discount != null)
+                player.Send(new CatalogItemDiscountComposer(discount));
         }
     }
 }

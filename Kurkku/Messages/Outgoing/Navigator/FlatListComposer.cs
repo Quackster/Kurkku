@@ -9,11 +9,13 @@ namespace Kurkku.Messages.Outgoing
     {
         private int signifier;
         private List<Room> roomList;
+        private PublicItemData promotion;
 
-        public FlatListComposer(int signifier, List<Room> roomList)
+        public FlatListComposer(int signifier, List<Room> roomList, PublicItemData promotion)
         {
             this.signifier = signifier;
             this.roomList = roomList;
+            this.promotion = promotion;
         }
 
         public override void Write()
@@ -27,9 +29,13 @@ namespace Kurkku.Messages.Outgoing
                 FlatListComposer.Compose(this, room.Data);
             }
 
-            m_Data.Add(0);
-            m_Data.Add(0);
-            m_Data.Add(false);
+            //m_Data.Add(false);
+            m_Data.Add(promotion != null);
+
+            if (promotion != null)
+            {
+                PublicItemsComposer.Compose(this, promotion);
+            }
         }
 
         public static void Compose(IMessageComposer messageComposer, RoomData room)

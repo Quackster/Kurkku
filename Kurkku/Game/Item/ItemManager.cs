@@ -1,6 +1,7 @@
 ﻿using Kurkku.Storage.Database.Access;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Kurkku.Game
 {
@@ -9,6 +10,7 @@ namespace Kurkku.Game
         #region Fields
 
         public static readonly ItemManager Instance = new ItemManager();
+        private int ItemCounter = -1;
 
         #endregion
 
@@ -37,6 +39,15 @@ namespace Kurkku.Game
             Definitions.TryGetValue(definitionId, out var definition);
             return definition;
         }
+
+        /// <summary>
+        /// Generate client side ID for item
+        /// </summary>
+        public int GenerateId()
+        {
+            return Interlocked.Increment(ref ItemCounter);
+        }
+
 
         #endregion
     }

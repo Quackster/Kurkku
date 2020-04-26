@@ -48,7 +48,18 @@ namespace Kurkku.Messages
             RegisterRoomUser();
             RegisterRoomSettings();
             RegisterCatalogue();
+            RegisterItems();
             ResolveComposers();
+
+            /*
+             *  1236 /
+[2020-04-21 01:15:41,431] DEBUG  Player Alex - Unknown: 678 /
+[2020-04-21 01:15:48,685] DEBUG  Player Alex - Unknown: 1236 / -- start chat
+[2020-04-21 01:15:53,897] DEBUG  Player Alex - Unknown: 2906 / [0][0][0][1]
+[2020-04-21 01:15:54,849] DEBUG  Player Alex - Unknown: 678 -- stop chat*/
+
+            // chat packet
+            // [2020-04-21 01:17:28,284] DEBUG  Player Alex - Unknown: 2275 / [0][4]test[0][0][0][0][0][0][0][0]
         }
 
         /// <summary>
@@ -169,6 +180,10 @@ namespace Kurkku.Messages
         private void RegisterRoomUser()
         {
             Events[IncomingEvents.WalkMessageEvent] = new WalkMessageEvent();
+            Events[IncomingEvents.StartTypingMessageEvent] = new StartTypingMessageEvent();
+            Events[IncomingEvents.StopTypingMessageEvent] = new StopTypingMessageEvent();
+            Events[IncomingEvents.ChatMessageMessageEvent] = new ChatMessageMessageEvent();
+            Events[IncomingEvents.ShoutMessageMessageEvent] = new ShoutMessageMessageEvent();
         }
 
         /// <summary>
@@ -188,6 +203,20 @@ namespace Kurkku.Messages
             Events[IncomingEvents.OpenCatalogueMessageEvent] = new OpenCatalogueMessageEvent();
             Events[IncomingEvents.GetCataloguePageMessageEvent] = new GetCataloguePageMessageEvent();
             Events[IncomingEvents.PurchaseItemMessageEvent] = new PurchaseItemMessageEvent();
+        }
+
+        /// <summary>
+        /// Register item handlers
+        /// </summary>
+        public void RegisterItems()
+        {
+            Events[IncomingEvents.InventoryMessageEvent] = new InventoryMessageEvent();
+            Events[IncomingEvents.PlaceItemMessageEvent] = new PlaceItemMessageEvent();
+            Events[IncomingEvents.RemoveItemMessageEvent] = new RemoveItemMessageEvent();
+            Events[IncomingEvents.MoveFloorItemMessageEvent] = new MoveFloorItemMessageEvent();
+            Events[IncomingEvents.MoveWallItemMessageEvent] = new MoveWallItemMessageEvent();
+            Events[IncomingEvents.PlaceStickieMessageEvent] = new PlaceStickieMessageEvent();
+
         }
 
         #endregion

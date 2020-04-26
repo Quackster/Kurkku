@@ -42,5 +42,15 @@
         public static readonly short GetCataloguePageMessageEvent = 1777;
         public static readonly short GetPromotableRoomsMessageEvent = 225;
         public static readonly short PurchaseItemMessageEvent = 1416;
+        public static readonly short StartTypingMessageEvent = 678;
+        public static readonly short StopTypingMessageEvent = 1236;
+        public static readonly short ChatMessageMessageEvent = 2275;
+        public static readonly short ShoutMessageMessageEvent = 1454;
+        public static readonly short InventoryMessageEvent = 2297;
+        public static readonly short PlaceItemMessageEvent = 2696;
+        public static readonly short RemoveItemMessageEvent = 1019;
+        public static readonly short MoveFloorItemMessageEvent = 1757;
+        public static readonly short MoveWallItemMessageEvent = 1897;
+        public static readonly short PlaceStickieMessageEvent = 361;
     }
 }

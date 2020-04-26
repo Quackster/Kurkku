@@ -5,7 +5,6 @@
         public static readonly short InitCryptoComposer = 889;
         public static readonly short SecretKeyComposer = 3489;
         public static readonly short AuthenticationOKComposer = 2008;
-        public static readonly short ActivityPointsComposer = 1271;
         public static readonly short CreditsBalanceComposer = 3412;
         public static readonly short LandingViewComposer = 2680;
         public static readonly short InitMessengerComposer = 1800;
@@ -48,9 +47,28 @@
         public static readonly short PublicRoomCastsComposer = 16;
         public static readonly short CataloguePagesComposer = 3845;
         public static readonly short AllowancesComposer = 709;
-        public static readonly short ActivityPointNotificationComposer = 1271;
+        public static readonly short ActivityPointsComposer = 1271;
+        public static readonly short ActivityPointsNotificationComposer = 2822;
         public static readonly short CataloguePageComposer = 3379;
         public static readonly short PromotableRoomsMessageComposer = 78;
         public static readonly short CatalogItemDiscountComposer = 366;
+        public static readonly short TypingStatusComposer = 3218;
+        public static readonly short ChatMessageComposer = 1510;
+        public static readonly short ShoutMessageComposer = 2408;
+        public static readonly short NoCreditsComposer = 874;
+        public static readonly short FurniListNotificationComposer = 469;
+        public static readonly short FurniListUpdateComposer = 1507;
+        public static readonly short PurchaseOKComposer = 2434;
+        public static readonly short InventoryMessageComposer = 3572;
+        public static readonly short FloorItemsComposer = 2087;
+        public static readonly short FloorItemComposer = 3076;
+        public static readonly short FurniListRemoveComposer = 238;
+        public static readonly short FurniListAddComposer = 27;
+        public static readonly short RemoveFloorItemComposer = 1891;
+        public static readonly short WallItemComposer = 1382;
+        public static readonly short WallItemsComposer = 1348;
+        public static readonly short RemoveWallItemComposer = 1317;
+        public static readonly short UpdateWallItemComposer = 893;
+        public static readonly short UpdateFloorItemComposer = 3510;
     }
 }

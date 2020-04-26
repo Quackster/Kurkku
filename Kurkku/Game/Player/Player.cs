@@ -85,6 +85,16 @@ namespace Kurkku.Game
         public RoomPlayer RoomUser => (RoomPlayer)RoomEntity;
 
         /// <summary>
+        /// Get currency manager for user
+        /// </summary>
+        public CurrencyManager Currency { get; set; }
+
+        /// <summary>
+        /// Get inventory instance for user
+        /// </summary>
+        public Inventory Inventory { get; set; }
+
+        /// <summary>
         /// Whether the player has logged in or not
         /// </summary>
         public bool Authenticated { get; private set; }
@@ -125,13 +135,20 @@ namespace Kurkku.Game
             log.Debug($"Player {playerData.Name} has logged in");
 
             UserSettingsDao.CreateOrUpdate(out settings, playerData.Id);
-            PlayerManager.Instance.AddPlayer(this);
 
             playerData.PreviousLastOnline = playerData.LastOnline;
             playerData.LastOnline = DateTime.Now;
-            UserDao.Update(playerData);
+
+            UserDao.SaveLastOnline(playerData);
+            PlayerManager.Instance.AddPlayer(this);
 
             Subscription = SubscriptionDao.GetSubscription(playerData.Id);
+
+            Currency = new CurrencyManager(this);
+            Currency.Load();
+
+            Inventory = new Inventory(this);
+            Inventory.Load();
 
             Messenger = new Messenger(this);
             Messenger.SendStatus();
@@ -139,7 +156,6 @@ namespace Kurkku.Game
             Authenticated = true;
 
             Send(new AuthenticationOKComposer());
-            Send(new ActivityPointNotificationComposer());
             Send(new AvailabilityStatusComposer());
             Send(new UserRightsMessageComposer(IsSubscribed ? 2 : 0, playerData.Rank));
 
@@ -170,7 +186,7 @@ namespace Kurkku.Game
             Messenger.SendStatus();
 
             playerData.LastOnline = DateTime.Now;
-            UserDao.Update(playerData);
+            UserDao.SaveLastOnline(playerData);
         }
 
         #endregion

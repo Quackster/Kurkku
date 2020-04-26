@@ -1,26 +1,49 @@
 ﻿using FluentNHibernate.Mapping;
+using System.Collections.Generic;
 
 namespace Kurkku.Storage.Database.Data
 {
-    class CataloguePackageMapping : ClassMap<CataloguePackageData>
+    class CataloguePageMapping : ClassMap<CataloguePageData>
     {
-        public CataloguePackageMapping()
+        public CataloguePageMapping()
         {
-            Table("catalogue_packages");
+            Table("catalogue_pages");
             Id(x => x.Id, "id");
-            Map(x => x.SaleCode, "salecode");
-            Map(x => x.DefinitionId, "definition_id");
-            Map(x => x.SpecialSpriteId, "special_sprite_id");
-            Map(x => x.Amount, "amount");
+            Map(x => x.ParentId, "parent_id");
+            Map(x => x.OrderId, "order_id");
+            Map(x => x.Caption, "caption");
+            Map(x => x.PageLink, "page_link");
+            Map(x => x.MinRank, "min_rank");
+            Map(x => x.IconColour, "icon_colour");
+            Map(x => x.IconImage, "icon_image");
+            Map(x => x.IsNavigatable, "is_navigatable");
+            Map(x => x.IsEnabled, "is_enabled");
+            Map(x => x.IsClubOnly, "is_club_only");
+            Map(x => x.Layout, "layout");
+            Map(x => x.ImagesData, "images");
+            Map(x => x.TextsData, "texts");
         }
     }
 
-    public class CataloguePackageData
+    public class CataloguePageData
     {
         public virtual int Id { get; set; }
-        public virtual string SaleCode { get; set; }
-        public virtual int DefinitionId { get; set; }
-        public virtual string SpecialSpriteId { get; set; }
-        public virtual int Amount { get; set; }
+        public virtual int ParentId { get; set; }
+        public virtual int OrderId { get; set; }
+        public virtual string Caption { get; set; }
+        public virtual string PageLink { get; set; }
+        public virtual int MinRank { get; set; }
+        public virtual int IconColour { get; set; }
+        public virtual int IconImage { get; set; }
+        public virtual bool IsVisible { get; set; }
+        public virtual bool IsEnabled { get; set; }
+        public virtual bool IsNavigatable { get; set; }
+        public virtual bool IsClubOnly { get; set; }
+        public virtual string Layout { get; set; }
+        public virtual string ImagesData { get; set; }
+        public virtual string TextsData { get; set; }
+        public virtual List<string> Images { get; set; }
+        public virtual List<string> Texts { get; set; }
+        public virtual IList<CatalogueDiscountData> Discounts { get; set; }
     }
 }

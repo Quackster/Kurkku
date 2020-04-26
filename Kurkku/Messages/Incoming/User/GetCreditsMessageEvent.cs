@@ -1,5 +1,4 @@
 ﻿using Kurkku.Game;
-using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
 
 namespace Kurkku.Messages.Incoming
@@ -8,7 +7,8 @@ namespace Kurkku.Messages.Incoming
     {
         public void Handle(Player player, Request request)
         {
-            player.Send(new CreditsBalanceComposer(player.Details.Credits));
+            player.Currency.UpdateCredits();
+            player.Currency.UpdateCurrencies();
         }
     }
 }

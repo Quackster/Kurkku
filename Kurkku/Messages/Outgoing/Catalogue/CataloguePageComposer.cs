@@ -1,5 +1,4 @@
 ﻿using Kurkku.Game;
-using System;
 
 namespace Kurkku.Messages.Outgoing
 {
@@ -31,25 +30,7 @@ namespace Kurkku.Messages.Outgoing
 
             foreach (CatalogueItem item in page.Items)
             {
-                m_Data.Add(item.Data.Id);
-                m_Data.Add(item.Data.SaleCode);
-                m_Data.Add(item.Data.PriceCoins);
-                m_Data.Add(item.Data.PricePixels);
-                m_Data.Add(0);
-                m_Data.Add(false);
-                m_Data.Add(item.Packages.Count);
-                
-                foreach (CataloguePackage package in item.Packages)
-                {
-                    m_Data.Add(package.Definition.Type);
-                    m_Data.Add(package.Definition.Data.SpriteId);
-                    m_Data.Add(package.Data.SpecialSpriteId); // extra data
-                    m_Data.Add(package.Data.Amount);
-                    m_Data.Add(0);
-                }
-
-                m_Data.Add(false);
-                m_Data.Add(true);
+                PurchaseOKComposer.SerialiseOffer(this, item);
             }
 
             m_Data.Add(-1);
