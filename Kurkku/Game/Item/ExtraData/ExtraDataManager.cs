@@ -12,7 +12,6 @@ namespace Kurkku.Game
 
         #endregion
 
-
         #region Public methods
 
         /// <summary>

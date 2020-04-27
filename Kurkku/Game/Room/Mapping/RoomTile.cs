@@ -83,7 +83,18 @@ namespace Kurkku.Game
 
         public double GetWalkingHeight()
         {
-            return TileHeight;
+            double height = TileHeight;
+
+            if (HighestItem != null)
+            {
+                if (HighestItem.Definition.InteractorType == InteractorType.CHAIR ||
+                    HighestItem.Definition.InteractorType == InteractorType.BED)
+                {
+                    height -= HighestItem.Definition.Data.TopHeight;
+                }
+            }
+
+            return height;
         }
 
         /// <summary>

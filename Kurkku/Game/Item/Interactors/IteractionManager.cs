@@ -23,6 +23,8 @@ namespace Kurkku.Game
         {
             Interactors = new Dictionary<InteractorType, Type>();
             Interactors[InteractorType.DEFAULT] = typeof(DefaultInteractor);
+            Interactors[InteractorType.BED] = typeof(BedInteractor);
+            Interactors[InteractorType.CHAIR] = typeof(ChairInteractor);
             Interactors[InteractorType.POST_IT] = typeof(StickieInteractor);
             Interactors[InteractorType.TROPHY] = typeof(TrophyInteractor);
         }

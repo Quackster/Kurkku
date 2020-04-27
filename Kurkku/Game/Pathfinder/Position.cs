@@ -55,7 +55,7 @@ namespace Kurkku.Game
         /// </summary>
         public RoomTile GetTile(Room room)
         {
-            if (!room.Model.IsTile(this))
+            if (room == null || room.Model == null || !room.Model.IsTile(this))
                 return null;
 
             return room.Mapping.Tiles[X, Y];

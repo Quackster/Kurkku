@@ -24,13 +24,18 @@ namespace Kurkku.Messages.Incoming
 
             Item item = room.ItemManager.GetItem(itemId);
 
-            if (item == null || item.Data.OwnerId != player.Details.Id) // TODO: Staff check
+            if (item == null && item.Data.OwnerId != player.Details.Id && !room.IsOwner(player.Details.Id)) // TODO: Staff check
                 return;
 
-            room.Mapping.RemoveItem(item, player: player);
-            player.Inventory.AddItem(item);
+            room.Mapping.RemoveItem(item);
 
-            player.Send(new FurniListAddComposer(item));
+            var owner = PlayerManager.Instance.GetPlayerById(item.Data.OwnerId);
+
+            if (owner != null)
+            {
+                owner.Inventory.AddItem(item);
+                owner.Send(new FurniListAddComposer(item));
+            }
             //player.Send(new FurniListUpdateComposer());
         }
     }

@@ -13,9 +13,11 @@ namespace Kurkku.Game
 
         }
 
-        public virtual void OnStop(IEntity entity)
+        public override void OnStop(IEntity entity)
         {
-
+            entity.RoomEntity.Position.Rotation = Item.Position.Rotation;
+            entity.RoomEntity.AddStatus("sit", Item.Definition.Data.TopHeight.ToClientValue());
+            entity.RoomEntity.NeedsUpdate = true;
         }
     }
 }

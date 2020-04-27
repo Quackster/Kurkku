@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Kurkku.Messages.Outgoing;
 using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
@@ -31,6 +33,37 @@ namespace Kurkku.Game
         #endregion
 
         #region Public methods
+
+        public void UpdateEntities(Position position = null)
+        {
+            List<IEntity> entities = new List<IEntity>();
+
+            foreach (Position affectedPositon in AffectedTile.GetAffectedTiles(this))
+            {
+                var tile = affectedPositon.GetTile(Room);
+
+                if (tile == null)
+                    continue;
+
+                entities.AddRange(tile.Entities.Values);
+            }
+
+            if (position != null)
+            {
+                foreach (Position affectedPositon in AffectedTile.GetAffectedTiles(this, position.X, position.Y, position.Rotation))
+                {
+                    var tile = affectedPositon.GetTile(Room);
+
+                    if (tile == null)
+                        continue;
+
+                    entities.AddRange(tile.Entities.Values);
+                }
+            }
+
+            foreach (IEntity entity in entities)
+                entity.RoomEntity.InteractItem();
+        }
 
         /// <summary>
         /// Get whether the item is walkable
@@ -100,6 +133,20 @@ namespace Kurkku.Game
             {
                 if (item.Definition.Data.Length <= 1 && item.Definition.Data.Width <= 1)
                     return true;
+
+
+                /*
+                if (item.getRollingData() != null) {
+                    return false; // Don't allow rotating items when they're rolling
+                }
+
+                if (item.getDefinition().getLength() <= 1 && item.getDefinition().getWidth() <= 1) {
+                    return true;
+                }
+                */
+
+                /*if (item.Definition.Data.Length <= 1 && item.Definition.Data.Width <= 1)
+                    return true;*/
             }
 
             foreach (Position position in AffectedTile.GetAffectedTiles(this, x, y, rotation))
@@ -112,8 +159,11 @@ namespace Kurkku.Game
                 if (room.Model.TileStates[position.X, position.Y] == TileState.CLOSED)
                     return false;
 
-                if (tile.Entities.Count > 0)
-                    return false;
+                if (!isRotation/* && item.Definition.InteractorType != InteractorType.BED && item.Definition.InteractorType != InteractorType.CHAIR*/)
+                {
+                    if (tile.Entities.Count > 0)
+                        return false;
+                }
 
                 Item highestItem = tile.HighestItem;
 

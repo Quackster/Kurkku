@@ -32,7 +32,12 @@ namespace Kurkku.Messages.Incoming
             int rotation = request.ReadInt();
 
             if (!item.IsValidMove(item, room, x, y, rotation))
+            {
+                if (new Position(x, y) != item.Position)
+                    room.Send(new UpdateFloorItemComposer(item));
+
                 return;
+            }
 
             room.Mapping.MoveItem(item, new Position
             {

@@ -1,4 +1,6 @@
 ﻿using Kurkku.Messages.Outgoing;
+using Kurkku.Util.Extensions;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
@@ -15,6 +17,8 @@ namespace Kurkku.Game
         public int InstanceId { get; set; }
         public bool NeedsUpdate { get; set; }
         public int RoomId => Room != null ? Room.Data.Id : 0;
+        public RoomTile Tile => Position != null ? (Position.GetTile(Room) ?? null) : null;
+        public Item CurrentItem => Tile?.HighestItem;
         public RoomTimerManager TimerManager { get; set; }
 
         /// <summary>
@@ -121,6 +125,12 @@ namespace Kurkku.Game
 
             if (pathList.Count > 0)
             {
+                var goalTile = Goal.GetTile(Room);
+
+                if (goalTile != null && goalTile.HighestItem != null)
+                    if (goalTile.HighestItem.Interactor.OnWalkRequest(Entity, Goal))
+                        return;
+
                 PathList = pathList;
                 IsWalking = true;
             }
@@ -136,9 +146,51 @@ namespace Kurkku.Game
 
             this.IsWalking = false;
             this.PathList.Clear();
-            this.NeedsUpdate = true;
             this.Next = null;
             this.RemoveStatus("mv");
+            this.InteractItem();
+            this.NeedsUpdate = true;
+        }
+
+        /// <summary>
+        /// Interact with current item by calling entity stop on interactor
+        /// </summary>
+        public void InteractItem()
+        {
+            var roomTile = Tile;
+
+            if (roomTile == null)
+                return;
+
+            Position.Z = roomTile.GetWalkingHeight();
+
+            Item item = CurrentItem;
+
+            if (item == null || (
+                item.Definition.InteractorType != InteractorType.CHAIR ||
+                item.Definition.InteractorType != InteractorType.BED))
+            {
+                if (ContainsStatus("sit") || ContainsStatus("lay"))
+                {
+                    RemoveStatus("sit");
+                    RemoveStatus("lay");
+                }
+            }
+            
+            if (item != null)
+            {
+                item.Interactor.OnStop(this.Entity);
+            }
+
+            this.NeedsUpdate = true;
+        }
+
+        /// <summary>
+        /// Get if entity contains status
+        /// </summary>
+        public bool ContainsStatus(string statusKey)
+        {
+            return Status.ContainsKey(statusKey);
         }
 
         /// <summary>

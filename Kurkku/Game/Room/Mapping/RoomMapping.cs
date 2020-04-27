@@ -72,6 +72,8 @@ namespace Kurkku.Game
         /// </summary>
         internal void AddItem(Item item, Position position = null, string wallPosition = null, Player player = null)
         {
+            item.Data.RoomId = room.Data.Id;
+
             if (item.Definition.HasBehaviour(ItemBehaviour.WALL_ITEM))
             {
                 item.Data.WallPosition = wallPosition;
@@ -103,9 +105,10 @@ namespace Kurkku.Game
 
                     roomTile.AddItem(item);
                 }
+                
+                item.UpdateEntities();
             }
 
-            item.Data.RoomId = room.Data.Id;
             item.Save();
 
             room.ItemManager.AddItem(item);
@@ -123,6 +126,7 @@ namespace Kurkku.Game
             }
             else
             {
+                var oldPosition = item.Position.Copy();
                 var oldTile = item.Position.GetTile(room);
 
                 if (oldTile == null)
@@ -163,6 +167,7 @@ namespace Kurkku.Game
                     roomTile.AddItem(item);
                 }
 
+                item.UpdateEntities(oldPosition);
                 room.Send(new UpdateFloorItemComposer(item));
             }
 
@@ -173,7 +178,7 @@ namespace Kurkku.Game
         /// <summary>
         /// Remove item handler
         /// </summary>
-        public void RemoveItem(Item item, Player player)
+        public void RemoveItem(Item item)
         {
             RoomTile tile = item.Position.GetTile(room);
 
@@ -191,20 +196,23 @@ namespace Kurkku.Game
                 roomTile.RemoveItem(item);
             }
 
-            item.Position = new Position();
-            item.Data.X = item.Position.X;
-            item.Data.Y = item.Position.Y;
-            item.Data.Z = item.Position.Z;
-            item.Data.Rotation = item.Position.Rotation;
-
             if (item.Definition.HasBehaviour(ItemBehaviour.WALL_ITEM))
             {
                 room.Send(new RemoveWallItemComposer(item));
                 item.Data.WallPosition = string.Empty;
             }
             else
+            {
                 room.Send(new RemoveFloorItemComposer(item));
+                item.UpdateEntities();
 
+                item.Position = new Position();
+                item.Data.X = item.Position.X;
+                item.Data.Y = item.Position.Y;
+                item.Data.Z = item.Position.Z;
+                item.Data.Rotation = item.Position.Rotation;
+
+            }
             item.Data.RoomId = 0;
             item.Save();
 
