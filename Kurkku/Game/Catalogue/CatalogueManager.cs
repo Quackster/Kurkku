@@ -211,14 +211,15 @@ namespace Kurkku.Game
         /// </summary>
         public CatalogueDiscountData GetBestDiscount(int pageId)
         {
-            var discounts = Discounts.Where(x => x.PageId == pageId && x.ExpireDate > DateTime.Now).ToList();
+            var discounts = Discounts.Where(x => x.PageId == pageId && (x.ExpireDate > DateTime.Now || x.ExpireDate == null)).ToList();
 
             if (!discounts.Any())
                 return null;
 
             return discounts
                 .Where(x => x.DiscountBatchSize > 0 && x.DiscountAmountPerBatch > 0)
-                .OrderByDescending(x => x.DiscountAmountPerBatch / x.DiscountBatchSize).FirstOrDefault();
+                .OrderByDescending(x => x.DiscountAmountPerBatch / x.DiscountBatchSize)
+                .FirstOrDefault();
         }
 
         /// <summary>

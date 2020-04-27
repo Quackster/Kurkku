@@ -1,4 +1,5 @@
 ﻿using System;
+using Kurkku.Messages.Outgoing;
 using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
 
@@ -11,6 +12,7 @@ namespace Kurkku.Game
         public int Id;
         public ItemData Data { get; }
         public ItemDefinition Definition => ItemManager.Instance.GetDefinition(Data.DefinitionId);
+        public Room Room => RoomManager.Instance.GetRoom(Data.RoomId);
         public Interactor Interactor { get; }
         public Position Position { get; set; }
 
@@ -64,6 +66,20 @@ namespace Kurkku.Game
         public void Save()
         {
             ItemDao.SaveItem(Data);
+        }
+
+        /// <summary>
+        /// Updates item state
+        /// </summary>
+        public void Update()
+        {
+            if (Room == null)
+                return;
+
+            if (Definition.HasBehaviour(ItemBehaviour.WALL_ITEM))
+                Room.Send(new UpdateWallItemComposer(this));
+            else
+                Room.Send(new UpdateFloorItemComposer(this));
         }
 
         /// <summary>

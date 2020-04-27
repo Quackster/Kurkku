@@ -70,5 +70,6 @@
         public static readonly short RemoveWallItemComposer = 1317;
         public static readonly short UpdateWallItemComposer = 893;
         public static readonly short UpdateFloorItemComposer = 3510;
+        public static readonly short StickieComposer = 3086;
     }
 }

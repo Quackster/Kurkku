@@ -21,12 +21,10 @@ namespace Kurkku.Game
             if (NeedsExtraDataUpdate)
             {
                 var stickieData = (StickieExtraData)GetJsonObject();
-
-                ExtraDataInventoryView = stickieData.Colour.ToString();
-                ExtraData = stickieData.Colour.ToString();
+                ExtraData = $"{stickieData.Colour}";
             }
 
-            return inventoryView ? ExtraDataInventoryView : ExtraData;
+            return ExtraData;
         }
     }
 }

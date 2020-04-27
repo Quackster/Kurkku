@@ -216,6 +216,9 @@ namespace Kurkku.Messages
             Events[IncomingEvents.MoveFloorItemMessageEvent] = new MoveFloorItemMessageEvent();
             Events[IncomingEvents.MoveWallItemMessageEvent] = new MoveWallItemMessageEvent();
             Events[IncomingEvents.PlaceStickieMessageEvent] = new PlaceStickieMessageEvent();
+            Events[IncomingEvents.GetStickieMessageEvent] = new GetStickieMessageEvent();
+            Events[IncomingEvents.UpdateStickieMessageEvent] = new UpdateStickieMessageEvent();
+            Events[1441] = new testEvent();
 
         }
 
@@ -269,6 +272,30 @@ namespace Kurkku.Messages
             catch (Exception ex)
             {
                 log.Error("Error occurred: ", ex);
+            }
+        }
+
+        private class testEvent : IMessageEvent
+        {
+            public void Handle(Player player, Request request)
+            {
+                int itemId = request.ReadInt();
+
+                if (player.RoomUser.Room == null)
+                    return;
+
+                Room room = player.RoomUser.Room;
+
+                if (room == null) // TODO: Fix for staff
+                    return;
+
+                Item item = room.ItemManager.GetItem(itemId);
+
+                if (item == null) // TODO: Staff check
+                    return;
+
+                item.Data.ExtraData = "1";
+                item.Update();
             }
         }
 
