@@ -1,5 +1,7 @@
 ﻿using Kurkku.Storage.Database.Data;
+using NHibernate.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Kurkku.Storage.Database.Access
 {
@@ -131,6 +133,18 @@ namespace Kurkku.Storage.Database.Access
                         transaction.Rollback();
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Delete item
+        /// </summary>
+        /// <param name="item"></param>
+        public static void DeleteItem(ItemData item)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                session.Query<ItemData>().Where(x => x.Id == item.Id).Delete();
             }
         }
     }

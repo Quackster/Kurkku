@@ -61,13 +61,13 @@ namespace Kurkku.Game
 
             player.Send(new RoomReadyComposer(room.Data.Model, room.Data.Id));
 
-            if (room.Data.Wallpaper > 0)
+            if (room.Data.Wallpaper != "0")
                 player.Send(new RoomPropertyComposer("wallpaper", Convert.ToString(room.Data.Wallpaper)));
 
-            if (room.Data.Floor > 0)
+            if (room.Data.Floor != "0")
                 player.Send(new RoomPropertyComposer("floor", Convert.ToString(room.Data.Floor)));
 
-            player.Send(new RoomPropertyComposer("landscape", Convert.ToString(room.Data.Wallpaper)));
+            player.Send(new RoomPropertyComposer("landscape", Convert.ToString(room.Data.Landscape)));
             
             if (!room.Data.IsPublicRoom)
             {

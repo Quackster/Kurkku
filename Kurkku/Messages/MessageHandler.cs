@@ -62,6 +62,10 @@ namespace Kurkku.Messages
             // [2020-04-21 01:17:28,284] DEBUG  Player Alex - Unknown: 2275 / [0][4]test[0][0][0][0][0][0][0][0]
         }
 
+        #endregion
+
+        #region Public methods
+
         /// <summary>
         /// Resolve composers, instead of assigning to every composer file, associate by file name instead
         /// </summary>
@@ -218,13 +222,10 @@ namespace Kurkku.Messages
             Events[IncomingEvents.PlaceStickieMessageEvent] = new PlaceStickieMessageEvent();
             Events[IncomingEvents.GetStickieMessageEvent] = new GetStickieMessageEvent();
             Events[IncomingEvents.UpdateStickieMessageEvent] = new UpdateStickieMessageEvent();
-            Events[1441] = new testEvent();
+            Events[IncomingEvents.DeleteStickieMessageEvent] = new DeleteStickieMessageEvent();
+            Events[IncomingEvents.ApplyDecorationMessageEvent] = new ApplyDecorationMessageEvent();
 
         }
-
-        #endregion
-
-        #region Public methods
 
         /// <summary>
         /// Handler for incoming message
@@ -272,30 +273,6 @@ namespace Kurkku.Messages
             catch (Exception ex)
             {
                 log.Error("Error occurred: ", ex);
-            }
-        }
-
-        private class testEvent : IMessageEvent
-        {
-            public void Handle(Player player, Request request)
-            {
-                int itemId = request.ReadInt();
-
-                if (player.RoomUser.Room == null)
-                    return;
-
-                Room room = player.RoomUser.Room;
-
-                if (room == null) // TODO: Fix for staff
-                    return;
-
-                Item item = room.ItemManager.GetItem(itemId);
-
-                if (item == null) // TODO: Staff check
-                    return;
-
-                item.Data.ExtraData = "1";
-                item.Update();
             }
         }
 
