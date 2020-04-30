@@ -2785,6 +2785,24 @@ INSERT INTO `catalogue_pages` (`id`, `parent_id`, `order_id`, `min_rank`, `is_na
 	(138, -1, 3000, 1, 0, 1, 0, 'Furni By Theme', 'furni_by_theme', 64, 2, '', '[]', '[]');
 /*!40000 ALTER TABLE `catalogue_pages` ENABLE KEYS */;
 
+CREATE TABLE IF NOT EXISTS `catalogue_subscriptions` (
+  `id` int(11) NOT NULL,
+  `page_id` int(11) NOT NULL DEFAULT 5,
+  `price_coins` int(11) NOT NULL DEFAULT 35,
+  `price_seasonal` int(11) NOT NULL DEFAULT 0,
+  `seasonal_type` enum('PUMPKINS','PEANUTS','STARS','CLOUDS','DIAMONDS','LOYALTY_POINTS','DUCKETS') NOT NULL DEFAULT 'DUCKETS',
+  `days` int(11) NOT NULL DEFAULT 0,
+  `months` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*!40000 ALTER TABLE `catalogue_subscriptions` DISABLE KEYS */;
+INSERT INTO `catalogue_subscriptions` (`id`, `page_id`, `price_coins`, `price_seasonal`, `seasonal_type`, `days`, `months`) VALUES
+	(1, 5, 15, 0, 'DUCKETS', 0, 1),
+	(2, 5, 30, 0, 'DUCKETS', 0, 3),
+	(3, 5, 60, 0, 'DUCKETS', 0, 6);
+/*!40000 ALTER TABLE `catalogue_subscriptions` ENABLE KEYS */;
+
 CREATE TABLE IF NOT EXISTS `item` (
   `id` varchar(250) NOT NULL,
   `order_id` int(11) NOT NULL DEFAULT -1,
@@ -2815,7 +2833,7 @@ INSERT INTO `item` (`id`, `order_id`, `user_id`, `room_id`, `definition_id`, `x`
 	('366f4a14-7c7d-4d6d-bd3a-c774dc1e241f', 0, 1, 2, 764, '0', '0', '0', ':w=6,3 l=22,84 l', 0, '', -1, '2020-04-29 23:39:37', '2020-04-29 23:40:06'),
 	('37f7c540-174c-4f3c-bc68-40792e364ece', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
 	('5e773479-513a-40de-9b9d-02bde233fcb5', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
-	('63246c8a-99dd-4479-9073-2c9ce8fb7adf', 0, 1, 0, 731, '0', '0', '0', '', 0, '', -1, '2020-04-29 23:24:37', '2020-04-29 23:24:37'),
+	('63246c8a-99dd-4479-9073-2c9ce8fb7adf', 0, 1, 0, 731, '0', '0', '0', '', 0, '', -1, '2020-04-29 23:24:37', '2020-04-30 21:15:38'),
 	('63a59404-e7d5-4604-9628-d1cb427f63ed', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
 	('65587ab9-cb85-4032-8b0f-ceeabe49e84e', 0, 1, 2, 251, '0', '0', '0', ':w=6,4 l=4,77 r', 0, '54', -1, '2020-04-29 23:22:26', '2020-04-29 23:40:16'),
 	('66c48d56-8a14-11ea-977d-309c23898e71', 0, 1, 0, 519, '0', '0', '0', '', 0, '1.8', -1, '2020-04-29 21:52:29', '2020-04-29 21:52:29'),
@@ -2834,7 +2852,7 @@ INSERT INTO `item` (`id`, `order_id`, `user_id`, `room_id`, `definition_id`, `x`
 	('c6f5653e-374e-4850-936a-608a3926803d', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
 	('c96b3b01-4032-4a6d-bf66-3ac4858a1e1a', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
 	('d3d6addb-4f7e-4b1b-ae72-fe60dadce5bc', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
-	('dbc59733-21b3-4499-9945-2679837a9a2e', 0, 1, 0, 1172, '0', '0', '0', '', 0, '', -1, '2020-04-29 23:23:06', '2020-04-29 23:23:06'),
+	('dbc59733-21b3-4499-9945-2679837a9a2e', 0, 1, 0, 1172, '0', '0', '0', '', 0, '', -1, '2020-04-29 23:23:06', '2020-04-30 21:15:35'),
 	('dddc94c0-dfa9-47ba-8de3-b26adf365732', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
 	('ed3d2145-aa9e-43c8-99b0-5fdb314fec8c', 0, 1, 2, 764, '0', '0', '0', ':w=3,4 l=31,79 r', 0, '', -1, '2020-04-29 23:39:39', '2020-04-29 23:39:58'),
 	('ed402818-08ff-420f-a712-22d73313e02b', 0, 1, 0, 250, '0', '0', '0', '', 0, '204', -1, '2020-04-29 23:29:37', '2020-04-29 23:29:37'),
@@ -4431,7 +4449,7 @@ INSERT INTO `item_definitions` (`id`, `sprite`, `name`, `description`, `sprite_i
 	(1786, 'byesw_loadscreen', '0', '-1', 4267, 0, 0, 0, '3', 'requires_rights_for_interaction,wall_item', 'default', 1, 1, 1, 1, '', -1, ''),
 	(1787, 'byesw_hotel', 'Hotel view memorial', '3 different miniature Hotels.', 3289, 1, 1, 0, '6', 'requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(1788, 'byesw_hand', 'Big Hand seat memorial', 'We\'ll miss you Big Hand!', 3291, 1, 1, 1.3, '2', '', 'chair', 1, 1, 1, 1, '', -1, '0,2,4,6'),
-	(1789, 'queue_tile1', 'White Quest Roller', 'The power of movement', -1, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
+	(1789, 'queue_tile1*0', 'White Quest Roller', 'The power of movement', 1658, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(1790, 'queue_tile1*1', 'Pink Habbo Roller', 'Movin\' on up!', 1657, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(1791, 'queue_tile1*3', 'Aqua Habbo Roller', 'Movin\' on up!', 1649, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(1792, 'queue_tile1*4', 'Gold Habbo Roller', 'Movin\' on up!', 1651, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
@@ -5188,7 +5206,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `pixels`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999803, 0, '', '2020-04-25 21:07:53', '2020-04-30 01:41:46'),
+	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999803, 0, '', '2020-04-25 21:07:53', '2020-05-01 00:07:16'),
 	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999990, 0, '', '2020-04-25 21:07:53', '2020-04-27 00:55:33');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
@@ -5232,6 +5250,8 @@ CREATE TABLE IF NOT EXISTS `user_subscriptions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user_subscriptions` DISABLE KEYS */;
+INSERT INTO `user_subscriptions` (`user_id`, `subscribed_at`, `expire_at`) VALUES
+	(1, '2020-05-01 00:03:37', '2020-08-01 00:03:38');
 /*!40000 ALTER TABLE `user_subscriptions` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

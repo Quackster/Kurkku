@@ -1,6 +1,7 @@
 ﻿using Kurkku.Game;
 using Kurkku.Messages.Headers;
 using Kurkku.Messages.Incoming;
+using Kurkku.Messages.Incoming.Catalogue;
 using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
 using log4net;
@@ -207,6 +208,7 @@ namespace Kurkku.Messages
             Events[IncomingEvents.OpenCatalogueMessageEvent] = new OpenCatalogueMessageEvent();
             Events[IncomingEvents.GetCataloguePageMessageEvent] = new GetCataloguePageMessageEvent();
             Events[IncomingEvents.PurchaseItemMessageEvent] = new PurchaseItemMessageEvent();
+            Events[IncomingEvents.CatalogueClubMessageEvent] = new CatalogueClubMessageEvent();
         }
 
         /// <summary>

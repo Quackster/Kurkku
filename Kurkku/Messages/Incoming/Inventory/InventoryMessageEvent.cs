@@ -18,8 +18,7 @@ namespace Kurkku.Messages.Incoming
 
             for (int i = 0; i < pages; i++)
             {
-                List<Item> items = inventoryItems.GetPage(i, itemsPerPage);
-                player.Send(new InventoryMessageComposer(pages, i, items));
+                player.Send(new InventoryMessageComposer(pages, i, inventoryItems.GetPage(i, itemsPerPage)));
             }
         }
     }
