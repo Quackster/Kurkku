@@ -11,14 +11,14 @@ namespace Kurkku.Messages.Incoming
     {
         public void Handle(Player player, Request request)
         {
+            var inventoryItems = new List<Item>(player.Inventory.Items.Values);
 
-            int itemsPerPage = 1000;
-            int pages = player.Inventory.Items.Values.CountPages(itemsPerPage);
-
+            int itemsPerPage = ValueManager.Instance.GetInt("inventory.items.per.page");
+            int pages = inventoryItems.CountPages(itemsPerPage);
 
             for (int i = 0; i < pages; i++)
             {
-                List<Item> items = player.Inventory.Items.Values.GetPage(i, itemsPerPage);
+                List<Item> items = inventoryItems.GetPage(i, itemsPerPage);
                 player.Send(new InventoryMessageComposer(pages, i, items));
             }
         }

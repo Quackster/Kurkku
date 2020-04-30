@@ -40,6 +40,7 @@ namespace Kurkku.Game
             ClientValues["max.rooms.allowed"] = "100";
             ClientValues["max.rooms.allowed.subscribed"] = "200";
             ClientValues["timer.speech.bubble"] = "15";
+            ClientValues["inventory.items.per.page"] = "500";
         }
 
 
