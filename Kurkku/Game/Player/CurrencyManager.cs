@@ -66,6 +66,14 @@ namespace Kurkku.Game
         /// <summary>
         /// Update curencies on client side
         /// </summary>
+        public void UpdateCredits()
+        {
+            player.Send(new CreditsBalanceComposer(player.Details.Credits));
+        }
+
+        /// <summary>
+        /// Update curencies on client side
+        /// </summary>
         public void UpdateCurrencies()
         {
             player.Send(new ActivityPointsComposer(Currencies));
@@ -78,15 +86,6 @@ namespace Kurkku.Game
         {
             if (Currencies.TryGetValue(seasonalCurrency, out var balance))
                 player.Send(new ActivityPointsNotificationComposer(seasonalCurrency, balance, notify));
-        }
-
-
-        /// <summary>
-        /// Update curencies on client side
-        /// </summary>
-        public void UpdateCredits()
-        {
-            player.Send(new CreditsBalanceComposer(player.Details.Credits));
         }
 
         /// <summary>

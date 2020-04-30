@@ -85,7 +85,7 @@ namespace Kurkku.Storage.Database.Access
 
 
         /// <summary>
-        /// Create items and refresh it
+        /// Create items and refresh it with their filled in database ID's
         /// </summary>
         public static void CreateItems(List<ItemData> items)
         {
@@ -112,7 +112,7 @@ namespace Kurkku.Storage.Database.Access
         }
 
         /// <summary>
-        /// Create item and refresh it
+        /// Create item and refresh it with their filled in database ID's
         /// </summary>
         public static void CreateItem(ItemData item)
         {

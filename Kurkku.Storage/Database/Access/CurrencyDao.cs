@@ -95,7 +95,7 @@ namespace Kurkku.Storage.Database.Access
         }
 
         /// <summary>
-        /// Get singular currency for user straight from database
+        /// Retrives adjusts the credits to change from database and saves it again, then returns it
         /// </summary>
         public static int SaveCredits(int userId, int creditsChanged)
         {
