@@ -10,7 +10,7 @@ namespace Kurkku.Game
         #region Fields
 
         public static readonly ItemManager Instance = new ItemManager();
-        private int ItemCounter = -1;
+        private int ItemCounter;
 
         #endregion
 
@@ -24,6 +24,7 @@ namespace Kurkku.Game
 
         public void Load()
         {
+            ItemCounter = 1;
             Definitions = ItemDao.GetDefinitions().Select(x => new ItemDefinition(x)).ToDictionary(x => x.Data.Id, x => x);
         }
 

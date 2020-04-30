@@ -20,5 +20,15 @@ namespace Kurkku.Util.Extensions
         {
             return source.OrderBy(x => Guid.NewGuid());
         }
+
+        public static List<T> GetPage<T>(this IEnumerable<T> list, int page, int pageSize)
+        {
+            return list.Skip(page * pageSize).Take(pageSize).ToList();
+        }
+
+        public static int CountPages<T>(this IEnumerable<T> list, int pageSize)
+        {
+            return ((list.Count() - 1) / pageSize) + 1;
+        }
     }
 }

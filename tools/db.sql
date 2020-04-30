@@ -198,7 +198,7 @@ INSERT INTO `catalogue_items` (`id`, `sale_code`, `page_id`, `order_id`, `price_
 	(147, 'tv_luxus', '19', 1, 6, 0, 'DUCKETS', 0, 1, 83, '', 0, 1),
 	(148, 'wood_tv', '19', 2, 4, 0, 'DUCKETS', 0, 1, 61, '', 0, 1),
 	(149, 'red_tv', '19', 3, 3, 0, 'DUCKETS', 0, 1, 60, '', 0, 1),
-	(150, 'wallpaper_single_', '19', 4, 3, 0, 'DUCKETS', 0, 1, 244, '', 0, 1),
+	(150, 'A2 tlp 20', '19', 4, 3, 0, 'DUCKETS', 0, 1, 244, '', 0, 1),
 	(151, 'pizza', '19', 5, 3, 0, 'DUCKETS', 0, 1, 43, '', 0, 1),
 	(152, 'drinks', '19', 6, 3, 0, 'DUCKETS', 0, 1, 44, '', 0, 1),
 	(153, 'bottle', '99,100', 7, 3, 0, 'DUCKETS', 0, 1, 47, '', 0, 1),
@@ -2806,6 +2806,39 @@ CREATE TABLE IF NOT EXISTS `item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*!40000 ALTER TABLE `item` DISABLE KEYS */;
+INSERT INTO `item` (`id`, `order_id`, `user_id`, `room_id`, `definition_id`, `x`, `y`, `z`, `wall_position`, `rotation`, `custom_data`, `expire_time`, `created_at`, `updated_at`) VALUES
+	('0a80a5dc-c125-4fb5-bceb-cb6993ef36e2', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('0f47a042-a0ee-4305-93eb-acd022627731', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('21fa36e5-eb12-420f-9e12-229ba53d7d63', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('2ab6b305-cdc2-4f18-ba45-8d94d44c8ff8', 0, 1, 2, 773, '0', '0', '0', ':w=1,6 l=32,61 l', 0, '', -1, '2020-04-29 23:39:42', '2020-04-29 23:39:55'),
+	('2e28559c-148e-478a-8111-580d7087a501', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('366f4a14-7c7d-4d6d-bd3a-c774dc1e241f', 0, 1, 2, 764, '0', '0', '0', ':w=6,3 l=22,84 l', 0, '', -1, '2020-04-29 23:39:37', '2020-04-29 23:40:06'),
+	('37f7c540-174c-4f3c-bc68-40792e364ece', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('5e773479-513a-40de-9b9d-02bde233fcb5', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('63246c8a-99dd-4479-9073-2c9ce8fb7adf', 0, 1, 0, 731, '0', '0', '0', '', 0, '', -1, '2020-04-29 23:24:37', '2020-04-29 23:24:37'),
+	('63a59404-e7d5-4604-9628-d1cb427f63ed', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('65587ab9-cb85-4032-8b0f-ceeabe49e84e', 0, 1, 2, 251, '0', '0', '0', ':w=6,4 l=4,77 r', 0, '54', -1, '2020-04-29 23:22:26', '2020-04-29 23:40:16'),
+	('66c48d56-8a14-11ea-977d-309c23898e71', 0, 1, 0, 519, '0', '0', '0', '', 0, '1.8', -1, '2020-04-29 21:52:29', '2020-04-29 21:52:29'),
+	('66ca9ada-8a14-11ea-977d-309c23898e71', 0, 1, 0, 519, '0', '0', '0', '', 0, '1.8', -1, '2020-04-29 21:52:29', '2020-04-29 21:52:29'),
+	('66ce782b-8a14-11ea-977d-309c23898e71', 0, 1, 0, 519, '0', '0', '0', '', 0, '1.8', -1, '2020-04-29 21:52:29', '2020-04-29 21:52:29'),
+	('66d116de-8a14-11ea-977d-309c23898e71', 0, 1, 0, 519, '0', '0', '0', '', 0, '1.8', -1, '2020-04-29 21:52:29', '2020-04-29 21:52:29'),
+	('66d39a40-8a14-11ea-977d-309c23898e71', 0, 1, 0, 519, '0', '0', '0', '', 0, '1.8', -1, '2020-04-29 21:52:29', '2020-04-29 21:52:29'),
+	('7b425cb8-7d82-4b8f-90d6-67bfa2d3a336', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('83e722d3-5090-49b7-a32c-e0baeeb7252a', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('85af84f6-46e8-435e-a0c5-70bdef64ed47', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('aad7d65b-26bd-409f-aab8-8fc83d4646d0', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('ba60532e-5e6d-4dab-a488-a475ac1b4f4c', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('c182ea94-0359-4134-8c0f-defcdc290015', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('c36bb498-4ca9-4d75-a9fe-fce863a0741b', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('c3ebb100-1230-4082-8515-0dae3f31944b', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('c6f5653e-374e-4850-936a-608a3926803d', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('c96b3b01-4032-4a6d-bf66-3ac4858a1e1a', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('d3d6addb-4f7e-4b1b-ae72-fe60dadce5bc', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('dbc59733-21b3-4499-9945-2679837a9a2e', 0, 1, 0, 1172, '0', '0', '0', '', 0, '', -1, '2020-04-29 23:23:06', '2020-04-29 23:23:06'),
+	('dddc94c0-dfa9-47ba-8de3-b26adf365732', 0, 1, 0, 244, '0', '0', '0', '', 0, '{"Message":"","Colour":"FFFF33"}', -1, '2020-04-30 01:37:52', '2020-04-30 01:37:52'),
+	('ed3d2145-aa9e-43c8-99b0-5fdb314fec8c', 0, 1, 2, 764, '0', '0', '0', ':w=3,4 l=31,79 r', 0, '', -1, '2020-04-29 23:39:39', '2020-04-29 23:39:58'),
+	('ed402818-08ff-420f-a712-22d73313e02b', 0, 1, 0, 250, '0', '0', '0', '', 0, '204', -1, '2020-04-29 23:29:37', '2020-04-29 23:29:37'),
+	('f2e8069a-033e-4cac-b053-e8747abc6d40', 0, 1, 2, 773, '0', '0', '0', ':w=1,8 l=4,69 l', 0, '', -1, '2020-04-29 23:39:44', '2020-04-29 23:39:52');
 /*!40000 ALTER TABLE `item` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `item_definitions` (
@@ -3081,8 +3114,8 @@ INSERT INTO `item_definitions` (`id`, `sprite`, `name`, `description`, `sprite_i
 	(246, 'hc_wall_lamp', '1', '-1', 4003, 0, 0, 0, '2', 'requires_rights_for_interaction,wall_item', 'default', 1, 1, 1, 1, '', -1, ''),
 	(247, 'industrialfan', '0', '-1', 4004, 0, 0, 0, '2', 'requires_rights_for_interaction,wall_item', 'default', 1, 1, 1, 1, '', -1, ''),
 	(248, 'torch', '0', '-1', 4005, 0, 0, 0, '2', 'requires_rights_for_interaction,wall_item', 'default', 1, 1, 1, 1, '', -1, ''),
-	(249, 'floor', '1', '-1', 3002, 0, 0, 0, '2', 'requires_rights_for_interaction,wall_item', 'decoration', 1, 1, 1, 1, '', -1, ''),
-	(250, 'wallpaper', '1', '-1', 3001, 0, 0, 0, '0', 'requires_rights_for_interaction,wall_item', 'decoration', 1, 1, 1, 1, '', -1, ''),
+	(249, 'floor', '1', '-1', 3002, 0, 0, 0, '2', 'requires_rights_for_interaction,wall_item', 'decoration', 0, 0, 0, 0, '', -1, ''),
+	(250, 'wallpaper', '1', '-1', 3001, 0, 0, 0, '0', 'requires_rights_for_interaction,wall_item', 'decoration', 0, 0, 0, 0, '', -1, ''),
 	(251, 'poster', '1', '-1', 4001, 0, 0, 0, '0', 'requires_rights_for_interaction,wall_item', 'default', 1, 1, 1, 1, '', -1, ''),
 	(252, 'table_norja_med', 'Beige Coffee Table', 'For larger gatherings.', 20, 2, 2, 1, '2', 'is_stackable,requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(253, 'doormat_plain*4', 'Doormat', 'Available in a variety of colors', 90, 1, 1, 0.2, '2', 'is_stackable,is_walkable,requires_rights_for_interaction', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
@@ -3306,7 +3339,7 @@ INSERT INTO `item_definitions` (`id`, `sprite`, `name`, `description`, `sprite_i
 	(516, 'table_plasto_round*9', 'Round Dining Table', 'Hip plastic furniture', 117, 2, 2, 1, '2', 'is_stackable,requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(517, 'table_plasto_square*9', 'Occasional Table', 'Hip plastic furniture', 118, 1, 1, 1, '2', 'is_stackable,requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(518, 'chair_plasto*3', 'Chair', 'Hip plastic furniture', 81, 1, 1, 1, '1', '', 'chair', 1, 1, 1, 1, '', -1, '0,2,4,6'),
-	(519, 'landscape', '1', '-1', 4055, 1, 1, 0, '0', 'requires_rights_for_interaction,wall_item', 'decoration', 1, 1, 1, 1, '', -1, ''),
+	(519, 'landscape', '1', '-1', 4055, 1, 1, 0, '0', 'requires_rights_for_interaction,wall_item', 'decoration', 0, 0, 1, 0, '', -1, ''),
 	(520, 'chair_plasty*1', 'Plastic Pod Chair', 'Hip plastic furniture', 121, 1, 1, 1, '1', '', 'chair', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(523, 'chair_plasty*2', 'Plastic Pod Chair', 'Hip plastic furniture', 124, 1, 1, 1, '1', '', 'chair', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(524, 'chair_plasty*3', 'Plastic Pod Chair', 'Hip plastic furniture', 125, 1, 1, 1, '1', '', 'chair', 1, 1, 1, 1, '', -1, '0,2,4,6'),
@@ -5049,9 +5082,9 @@ CREATE TABLE IF NOT EXISTS `room` (
   `password` text NOT NULL DEFAULT '',
   `model` varchar(30) NOT NULL DEFAULT '',
   `ccts` text NOT NULL DEFAULT '',
-  `wallpaper` int(11) NOT NULL DEFAULT 0,
-  `floor` int(11) NOT NULL DEFAULT 0,
-  `landscape` int(11) NOT NULL DEFAULT 0,
+  `wallpaper` varchar(50) NOT NULL DEFAULT '0',
+  `floor` varchar(50) NOT NULL DEFAULT '0',
+  `landscape` varchar(50) NOT NULL DEFAULT '0',
   `rating` int(11) NOT NULL DEFAULT 0,
   `allow_pets` tinyint(1) NOT NULL DEFAULT 1,
   `allow_pets_eat` tinyint(1) NOT NULL DEFAULT 1,
@@ -5065,9 +5098,9 @@ CREATE TABLE IF NOT EXISTS `room` (
 
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
 INSERT INTO `room` (`id`, `owner_id`, `name`, `description`, `category_id`, `visitors_now`, `visitors_max`, `status`, `password`, `model`, `ccts`, `wallpaper`, `floor`, `landscape`, `rating`, `allow_pets`, `allow_pets_eat`, `allow_walkthrough`, `hidewall`, `wall_thickness`, `floor_thickness`, `is_owner_hidden`) VALUES
-	(1, 0, 'Welcome Lobby', 'welcome_lounge', 15, 0, 25, 'OPEN', '', 'newbie_lobby', 'hh_room_nlobby', 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0),
-	(2, 1, '123', '', 6, 0, 25, 'OPEN', '', 'model_g', '', 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0),
-	(3, 1, 'test room', '', 14, 0, 25, 'OPEN', '', 'model_b', '', 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0);
+	(1, 0, 'Welcome Lobby', 'welcome_lounge', 15, 0, 25, 'OPEN', '', 'newbie_lobby', 'hh_room_nlobby', '0', '0', '0', 0, 1, 1, 1, 0, 0, 0, 0),
+	(2, 1, '123', '', 6, 0, 25, 'OPEN', '', 'model_g', '', '204', '504', '1.8', 0, 1, 1, 0, 0, 0, 0, 0),
+	(3, 1, 'test room', '', 14, 0, 25, 'OPEN', '', 'model_b', '', '3106', '504', '1.8', 0, 1, 1, 0, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `room_category` (
@@ -5155,7 +5188,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `pixels`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999853, 0, '', '2020-04-25 21:07:53', '2020-04-28 23:35:30'),
+	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999803, 0, '', '2020-04-25 21:07:53', '2020-04-30 01:41:46'),
 	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999990, 0, '', '2020-04-25 21:07:53', '2020-04-27 00:55:33');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
@@ -5166,6 +5199,14 @@ CREATE TABLE IF NOT EXISTS `user_seasonal_currencies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user_seasonal_currencies` DISABLE KEYS */;
+INSERT INTO `user_seasonal_currencies` (`user_id`, `seasonal_type`, `balance`) VALUES
+	(1, 'PUMPKINS', 0),
+	(1, 'PEANUTS', 0),
+	(1, 'STARS', 0),
+	(1, 'CLOUDS', 0),
+	(1, 'DIAMONDS', 0),
+	(1, 'DUCKETS', 0),
+	(1, 'LOYALTY_POINTS', 0);
 /*!40000 ALTER TABLE `user_seasonal_currencies` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_settings` (
@@ -5179,6 +5220,8 @@ CREATE TABLE IF NOT EXISTS `user_settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user_settings` DISABLE KEYS */;
+INSERT INTO `user_settings` (`user_id`, `daily_respect_points`, `daily_respect_pet_points`, `respect_points`, `friend_requests_enabled`, `following_enabled`) VALUES
+	(1, 0, 0, 0, 1, 1);
 /*!40000 ALTER TABLE `user_settings` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_subscriptions` (

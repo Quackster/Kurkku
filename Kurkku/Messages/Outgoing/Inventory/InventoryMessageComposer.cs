@@ -1,25 +1,30 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Kurkku.Game;
 
 namespace Kurkku.Messages.Outgoing
 {
     public class InventoryMessageComposer : IMessageComposer
     {
-        private ConcurrentDictionary<int, Item> items;
+        private int totalPages;
+        private int page;
+        private List<Item> items;
 
-        public InventoryMessageComposer(ConcurrentDictionary<int, Item> items)
+        public InventoryMessageComposer(int pages, int i, List<Item> items1)
         {
-            this.items = items;
+            this.totalPages = pages;
+            this.page = i;
+            this.items = items1;
         }
 
         public override void Write()
         {
-            m_Data.Add(1);
-            m_Data.Add(1);
+            m_Data.Add(totalPages);
+            m_Data.Add(page - 1);
             m_Data.Add(items.Count);
 
-            foreach (var item in items.Values)
+            foreach (var item in items)
             {
                 Serialize(this, item);
             }
@@ -67,6 +72,8 @@ namespace Kurkku.Messages.Outgoing
                 composer.Data.Add("");
                 composer.Data.Add(0); // todo: sprite code for wrapping
             }
+
+            Console.WriteLine(string.Join(", ", composer));
         }
     }
 }
