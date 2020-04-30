@@ -56,5 +56,6 @@
         public static readonly short UpdateStickieMessageEvent = 1561;
         public static readonly short DeleteStickieMessageEvent = 980;
         public static readonly short ApplyDecorationMessageEvent = 2421;
+        public static readonly short CatalogueClubMessageEvent = 947;
     }
 }

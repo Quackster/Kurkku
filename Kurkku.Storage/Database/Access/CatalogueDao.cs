@@ -5,6 +5,9 @@ namespace Kurkku.Storage.Database.Access
 {
     public class CatalogueDao
     {
+        /// <summary>
+        /// Get page data by page id
+        /// </summary>
         public static CataloguePageData GetPageData(int id)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
@@ -13,6 +16,10 @@ namespace Kurkku.Storage.Database.Access
             }
         }
 
+        /// <summary>
+        /// Get all page data
+        /// </summary>
+        /// <returns></returns>
         public static List<CataloguePageData> GetPages()
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
@@ -21,6 +28,10 @@ namespace Kurkku.Storage.Database.Access
             }
         }
 
+        /// <summary>
+        /// Get all catalogue item data
+        /// </summary>
+        /// <returns></returns>
         public static List<CatalogueItemData> GetItems()
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
@@ -29,6 +40,10 @@ namespace Kurkku.Storage.Database.Access
             }
         }
 
+        /// <summary>
+        /// Get all item packages
+        /// </summary>
+        /// <returns></returns>
         public static List<CataloguePackageData> GetPackages()
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
@@ -37,11 +52,26 @@ namespace Kurkku.Storage.Database.Access
             }
         }
 
+        /// <summary>
+        /// Get all discount data
+        /// </summary>
+        /// <returns></returns>
         public static List<CatalogueDiscountData> GetDiscounts()
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
                 return session.QueryOver<CatalogueDiscountData>().List() as List<CatalogueDiscountData>;
+            }
+        }
+
+        /// <summary>
+        /// Get subscription data by page id
+        /// </summary>
+        public static List<CatalogueSubscriptionData> GetSubscriptionData()
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                return session.QueryOver<CatalogueSubscriptionData>().List() as List<CatalogueSubscriptionData>;
             }
         }
     }

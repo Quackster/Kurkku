@@ -71,5 +71,6 @@
         public static readonly short UpdateWallItemComposer = 893;
         public static readonly short UpdateFloorItemComposer = 3510;
         public static readonly short StickieComposer = 3086;
+        public static readonly short CatalogueClubMessageComposer = 2677;
     }
 }
