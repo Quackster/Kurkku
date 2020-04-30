@@ -17,7 +17,7 @@ namespace Kurkku.Game
             if (!IsPillowTile(destination))
                 destination = ConvertToPillow(destination);
 
-            if (IsPillowTile(destination))
+            if (destination != null)
             {
                 var tile = destination.GetTile(entity.RoomEntity.Room);
 
@@ -100,7 +100,7 @@ namespace Kurkku.Game
         public List<Position> GetPillowTiles()
         {
             if (Item == null || Item.Position == null)
-                return new List<Position>();
+                return List.Create<Position>();
 
             List<Position> tiles = new List<Position>();
             tiles.Add(new Position(Item.Position.X, Item.Position.Y));

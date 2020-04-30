@@ -4,9 +4,9 @@ namespace System.Collections.Generic
 {
     public static class List
     {
-        public static List<T> Create<T>(T value)
+        public static List<T> Create<T>(params T[] values)
         {
-            return new List<T>(1) { value };
+            return new List<T>(values);
         }
     }
 }
