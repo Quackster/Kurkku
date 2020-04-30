@@ -71,14 +71,15 @@ namespace Kurkku.Game
             
             if (!room.Data.IsPublicRoom)
             {
-                if (room.HasRights(player.Details.Id, true))
+                if (room.IsOwner(player.Details.Id))
                 {
                     player.Send(new YouAreOwnerMessageEvent());
                     player.Send(new YouAreControllerComposer(4));
                 }
-
-                if (room.HasRights(player.Details.Id, false))
+                else if (room.HasRights(player.Details.Id, false))
+                {
                     player.Send(new YouAreControllerComposer(1));
+                }
             }
         }
 
