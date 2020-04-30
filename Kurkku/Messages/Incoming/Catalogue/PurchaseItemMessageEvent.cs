@@ -54,6 +54,10 @@ namespace Kurkku.Messages.Incoming
                 totalDiscountedItems = ((int)basicDiscount * (int)discount.DiscountAmountPerBatch) + (int)bonusDiscount;
             }
 
+            // Can't buy an amount less than 0
+            if (amount <= 0)
+                return;
+
             // Calculate new price for both credits and seasonal furniture
             int priceCoins = catalogueItem.Data.PriceCoins * (amount - totalDiscountedItems);
             int priceSeasonal = catalogueItem.Data.PriceSeasonal * (amount - totalDiscountedItems);
