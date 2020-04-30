@@ -4,9 +4,6 @@
     {
         public override ExtraDataType ExtraDataType => ExtraDataType.StringData;
 
-        public DefaultInteractor(Item item) : base(item)
-        {
-
-        }
+        public DefaultInteractor(Item item) : base(item) { }
     }
 }

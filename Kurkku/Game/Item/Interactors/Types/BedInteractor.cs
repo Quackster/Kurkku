@@ -9,10 +9,7 @@ namespace Kurkku.Game
     {
         public override ExtraDataType ExtraDataType => ExtraDataType.StringData;
 
-        public BedInteractor(Item item) : base(item)
-        {
-
-        }
+        public BedInteractor(Item item) : base(item) { }
 
         public override void OnStop(IEntity entity) {
             Position destination = entity.RoomEntity.Position.Copy();

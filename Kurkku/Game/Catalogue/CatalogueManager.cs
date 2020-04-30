@@ -71,7 +71,7 @@ namespace Kurkku.Game
             ItemDao.CreateItems(purchaseQueue);
 
             // Convert item data to item instance
-            List<Item> items 
+            List<Item> items
                 = purchaseQueue.Select(x => new Item(x)).ToList();
 
             var player = PlayerManager.Instance.GetPlayerById(userId);
@@ -93,12 +93,12 @@ namespace Kurkku.Game
         /// </summary>
         private List<ItemData> GenerateItemData(int userId, CataloguePackage cataloguePackage, string userInputMessage, long datePurchase)
         {
-            List<ItemData> items = new List<ItemData>();
-
-            ItemDefinition definition = ItemManager.Instance.GetDefinition(cataloguePackage.Definition.Data.Id);
+            ItemDefinition definition = cataloguePackage.Definition;
 
             if (definition == null)
                 return null;
+
+            List<ItemData> items = new List<ItemData>();
 
             int itemsToGenerate = 1;
             object serializeable = null;

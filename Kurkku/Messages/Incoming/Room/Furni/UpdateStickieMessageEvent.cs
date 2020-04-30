@@ -29,20 +29,18 @@ namespace Kurkku.Messages.Incoming
 
             StickieExtraData stickieData = (StickieExtraData)item.Interactor.GetJsonObject();
 
-            String colour = request.ReadString();
-            String text = request.ReadString().FilterInput(false);
+            string colour = request.ReadString();
+            string text = request.ReadString().FilterInput(false);
 
             if (colour != stickieData.Colour || !stickieData.Message.StartsWith(text))
                 if (!room.HasRights(player.Details.Id))
                     return; // TODO: Staff check
 
-            StickieExtraData updatedStickieData = new StickieExtraData
+            item.Interactor.SetJsonObject(new StickieExtraData
             {
                 Colour = colour,
                 Message = text
-            };
-
-            item.Interactor.SetJsonObject(updatedStickieData);
+            });
             item.Update();
             item.Save();
         }

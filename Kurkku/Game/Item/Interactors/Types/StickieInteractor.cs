@@ -6,10 +6,7 @@ namespace Kurkku.Game
     {
         public override ExtraDataType ExtraDataType => ExtraDataType.StringData;
 
-        public StickieInteractor(Item item) : base(item)
-        {
-
-        }
+        public StickieInteractor(Item item) : base(item) { }
 
         public override object GetJsonObject()
         {
@@ -20,8 +17,8 @@ namespace Kurkku.Game
         {
             if (NeedsExtraDataUpdate)
             {
-                var stickieData = (StickieExtraData)GetJsonObject();
-                ExtraData = $"{stickieData.Colour}";
+                NeedsExtraDataUpdate = false;
+                ExtraData = ((StickieExtraData)GetJsonObject()).Colour;
             }
 
             return ExtraData;

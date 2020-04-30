@@ -8,10 +8,7 @@ namespace Kurkku.Game
     {
         public override ExtraDataType ExtraDataType => ExtraDataType.StringData;
 
-        public ChairInteractor(Item item) : base(item)
-        {
-
-        }
+        public ChairInteractor(Item item) : base(item) { }
 
         public override void OnStop(IEntity entity)
         {
