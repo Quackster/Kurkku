@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Kurkku.Storage.Database.Data;
 
-namespace Kurkku.Messages.Outgoing.Catalogue
+namespace Kurkku.Messages.Outgoing
 {
     class CatalogueClubMessageComposer : IMessageComposer
     {
@@ -34,12 +34,10 @@ namespace Kurkku.Messages.Outgoing.Catalogue
                 m_Data.Add(true); // public function get vip():Boolean
                 m_Data.Add(subscription.Months);
 
-                m_Data.Add(10); // ??
-                m_Data.Add(10); // ??
+                m_Data.Add(0); // ??
+                m_Data.Add(0); // ??
 
-                var futureDate = DateTime.Now;
-                futureDate = futureDate.AddDays(subscription.Days);
-                futureDate = futureDate.AddMonths(subscription.Months);
+                var futureDate = DateTime.Now.AddMonths(subscription.Months);
 
                 m_Data.Add(futureDate.Year);
                 m_Data.Add(futureDate.Month);

@@ -2,6 +2,7 @@
 using Kurkku.Game;
 using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
+using Kurkku.Storage.Database.Data;
 using Kurkku.Util;
 using Kurkku.Util.Extensions;
 
@@ -11,7 +12,8 @@ namespace Kurkku.Messages.Incoming
     {
         public void Handle(Player player, Request request)
         {
-            var cataloguePage = CatalogueManager.Instance.GetPage(request.ReadInt(), player.Details.Rank, player.IsSubscribed);
+            int pageId = request.ReadInt();
+            var cataloguePage = CatalogueManager.Instance.GetPage(pageId, player.Details.Rank, player.IsSubscribed);
 
             if (cataloguePage == null)
                 return;
@@ -20,7 +22,12 @@ namespace Kurkku.Messages.Incoming
             var catalogueItem = cataloguePage.Items.Where(x => x.Data.Id == itemId).FirstOrDefault();
 
             if (catalogueItem == null)
+            {
+                if (SubscriptionManager.Instance.IsSubscriptionItem(pageId, itemId))
+                    SubscriptionManager.Instance.PurchaseClub(player, pageId, itemId);
+
                 return;
+            }
 
             if (catalogueItem.Definition != null && catalogueItem.Definition.HasBehaviour(ItemBehaviour.EFFECT))
                 return; // Effects disabled for now

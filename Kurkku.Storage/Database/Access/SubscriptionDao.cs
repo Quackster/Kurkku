@@ -6,8 +6,7 @@ namespace Kurkku.Storage.Database.Access
 {
     public class SubscriptionDao
     {
-
-        public static bool ContainsSubscription(int userId)
+        /*public static bool ContainsSubscription(int userId)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
@@ -18,8 +17,11 @@ namespace Kurkku.Storage.Database.Access
                     .And(() => subscriptionDataAlias.ExpireDate > DateTime.Now)
                     .List().Count > 0;
             }
-        }
+        }*/
 
+        /// <summary>
+        /// Get subscription by user id
+        /// </summary>
         public static SubscriptionData GetSubscription(int userId)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
@@ -32,6 +34,9 @@ namespace Kurkku.Storage.Database.Access
             }
         }
 
+        /// <summary>
+        /// Save subscription by user id
+        /// </summary>
         public static void SaveSubscription(SubscriptionData subscriptionData)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())

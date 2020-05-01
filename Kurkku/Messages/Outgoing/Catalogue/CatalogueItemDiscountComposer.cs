@@ -2,11 +2,11 @@
 
 namespace Kurkku.Messages.Outgoing
 {
-    class CatalogItemDiscountComposer : IMessageComposer
+    class CatalogueItemDiscountComposer : IMessageComposer
     {
         private CatalogueDiscountData discount;
 
-        public CatalogItemDiscountComposer(CatalogueDiscountData discount)
+        public CatalogueItemDiscountComposer(CatalogueDiscountData discount)
         {
             this.discount = discount;
         }

@@ -53,7 +53,7 @@ namespace Kurkku.Game
         /// <summary>
         /// Get subscription data
         /// </summary>
-        public SubscriptionData Subscription { get; private set; }
+        public SubscriptionData Subscription { get; set; }
 
         /// <summary>
         /// Get whether has subscription data

@@ -12,7 +12,6 @@ namespace Kurkku.Storage.Database.Data
             Map(x => x.PriceCoins, "price_coins");
             Map(x => x.PriceSeasonal, "price_seasonal");
             Map(x => x.SeasonalType, "seasonal_type");
-            Map(x => x.Days, "days");
             Map(x => x.Months, "months");
         }
     }
@@ -20,11 +19,10 @@ namespace Kurkku.Storage.Database.Data
     public class CatalogueSubscriptionData
     {
         public virtual int Id { get; set; }
-        public virtual string PageId { get; set; }
+        public virtual int PageId { get; set; }
         public virtual int PriceCoins { get; set; }
         public virtual int PriceSeasonal { get; set; }
         public virtual SeasonalCurrencyType SeasonalType { get; set; }
-        public virtual int Days { get; set; }
         public virtual int Months { get; set; }
     }
 }
