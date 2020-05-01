@@ -2791,16 +2791,15 @@ CREATE TABLE IF NOT EXISTS `catalogue_subscriptions` (
   `price_coins` int(11) NOT NULL DEFAULT 35,
   `price_seasonal` int(11) NOT NULL DEFAULT 0,
   `seasonal_type` enum('PUMPKINS','PEANUTS','STARS','CLOUDS','DIAMONDS','LOYALTY_POINTS','DUCKETS') NOT NULL DEFAULT 'DUCKETS',
-  `days` int(11) NOT NULL DEFAULT 0,
   `months` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `catalogue_subscriptions` DISABLE KEYS */;
-INSERT INTO `catalogue_subscriptions` (`id`, `page_id`, `price_coins`, `price_seasonal`, `seasonal_type`, `days`, `months`) VALUES
-	(1, 5, 15, 0, 'DUCKETS', 0, 1),
-	(2, 5, 30, 0, 'DUCKETS', 0, 3),
-	(3, 5, 60, 0, 'DUCKETS', 0, 6);
+INSERT INTO `catalogue_subscriptions` (`id`, `page_id`, `price_coins`, `price_seasonal`, `seasonal_type`, `months`) VALUES
+	(1, 63, 15, 0, 'DUCKETS', 1),
+	(2, 63, 30, 0, 'DUCKETS', 3),
+	(3, 63, 60, 0, 'DUCKETS', 6);
 /*!40000 ALTER TABLE `catalogue_subscriptions` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `item` (
@@ -5206,7 +5205,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `pixels`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999803, 0, '', '2020-04-25 21:07:53', '2020-05-01 00:07:16'),
+	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999728, 0, '', '2020-04-25 21:07:53', '2020-05-01 21:55:17'),
 	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999990, 0, '', '2020-04-25 21:07:53', '2020-04-27 00:55:33');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
@@ -5251,7 +5250,7 @@ CREATE TABLE IF NOT EXISTS `user_subscriptions` (
 
 /*!40000 ALTER TABLE `user_subscriptions` DISABLE KEYS */;
 INSERT INTO `user_subscriptions` (`user_id`, `subscribed_at`, `expire_at`) VALUES
-	(1, '2020-05-01 00:03:37', '2020-08-01 00:03:38');
+	(1, '2020-05-01 21:55:50', '2020-06-01 21:55:50');
 /*!40000 ALTER TABLE `user_subscriptions` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
