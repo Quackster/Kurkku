@@ -87,24 +87,7 @@ namespace Kurkku.Game
                 player.Currency.SaveCurrencies();
             }
 
-            DateTime startTime;
-
-            if (player.IsSubscribed)
-                startTime = player.Subscription.ExpireDate;
-            else
-                startTime = DateTime.Now;
-
-            player.Subscription = new SubscriptionData
-            {
-                SubscribedDate = DateTime.Now,
-                ExpireDate = startTime.AddMonths(subscriptionData.Months),
-                UserId = player.Details.Id
-            };
-
-            SubscriptionDao.SaveSubscription(player.Subscription);
-
-            player.Send(new UserRightsMessageComposer(player.IsSubscribed ? 2 : 0, player.Details.Rank));
-            player.Send(new ScrSendUserInfoComposer(player.Subscription));
+            player.Subscription.AddMonths(subscriptionData.Months);
         }
 
         #endregion

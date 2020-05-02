@@ -51,9 +51,9 @@ namespace Kurkku.Game
         public Messenger Messenger { get; private set; }
 
         /// <summary>
-        /// Get subscription data
+        /// Get subscription manager
         /// </summary>
-        public SubscriptionData Subscription { get; set; }
+        public Subscription Subscription { get; private set; }
 
         /// <summary>
         /// Get whether has subscription data
@@ -65,7 +65,7 @@ namespace Kurkku.Game
                 if (Subscription == null)
                     return false;
 
-                return Subscription.ExpireDate > DateTime.Now;
+                return Subscription.Data.ExpireDate > DateTime.Now;
             }
         }
 
@@ -99,6 +99,10 @@ namespace Kurkku.Game
         /// </summary>
         public bool Authenticated { get; private set; }
 
+        /// <summary>
+        /// The time when player connected
+        /// </summary>
+        public DateTime AuthenticationTime { get; private set; }
 
         #endregion
 
@@ -142,7 +146,8 @@ namespace Kurkku.Game
             UserDao.SaveLastOnline(playerData);
             PlayerManager.Instance.AddPlayer(this);
 
-            Subscription = SubscriptionDao.GetSubscription(playerData.Id);
+            Subscription = new Subscription(this);
+            Subscription.Load();
 
             Currency = new CurrencyManager(this);
             Currency.Load();
@@ -154,6 +159,7 @@ namespace Kurkku.Game
             Messenger.SendStatus();
 
             Authenticated = true;
+            AuthenticationTime = DateTime.Now;
 
             Send(new AuthenticationOKComposer());
             Send(new AvailabilityStatusComposer());
@@ -187,6 +193,11 @@ namespace Kurkku.Game
 
             playerData.LastOnline = DateTime.Now;
             UserDao.SaveLastOnline(playerData);
+
+            long timeInSeconds = (long)(DateTime.Now - AuthenticationTime).TotalSeconds;
+            settings.OnlineTime += timeInSeconds;
+            UserSettingsDao.Update(settings);
+           
         }
 
         #endregion

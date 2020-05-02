@@ -6,30 +6,6 @@ namespace Kurkku.Storage.Database.Access
 {
     public class UserSettingsDao
     {
-
-        /// <summary>
-        /// Save player statistics
-        /// </summary>
-        public static void Save(PlayerSettingsData settingsData)
-        {
-            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
-            {
-                using (var transaction = session.BeginTransaction())
-                {
-                    try
-                    {
-                        session.SaveOrUpdate(settingsData);
-                        transaction.Commit();
-                    }
-                    catch (HibernateException ex)
-                    {
-                        transaction.Rollback();
-                        throw ex;
-                    }
-                }
-            }
-        }
-
         /// <summary>
         /// Create player statistics
         /// </summary>
@@ -87,14 +63,6 @@ namespace Kurkku.Storage.Database.Access
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Get settings by user id
-        /// </summary>
-        public static object GetById(int userId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

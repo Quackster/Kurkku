@@ -11,6 +11,8 @@ namespace Kurkku.Storage.Database.Data
             Id(x => x.UserId, "user_id").GeneratedBy.Assigned();
             Map(x => x.SubscribedDate, "subscribed_at");
             Map(x => x.ExpireDate, "expire_at");
+            Map(x => x.SubscriptionAge, "subscription_age").Generated.Insert();
+            Map(x => x.SubscriptionAgeLastUpdated, "subscription_age_last_updated").Generated.Insert();
         }
     }
 
@@ -52,5 +54,8 @@ namespace Kurkku.Storage.Database.Data
                 return ts.Days;
             }
         }
+
+        public virtual int SubscriptionAge { get; set; }
+        public virtual DateTime SubscriptionAgeLastUpdated { get; set; }
     }
 }

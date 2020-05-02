@@ -10,8 +10,8 @@
         public static readonly short InitMessengerMessageEvent = 3621;
         public static readonly short UserInfoMessageEvent = 2671;
         public static readonly short UserInfoMessageEvent2 = 2671;
-        public static readonly short SearchMessengerEvent = 1903;
-        public static readonly short BuddyRequestMessengerEvent = 202;
+        public static readonly short SearchMessageEvent = 1903;
+        public static readonly short BuddyRequestMessageEvent = 202;
         public static readonly short AcceptRequestsMessageEvent = 3528;
         public static readonly short DeclineRequestMessageEvent = 1752;
         public static readonly short RemoveFriendMessageEvent = 3055;
@@ -19,7 +19,7 @@
         public static readonly short OfficialRoomsMessageEvent = 1582;
         public static readonly short PublicItemsMessageEvent = 3754;
         public static readonly short UserFlatsMessageEvent = 1907;
-        public static readonly short UserFlatsCatsMessageEvent = 1272;
+        public static readonly short UserFlatCatsMessageEvent = 1272;
         public static readonly short CanCreateRoomMessageEvent = 2274;
         public static readonly short ScrGetUserInfoMessageEvent = 2999;
         public static readonly short OpenFlatConnectionMessageEvent = 2807;
@@ -29,7 +29,7 @@
         public static readonly short GetRoomEntryDataMessageEvent = 329;
         public static readonly short GetGuestRoomMessageEvent = 634;
         public static readonly short QuitMessageEvent = 549;
-        public static readonly short PopularFlatsMessengerEvent = 512;
+        public static readonly short PopularFlatsMessageEvent = 512;
         public static readonly short WalkMessageEvent = 2600;
         public static readonly short CreateRoomMessageEvent = 9;
         public static readonly short GetCreditsMessageEvent = 2101;

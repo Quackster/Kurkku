@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Kurkku.Messages.Incoming
 {
-    public class PopularFlatsMessengerEvent : IMessageEvent
+    public class PopularFlatsMessageEvent : IMessageEvent
     {
         public void Handle(Player player, Request request)
         {

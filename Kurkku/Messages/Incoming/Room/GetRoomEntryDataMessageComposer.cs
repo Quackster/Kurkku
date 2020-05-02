@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Kurkku.Messages.Incoming
 {
-    class GetRoomEntryDataMessageComposer : IMessageEvent
+    class GetRoomEntryDataMessageEvent : IMessageEvent
     {
         public void Handle(Player player, Request request)
         {

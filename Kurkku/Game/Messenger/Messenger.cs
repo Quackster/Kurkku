@@ -79,7 +79,7 @@ namespace Kurkku.Game
         public Messenger(Player player)
         {
             Player = player;
-            subscription = player.Subscription;
+            subscription = player.Subscription.Data;
             FriendRequestsEnabled = player.Settings.FriendRequestsEnabled;
             LoadMessengerData(player.Details.Id);
         }

@@ -13,6 +13,7 @@ namespace Kurkku.Storage.Database.Data
             Map(x => x.DailyPetRespectPoints, "daily_respect_pet_points").Generated.Insert();
             Map(x => x.FriendRequestsEnabled, "friend_requests_enabled").Generated.Insert();
             Map(x => x.FollowingEnabled, "following_enabled").Generated.Insert();
+            Map(x => x.OnlineTime, "online_time").Generated.Insert();
         }
     }
     
@@ -24,5 +25,6 @@ namespace Kurkku.Storage.Database.Data
         public virtual int DailyPetRespectPoints { get; set; }
         public virtual bool FriendRequestsEnabled { get; set; }
         public virtual bool FollowingEnabled { get; set; }
+        public virtual long OnlineTime { get; set; }
     }
 }
