@@ -40,8 +40,7 @@ namespace Kurkku.Messages
 
         public void Load()
         {
-            ResolveEvents();
-            ResolveComposers();
+            ResolveMessages();
         }
 
         #endregion
@@ -51,46 +50,37 @@ namespace Kurkku.Messages
         /// <summary>
         /// Resolve events, instead of assigning to every event file, associate by file name instead
         /// </summary>
-        public void ResolveEvents()
+        public void ResolveMessages()
         {
             Type incomingEventType = typeof(IncomingEvents);
-
-            var type = typeof(IMessageEvent);
-            var messageEvents = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes())
-                .Where(p => type.IsAssignableFrom(p) && p != type);
-
-            foreach (var incomingEvent in messageEvents)
-            {
-                var incomingField = incomingEventType.GetField(incomingEvent.Name);
-
-                if (incomingField != null)
-                    Events[Convert.ToInt16(incomingField.GetValue(null))] = (IMessageEvent)Activator.CreateInstance(incomingEvent);
-                else
-                    log.Error($"Event {incomingEvent.Name} has no header defined");
-            }
-        }
-
-        /// <summary>
-        /// Resolve composers, instead of assigning to every composer file, associate by file name instead
-        /// </summary>
-        public void ResolveComposers()
-        {
             Type outgoingEventType = typeof(OutgoingEvents);
 
-            var type = typeof(IMessageComposer);
-            var messageComposers = AppDomain.CurrentDomain.GetAssemblies()
+            var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
-                .Where(p => type.IsAssignableFrom(p) && p != type);
+                .Where(p => 
+                (typeof(IMessageEvent).IsAssignableFrom(p) && p != typeof(IMessageEvent)) || 
+                (typeof(IMessageComposer).IsAssignableFrom(p) && p != typeof(IMessageComposer)));
 
-            foreach (var composer in messageComposers)
+            foreach (var packetType in types)
             {
-                var composerField = outgoingEventType.GetField(composer.Name);
+                if (typeof(IMessageEvent).IsAssignableFrom(packetType)) {
+                    var incomingField = incomingEventType.GetField(packetType.Name);
 
-                if (composerField != null)
-                    Composers[composer.Name] = Convert.ToInt16(composerField.GetValue(null));
-                else
-                    log.Error($"Composer {composer.Name} has no header defined");
+                    if (incomingField != null)
+                        Events[Convert.ToInt16(incomingField.GetValue(null))] = (IMessageEvent)Activator.CreateInstance(packetType);
+                    else
+                        log.Error($"Event {packetType.Name} has no header defined");
+                }
+
+                if (typeof(IMessageComposer).IsAssignableFrom(packetType)) {
+                    var composerField = outgoingEventType.GetField(packetType.Name);
+
+                    if (composerField != null)
+                        Composers[packetType.Name] = Convert.ToInt16(composerField.GetValue(null));
+                    else
+                        log.Error($"Composer {packetType.Name} has no header defined");
+                }
+                /**/
             }
         }
 
