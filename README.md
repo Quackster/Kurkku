@@ -60,6 +60,14 @@ Kurkku uses DotNetty for asynchronous TCP sockets and networking. Fluid NHiberna
 - Place stickies/post-its
 - Modify post-it
 - View trophy message in room
+
+# Important Information
+
+The MySQL/MariaDB event scheduler must be enabled in order for values to be refreshed in the database.
+
+You can enable the event scheduler by running the code below and then restarting the database server.
+
+```SET GLOBAL event_scheduler = ON;```
  
 # Screenshot
 
