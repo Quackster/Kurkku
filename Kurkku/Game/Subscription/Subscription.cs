@@ -37,6 +37,9 @@ namespace Kurkku.Game
 
         #region Public methods
 
+        /// <summary>
+        /// Extend club days by months
+        /// </summary>
         public void AddMonths(int months)
         {
             DateTime startTime;
@@ -55,8 +58,33 @@ namespace Kurkku.Game
 
             SubscriptionDao.SaveSubscription(Data);
 
+            Update();
+        }
+
+        /// <summary>
+        /// Send packets to update club
+        /// </summary>
+        public void Update()
+        {
             player.Send(new UserRightsMessageComposer(player.IsSubscribed ? 2 : 0, player.Details.Rank));
             player.Send(new ScrSendUserInfoComposer(player.Subscription.Data));
+        }
+
+
+        /// <summary>
+        /// Count the membership days when user logs on/off
+        /// </summary>
+        public void CountMemberDays()
+        {
+            if (player.IsSubscribed)
+            {
+                DateTime lastUpdated = Data.SubscriptionAgeLastUpdated;
+
+                Data.SubscriptionAge = (long)DateTime.Now.Subtract(Data.SubscriptionAgeLastUpdated).TotalSeconds;
+                Data.SubscriptionAgeLastUpdated = DateTime.Now;
+
+                SubscriptionDao.SaveSubscription(Data);
+            }
         }
 
         #endregion

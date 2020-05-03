@@ -2802,6 +2802,18 @@ INSERT INTO `catalogue_subscriptions` (`id`, `page_id`, `price_coins`, `price_se
 	(3, 63, 60, 0, 'DUCKETS', 6);
 /*!40000 ALTER TABLE `catalogue_subscriptions` ENABLE KEYS */;
 
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` EVENT `event_respect_points` ON SCHEDULE EVERY 1 DAY STARTS '2020-05-03 14:29:37' ON COMPLETION PRESERVE ENABLE DO BEGIN
+	UPDATE user_settings SET daily_respect_points = 3, daily_respect_pet_points = 3;
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` EVENT `event_ticket_expire` ON SCHEDULE EVERY 1 DAY STARTS '2020-05-03 14:26:20' ON COMPLETION PRESERVE ENABLE DO BEGIN
+	DELETE FROM authentication_ticket WHERE expires_at IS NOT NULL AND CURRENT_TIMESTAMP() > expires_at;
+END//
+DELIMITER ;
+
 CREATE TABLE IF NOT EXISTS `item` (
   `id` varchar(250) NOT NULL,
   `order_id` int(11) NOT NULL DEFAULT -1,
@@ -5205,7 +5217,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `pixels`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999728, 0, '', '2020-04-25 21:07:53', '2020-05-01 21:55:17'),
+	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999713, 0, '', '2020-04-25 21:07:53', '2020-05-02 19:23:15'),
 	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999990, 0, '', '2020-04-25 21:07:53', '2020-04-27 00:55:33');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
@@ -5233,24 +5245,27 @@ CREATE TABLE IF NOT EXISTS `user_settings` (
   `respect_points` int(11) NOT NULL DEFAULT 0,
   `friend_requests_enabled` tinyint(1) NOT NULL DEFAULT 1,
   `following_enabled` tinyint(1) NOT NULL DEFAULT 1,
+  `online_time` bigint(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user_settings` DISABLE KEYS */;
-INSERT INTO `user_settings` (`user_id`, `daily_respect_points`, `daily_respect_pet_points`, `respect_points`, `friend_requests_enabled`, `following_enabled`) VALUES
-	(1, 0, 0, 0, 1, 1);
+INSERT INTO `user_settings` (`user_id`, `daily_respect_points`, `daily_respect_pet_points`, `respect_points`, `friend_requests_enabled`, `following_enabled`, `online_time`) VALUES
+	(1, 3, 3, 0, 1, 1, 16);
 /*!40000 ALTER TABLE `user_settings` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_subscriptions` (
   `user_id` int(11) NOT NULL,
   `subscribed_at` datetime NOT NULL,
   `expire_at` datetime NOT NULL,
+  `subscription_age` int(11) NOT NULL DEFAULT 0,
+  `subscription_age_last_updated` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user_subscriptions` DISABLE KEYS */;
-INSERT INTO `user_subscriptions` (`user_id`, `subscribed_at`, `expire_at`) VALUES
-	(1, '2020-05-01 21:55:50', '2020-06-01 21:55:50');
+INSERT INTO `user_subscriptions` (`user_id`, `subscribed_at`, `expire_at`, `subscription_age`, `subscription_age_last_updated`) VALUES
+	(1, '2020-05-02 19:08:04', '2020-07-04 20:55:50', 0, '2020-05-02 16:52:39');
 /*!40000 ALTER TABLE `user_subscriptions` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

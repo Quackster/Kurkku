@@ -55,7 +55,7 @@ namespace Kurkku.Storage.Database.Data
             }
         }
 
-        public virtual int SubscriptionAge { get; set; }
+        public virtual long SubscriptionAge { get; set; }
         public virtual DateTime SubscriptionAgeLastUpdated { get; set; }
     }
 }
