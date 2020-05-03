@@ -53,7 +53,9 @@ namespace Kurkku.Game
             {
                 SubscribedDate = DateTime.Now,
                 ExpireDate = startTime.AddMonths(months),
-                UserId = player.Details.Id
+                UserId = player.Details.Id,
+                SubscriptionAge = Data != null ? Data.SubscriptionAge : 0,
+                SubscriptionAgeLastUpdated = Data != null ? Data.SubscriptionAgeLastUpdated : DateTime.Now
             };
 
             SubscriptionDao.SaveSubscription(Data);
@@ -78,9 +80,7 @@ namespace Kurkku.Game
         {
             if (player.IsSubscribed)
             {
-                DateTime lastUpdated = Data.SubscriptionAgeLastUpdated;
-
-                Data.SubscriptionAge = (long)DateTime.Now.Subtract(Data.SubscriptionAgeLastUpdated).TotalSeconds;
+                Data.SubscriptionAge += (long)DateTime.Now.Subtract(Data.SubscriptionAgeLastUpdated).TotalSeconds;
                 Data.SubscriptionAgeLastUpdated = DateTime.Now;
 
                 SubscriptionDao.SaveSubscription(Data);

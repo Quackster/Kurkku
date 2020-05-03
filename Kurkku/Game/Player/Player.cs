@@ -62,7 +62,7 @@ namespace Kurkku.Game
         {
             get
             {
-                if (Subscription == null)
+                if (Subscription.Data == null)
                     return false;
 
                 return Subscription.Data.ExpireDate > DateTime.Now;
@@ -148,6 +148,7 @@ namespace Kurkku.Game
 
             Subscription = new Subscription(this);
             Subscription.Load();
+            Subscription.CountMemberDays();
 
             Currency = new CurrencyManager(this);
             Currency.Load();
@@ -190,6 +191,7 @@ namespace Kurkku.Game
             PlayerManager.Instance.RemovePlayer(this);
 
             Messenger.SendStatus();
+            Subscription.CountMemberDays();
 
             playerData.LastOnline = DateTime.Now;
             UserDao.SaveLastOnline(playerData);
