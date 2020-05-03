@@ -1,7 +1,9 @@
 ﻿
 using Kurkku.Storage.Database.Data;
+using NHibernate.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Kurkku.Storage.Database.Access
 {
@@ -71,23 +73,22 @@ namespace Kurkku.Storage.Database.Access
         /// <summary>
         /// Save subscription by user id
         /// </summary>
-        public static void SaveSubscription(SubscriptionData subscriptionData)
+        public static void SaveSubscriptionExpiry(int userId, DateTime expiry)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
-                using (var transaction = session.BeginTransaction())
-                {
-                    try
-                    {
-                        session.Refresh(subscriptionData);
-                        session.Update(subscriptionData);
-                        transaction.Commit();
-                    }
-                    catch
-                    {
-                        transaction.Rollback();
-                    }
-                }
+                session.Query<SubscriptionData>().Where(x => x.UserId == userId).Update(x => new SubscriptionData { ExpireDate = expiry });
+            }
+        }
+
+        /// <summary>
+        /// Save club duration by user id
+        /// </summary>
+        public static void SaveSubscriptionAge(int userId, long clubAge, DateTime clubAgeLastUpdate)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                session.Query<SubscriptionData>().Where(x => x.UserId == userId).Update(x => new SubscriptionData { SubscriptionAge = clubAge, SubscriptionAgeLastUpdated = clubAgeLastUpdate });
             }
         }
     }

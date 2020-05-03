@@ -76,7 +76,7 @@ namespace Kurkku.Game
             else
             {
                 Data.ExpireDate = startTime.AddMonths(months);
-                SubscriptionDao.SaveSubscription(Data);
+                SubscriptionDao.SaveSubscriptionExpiry(player.Details.Id, Data.ExpireDate);
             }
 
             Update();
@@ -102,7 +102,7 @@ namespace Kurkku.Game
                 Data.SubscriptionAge += (long)DateTime.Now.Subtract(Data.SubscriptionAgeLastUpdated).TotalSeconds;
                 Data.SubscriptionAgeLastUpdated = DateTime.Now;
 
-                SubscriptionDao.SaveSubscription(Data);
+                SubscriptionDao.SaveSubscriptionAge(player.Details.Id, Data.SubscriptionAge, Data.SubscriptionAgeLastUpdated);
             }
         }
 
