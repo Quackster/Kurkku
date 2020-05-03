@@ -17,7 +17,8 @@ namespace Kurkku.Game
 
         #region Properties
 
-        public List<CatalogueSubscriptionData> subscriptions;
+        public List<CatalogueSubscriptionData> Subscriptions { get; private set; }
+        public List<SubscriptionGiftData> Gifts { get; private set; }
 
         #endregion
 
@@ -25,7 +26,7 @@ namespace Kurkku.Game
 
         public void Load()
         {
-            subscriptions = CatalogueDao.GetSubscriptionData(); ;
+            Subscriptions = CatalogueDao.GetSubscriptionData(); ;
         }
 
         #endregion
@@ -37,7 +38,7 @@ namespace Kurkku.Game
         /// </summary>
         public bool IsSubscriptionItem(int pageId, int itemId)
         {
-            var subscriptionData = subscriptions.Where(x => x.Id == itemId && x.PageId == pageId).FirstOrDefault();
+            var subscriptionData = Subscriptions.Where(x => x.Id == itemId && x.PageId == pageId).FirstOrDefault();
 
             if (subscriptionData == null)
                 return false;
@@ -50,7 +51,7 @@ namespace Kurkku.Game
         /// </summary>
         public void PurchaseClub(Player player, int pageId, int itemId)
         {
-            var subscriptionData = subscriptions.Where(x => x.Id == itemId && x.PageId == pageId).FirstOrDefault();
+            var subscriptionData = Subscriptions.Where(x => x.Id == itemId && x.PageId == pageId).FirstOrDefault();
 
             if (subscriptionData == null)
                 return;

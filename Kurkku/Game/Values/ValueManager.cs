@@ -1,4 +1,6 @@
-﻿using Kurkku.Util.Extensions;
+﻿using Kurkku.Storage.Database.Access;
+using Kurkku.Util.Extensions;
+using System;
 using System.Collections.Generic;
 
 namespace Kurkku.Game
@@ -8,6 +10,7 @@ namespace Kurkku.Game
         #region Fields
 
         public static readonly ValueManager Instance = new ValueManager();
+        private Dictionary<string, string> _clientValues;
 
         #endregion
 
@@ -15,7 +18,7 @@ namespace Kurkku.Game
 
         private Dictionary<string, string> ClientValues
         {
-            get; set;
+            get { return _clientValues; }
         }
 
         #endregion
@@ -24,26 +27,38 @@ namespace Kurkku.Game
 
         public void Load()
         {
-            SetDefaultValues();
+            SettingDao.GetSettings(out _clientValues);
+
+            foreach (var kvp in GetDefaultValues())
+            {
+                if (!SettingDao.HasSetting(kvp.Key))
+                {
+                    SettingDao.SaveSetting(kvp.Key, kvp.Value);
+                    _clientValues[kvp.Key] = kvp.Value;
+                }
+            }
         }
 
-        #endregion
-
-        #region Private methods
-
-        private void SetDefaultValues()
+        /// <summary>
+        /// Get default configuration values
+        /// </summary>
+        public Dictionary<string, string> GetDefaultValues()
         {
-            ClientValues = new Dictionary<string, string>();
-            ClientValues["max.friends.normal"] = "300";
-            ClientValues["max.friends.hc"] = "600";
-            ClientValues["max.friends.vip"] = "1100";
-            ClientValues["max.rooms.allowed"] = "100";
-            ClientValues["max.rooms.allowed.subscribed"] = "200";
-            ClientValues["timer.speech.bubble"] = "15";
-            ClientValues["inventory.items.per.page"] = "500";
-            ClientValues["catalogue.subscription.page"] = "63";
-        }
+            var defaultValues = new Dictionary<string, string>();
+            
+            defaultValues["max.friends.normal"] = "300";
+            defaultValues["max.friends.hc"] = "600";
+            defaultValues["max.friends.vip"] = "1100";
+            defaultValues["max.rooms.allowed"] = "100";
+            defaultValues["max.rooms.allowed.subscribed"] = "200";
+            defaultValues["timer.speech.bubble"] = "15";
+            defaultValues["inventory.items.per.page"] = "500";
+            defaultValues["catalogue.subscription.page"] = "63";
+            defaultValues["club.gift.interval"] = "1";
+            defaultValues["club.gift.interval.type"] = "MONTH";
 
+            return defaultValues;
+        }
 
         #endregion
 

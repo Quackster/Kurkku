@@ -13,8 +13,7 @@ namespace Kurkku.Messages.Incoming.Catalogue
     {
         public void Handle(Player player, Request request)
         {
-            List<CatalogueSubscriptionData> subscriptionData = CatalogueDao.GetSubscriptionData();
-            player.Send(new CatalogueClubMessageComposer(subscriptionData));
+            player.Send(new CatalogueClubMessageComposer(SubscriptionManager.Instance.Subscriptions));
         }
     }
 }

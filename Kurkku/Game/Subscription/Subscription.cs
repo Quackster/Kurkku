@@ -49,17 +49,32 @@ namespace Kurkku.Game
             else
                 startTime = DateTime.Now;
 
-            Data = new SubscriptionData
+            if (Data == null)
             {
-                SubscribedDate = DateTime.Now,
-                ExpireDate = startTime.AddMonths(months),
-                UserId = player.Details.Id,
-                SubscriptionAge = Data != null ? Data.SubscriptionAge : 0,
-                SubscriptionAgeLastUpdated = Data != null ? Data.SubscriptionAgeLastUpdated : DateTime.Now
-            };
+                var nextGiftDate = DateTime.Now;
+
+                switch (ValueManager.Instance.GetString("club.gift.interval.type"))
+                {
+                    case "MONTH":
+                        nextGiftDate = nextGiftDate.AddMonths(ValueManager.Instance.GetInt("club.gift.interval"));
+                        break;
+                    case "DAY":
+                        nextGiftDate = nextGiftDate.AddDays(ValueManager.Instance.GetInt("club.gift.interval"));
+                        break;
+                }
+
+                Data = new SubscriptionData
+                {
+                    SubscribedDate = DateTime.Now,
+                    ExpireDate = startTime.AddMonths(months),
+                    UserId = player.Details.Id,
+                    GiftedDate = nextGiftDate
+                };
+            }
+            else
+                Data.ExpireDate = startTime.AddMonths(months);
 
             SubscriptionDao.SaveSubscription(Data);
-
             Update();
         }
 

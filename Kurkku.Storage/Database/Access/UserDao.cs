@@ -10,9 +10,6 @@ namespace Kurkku.Storage.Database.Access
         /// <summary>
         /// Login user with SSO ticket
         /// </summary>
-        /// <param name="loginData">the player data to set</param>
-        /// <param name="ssoTicket">the sso ticket to try</param>
-        /// <returns></returns>
         public static bool Login(out PlayerData loginData, string ssoTicket)
         {
             PlayerData playerData = null;

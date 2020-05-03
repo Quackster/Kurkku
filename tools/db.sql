@@ -2710,7 +2710,7 @@ INSERT INTO `catalogue_pages` (`id`, `parent_id`, `order_id`, `min_rank`, `is_na
 	(62, -1, 16000, 6, 0, 1, 0, 'Admin Shop', 'admin_shop', 1, 6, '', '[]', '[]'),
 	(63, -1, 5000, 1, 1, 1, 0, 'HC Club', 'hc_club', 172, 0, 'vip_buy', '["catalog_header_hc","hc_catalog_teaser"]', '[]'),
 	(64, 63, 5001, 1, 1, 1, 1, 'Club Specials', 'club_specials', 172, 0, 'default_3x3', '["catalog_club_headline1","catalog_hc_teaser","catalog_special_txtbg1"]', '["NEW Habbo Club Furni range. Allow these elegant delights to make your room sophisticated and humble. They look great placed with your monthly gifts!","Click on the item you want for more information","For Habbo Club members only!"]'),
-	(65, 63, 5000, 1, 1, 1, 0, 'Club Gifts', 'club_gifts', 172, 0, 'club2', '["catalog_club_headline1","club_pos","","club_neg"]', '["What happens when my Habbo Club runs out?","If your Habbo Club runs out, you WILL be able to keep any rooms you made with a Club layout and the Habbo Club Furni is yours to keep.","If your Habbo Club runs out you WON\'T be able to wander around with a cool HC badge, the funky clothes and your hair will vanish from your Habbo, you won\'t be able to do chose HC rooms layouts in the Room-O-Matics, you\'ll receive no new HC Furni and worst all, you won\'t be able to jump the queue if the Hotel\'s Full!","Stay in Habbo Club for more than a year and you\'ll get a special sparkly BADGE!"]'),
+	(65, 63, 5000, 1, 1, 1, 1, 'Club Gifts', 'club_gifts', 172, 0, 'club_gifts', '["catalog_header_hc","hc_catalog_teaser"]', '[]'),
 	(66, 138, 0, 1, 1, 1, 0, 'Glass', 'glass', 29, 0, 'default_3x3', '["catalog_glass_headline1","catalog_glass_teaser1"]', '["You can really open up a space with this stylish glass furniture, just don\'t walk into it!","Click on the item you want for more information",""]'),
 	(67, 137, 2006, 1, 1, 1, 0, 'Greek', 'greek', 31, 0, 'default_3x3', '["catalog_greek_header1","catalog_greek_teaser1"]', '["Be transported back to ancient Greece with a couple of thousand pounds and British Airways. Until then, build your own panthenon with our realist Greek range!","Click on the item you want for more information",""]'),
 	(68, 138, 0, 1, 1, 1, 0, 'Romantique', 'romantique', 50, 0, 'default_3x3', '["catalog_romantique_headline1","catalog_romantique_teaser1"]', '["The Romantique range features Grand Pianos, old antique lamps and tables. It is the ideal range for setting a warm and loving mood in your room. Spruce up your room and invite that special someone over. Now featuring the extra special COLOUR edition.","Click on the item you want for more information",""]'),
@@ -2801,6 +2801,29 @@ INSERT INTO `catalogue_subscriptions` (`id`, `page_id`, `price_coins`, `price_se
 	(2, 63, 30, 0, 'DUCKETS', 3),
 	(3, 63, 60, 0, 'DUCKETS', 6);
 /*!40000 ALTER TABLE `catalogue_subscriptions` ENABLE KEYS */;
+
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` EVENT `event_club_gifts` ON SCHEDULE EVERY 1 SECOND STARTS '2020-05-03 19:17:59' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+	SET @gift_interval = (SELECT `value` FROM `server_settings` WHERE `setting` = 'club.gift.interval');
+	SET @gift_interval_type = (SELECT `value` FROM `server_settings` WHERE `setting` = 'club.gift.interval.type');
+	
+	IF (@gift_interval_type = 'MONTH') THEN
+		UPDATE user_subscriptions 
+		SET 
+			gifts_redeemable = gifts_redeemable + 1,
+			gift_at = DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL @gift_interval MONTH)
+		WHERE CURRENT_TIMESTAMP() > gift_at;
+	END IF;
+	
+	IF (@gift_interval_type = 'DAY') THEN
+		UPDATE user_subscriptions 
+		SET 
+			gifts_redeemable = gifts_redeemable + 1,
+			gift_at = DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL @gift_interval DAY)
+		WHERE CURRENT_TIMESTAMP() > gift_at;
+	END IF;
+END//
+DELIMITER ;
 
 DELIMITER //
 CREATE DEFINER=`root`@`localhost` EVENT `event_respect_points` ON SCHEDULE EVERY 1 DAY STARTS '2020-05-03 14:29:37' ON COMPLETION PRESERVE ENABLE DO BEGIN
@@ -5201,6 +5224,56 @@ INSERT INTO `room_models` (`model`, `door_x`, `door_y`, `door_z`, `door_dir`, `h
 	('newbie_lobby', 2, 11, 0, 2, 'xxxxxxxxxxxxxxxx000000|xxxxx0xxxxxxxxxx000000|xxxxx00000000xxx000000|xxxxx000000000xx000000|0000000000000000000000|0000000000000000000000|0000000000000000000000|0000000000000000000000|0000000000000000000000|xxxxx000000000000000xx|xxxxx000000000000000xx|x0000000000000000000xx|x0000000000000000xxxxx|xxxxxx00000000000xxxxx|xxxxxxx0000000000xxxxx|xxxxxxxx000000000xxxxx|xxxxxxxx000000000xxxxx|xxxxxxxx000000000xxxxx|xxxxxxxx000000000xxxxx|xxxxxxxx000000000xxxxx|xxxxxxxx000000000xxxxx|xxxxxx00000000000xxxxx|xxxxxx00000000000xxxxx|xxxxxx00000000000xxxxx|xxxxxx00000000000xxxxx|xxxxxx00000000000xxxxx|xxxxx000000000000xxxxx|xxxxx000000000000xxxxx', 0);
 /*!40000 ALTER TABLE `room_models` ENABLE KEYS */;
 
+CREATE TABLE IF NOT EXISTS `server_settings` (
+  `setting` text NOT NULL,
+  `value` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*!40000 ALTER TABLE `server_settings` DISABLE KEYS */;
+INSERT INTO `server_settings` (`setting`, `value`) VALUES
+	('max.friends.normal', '300'),
+	('max.friends.hc', '600'),
+	('max.friends.vip', '1100'),
+	('max.rooms.allowed', '100'),
+	('max.rooms.allowed.subscribed', '200'),
+	('timer.speech.bubble', '15'),
+	('inventory.items.per.page', '500'),
+	('catalogue.subscription.page', '63'),
+	('club.gift.interval', '1'),
+	('club.gift.interval.type', 'MONTH');
+/*!40000 ALTER TABLE `server_settings` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `subscription_gifts` (
+  `sale_code` varchar(255) NOT NULL,
+  `duration_requirement` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*!40000 ALTER TABLE `subscription_gifts` DISABLE KEYS */;
+INSERT INTO `subscription_gifts` (`sale_code`, `duration_requirement`) VALUES
+	('hcamme', 2),
+	('hc_tv', 1),
+	('hc_crtn', 3),
+	('edicehc', 6),
+	('hc_wall_lamp', 7),
+	('doorD', 8),
+	('hcshova', 10),
+	('deal_hcrollers', 9),
+	('hc_bkshlf', 11),
+	('hc_lmp', 12),
+	('hc_trll', 13),
+	('hc_tbl', 14),
+	('hc_machine', 15),
+	('hc_chr', 16),
+	('hc_rntgn', 17),
+	('hc_dsk', 18),
+	('hc_djset', 19),
+	('hc_lmpst', 20),
+	('hc_btlr', 22),
+	('hc_frplc', 21),
+	('moccamaster', 4),
+	('hc_crpt', 5);
+/*!40000 ALTER TABLE `subscription_gifts` ENABLE KEYS */;
+
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) DEFAULT NULL,
@@ -5217,7 +5290,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `pixels`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999713, 0, '', '2020-04-25 21:07:53', '2020-05-02 19:23:15'),
+	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999578, 0, '', '2020-04-25 21:07:53', '2020-05-04 00:33:01'),
 	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999990, 0, '', '2020-04-25 21:07:53', '2020-04-27 00:55:33');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
@@ -5251,21 +5324,21 @@ CREATE TABLE IF NOT EXISTS `user_settings` (
 
 /*!40000 ALTER TABLE `user_settings` DISABLE KEYS */;
 INSERT INTO `user_settings` (`user_id`, `daily_respect_points`, `daily_respect_pet_points`, `respect_points`, `friend_requests_enabled`, `following_enabled`, `online_time`) VALUES
-	(1, 3, 3, 0, 1, 1, 16);
+	(1, 3, 3, 0, 1, 1, 476);
 /*!40000 ALTER TABLE `user_settings` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_subscriptions` (
   `user_id` int(11) NOT NULL,
   `subscribed_at` datetime NOT NULL,
   `expire_at` datetime NOT NULL,
+  `gift_at` datetime NOT NULL,
+  `gifts_redeemable` int(11) NOT NULL DEFAULT 0,
   `subscription_age` int(11) NOT NULL DEFAULT 0,
   `subscription_age_last_updated` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user_subscriptions` DISABLE KEYS */;
-INSERT INTO `user_subscriptions` (`user_id`, `subscribed_at`, `expire_at`, `subscription_age`, `subscription_age_last_updated`) VALUES
-	(1, '2020-05-02 19:08:04', '2020-07-04 20:55:50', 0, '2020-05-02 16:52:39');
 /*!40000 ALTER TABLE `user_subscriptions` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

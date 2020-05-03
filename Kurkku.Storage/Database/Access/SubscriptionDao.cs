@@ -1,6 +1,7 @@
 ﻿
 using Kurkku.Storage.Database.Data;
 using System;
+using System.Collections.Generic;
 
 namespace Kurkku.Storage.Database.Access
 {
@@ -35,6 +36,17 @@ namespace Kurkku.Storage.Database.Access
         }
 
         /// <summary>
+        /// Get subscription gifts
+        /// </summary>
+        public static List<SubscriptionGiftData> GetSubscriptionGifts()
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                return session.QueryOver<SubscriptionGiftData>().List() as List<SubscriptionGiftData>;
+            }
+        }
+
+        /// <summary>
         /// Save subscription by user id
         /// </summary>
         public static void SaveSubscription(SubscriptionData subscriptionData)
@@ -47,6 +59,7 @@ namespace Kurkku.Storage.Database.Access
                     {
                         session.SaveOrUpdate(subscriptionData);
                         transaction.Commit();
+                        session.Refresh(subscriptionData);
                     }
                     catch
                     {
