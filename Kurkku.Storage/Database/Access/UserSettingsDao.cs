@@ -54,6 +54,7 @@ namespace Kurkku.Storage.Database.Access
                 {
                     try
                     {
+                        session.Refresh(settingsData);
                         session.SaveOrUpdate(settingsData);
                         transaction.Commit();
                     }

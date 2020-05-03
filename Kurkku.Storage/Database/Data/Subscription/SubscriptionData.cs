@@ -12,6 +12,7 @@ namespace Kurkku.Storage.Database.Data
             Map(x => x.SubscribedDate, "subscribed_at");
             Map(x => x.ExpireDate, "expire_at");
             Map(x => x.GiftedDate, "gift_at");
+            Map(x => x.GiftsRedeemable, "gifts_redeemable");
             Map(x => x.SubscriptionAge, "subscription_age").Generated.Insert();
             Map(x => x.SubscriptionAgeLastUpdated, "subscription_age_last_updated").Generated.Insert();
         }
@@ -22,6 +23,7 @@ namespace Kurkku.Storage.Database.Data
         public virtual int UserId { get; set; }
         public virtual DateTime SubscribedDate { get; set; }
         public virtual DateTime ExpireDate { get; set; }
+        public virtual int GiftsRedeemable { get; set; }
         public virtual DateTime GiftedDate { get; set; }
 
         public virtual int MonthsLeft

@@ -70,11 +70,15 @@ namespace Kurkku.Game
                     UserId = player.Details.Id,
                     GiftedDate = nextGiftDate
                 };
+
+                SubscriptionDao.CreateSubscription(Data);
             }
             else
+            {
                 Data.ExpireDate = startTime.AddMonths(months);
+                SubscriptionDao.SaveSubscription(Data);
+            }
 
-            SubscriptionDao.SaveSubscription(Data);
             Update();
         }
 

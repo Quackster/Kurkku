@@ -47,6 +47,28 @@ namespace Kurkku.Storage.Database.Access
         }
 
         /// <summary>
+        /// Create subscription by user id
+        /// </summary>
+        public static void CreateSubscription(SubscriptionData subscriptionData)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    try
+                    {
+                        session.Save(subscriptionData);
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Save subscription by user id
         /// </summary>
         public static void SaveSubscription(SubscriptionData subscriptionData)
@@ -57,9 +79,9 @@ namespace Kurkku.Storage.Database.Access
                 {
                     try
                     {
-                        session.SaveOrUpdate(subscriptionData);
-                        transaction.Commit();
                         session.Refresh(subscriptionData);
+                        session.Update(subscriptionData);
+                        transaction.Commit();
                     }
                     catch
                     {
