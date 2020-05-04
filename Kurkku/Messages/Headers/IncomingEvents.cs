@@ -58,5 +58,6 @@
         public static readonly short ApplyDecorationMessageEvent = 2421;
         public static readonly short CatalogueClubMessageEvent = 947;
         public static readonly short CatalogueClubGiftsMessageEvent = 1259;
+        public static readonly short ChoseClubGiftMessageEvent = 1619;
     }
 }

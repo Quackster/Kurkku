@@ -5,6 +5,7 @@ using Kurkku.Storage.Database.Access;
 
 namespace Kurkku.Game
 {
+    [Serializable]
     public class ItemDefinition
     {
         #region Properties

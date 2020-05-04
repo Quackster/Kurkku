@@ -40,6 +40,14 @@ namespace Kurkku.Game
         /// <summary>
         /// Get if the requested item is actually a subscription
         /// </summary>
+        public SubscriptionGift GetGift(string spriteName)
+        {
+            return Gifts.Where(x => x.CatalogueItem.Data.SaleCode == spriteName || (x.CatalogueItem.Definition != null && x.CatalogueItem.Definition.Data.Sprite == spriteName)).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Get if the requested item is actually a subscription
+        /// </summary>
         public bool IsSubscriptionItem(int pageId, int itemId)
         {
             var subscriptionData = Subscriptions.Where(x => x.Id == itemId && x.PageId == pageId).FirstOrDefault();

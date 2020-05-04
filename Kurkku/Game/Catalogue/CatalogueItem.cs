@@ -1,9 +1,11 @@
 ﻿using Kurkku.Util.Extensions;
 using Kurkku.Storage.Database.Data;
 using System.Collections.Generic;
+using System;
 
 namespace Kurkku.Game
 {
+    [Serializable]
     public class CatalogueItem
     {
         #region Properties

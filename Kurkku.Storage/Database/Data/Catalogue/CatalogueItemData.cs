@@ -1,4 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
+using System;
 
 namespace Kurkku.Storage.Database.Data
 {
@@ -23,6 +24,7 @@ namespace Kurkku.Storage.Database.Data
         }
     }
 
+    [Serializable]
     public class CatalogueItemData
     {
         public virtual int Id { get; set; }

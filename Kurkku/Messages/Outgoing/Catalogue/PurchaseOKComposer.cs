@@ -16,10 +16,10 @@ namespace Kurkku.Messages.Outgoing
             SerialiseOffer(this, item);
         }
 
-        internal static void SerialiseOffer(IMessageComposer composer, CatalogueItem item)
+        internal static void SerialiseOffer(IMessageComposer composer, CatalogueItem item)//, bool spriteAsSaleCode = false)
         {
             composer.Data.Add(item.Data.Id);
-            composer.Data.Add(item.Data.SaleCode);
+            composer.Data.Add(item.Data.SaleCode);//composer.Data.Add(spriteAsSaleCode ? ItemManager.Instance.GetDefinition(item.Packages[0].Data.DefinitionId).Data.Sprite : item.Data.SaleCode);
             composer.Data.Add(item.Data.PriceCoins);
             composer.Data.Add(item.Data.PriceSeasonal);
             composer.Data.Add((int)item.Data.SeasonalType);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Kurkku.Util.Extensions;
 using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Game
@@ -24,6 +25,19 @@ namespace Kurkku.Game
             if (catalogueItem == null)
             {
                 Console.WriteLine("Error: " + Data.SaleCode + " is invalid");
+            }
+            else
+            {
+                // Set packages to 1 items only to fix display on club gifts page
+                this.CatalogueItem = catalogueItem.DeepClone();
+                
+                if (this.CatalogueItem.Data.IsPackage)
+                {
+                    var package = this.CatalogueItem.Packages[0];
+                    this.CatalogueItem.Data.IsPackage = false;
+                    this.CatalogueItem.Data.DefinitionId = package.Data.DefinitionId;
+                    this.CatalogueItem.Data.Amount = 1;
+                }
             }
         }
 

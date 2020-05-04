@@ -102,5 +102,17 @@ namespace Kurkku.Storage.Database.Access
                 session.Refresh(data);
             }
         }
+
+        /// <summary>
+        /// Save how many gifts a user can redeem
+        /// </summary>
+        public static void SaveGiftsRedeemable(int userId, int giftsRedeemable)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                session.Query<SubscriptionData>().Where(x => x.UserId == userId).Update(x => new SubscriptionData { GiftsRedeemable = giftsRedeemable });
+            }
+        }
+
     }
 }

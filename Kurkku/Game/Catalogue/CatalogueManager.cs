@@ -100,7 +100,7 @@ namespace Kurkku.Game
 
             List<ItemData> items = new List<ItemData>();
 
-            int itemsToGenerate = 1;
+            int itemsToGenerate = cataloguePackage.Data.Amount;
             object serializeable = null;
 
             switch (definition.InteractorType)
@@ -112,8 +112,6 @@ namespace Kurkku.Game
                             Message = string.Empty,
                             Colour = "FFFF33"
                         };
-
-                        itemsToGenerate = 20;
                     }
                     break;
                 case InteractorType.TROPHY:
