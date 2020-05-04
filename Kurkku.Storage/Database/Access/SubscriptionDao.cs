@@ -33,7 +33,7 @@ namespace Kurkku.Storage.Database.Access
 
                 return session.QueryOver(() => subscriptionDataAlias)
                     .Where(() => subscriptionDataAlias.UserId == userId)
-                    .And(() =>subscriptionDataAlias.ExpireDate > DateTime.Now ).SingleOrDefault();
+                    /*.And(() =>subscriptionDataAlias.ExpireDate > DateTime.Now )*/.SingleOrDefault();
             }
         }
 
@@ -51,7 +51,7 @@ namespace Kurkku.Storage.Database.Access
         /// <summary>
         /// Create subscription by user id
         /// </summary>
-        public static void CreateSubscription(SubscriptionData subscriptionData)
+        public static void UpdateSubscription(SubscriptionData subscriptionData)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
@@ -59,7 +59,7 @@ namespace Kurkku.Storage.Database.Access
                 {
                     try
                     {
-                        session.Save(subscriptionData);
+                        session.SaveOrUpdate(subscriptionData);
                         transaction.Commit();
                     }
                     catch

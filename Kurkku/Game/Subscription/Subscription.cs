@@ -71,7 +71,7 @@ namespace Kurkku.Game
                     GiftDate = nextGiftDate
                 };
 
-                SubscriptionDao.CreateSubscription(Data);
+                SubscriptionDao.UpdateSubscription(Data);
             }
             else
             {
