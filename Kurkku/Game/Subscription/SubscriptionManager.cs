@@ -18,7 +18,7 @@ namespace Kurkku.Game
         #region Properties
 
         public List<CatalogueSubscriptionData> Subscriptions { get; private set; }
-        public List<SubscriptionGiftData> Gifts { get; private set; }
+        public List<SubscriptionGift> Gifts { get; private set; }
 
         #endregion
 
@@ -26,7 +26,11 @@ namespace Kurkku.Game
 
         public void Load()
         {
-            Subscriptions = CatalogueDao.GetSubscriptionData(); ;
+            Subscriptions = CatalogueDao.GetSubscriptionData();
+            Gifts = SubscriptionDao.GetSubscriptionGifts()
+                .Select(x => new SubscriptionGift(x, CatalogueManager.Instance.GetItem(x.SaleCode)))
+                .OrderBy(x => x.Data.DurationRequirement)
+                .ToList();
         }
 
         #endregion

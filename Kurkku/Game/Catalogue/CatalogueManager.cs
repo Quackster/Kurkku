@@ -187,7 +187,7 @@ namespace Kurkku.Game
         /// </summary>
         public CataloguePage GetPage(int pageId, int rank = 7, bool hasClub = true)
         {
-            var page = Pages.Where(x => x.Data.Id == pageId && x.Data.IsEnabled && x.Data.IsNavigatable && rank >= x.Data.MinRank).FirstOrDefault();
+            var page = Pages.Where(x => x.Data.Id == pageId && x.Data.IsEnabled && x.Data.IsNavigatable && rank >= x.Data.MinRank).SingleOrDefault();
 
             if (page == null)
                 return null;
@@ -204,6 +204,14 @@ namespace Kurkku.Game
         public List<CatalogueItem> GetItems(int pageId)
         {
             return Items.Where(x => x.PageIds.Contains(pageId) && !x.Data.IsHidden).OrderBy(x => x.Data.OrderId).ToList();
+        }
+
+        /// <summary>
+        /// Get item by sale code
+        /// </summary>
+        public CatalogueItem GetItem(string saleCode)
+        {
+            return Items.Where(x => x.Data.SaleCode != null && x.Data.SaleCode == saleCode).SingleOrDefault();
         }
 
         /// <summary>

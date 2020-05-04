@@ -87,11 +87,11 @@ namespace Kurkku
         private static void tryGameData()
         {
             ValueManager.Instance.Load();
-            SubscriptionManager.Instance.Load();
             InteractionManager.Instance.Load();
             ItemManager.Instance.Load();
             CatalogueManager.Instance.Load();
             RoomManager.Instance.Load();
+            SubscriptionManager.Instance.Load();
             NavigatorManager.Instance.Load();
             MessageHandler.Instance.Load();
             RoomDao.ResetVisitorCounts();

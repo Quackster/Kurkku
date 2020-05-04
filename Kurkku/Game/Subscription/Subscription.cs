@@ -68,7 +68,7 @@ namespace Kurkku.Game
                     SubscribedDate = DateTime.Now,
                     ExpireDate = startTime.AddMonths(months),
                     UserId = player.Details.Id,
-                    GiftedDate = nextGiftDate
+                    GiftDate = nextGiftDate
                 };
 
                 SubscriptionDao.CreateSubscription(Data);

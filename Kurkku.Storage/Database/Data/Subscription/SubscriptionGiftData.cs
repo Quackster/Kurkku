@@ -15,7 +15,7 @@ namespace Kurkku.Storage.Database.Data
 
     public class SubscriptionGiftData
     {
-        public virtual int SaleCode { get; set; }
-        public virtual DateTime DurationRequirement { get; set; }
+        public virtual string SaleCode { get; set; }
+        public virtual int DurationRequirement { get; set; }
     }
 }

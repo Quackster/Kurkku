@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Kurkku.Game;
+using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
 
 namespace Kurkku.Messages.Incoming.Catalogue
@@ -10,7 +11,7 @@ namespace Kurkku.Messages.Incoming.Catalogue
     {
         public void Handle(Player player, Request request)
         {
-            throw new NotImplementedException();
+            player.Send(new CatalogueClubGiftsMessageComposer(player.IsSubscribed ? player.Subscription : null, SubscriptionManager.Instance.Gifts));
         }
     }
 }
