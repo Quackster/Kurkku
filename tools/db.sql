@@ -5256,7 +5256,7 @@ INSERT INTO `subscription_gifts` (`sale_code`, `duration_requirement`) VALUES
 	('edicehc', 6),
 	('hc_wall_lamp', 7),
 	('doorD', 8),
-	('hcshova', 10),
+	('hcsohva', 10),
 	('deal_hcrollers', 9),
 	('hc_bkshlf', 11),
 	('hc_lmp', 12),
@@ -5270,7 +5270,7 @@ INSERT INTO `subscription_gifts` (`sale_code`, `duration_requirement`) VALUES
 	('hc_lmpst', 20),
 	('hc_btlr', 22),
 	('hc_frplc', 21),
-	('moccamaster', 4),
+	('mocchamaster', 4),
 	('hc_crpt', 5);
 /*!40000 ALTER TABLE `subscription_gifts` ENABLE KEYS */;
 
@@ -5290,7 +5290,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `pixels`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999578, 0, '', '2020-04-25 21:07:53', '2020-05-04 00:33:01'),
+	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999503, 0, '', '2020-04-25 21:07:53', '2020-05-04 18:08:17'),
 	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999990, 0, '', '2020-04-25 21:07:53', '2020-04-27 00:55:33');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
@@ -5324,7 +5324,7 @@ CREATE TABLE IF NOT EXISTS `user_settings` (
 
 /*!40000 ALTER TABLE `user_settings` DISABLE KEYS */;
 INSERT INTO `user_settings` (`user_id`, `daily_respect_points`, `daily_respect_pet_points`, `respect_points`, `friend_requests_enabled`, `following_enabled`, `online_time`) VALUES
-	(1, 3, 3, 0, 1, 1, 476);
+	(1, 3, 3, 0, 1, 1, 705);
 /*!40000 ALTER TABLE `user_settings` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_subscriptions` (
@@ -5333,7 +5333,7 @@ CREATE TABLE IF NOT EXISTS `user_subscriptions` (
   `expire_at` datetime NOT NULL,
   `gift_at` datetime NOT NULL,
   `gifts_redeemable` int(11) NOT NULL DEFAULT 0,
-  `subscription_age` int(11) NOT NULL DEFAULT 0,
+  `subscription_age` bigint(11) NOT NULL DEFAULT 0,
   `subscription_age_last_updated` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
