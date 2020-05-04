@@ -100,7 +100,7 @@ namespace Kurkku.Game
                     nextTile.AddEntity(entity);
 
                     int rotation = Rotation.CalculateDirection(position.X, position.Y, next.X, next.Y);
-                    double height = room.Model.TileHeights[next.X, next.Y];
+                    double height = next.GetTile(room).TileHeight;
 
                     entity.RoomEntity.RemoveStatus("mv");
                     entity.RoomEntity.RemoveStatus("sit");
