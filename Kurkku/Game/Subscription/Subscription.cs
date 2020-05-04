@@ -91,6 +91,13 @@ namespace Kurkku.Game
             player.Send(new ScrSendUserInfoComposer(player.Subscription.Data));
         }
 
+        /// <summary>
+        /// Refresh subscription data object
+        /// </summary>
+        public void Refresh()
+        {
+            SubscriptionDao.Refresh(Data);
+        }
 
         /// <summary>
         /// Count the membership days when user logs on/off

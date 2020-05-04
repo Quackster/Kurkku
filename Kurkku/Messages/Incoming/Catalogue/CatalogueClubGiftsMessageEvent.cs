@@ -4,6 +4,7 @@ using System.Text;
 using Kurkku.Game;
 using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
+using Kurkku.Storage.Database.Access;
 
 namespace Kurkku.Messages.Incoming.Catalogue
 {
@@ -11,6 +12,9 @@ namespace Kurkku.Messages.Incoming.Catalogue
     {
         public void Handle(Player player, Request request)
         {
+            player.Subscription.Refresh();
+            player.Subscription.CountMemberDays();
+
             player.Send(new CatalogueClubGiftsMessageComposer(player.IsSubscribed ? player.Subscription : null, SubscriptionManager.Instance.Gifts));
         }
     }

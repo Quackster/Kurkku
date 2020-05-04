@@ -91,5 +91,16 @@ namespace Kurkku.Storage.Database.Access
                 session.Query<SubscriptionData>().Where(x => x.UserId == userId).Update(x => new SubscriptionData { SubscriptionAge = clubAge, SubscriptionAgeLastUpdated = clubAgeLastUpdate });
             }
         }
+
+        /// <summary>
+        /// Refreshes subscription data
+        /// </summary>
+        public static void Refresh(SubscriptionData data)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                session.Refresh(data);
+            }
+        }
     }
 }

@@ -43,9 +43,19 @@ namespace Kurkku.Messages.Outgoing
             {
                 m_Data.Add(giftData.CatalogueItem.Data.Id);
                 m_Data.Add(false); // ?? unused
-                m_Data.Add(0); // days until gift allowed with 0 or less being yes you can select
-                m_Data.Add(false); // button to enable or not 
 
+                if (subscription != null)
+                {
+                    var secondsForGift = giftData.GetSecondsRequired();
+
+                    m_Data.Add(giftData.GetDaysUntilGift(subscription.Data.SubscriptionAge)); // days until gift allowed with 0 or less being yes you can select
+                    m_Data.Add(giftData.IsGiftRedeemable(subscription.Data.SubscriptionAge)); // button to enable or not 
+                }
+                else
+                {
+                    m_Data.Add(0); // days until gift allowed with 0 or less being yes you can select
+                    m_Data.Add(false); // button to enable or not 
+                }
             }
         }
     }
