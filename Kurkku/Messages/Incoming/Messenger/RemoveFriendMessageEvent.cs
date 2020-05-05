@@ -42,7 +42,7 @@ namespace Kurkku.Messages.Incoming
                 MessengerDao.DeleteRequests(player.Details.Id, userId);
                 MessengerDao.DeleteFriends(player.Details.Id, userId);
 
-                messenger.QueueUpdate(MessengerUpdateType.RemoveFriend, Messenger.Wrap(playerData));
+                messenger.QueueUpdate(MessengerUpdateType.RemoveFriend, new MessengerUser(playerData));
             }
 
             messenger.ForceUpdate();

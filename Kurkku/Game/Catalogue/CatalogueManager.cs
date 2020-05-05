@@ -71,19 +71,17 @@ namespace Kurkku.Game
             ItemDao.CreateItems(purchaseQueue);
 
             // Convert item data to item instance
-            List<Item> items
-                = purchaseQueue.Select(x => new Item(x)).ToList();
+            List<Item> items = purchaseQueue.Select(x => new Item(x)).ToList();
 
             var player = PlayerManager.Instance.GetPlayerById(userId);
 
             if (player == null)
                 return;
 
-            player.Send(new PurchaseOKComposer(catalogueItem));
-
             foreach (var item in items)
                 player.Inventory.AddItem(item);
 
+            player.Send(new PurchaseOKComposer(catalogueItem));
             player.Send(new FurniListNotificationComposer(items));
             player.Send(new FurniListUpdateComposer());
         }

@@ -9,9 +9,10 @@ namespace Kurkku.Messages.Incoming
     {
         public void Handle(Player player, Request request)
         {
-            var roomList = RoomManager.SortRooms(
-                RoomManager.Instance.Rooms.Where(x => x.Value.Data.UsersNow > 0 && x.Value.Data.IsPrivateRoom).Select(x => x.Value).ToList()
-            );
+            var roomList = RoomManager.SortRooms(RoomManager.Instance.Rooms.Where(x => 
+                x.Value.Data.UsersNow > 0 && 
+                x.Value.Data.IsPrivateRoom
+            ).Select(x => x.Value).ToList());
 
             player.Send(new FlatListComposer(2, roomList, NavigatorManager.Instance.GetPopularPromotion()));
         }

@@ -46,7 +46,7 @@ namespace Kurkku.Messages.Incoming
             player.Send(new FurniListRemoveComposer(item.Id));
 
             RoomDao.SaveRoom(room.Data);
-            //ItemDao.DeleteItem(item.Data);
+            ItemDao.DeleteItem(item.Data);
         }
     }
 }

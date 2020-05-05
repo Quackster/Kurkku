@@ -25,6 +25,15 @@ namespace Kurkku.Game
 
         #endregion
 
+        #region Constructors
+
+        public MessengerUser(PlayerData friendData)
+        {
+            this.PlayerData = friendData;
+        }
+
+        #endregion
+
         #region Public methods
 
         public override bool Equals(object obj)
