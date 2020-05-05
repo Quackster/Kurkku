@@ -73,7 +73,7 @@ namespace Kurkku.Game
                 {
                     entity.RoomEntity.Position.X = entity.RoomEntity.Next.X;
                     entity.RoomEntity.Position.Y = entity.RoomEntity.Next.Y;
-                    entity.RoomEntity.Position.Z = room.Model.TileHeights[entity.RoomEntity.Position.X, entity.RoomEntity.Position.Y];
+                    entity.RoomEntity.Position.Z = entity.RoomEntity.Position.GetTile(room).GetWalkingHeight();
                 }
 
                 if (entity.RoomEntity.PathList.Count > 0)
