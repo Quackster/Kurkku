@@ -89,7 +89,7 @@ namespace Kurkku.Game
         /// <summary>
         /// Get total height for furni, which is floor z axis, plus height of furni
         /// </summary>
-        public double Height => Definition.Data.TopHeight + Position.Z;
+        public double Height => Definition.Data.TopHeight + Position.Z + 0.001;
 
         /// <summary>
         /// Save item, todo: queue saving
