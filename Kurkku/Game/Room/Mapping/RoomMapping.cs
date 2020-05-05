@@ -1,5 +1,4 @@
 ﻿using Kurkku.Messages.Outgoing;
-using System;
 
 namespace Kurkku.Game
 {
