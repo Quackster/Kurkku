@@ -28,6 +28,7 @@ namespace Kurkku.Game
             Interactors[InteractorType.CHAIR] = typeof(ChairInteractor);
             Interactors[InteractorType.POST_IT] = typeof(StickieInteractor);
             Interactors[InteractorType.TROPHY] = typeof(TrophyInteractor);
+            Interactors[InteractorType.ROOMDIMMER] = typeof(MoodlightInteractor);
         }
 
         #endregion

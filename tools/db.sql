@@ -2858,6 +2858,25 @@ CREATE TABLE IF NOT EXISTS `item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*!40000 ALTER TABLE `item` DISABLE KEYS */;
+INSERT INTO `item` (`id`, `order_id`, `user_id`, `room_id`, `definition_id`, `x`, `y`, `z`, `wall_position`, `rotation`, `custom_data`, `expire_time`, `created_at`, `updated_at`) VALUES
+	('13cf6b47-f31c-4dc7-8102-980f095c974f', 0, 1, 2, 774, '0', '0', '0', ':w=9,1 l=13,75 r', 0, '', -1, '2020-05-06 00:21:20', '2020-05-06 00:21:31'),
+	('2018b975-cbaf-4506-84c4-1c6c26d6a9b4', 0, 1, 2, 98, '7', '3', '0', '', 0, '', -1, '2020-05-06 00:24:38', '2020-05-06 00:24:51'),
+	('27aea125-4d07-454f-9269-829286db415e', 0, 1, 2, 27, '9', '11', '0', '', 0, '', -1, '2020-05-06 00:23:46', '2020-05-06 00:24:19'),
+	('2a5dbe49-dd1f-43c9-8725-2faf15c3afa0', 0, 1, 2, 773, '0', '0', '0', ':w=1,5 l=5,74 l', 0, '', -1, '2020-05-06 00:29:00', '2020-05-06 00:29:08'),
+	('2fd9d3eb-3593-4f60-86ff-3aab53c272c1', 0, 1, 2, 27, '10', '10', '0', '', 0, '', -1, '2020-05-06 00:23:45', '2020-05-06 00:24:18'),
+	('33f588fb-3bc5-4270-9054-53795eabd3c0', 0, 1, 2, 352, '0', '0', '0', ':w=6,3 l=1,77 l', 0, '{"Enabled":false,"CurrentPreset":1,"Presets":[{"IsBackground":false,"ColorCode":"#000000","ColorIntensity":255},{"IsBackground":false,"ColorCode":"#000000","ColorIntensity":255},{"IsBackground":false,"ColorCode":"#000000","ColorIntensity":255}]}', -1, '2020-05-06 00:49:39', '2020-05-06 00:49:46'),
+	('3a8796c2-3790-4bd0-98dd-820523fd477b', 0, 1, 2, 50, '2', '9', '1.001', '', 2, '', -1, '2020-05-06 00:23:41', '2020-05-06 00:34:35'),
+	('48d496ee-086a-42fc-8378-b2e90c326f4b', 0, 1, 2, 30, '7', '2', '0', '', 2, '', -1, '2020-05-06 00:23:28', '2020-05-06 00:24:04'),
+	('526b759d-a17d-4ef3-bc48-5004a6281b3f', 0, 1, 2, 773, '0', '0', '0', ':w=1,8 l=5,75 l', 0, '', -1, '2020-05-06 00:29:12', '2020-05-06 00:29:24'),
+	('6ca06db4-eda7-4ba0-a550-11d0c3928ba3', 0, 1, 2, 70, '2', '6', '1', '', 0, '', -1, '2020-05-06 00:29:39', '2020-05-06 00:34:55'),
+	('6cfab7d4-8151-4dd5-b5b2-e670d72cb604', 0, 1, 2, 774, '0', '0', '0', ':w=4,4 l=10,68 r', 0, '', -1, '2020-05-06 00:21:22', '2020-05-06 00:21:26'),
+	('6dc93875-ec78-4ae8-a3bc-52b376e2a18c', 0, 1, 2, 75, '10', '2', '0', '', 0, '', -1, '2020-05-06 00:29:36', '2020-05-06 00:29:57'),
+	('6f7ba136-b91a-4d0f-803d-44248902231d', 0, 1, 2, 29, '2', '5', '1', '', 0, '', -1, '2020-05-06 00:24:36', '2020-05-06 00:34:12'),
+	('80ea4eea-aa74-4876-9826-6b08dd5fb759', 0, 1, 0, 212, '0', '0', '0', '', 0, '', -1, '2020-05-06 00:35:48', '2020-05-06 00:49:29'),
+	('b0faa0bc-3cea-4f2b-ab07-8832865247c0', 0, 1, 2, 58, '8', '5', '0', '', 0, '', -1, '2020-05-06 00:30:12', '2020-05-06 00:35:00'),
+	('c7b7fa50-78f8-4076-ba99-18a40f954881', 0, 1, 2, 71, '7', '12', '0', '', 0, '', -1, '2020-05-06 00:29:42', '2020-05-06 00:30:00'),
+	('d287e3de-e2f6-41a6-b9ae-4acfd0efefc9', 0, 1, 0, 353, '0', '0', '0', '', 0, '', -1, '2020-05-06 00:36:23', '2020-05-06 00:36:42'),
+	('da05cea2-e4f7-4e8e-b9cd-47de24596e9b', 0, 1, 2, 26, '9', '10', '0', '', 0, '', -1, '2020-05-06 00:23:47', '2020-05-06 00:24:18');
 /*!40000 ALTER TABLE `item` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `item_definitions` (
@@ -3133,8 +3152,8 @@ INSERT INTO `item_definitions` (`id`, `sprite`, `name`, `description`, `sprite_i
 	(246, 'hc_wall_lamp', '1', '-1', 4003, 0, 0, 0, '2', 'requires_rights_for_interaction,wall_item', 'default', 1, 1, 1, 1, '', -1, ''),
 	(247, 'industrialfan', '0', '-1', 4004, 0, 0, 0, '2', 'requires_rights_for_interaction,wall_item', 'default', 1, 1, 1, 1, '', -1, ''),
 	(248, 'torch', '0', '-1', 4005, 0, 0, 0, '2', 'requires_rights_for_interaction,wall_item', 'default', 1, 1, 1, 1, '', -1, ''),
-	(249, 'floor', '1', '-1', 3002, 0, 0, 0, '2', 'requires_rights_for_interaction,wall_item', 'decoration', 0, 0, 0, 0, '', -1, ''),
-	(250, 'wallpaper', '1', '-1', 3001, 0, 0, 0, '0', 'requires_rights_for_interaction,wall_item', 'decoration', 0, 0, 0, 0, '', -1, ''),
+	(249, 'floor', '1', '-1', 3002, 0, 0, 0, '2', 'requires_rights_for_interaction,wall_item', 'decoration', 0, 0, 1, 0, '', -1, ''),
+	(250, 'wallpaper', '1', '-1', 3001, 0, 0, 0, '0', 'requires_rights_for_interaction,wall_item', 'decoration', 0, 0, 1, 0, '', -1, ''),
 	(251, 'poster', '1', '-1', 4001, 0, 0, 0, '0', 'requires_rights_for_interaction,wall_item', 'default', 1, 1, 1, 1, '', -1, ''),
 	(252, 'table_norja_med', 'Beige Coffee Table', 'For larger gatherings.', 20, 2, 2, 1, '2', 'is_stackable,requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(253, 'doormat_plain*4', 'Doormat', 'Available in a variety of colors', 90, 1, 1, 0.2, '2', 'is_stackable,is_walkable,requires_rights_for_interaction', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
@@ -5118,7 +5137,7 @@ CREATE TABLE IF NOT EXISTS `room` (
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
 INSERT INTO `room` (`id`, `owner_id`, `name`, `description`, `category_id`, `visitors_now`, `visitors_max`, `status`, `password`, `model`, `ccts`, `wallpaper`, `floor`, `landscape`, `rating`, `allow_pets`, `allow_pets_eat`, `allow_walkthrough`, `hidewall`, `wall_thickness`, `floor_thickness`, `is_owner_hidden`) VALUES
 	(1, 0, 'Welcome Lobby', 'welcome_lounge', 15, 0, 25, 'OPEN', '', 'newbie_lobby', 'hh_room_nlobby', '0', '0', '0', 0, 1, 1, 1, 0, 0, 0, 0),
-	(2, 1, '123', '', 6, 1, 25, 'OPEN', '', 'model_g', '', '115', '402', '1.8', 0, 1, 1, 0, 0, 0, 0, 0),
+	(2, 1, '123', '', 6, 1, 25, 'OPEN', '', 'model_g', '', '101', '402', '1.2', 0, 1, 1, 0, 0, 0, 0, 0),
 	(3, 1, 'test room', '', 14, 0, 25, 'OPEN', '', 'model_b', '', '3106', '504', '1.8', 0, 1, 1, 0, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
@@ -5248,7 +5267,6 @@ CREATE TABLE IF NOT EXISTS `user` (
   `sex` varchar(1) NOT NULL DEFAULT 'M',
   `rank` int(11) NOT NULL DEFAULT 1,
   `credits` int(11) NOT NULL DEFAULT 0,
-  `pixels` int(11) NOT NULL DEFAULT 0,
   `motto` text NOT NULL DEFAULT '',
   `join_date` datetime NOT NULL DEFAULT current_timestamp(),
   `last_online` datetime NOT NULL DEFAULT current_timestamp(),
@@ -5256,9 +5274,9 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `pixels`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 7, 999413, 0, '', '2020-04-25 21:07:53', '2020-05-05 00:49:57'),
-	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999990, 0, '', '2020-04-25 21:07:53', '2020-04-27 00:55:33');
+INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `motto`, `join_date`, `last_online`) VALUES
+	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 7, 9289, '', '2020-04-25 21:07:53', '2020-05-06 00:49:20'),
+	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999990, '', '2020-04-25 21:07:53', '2020-04-27 00:55:33');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_seasonal_currencies` (
@@ -5274,7 +5292,7 @@ INSERT INTO `user_seasonal_currencies` (`user_id`, `seasonal_type`, `balance`) V
 	(1, 'STARS', 0),
 	(1, 'CLOUDS', 0),
 	(1, 'DIAMONDS', 0),
-	(1, 'DUCKETS', 0),
+	(1, 'DUCKETS', 350),
 	(1, 'LOYALTY_POINTS', 0);
 /*!40000 ALTER TABLE `user_seasonal_currencies` ENABLE KEYS */;
 
@@ -5291,7 +5309,7 @@ CREATE TABLE IF NOT EXISTS `user_settings` (
 
 /*!40000 ALTER TABLE `user_settings` DISABLE KEYS */;
 INSERT INTO `user_settings` (`user_id`, `daily_respect_points`, `daily_respect_pet_points`, `respect_points`, `friend_requests_enabled`, `following_enabled`, `online_time`) VALUES
-	(1, 3, 3, 0, 1, 1, 3666);
+	(1, 3, 3, 0, 1, 1, 5066);
 /*!40000 ALTER TABLE `user_settings` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_subscriptions` (
@@ -5307,7 +5325,7 @@ CREATE TABLE IF NOT EXISTS `user_subscriptions` (
 
 /*!40000 ALTER TABLE `user_subscriptions` DISABLE KEYS */;
 INSERT INTO `user_subscriptions` (`user_id`, `subscribed_at`, `expire_at`, `gift_at`, `gifts_redeemable`, `subscription_age`, `subscription_age_last_updated`) VALUES
-	(1, '2020-05-04 21:15:47', '2020-06-04 21:29:36', '2020-06-04 21:15:47', 3, 666671756, '2020-05-05 00:50:05');
+	(1, '2020-05-04 21:15:47', '2020-06-04 21:29:36', '2020-06-04 21:15:47', 12, 666758108, '2020-05-06 00:49:20');
 /*!40000 ALTER TABLE `user_subscriptions` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

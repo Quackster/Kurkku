@@ -33,8 +33,7 @@ namespace Kurkku.Messages.Incoming
                 return; // Effects disabled for now
 
             if (catalogueItem.Definition != null && (
-                catalogueItem.Definition.InteractorType == InteractorType.TELEPORTER || 
-                catalogueItem.Definition.InteractorType == InteractorType.ROOMDIMMER))
+                catalogueItem.Definition.InteractorType == InteractorType.TELEPORTER))
                 return; // Teleporters, trophies & moodlights disabled for now until coded
 
             string extraData = request.ReadString().FilterInput(false);

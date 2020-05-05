@@ -126,6 +126,20 @@ namespace Kurkku.Game
                         };
                     }
                     break;
+                case InteractorType.ROOMDIMMER:
+                    {
+                        serializeable = new MoodlightExtraData
+                        {
+                            CurrentPreset = 1,
+                            Presets = new List<MoodlightPresetData>
+                            {
+                                new MoodlightPresetData(),
+                                new MoodlightPresetData(),
+                                new MoodlightPresetData()
+                            }
+                        };
+                    }
+                    break;
             }
 
             var extraData = string.Empty;
