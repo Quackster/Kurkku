@@ -1,10 +1,10 @@
 ﻿using Kurkku.Messages.Outgoing;
 using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace Kurkku.Game
 {
@@ -127,7 +127,7 @@ namespace Kurkku.Game
             var extraData = string.Empty;
 
             if (serializeable != null)
-                extraData = JsonConvert.SerializeObject(serializeable);
+                extraData = JsonSerializer.Serialize(serializeable);
 
             if (!string.IsNullOrEmpty(cataloguePackage.Data.SpecialSpriteId))
                 extraData = cataloguePackage.Data.SpecialSpriteId;
@@ -152,8 +152,8 @@ namespace Kurkku.Game
         {
             foreach (var page in Pages)
             {
-                page.Images = JsonConvert.DeserializeObject<List<string>>(page.Data.ImagesData);
-                page.Texts = JsonConvert.DeserializeObject<List<string>>(page.Data.TextsData);
+                page.Images = JsonSerializer.Deserialize<List<string>>(page.Data.ImagesData);
+                page.Texts = JsonSerializer.Deserialize<List<string>>(page.Data.TextsData);
 
                 var bestDiscount = GetBestDiscount(page.Data.Id);
 

@@ -1,5 +1,4 @@
 ﻿using Kurkku.Util.Extensions;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text;
 
