@@ -45,7 +45,7 @@ namespace Kurkku.Game
         /// <summary>
         /// Handle item purchase
         /// </summary>
-        public void Purchase(int userId, int itemId, int amount, string extraData, long datePurchase)
+        public void Purchase(int userId, int itemId, int amount, string extraData, long datePurchase, bool isClubGift = false)
         {
             CatalogueItem catalogueItem = Items.FirstOrDefault(x => x.Data.Id == itemId);
 
@@ -81,7 +81,11 @@ namespace Kurkku.Game
             foreach (var item in items)
                 player.Inventory.AddItem(item);
 
-            player.Send(new PurchaseOKComposer(catalogueItem));
+            if (isClubGift)
+                player.Send(new ClubGiftReceivedComposer(catalogueItem));
+            else
+                player.Send(new PurchaseOKComposer(catalogueItem));
+
             player.Send(new FurniListNotificationComposer(items));
             player.Send(new FurniListUpdateComposer());
         }

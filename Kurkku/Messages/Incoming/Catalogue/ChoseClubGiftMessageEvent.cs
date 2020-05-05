@@ -23,7 +23,7 @@ namespace Kurkku.Messages.Incoming.Catalogue
             player.Subscription.Data.GiftsRedeemable--;
 
             SubscriptionDao.SaveGiftsRedeemable(player.Details.Id, player.Subscription.Data.GiftsRedeemable);
-            CatalogueManager.Instance.Purchase(player.Details.Id, subscriptionGift.CatalogueItem.Data.Id, 1, string.Empty, DateUtil.GetUnixTimestamp());
+            CatalogueManager.Instance.Purchase(player.Details.Id, subscriptionGift.CatalogueItem.Data.Id, 1, string.Empty, DateUtil.GetUnixTimestamp(), isClubGift: true);
         }
     }
 }

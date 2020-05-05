@@ -14,7 +14,6 @@ namespace Kurkku.Storage.Database.Data
             Map(x => x.Sex, "sex");
             Map(x => x.Rank, "rank");
             Map(x => x.Credits, "credits");
-            Map(x => x.Pixels, "pixels");
             Map(x => x.JoinDate, "join_date");
             Map(x => x.LastOnline, "last_online");
             Map(x => x.Motto, "motto");
@@ -29,7 +28,6 @@ namespace Kurkku.Storage.Database.Data
         public virtual string Sex { get; set; }
         public virtual int Rank { get; set; }
         public virtual int Credits { get; set; }
-        public virtual int Pixels { get; set; }
         public virtual DateTime JoinDate { get; set; }
         public virtual DateTime LastOnline { get; set; }
         public virtual DateTime PreviousLastOnline { get; set; }

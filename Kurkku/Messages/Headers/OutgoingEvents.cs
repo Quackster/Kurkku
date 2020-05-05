@@ -59,6 +59,7 @@
         public static readonly short FurniListNotificationComposer = 469;
         public static readonly short FurniListUpdateComposer = 1507;
         public static readonly short PurchaseOKComposer = 2434;
+        public static readonly short ClubGiftReceivedComposer = 777;
         public static readonly short InventoryMessageComposer = 3572;
         public static readonly short FloorItemsComposer = 2087;
         public static readonly short FloorItemComposer = 3076;
