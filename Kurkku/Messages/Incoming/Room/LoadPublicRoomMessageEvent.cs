@@ -18,6 +18,7 @@ namespace Kurkku.Messages.Incoming
                 return;
 
             player.Send(new OpenConnectionComposer(room.Data.Id, room.Data.CategoryId));
+
             room.EntityManager.EnterRoom(player);
         }
     }

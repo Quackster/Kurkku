@@ -56,7 +56,7 @@ namespace Kurkku.Messages.Outgoing
                     break;
             }
 
-            ExtraDataManager.Instance.WriteExtraData(composer, item, true);
+            InteractionManager.Instance.WriteExtraData(composer, item, true);
 
             composer.Data.Add(item.Definition.Data.IsRecyclable);
             composer.Data.Add(item.Definition.Data.IsTradable);

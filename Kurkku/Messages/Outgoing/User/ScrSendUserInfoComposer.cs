@@ -19,7 +19,7 @@ namespace Kurkku.Messages.Outgoing
             m_Data.Add(subscription != null ? subscription.MonthsLeft : 0); // MONTHS LEFT
             m_Data.Add(0); // unused ??
             m_Data.Add(false); // unused ??
-            m_Data.Add(subscription != null); // unused ??
+            m_Data.Add(subscription != null);
             m_Data.Add(0); // unused ??
             m_Data.Add(0); // unused ??
             m_Data.Add(0); // unused ??

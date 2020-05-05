@@ -44,7 +44,7 @@ namespace Kurkku.Messages.Incoming
                 X = x,
                 Y = y,
                 Rotation = rotation
-            }); ;
+            });
         }
     }
 }

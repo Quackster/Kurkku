@@ -1,6 +1,5 @@
 ﻿using Kurkku.Storage.Database.Access;
 using Kurkku.Util.Extensions;
-using System;
 using System.Collections.Concurrent;
 
 namespace Kurkku.Game.Managers

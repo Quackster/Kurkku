@@ -1,8 +1,6 @@
 ﻿using Kurkku.Game;
 using Kurkku.Messages.Headers;
 using Kurkku.Messages.Incoming;
-using Kurkku.Messages.Incoming.Catalogue;
-using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
 using log4net;
 using System;

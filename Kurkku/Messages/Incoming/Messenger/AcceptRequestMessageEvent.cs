@@ -28,7 +28,7 @@ namespace Kurkku.Messages.Incoming
                     continue;
 
                 var targetMessenger = Messenger.GetMessengerData(userId);
-                var targetFriend = Messenger.Wrap(playerData);
+                var targetFriend = new MessengerUser(playerData);
 
                 targetMessenger.Friends.Add(messenger.MessengerUser);
                 messenger.Friends.Add(targetFriend);

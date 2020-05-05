@@ -36,7 +36,6 @@ namespace Kurkku.Messages.Incoming
                 owner.Inventory.AddItem(item);
                 owner.Send(new FurniListAddComposer(item));
             }
-            //player.Send(new FurniListUpdateComposer());
         }
     }
 }

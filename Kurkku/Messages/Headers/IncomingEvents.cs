@@ -10,7 +10,7 @@
         public static readonly short InitMessengerMessageEvent = 3621;
         public static readonly short UserInfoMessageEvent = 2671;
         public static readonly short UserInfoMessageEvent2 = 2671;
-        public static readonly short SearchMessageEvent = 1903;
+        public static readonly short SearchMessengerMessageEvent = 1903;
         public static readonly short BuddyRequestMessageEvent = 202;
         public static readonly short AcceptRequestsMessageEvent = 3528;
         public static readonly short DeclineRequestMessageEvent = 1752;

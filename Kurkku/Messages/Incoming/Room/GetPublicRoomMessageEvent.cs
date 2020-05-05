@@ -13,7 +13,6 @@ namespace Kurkku.Messages.Incoming
             if (room == null)
                 return;
 
-
             player.Send(new PublicRoomCastsComposer(room.Data.Id, room.Data.CCTs));
         }
     }

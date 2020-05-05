@@ -1,6 +1,5 @@
 ﻿using Kurkku.Messages.Outgoing;
 using Kurkku.Util.Extensions;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 

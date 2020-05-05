@@ -69,8 +69,7 @@ namespace Kurkku.Game
         /// <summary>
         /// Get the player as messenger user
         /// </summary>
-        public MessengerUser MessengerUser => 
-            new MessengerUser { PlayerData = Player.Details };
+        public MessengerUser MessengerUser => new MessengerUser (Player.Details);
 
         #endregion
 
@@ -114,24 +113,10 @@ namespace Kurkku.Game
         /// </summary>
         private void LoadMessengerData(int userId)
         {
-            Friends = MessengerDao.GetFriends(userId).Select(data => Wrap(data.FriendData)).ToList();
-            Requests = MessengerDao.GetRequests(userId).Select(data => Wrap(data.FriendData)).ToList();
+            Friends = MessengerDao.GetFriends(userId).Select(data => new MessengerUser(data.FriendData)).ToList();
+            Requests = MessengerDao.GetRequests(userId).Select(data => new MessengerUser(data.FriendData)).ToList();
             Categories = MessengerDao.GetCategories(userId);
             Queue = new ConcurrentQueue<MessengerUpdate>();
-        }
-
-
-        /// <summary>
-        /// Wrapper around messenger user data
-        /// </summary>
-        /// <param name="messengerUserData">the data to wrap</param>
-        /// <returns>the wrapped class</returns>
-        public static MessengerUser Wrap(PlayerData playerData)
-        {
-            return new MessengerUser
-            {
-                PlayerData = playerData
-            };
         }
 
         /// <summary>

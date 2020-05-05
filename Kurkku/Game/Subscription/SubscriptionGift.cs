@@ -17,28 +17,10 @@ namespace Kurkku.Game
 
         #region Constructors
 
-        public SubscriptionGift(SubscriptionGiftData x, CatalogueItem catalogueItem)
+        public SubscriptionGift(SubscriptionGiftData giftData, CatalogueItem catalogueItem)
         {
-            this.Data = x;
+            this.Data = giftData;
             this.CatalogueItem = catalogueItem;
-
-            if (catalogueItem == null)
-            {
-                Console.WriteLine("Error: " + Data.SaleCode + " is invalid");
-            }
-            else
-            {
-                // Set packages to 1 items only to fix display on club gifts page
-                this.CatalogueItem = catalogueItem.DeepClone();
-                
-                if (this.CatalogueItem.Data.IsPackage)
-                {
-                    var package = this.CatalogueItem.Packages[0];
-                    this.CatalogueItem.Data.IsPackage = false;
-                    this.CatalogueItem.Data.DefinitionId = package.Data.DefinitionId;
-                    this.CatalogueItem.Data.Amount = 1;
-                }
-            }
         }
 
         #endregion
