@@ -4,6 +4,7 @@ using Kurkku.Network.Streams;
 using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
 using Kurkku.Util.Extensions;
+using Newtonsoft.Json;
 
 namespace Kurkku.Messages.Incoming
 {

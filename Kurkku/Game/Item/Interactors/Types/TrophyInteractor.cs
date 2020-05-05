@@ -1,6 +1,6 @@
 ﻿using Kurkku.Util.Extensions;
+using Newtonsoft.Json;
 using System.Text;
-using System.Text.Json;
 
 namespace Kurkku.Game
 {
@@ -15,7 +15,7 @@ namespace Kurkku.Game
 
         public override object GetJsonObject()
         {
-            return JsonSerializer.Deserialize<TrophyExtraData>(Item.Data.ExtraData);
+            return JsonConvert.DeserializeObject<TrophyExtraData>(Item.Data.ExtraData);
         }
 
         public override object GetExtraData(bool inventoryView = false)

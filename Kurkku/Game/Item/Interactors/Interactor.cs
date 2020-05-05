@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+﻿using Newtonsoft.Json;
 
 namespace Kurkku.Game
 {
@@ -19,7 +19,7 @@ namespace Kurkku.Game
         public virtual object GetJsonObject() { return null; }
         public void SetJsonObject(object jsonObject)
         {
-            Item.Data.ExtraData = JsonSerializer.Serialize(jsonObject);
+            Item.Data.ExtraData = JsonConvert.SerializeObject(jsonObject);
             NeedsExtraDataUpdate = true;
         }
 
