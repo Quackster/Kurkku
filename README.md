@@ -55,11 +55,16 @@ Kurkku uses DotNetty for asynchronous TCP sockets and networking. Fluid NHiberna
 - Pick up floor items
 - Pickup wall items
 
+**Habbo Club**
+
+- Purchase Habbo Club
+- Renew Habbo Club
+- Habbo Club Gift system (relies on MySQL scheduler!)
+
 **Special Item Interactions**
 
-- Place stickies/post-its
-- Modify post-it
-- View trophy message in room
+- Stickies/Post-Its
+- Trophies
 
 # Important Information
 
