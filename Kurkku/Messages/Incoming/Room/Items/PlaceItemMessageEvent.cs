@@ -5,6 +5,7 @@ using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
 using Kurkku.Util.Extensions;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Kurkku.Messages.Incoming
 {
@@ -18,7 +19,10 @@ namespace Kurkku.Messages.Incoming
             Room room = player.RoomUser.Room;
 
             if (room == null || !room.HasRights(player.Details.Id))
+            {
+                player.Send(new ItemPlaceErrorComposer(ItemPlaceError.NoRights));
                 return;
+            }
 
             var placementData = request.ReadString().Split(' ');
 
@@ -34,6 +38,11 @@ namespace Kurkku.Messages.Incoming
 
             if (item.Definition.HasBehaviour(ItemBehaviour.WALL_ITEM))
             {
+                // Do nothing if dimmer exists.. replicating Habbo's behaviour here, I literally bought another room dimmer on official Habbo just to test what happens!
+                if (item.Definition.InteractorType == InteractorType.ROOMDIMMER &&
+                    room.ItemManager.Items.Values.Count(x => x.Definition.InteractorType == InteractorType.ROOMDIMMER) > 0)
+                    return;
+
                 var wallPosition = $"{placementData[1]} {placementData[2]} {placementData[3]}";
                 room.Mapping.AddItem(item, wallPosition: wallPosition, player: player);
             }
@@ -49,7 +58,10 @@ namespace Kurkku.Messages.Incoming
                 position.Rotation = rotation;
 
                 if (!item.IsValidMove(item, room, x, y, rotation))
+                {
+                    player.Send(new ItemPlaceErrorComposer(ItemPlaceError.NoPlacementAllowed));
                     return;
+                }
 
                 room.Mapping.AddItem(item, position, player: player);
             }

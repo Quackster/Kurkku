@@ -45,8 +45,22 @@ namespace Kurkku.Game
         {
             if (NeedsExtraDataUpdate)
             {
+                var data = (MoodlightExtraData)GetJsonObject();
+                var preset = data.Presets[data.CurrentPreset - 1];
+
+                StringBuilder builder = new StringBuilder();
+                builder.Append(data.Enabled ? 2 : 1);
+                builder.Append(",");
+                builder.Append(data.CurrentPreset);
+                builder.Append(",");
+                builder.Append(preset.IsBackground ? 2 : 1);
+                builder.Append(",");
+                builder.Append(preset.ColorCode);
+                builder.Append(",");
+                builder.Append(preset.ColorIntensity);
+
                 NeedsExtraDataUpdate = false;
-                ExtraData = "";
+                ExtraData = builder.ToString();
             }
 
             return ExtraData;

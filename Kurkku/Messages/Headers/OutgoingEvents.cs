@@ -74,5 +74,7 @@
         public static readonly short StickieComposer = 3086;
         public static readonly short CatalogueClubMessageComposer = 2677;
         public static readonly short CatalogueClubGiftsMessageComposer = 3740;
+        public static readonly short ItemPlaceErrorComposer = 2312;
+        public static readonly short MoodlightConfigComposer = 418;
     }
 }

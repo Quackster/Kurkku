@@ -19,7 +19,11 @@ namespace Kurkku.Game
         public virtual object GetJsonObject() { return null; }
         public void SetJsonObject(object jsonObject)
         {
-            Item.Data.ExtraData = JsonConvert.SerializeObject(jsonObject);
+            if (jsonObject is string)
+                Item.Data.ExtraData = jsonObject.ToString();
+            else
+                Item.Data.ExtraData = JsonConvert.SerializeObject(jsonObject);
+
             NeedsExtraDataUpdate = true;
         }
 

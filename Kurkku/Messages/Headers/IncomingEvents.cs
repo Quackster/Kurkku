@@ -59,5 +59,8 @@
         public static readonly short CatalogueClubMessageEvent = 947;
         public static readonly short CatalogueClubGiftsMessageEvent = 1259;
         public static readonly short ChoseClubGiftMessageEvent = 1619;
+        public static readonly short GetMoodlightConfigEvent = 3264;
+        public static readonly short ToggleMoodlightMessageEvent = 2017;
+        public static readonly short SaveMoodlightMessageEvent = 2541;
     }
 }
