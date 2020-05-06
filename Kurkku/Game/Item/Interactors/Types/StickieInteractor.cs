@@ -10,7 +10,23 @@ namespace Kurkku.Game
 
         public override object GetJsonObject()
         {
-            return JsonConvert.DeserializeObject<StickieExtraData>(Item.Data.ExtraData);
+            StickieExtraData extraData = null;
+
+            try
+            {
+                extraData =  JsonConvert.DeserializeObject<StickieExtraData>(Item.Data.ExtraData);
+            } catch { }
+
+            if (extraData == null)
+            {
+                extraData = new StickieExtraData
+                {
+                    Message = string.Empty,
+                    Colour = "FFFF33"
+                };
+            }
+
+            return extraData;
         }
 
         public override object GetExtraData(bool inventoryView = false)

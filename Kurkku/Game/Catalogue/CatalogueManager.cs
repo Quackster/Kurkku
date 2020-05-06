@@ -107,15 +107,6 @@ namespace Kurkku.Game
 
             switch (definition.InteractorType)
             {
-                case InteractorType.POST_IT:
-                    {
-                        serializeable = new StickieExtraData
-                        {
-                            Message = string.Empty,
-                            Colour = "FFFF33"
-                        };
-                    }
-                    break;
                 case InteractorType.TROPHY:
                     {
                         serializeable = new TrophyExtraData
@@ -123,20 +114,6 @@ namespace Kurkku.Game
                             UserId = userId,
                             Message = userInputMessage,
                             Date = datePurchase
-                        };
-                    }
-                    break;
-                case InteractorType.ROOMDIMMER:
-                    {
-                        serializeable = new MoodlightExtraData
-                        {
-                            CurrentPreset = 1,
-                            Presets = new List<MoodlightPresetData>
-                            {
-                                new MoodlightPresetData(),
-                                new MoodlightPresetData(),
-                                new MoodlightPresetData()
-                            }
                         };
                     }
                     break;
