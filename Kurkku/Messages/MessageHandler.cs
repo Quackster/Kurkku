@@ -22,7 +22,7 @@ namespace Kurkku.Messages
 
         #region Properties
 
-        private Dictionary<short, IMessageEvent> Events { get; }
+        private Dictionary<short, List<IMessageEvent>> Events { get; }
         private Dictionary<string, short> Composers { get; }
 
 
@@ -32,7 +32,7 @@ namespace Kurkku.Messages
 
         public MessageHandler()
         {
-            Events = new Dictionary<short, IMessageEvent>();
+            Events = new Dictionary<short, List<IMessageEvent>>();
             Composers = new Dictionary<string, short>();
         }
 
@@ -65,7 +65,15 @@ namespace Kurkku.Messages
                     var incomingField = incomingEventType.GetField(packetType.Name);
 
                     if (incomingField != null)
-                        Events[Convert.ToInt16(incomingField.GetValue(null))] = (IMessageEvent)Activator.CreateInstance(packetType);
+                    {
+                        short header = Convert.ToInt16(incomingField.GetValue(null));
+
+                        if (!Events.ContainsKey(header))
+                            Events.Add(header, new List<IMessageEvent>());
+
+                        Events[header].Add((IMessageEvent)Activator.CreateInstance(packetType));
+                    }
+
                     else
                         log.Error($"Event {packetType.Name} has no header defined");
                 }
@@ -106,7 +114,7 @@ namespace Kurkku.Messages
             {
                 if (Events.ContainsKey(request.Header))
                 {
-                    var message = Events[request.Header];
+                    var message = Events[request.Header][0];
 
                     // Not allowed to handle once logged in
                     if (!player.Authenticated &&
@@ -131,7 +139,22 @@ namespace Kurkku.Messages
                     }
 
                     player.Log.Debug($"RECEIVED {message.GetType().Name}: {request.Header} / {request.MessageBody}");
-                    message.Handle(player, request);
+
+                    foreach (IMessageEvent handler in Events[request.Header])
+                    {
+                        if (Events[request.Header].Count > 1)
+                        {
+                            var copyBuffer = request.Buffer.Copy();
+                            handler.Handle(player, new Request(request.Length, request.Header, copyBuffer));
+                            copyBuffer.Release();
+                        }
+                        else
+                        {
+                            handler.Handle(player, request);
+                        }
+                    }
+
+                    request.Buffer.Release();
                 } 
                 else
                 {

@@ -78,11 +78,11 @@ namespace Kurkku.Network.Streams
         /// </summary>
         /// <param name="length"></param>
         /// <param name="buffer"></param>
-        public Request(int length, IByteBuffer buffer)
+        public Request(int length, short header, IByteBuffer buffer)
         {
             this.m_Length = length;
             this.m_Buffer = buffer;
-            this.m_Header = buffer.ReadShort();
+            this.m_Header = header;
         }
 
         #endregion

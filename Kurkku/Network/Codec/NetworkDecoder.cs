@@ -48,7 +48,8 @@ namespace Kurkku.Network
                     return;
                 }
 
-                output.Add(new Request(length, buffer.ReadBytes(length)));
+                var messageBuffer = buffer.ReadBytes(length);
+                output.Add(new Request(length, messageBuffer.ReadShort(), messageBuffer));
             }
         }
     }
