@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kurkku", "Kurkku\Kurkku.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kurkku.Storage", "Kurkku.Storage\Kurkku.Storage.csproj", "{B981244B-BDB9-4A5B-9C08-59D2069FF174}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Example", "Kurkku.Plugin.Example\Plugin.Example.csproj", "{D4C2996F-48AE-4F94-85F0-37D672E8DDCE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B981244B-BDB9-4A5B-9C08-59D2069FF174}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B981244B-BDB9-4A5B-9C08-59D2069FF174}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B981244B-BDB9-4A5B-9C08-59D2069FF174}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4C2996F-48AE-4F94-85F0-37D672E8DDCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4C2996F-48AE-4F94-85F0-37D672E8DDCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4C2996F-48AE-4F94-85F0-37D672E8DDCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4C2996F-48AE-4F94-85F0-37D672E8DDCE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

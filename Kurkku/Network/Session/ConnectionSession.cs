@@ -1,4 +1,5 @@
-﻿using DotNetty.Transport.Channels;
+﻿using System;
+using DotNetty.Transport.Channels;
 using Kurkku.Game;
 using Kurkku.Messages;
 
@@ -67,7 +68,7 @@ namespace Kurkku.Network.Session
         /// <summary>
         /// Kick handler
         /// </summary>
-        public virtual void Kick()
+        public void Close()
         {
             Channel.CloseAsync();
         }

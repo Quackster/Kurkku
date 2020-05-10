@@ -114,31 +114,7 @@ namespace Kurkku.Messages
             {
                 if (Events.ContainsKey(request.Header))
                 {
-                    var message = Events[request.Header][0];
-
-                    // Not allowed to handle once logged in
-                    if (!player.Authenticated &&
-                        !(message is VersionCheckMessageEvent ||
-                            message is InitCryptoMessageEvent ||
-                            message is GenerateSecretKeyMessageEvent ||
-                            message is SSOTicketMessageEvent))
-                    {
-                        player.Connection.Channel.CloseAsync();
-                        return;
-                    }
-
-                    // Only allowed to handle when NOT logged in
-                    if (player.Authenticated &&
-                        (message is VersionCheckMessageEvent ||
-                            message is InitCryptoMessageEvent ||
-                            message is GenerateSecretKeyMessageEvent ||
-                            message is SSOTicketMessageEvent))
-                    {
-                        player.Connection.Channel.CloseAsync();
-                        return;
-                    }
-
-                    player.Log.Debug($"RECEIVED {message.GetType().Name}: {request.Header} / {request.MessageBody}");
+                    player.Log.Debug($"RECEIVED {Events[request.Header][0].GetType().Name}: {request.Header} / {request.MessageBody}");
 
                     foreach (IMessageEvent handler in Events[request.Header])
                     {

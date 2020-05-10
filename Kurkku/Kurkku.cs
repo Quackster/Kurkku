@@ -94,6 +94,7 @@ namespace Kurkku
             SubscriptionManager.Instance.Load();
             NavigatorManager.Instance.Load();
             MessageHandler.Instance.Load();
+            PluginManager.Instance.Load();
             RoomDao.ResetVisitorCounts();
 
             /*int defId = 2300;
