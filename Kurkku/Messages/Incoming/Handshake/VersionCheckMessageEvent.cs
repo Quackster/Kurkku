@@ -16,9 +16,9 @@ namespace Kurkku.Messages.Incoming
             var clientVersion = request.ReadString();
 
             if (clientVersion == Kurkku.ClientVersion)
-                player.Log.Debug($"Received request: {clientVersion}");
+                player.Log.Debug($"Received version: {clientVersion}");
             else
-                player.Connection.Disconnect();
+                player.Connection.Close();
         }
     }
 }

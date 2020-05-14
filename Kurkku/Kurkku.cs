@@ -37,7 +37,7 @@ namespace Kurkku
         /// </summary>
         public static string ClientVersion
         {
-            get { return "RELEASE63-201302211227-193109692"; }
+            get { return "RELEASE63-201306230129-703021386"; }//"RELEASE63 -201302211227-193109692"; }
         }
 
         #endregion
