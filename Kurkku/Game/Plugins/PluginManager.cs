@@ -43,6 +43,9 @@ namespace Kurkku.Game
         /// </summary>
         public void ReloadPlugins()
         {
+            if (!Directory.Exists(pluginDictionary))
+                Directory.CreateDirectory(pluginDictionary);
+
             bool isReload = plugins != null;
 
             if (plugins != null)
