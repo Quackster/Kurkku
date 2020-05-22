@@ -22,11 +22,11 @@ namespace Kurkku.Messages.Outgoing
                 {
                     if (!this.map.IsTile(new Position(x, y)))
                     {
-                        m_Data.Add((short)short.MaxValue);
+                        m_Data.Add((short)-1);
                     }
                     else
                     {
-                        m_Data.Add((short)(this.map.TileHeights[x, y] * 256));
+                        m_Data.Add((short)1);
                     }
                 }
 
