@@ -15,7 +15,7 @@ namespace Kurkku.Messages.Incoming
             Room room = player.RoomUser.Room;
             RoomModel roomModel = room.Model;
 
-            player.Send(new HeightMapComposer(roomModel));
+            player.Send(new HeightMapComposer(roomModel.Heightmap));
             player.Send(new FloorHeightMapComposer(roomModel.Heightmap));
             player.Send(new RoomVisualizationSettingsComposer(room.Data.FloorThickness, room.Data.WallThickness, room.Data.IsHidingWall));
             player.Send(new RoomEntryInfoComposer(room.Data, room.IsOwner(player.Details.Id)));
