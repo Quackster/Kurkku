@@ -60,6 +60,10 @@ namespace Kurkku.Messages.Outgoing
             Data.Add(0); // ??
             Data.Add(0); // ??
             Data.Add(true); // whether you can mute room
+
+            Data.Add(0); // ??
+            Data.Add(0); // ??
+            Data.Add(0); // ??
         }
     }
 }
