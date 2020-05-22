@@ -45,6 +45,9 @@ namespace Kurkku.Game
         {
             bool isReload = plugins != null;
 
+            if (!Directory.Exists(pluginDictionary))
+                Directory.CreateDirectory(pluginDictionary);
+
             if (plugins != null)
             {
                 plugins.ForEach(x => x.Plugin.onDisable());

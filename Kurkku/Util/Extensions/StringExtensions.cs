@@ -38,5 +38,20 @@ namespace Kurkku.Util.Extensions
         {
             return value.Split(separator).Select(i => int.Parse(i)).ToArray();
         }
+
+        /// <summary>
+        /// Convert string to console output
+        /// </summary>
+        public static string ToConsoleOutput(this string value)
+        {
+            var consoleText = value;
+
+            for (int i = 0; i < 13; i++)
+            {
+                consoleText = consoleText.Replace(Convert.ToString((char)i), "[" + i + "]");
+            }
+
+            return consoleText;
+        }
     }
 }

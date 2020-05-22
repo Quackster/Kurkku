@@ -210,7 +210,7 @@ namespace Kurkku.Game
         public void RemoveStatus(string key)
         {
             if (Status.ContainsKey(key))
-                this.Status.Remove(key, out _);
+                this.Status.Remove(key);
         }
 
         public RoomTile CurrentTile => Position.GetTile(Room);
