@@ -1,6 +1,6 @@
 # Kurkku
 
-A private Habbo Hotel server designed for emulating the 2013 version of Habbo written in C# using .NET Core. The SWF release it currently uses is *RELEASE63-201306230129-703021386* but this may be subject to change in the future.
+A private Habbo Hotel server designed for emulating the 2013 version of Habbo written in C# using .NET Core. The SWF release it currently uses is *RELEASE63-201302211227-193109692* but this may be subject to change in the future.
  
 Kurkku uses DotNetty for asynchronous TCP sockets and networking. Fluid NHibernate for quick and easy database access and SQL queries on the fly without having to manually write queries and Newtonsoft.Json for JSON serializing and deserializing for various custom item attributes. 
 

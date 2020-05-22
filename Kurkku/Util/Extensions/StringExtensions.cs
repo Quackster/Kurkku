@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Kurkku.Util.Extensions
 {
@@ -38,21 +37,6 @@ namespace Kurkku.Util.Extensions
         public static int[] ToIntArray(this string value, char separator)
         {
             return value.Split(separator).Select(i => int.Parse(i)).ToArray();
-        }
-
-        /// <summary>
-        /// Convert string to console output
-        /// </summary>
-        public static string ToConsoleOutput(this string value)
-        {
-            var consoleText = value;
-
-            for (int i = 0; i < 13; i++)
-            {
-                consoleText = consoleText.Replace(Convert.ToString((char)i), "[" + i + "]");
-            }
-
-            return consoleText;
         }
     }
 }
