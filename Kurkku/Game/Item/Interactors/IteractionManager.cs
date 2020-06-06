@@ -29,6 +29,7 @@ namespace Kurkku.Game
             Interactors[InteractorType.POST_IT] = typeof(StickieInteractor);
             Interactors[InteractorType.TROPHY] = typeof(TrophyInteractor);
             Interactors[InteractorType.ROOMDIMMER] = typeof(MoodlightInteractor);
+            Interactors[InteractorType.TELEPORTER] = typeof(TeleporterInteractor);
         }
 
         #endregion
@@ -40,6 +41,9 @@ namespace Kurkku.Game
         /// </summary>
         public Interactor CreateInteractor(Item item)
         {
+            if (item.Definition == null)
+                return null;
+
             Type type;
 
             if (!Interactors.TryGetValue(item.Definition.InteractorType, out type))

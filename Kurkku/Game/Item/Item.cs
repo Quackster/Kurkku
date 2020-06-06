@@ -83,6 +83,9 @@ namespace Kurkku.Game
             if (Definition.InteractorType == InteractorType.GATE || Definition.InteractorType == InteractorType.ONE_WAY_GATE)
                 return Interactor.GetExtraData().Equals("1");
 
+            if (Definition.InteractorType == InteractorType.TELEPORTER)
+                return Interactor.GetExtraData().Equals(TeleporterInteractor.TELEPORTER_OPEN);
+
             return false;
         }
 

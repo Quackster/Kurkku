@@ -127,16 +127,41 @@ namespace Kurkku.Game
             if (!string.IsNullOrEmpty(cataloguePackage.Data.SpecialSpriteId))
                 extraData = cataloguePackage.Data.SpecialSpriteId;
 
-
-            for (int i = 0; i < itemsToGenerate; i++)
+            if (definition.InteractorType == InteractorType.TELEPORTER)
             {
-                ItemData itemData = new ItemData();
-                itemData.OwnerId = userId;
-                itemData.DefinitionId = cataloguePackage.Definition.Data.Id;
-                itemData.ExtraData = extraData;
-                items.Add(itemData);
-            }
+                ItemData firstTeleporter = new ItemData();
+                firstTeleporter.OwnerId = userId;
+                firstTeleporter.DefinitionId = cataloguePackage.Definition.Data.Id;
 
+                ItemData secondTeleporter = new ItemData();
+                secondTeleporter.OwnerId = userId;
+                secondTeleporter.DefinitionId = cataloguePackage.Definition.Data.Id;
+
+                firstTeleporter.ExtraData = JsonConvert.SerializeObject(new TeleporterExtraData
+                {
+                    LinkedItem = secondTeleporter.Id
+                });
+
+                secondTeleporter.ExtraData = JsonConvert.SerializeObject(new TeleporterExtraData
+                {
+                    LinkedItem = firstTeleporter.Id
+                });
+
+                items.Add(firstTeleporter);
+                items.Add(secondTeleporter);
+            }
+            else
+            {
+                for (int i = 0; i < itemsToGenerate; i++)
+                {
+                    ItemData itemData = new ItemData();
+                    itemData.OwnerId = userId;
+                    itemData.DefinitionId = cataloguePackage.Definition.Data.Id;
+                    itemData.ExtraData = extraData;
+                    items.Add(itemData);
+                }
+            }
+            
             return items;
         }
 

@@ -19,6 +19,8 @@ namespace Kurkku.Game
         public RoomTile Tile => Position != null ? (Position.GetTile(Room) ?? null) : null;
         public Item CurrentItem => Tile?.HighestItem;
         public RoomTimerManager TimerManager { get; set; }
+        public int AuthenticateTeleporterId { get; set; }
+        public int AuthenticateRoomId { get; set; }
 
         /// <summary>
         /// Get the status handling, the value is the value string and the time it was added.
@@ -29,6 +31,7 @@ namespace Kurkku.Game
         {
             Entity = entity;
             TimerManager = new RoomTimerManager();
+            AuthenticateTeleporterId = -1;
         }
 
         /// <summary>
@@ -214,5 +217,6 @@ namespace Kurkku.Game
         }
 
         public RoomTile CurrentTile => Position.GetTile(Room);
+
     }
 }

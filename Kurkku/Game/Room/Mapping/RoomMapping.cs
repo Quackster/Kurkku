@@ -108,6 +108,7 @@ namespace Kurkku.Game
                 item.UpdateEntities();
             }
 
+            item.Interactor.OnPlace(player);
             item.Save();
 
             room.ItemManager.AddItem(item);
@@ -170,6 +171,7 @@ namespace Kurkku.Game
                 room.Send(new UpdateFloorItemComposer(item));
             }
 
+
             item.Save();
         }
 
@@ -177,7 +179,7 @@ namespace Kurkku.Game
         /// <summary>
         /// Remove item handler
         /// </summary>
-        public void RemoveItem(Item item)
+        public void RemoveItem(Item item, Player player)
         {
             RoomTile tile = item.Position.GetTile(room);
 
@@ -212,6 +214,9 @@ namespace Kurkku.Game
                 item.Data.Rotation = item.Position.Rotation;
 
             }
+
+            item.Interactor.OnPickup(player);
+
             item.Data.RoomId = 0;
             item.Save();
 

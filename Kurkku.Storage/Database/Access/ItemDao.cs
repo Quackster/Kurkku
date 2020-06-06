@@ -1,5 +1,6 @@
 ﻿using Kurkku.Storage.Database.Data;
 using NHibernate.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,6 +38,18 @@ namespace Kurkku.Storage.Database.Access
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
                 return session.QueryOver<ItemData>().Where(x => x.RoomId == roomId).List() as List<ItemData>;
+            }
+        }
+
+        /// <summary>
+        /// Get single item
+        /// </summary>
+        /// <returns>the item</returns>
+        public static ItemData GetItem(string itemId)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                return session.QueryOver<ItemData>().Where(x => x.Id == itemId).Take(1).SingleOrDefault();
             }
         }
 

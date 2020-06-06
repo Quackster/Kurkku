@@ -32,10 +32,6 @@ namespace Kurkku.Messages.Incoming
             if (catalogueItem.Definition != null && catalogueItem.Definition.HasBehaviour(ItemBehaviour.EFFECT))
                 return; // Effects disabled for now
 
-            if (catalogueItem.Definition != null && (
-                catalogueItem.Definition.InteractorType == InteractorType.TELEPORTER))
-                return; // Teleporters, trophies & moodlights disabled for now until coded
-
             string extraData = request.ReadString().FilterInput(false);
             int amount = request.ReadInt();
 

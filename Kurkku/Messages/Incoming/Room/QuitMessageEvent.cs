@@ -7,8 +7,13 @@ namespace Kurkku.Messages.Incoming
     {
         public void Handle(Player player, Request request)
         {
-            if (player.RoomUser.Room != null)
-                player.RoomUser.Room.EntityManager.LeaveRoom(player, true);
+            if (player.RoomUser.Room == null)
+                return;
+
+            player.RoomUser.AuthenticateRoomId = -1;
+            player.RoomUser.AuthenticateTeleporterId = -1;
+
+            player.RoomUser.Room.EntityManager.LeaveRoom(player, true);
         }
     }
 }

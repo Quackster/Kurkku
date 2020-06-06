@@ -29,6 +29,8 @@ namespace Kurkku.Game
 
         public virtual void OnStop(IEntity entity) { }
         public virtual void OnInteract(IEntity entity) { }
+        public virtual void OnPickup(IEntity entity) { }
+        public virtual void OnPlace(IEntity entity) { }
         public virtual bool OnWalkRequest(IEntity entity, Position goal) { return false; }
     }
 }

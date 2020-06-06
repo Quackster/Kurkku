@@ -28,7 +28,7 @@ namespace Kurkku.Messages.Incoming
             if (item == null && item.Data.OwnerId != player.Details.Id && !room.IsOwner(player.Details.Id)) // TODO: Staff check
                 return;
 
-            room.Mapping.RemoveItem(item);
+            room.Mapping.RemoveItem(item, player);
 
             ItemDao.DeleteItem(item.Data);
         }
