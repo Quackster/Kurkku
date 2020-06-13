@@ -33,8 +33,7 @@
                 if (newMode >= Item.Definition.Data.MaxStatus)
                     newMode = 0;
 
-                Item.Data.ExtraData = newMode.ToString();
-                Item.Update();
+                Item.UpdateStatus(newMode.ToString());
                 Item.Save();
             }
         }

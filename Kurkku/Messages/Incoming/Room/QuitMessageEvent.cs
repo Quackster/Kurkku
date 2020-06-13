@@ -11,7 +11,7 @@ namespace Kurkku.Messages.Incoming
                 return;
 
             player.RoomUser.AuthenticateRoomId = -1;
-            player.RoomUser.AuthenticateTeleporterId = -1;
+            player.RoomUser.AuthenticateTeleporterId = null;
 
             player.RoomUser.Room.EntityManager.LeaveRoom(player, true);
         }

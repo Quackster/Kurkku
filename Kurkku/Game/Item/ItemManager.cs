@@ -1,4 +1,6 @@
 ﻿using Kurkku.Storage.Database.Access;
+using Kurkku.Storage.Database.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -49,6 +51,38 @@ namespace Kurkku.Game
             return Interlocked.Increment(ref ItemCounter);
         }
 
+        /// <summary>
+        /// Try and resolve an item inside a room or persons inventory
+        /// </summary>
+        /// <param name="itemId">the item GUID</param>
+        /// <returns>the tiem</returns>
+        public Item ResolveItem(string itemId = null, ItemData itemData = null)
+        {
+            if (itemData == null)
+                itemData = ItemDao.GetItem(itemId);
+
+            if (itemData == null)
+                return null;
+
+            var room = RoomManager.Instance.GetRoom(itemData.RoomId);
+
+            if (room == null)
+            {
+                var player = PlayerManager.Instance.GetPlayerById(itemData.RoomId);
+
+                if (player != null)
+                {
+                    return player.Inventory.GetItem(itemData.Id);
+                }
+            }
+            else
+            {
+                return room.ItemManager.GetItem(itemData.Id);
+            }
+
+
+            return null;
+        }
 
         #endregion
     }

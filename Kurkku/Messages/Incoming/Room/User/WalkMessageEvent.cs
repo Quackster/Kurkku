@@ -7,6 +7,9 @@ namespace Kurkku.Messages.Incoming
     {
         public void Handle(Player player, Request request)
         {
+            if (!player.RoomUser.WalkingAllowed)
+                return;
+
             int x = request.ReadInt();
             int y = request.ReadInt();
 

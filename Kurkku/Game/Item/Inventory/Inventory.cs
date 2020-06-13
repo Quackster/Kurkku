@@ -48,6 +48,14 @@ namespace Kurkku.Game
         }
 
         /// <summary>
+        /// Get item by database id
+        /// </summary>
+        internal Item GetItem(string itemId)
+        {
+            return Items.Values.Where(x => x.Data.Id == itemId).FirstOrDefault();
+        }
+
+        /// <summary>
         /// Add item to inventory
         /// </summary>
         public void AddItem(Item item, bool alertNewItem = false, bool forceUpdate = false)

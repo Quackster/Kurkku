@@ -102,6 +102,32 @@ namespace Kurkku.Game
             ItemDao.SaveItem(Data);
         }
 
+
+        public void UpdateStatus(string state)
+        {
+            switch (Definition.InteractorType)
+            {
+                case InteractorType.TELEPORTER:
+                    var teleporterData = (TeleporterExtraData)Interactor.GetJsonObject();
+
+                    Interactor.SetJsonObject(new TeleporterExtraData
+                    {
+                        LinkedItem = teleporterData.LinkedItem,
+                        State = state
+                    });
+
+                    Update();
+                    break;
+                case InteractorType.BED:
+                case InteractorType.CHAIR:
+                case InteractorType.DEFAULT:
+                    Data.ExtraData = state;
+                    Update();
+                    break;
+            }
+
+        }
+
         /// <summary>
         /// Updates item state
         /// </summary>

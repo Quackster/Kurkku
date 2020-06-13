@@ -1,6 +1,7 @@
 ﻿using Kurkku.Storage.Database.Access;
 using Kurkku.Util.Extensions;
 using System.Collections.Concurrent;
+using System.Linq;
 
 namespace Kurkku.Game.Managers
 {
@@ -53,6 +54,15 @@ namespace Kurkku.Game.Managers
                 return item;
 
             return null;
+        }
+
+
+        /// <summary> 
+        /// Retrieve item from room item list by database ID
+        /// </summary>
+        public Item GetItem(string itemId)
+        {
+            return Items.Values.Where(x => x.Data.Id == itemId).FirstOrDefault();
         }
 
         /// <summary>
