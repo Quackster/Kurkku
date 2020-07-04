@@ -18,6 +18,7 @@ namespace Kurkku.Game
         public override void OnInteract(IEntity entity)
         {
             var roomUser = entity.RoomEntity;
+            var room = entity.RoomEntity.Room;
 
             if (!string.IsNullOrEmpty(roomUser.AuthenticateTeleporterId))
                 return;
@@ -72,7 +73,7 @@ namespace Kurkku.Game
             roomUser.AuthenticateTeleporterId = pairedTeleporter.Data.Id;
 
             // Check if the user is inside the teleporter, if so, walk out. Useful if the user is stuck inside.
-            if (Item.Position == roomUser.Position && 
+            if (Item.Position == roomUser.Position &&
                 !RoomTile.IsValidTile(roomUser.Room, entity, Item.Position.GetSquareInFront()))
             {
                 Item.UpdateStatus(TELEPORTER_EFFECTS);
@@ -93,31 +94,119 @@ namespace Kurkku.Game
                     if (pairedTeleporter.Data.RoomId == Item.Data.RoomId)
                     {
                         pairedTeleporter.UpdateStatus(TELEPORTER_EFFECTS);
+
+                        var newPosition = pairedTeleporter.Position.Copy();
+                        newPosition.Rotation = pairedTeleporter.Position.Rotation;
+
+                        roomUser.Warp(newPosition, instantUpdate: true);
                     }
                     else
                     {
                         roomUser.AuthenticateRoomId = pairedTeleporter.Data.RoomId;
+                        roomUser.Room.Forward(roomUser.Entity);
                     }
                 });
 
+                // Handle teleporting in the same room
+                if (pairedTeleporter.Data.RoomId == Item.Data.RoomId)
+                {
+                    Task.Delay(3000).ContinueWith(t =>
+                    {
+                        if (string.IsNullOrEmpty(roomUser.AuthenticateTeleporterId))
+                            return;
+
+                        pairedTeleporter.UpdateStatus(TELEPORTER_OPEN);
+
+                        roomUser.Move(
+                            pairedTeleporter.Position.GetSquareInFront().X,
+                            pairedTeleporter.Position.GetSquareInFront().Y);
+
+                        roomUser.WalkingAllowed = true;
+                    });
+
+                    Task.Delay(4000).ContinueWith(t =>
+                    {
+                        if (string.IsNullOrEmpty(roomUser.AuthenticateTeleporterId))
+                            return;
+
+                        pairedTeleporter.UpdateStatus(TELEPORTER_CLOSE);
+                        roomUser.AuthenticateTeleporterId = null;
+                    });
+
+                }
+
+                return;
+            }
+
+            // Resume normal teleportation
+            Task.Delay(1000).ContinueWith(t =>
+            {
+                if (string.IsNullOrEmpty(roomUser.AuthenticateTeleporterId))
+                    return;
+
+                Item.UpdateStatus(TELEPORTER_EFFECTS);
+            });
+
+            Task.Delay(1500).ContinueWith(t =>
+            {
+                if (string.IsNullOrEmpty(roomUser.AuthenticateTeleporterId))
+                    return;
+
+                Item.UpdateStatus(TELEPORTER_CLOSE);
+
+                if (pairedTeleporter.Data.RoomId != Item.Data.RoomId)
+                {
+                    roomUser.AuthenticateRoomId = pairedTeleporter.Room.Data.Id;
+                    pairedTeleporter.Room.Forward(roomUser.Entity);
+                }
+                else
+                {
+                    roomUser.Warp(pairedTeleporter.Position.Copy(), instantUpdate: true);
+                }
+
+                if (pairedTeleporter.Data.RoomId == Item.Data.RoomId)
+                {
+                    pairedTeleporter.UpdateStatus(TELEPORTER_EFFECTS);
+                }
+            });
+
+            if (pairedTeleporter.Data.RoomId == Item.Data.RoomId)
+            {
                 Task.Delay(3000).ContinueWith(t =>
                 {
-                    if (string.IsNullOrEmpty(roomUser.AuthenticateTeleporterId))
+                    if (roomUser.RoomId != room.Data.Id)
+                    {
+                        roomUser.AuthenticateTeleporterId = null;
                         return;
+                    }
 
                     pairedTeleporter.UpdateStatus(TELEPORTER_OPEN);
+
+                    roomUser.WalkingAllowed = true;
+                    roomUser.Move(
+                        pairedTeleporter.Position.GetSquareInFront().X,
+                        pairedTeleporter.Position.GetSquareInFront().Y);
                 });
 
                 Task.Delay(4000).ContinueWith(t =>
                 {
-                    if (string.IsNullOrEmpty(roomUser.AuthenticateTeleporterId))
+                    if (roomUser.RoomId != room.Data.Id)
+                    {
+                        roomUser.AuthenticateTeleporterId = null;
                         return;
+                    }
 
-                    pairedTeleporter.UpdateStatus(TELEPORTER_CLOSE);
                     roomUser.AuthenticateTeleporterId = null;
-                });
 
-                return;
+                    if (pairedTeleporter.Data.RoomId == Item.Data.RoomId)
+                    {
+                        pairedTeleporter.UpdateStatus(TELEPORTER_CLOSE);
+                    }
+                    else
+                    {
+                        pairedTeleporter.UpdateStatus(TELEPORTER_CLOSE);
+                    }
+                });
             }
         }
 

@@ -25,8 +25,7 @@
 
             if (Item.Definition.Data.MaxStatus > 0)
             {
-                int currentMode;
-                int.TryParse(Item.Data.ExtraData, out currentMode);
+                int.TryParse(Item.Data.ExtraData, out int currentMode);
 
                 int newMode = currentMode + 1;
 

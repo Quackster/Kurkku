@@ -1,6 +1,8 @@
 ﻿using Kurkku.Game.Managers;
 using Kurkku.Messages;
+using Kurkku.Messages.Outgoing;
 using Kurkku.Storage.Database.Data;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -100,6 +102,22 @@ namespace Kurkku.Game
 
             foreach (var player in specificUsers)
                 player.Send(composer);
+        }
+
+        /// <summary>
+        /// Forward entity to room
+        /// </summary>
+        /// <param name="entity"></param>
+        public void Forward(IEntity entity)
+        {
+            if (!(entity is Player))
+            {
+                return;
+            }
+
+            var player = (Player)entity;
+            
+            player.Send(new RoomForwardComposer(Data.Id, Data.IsPublicRoom));
         }
 
         #endregion

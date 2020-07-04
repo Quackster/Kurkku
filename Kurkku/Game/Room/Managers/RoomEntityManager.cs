@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Kurkku.Util.Extensions;
+using System.Threading.Tasks;
 
 namespace Kurkku.Game
 {
@@ -98,11 +99,43 @@ namespace Kurkku.Game
             entity.RoomEntity.Room = room;
             entity.RoomEntity.InstanceId = GenerateInstanceId();
             entity.RoomEntity.Position = (entryPosition ?? room.Model.Door);
+            entity.RoomEntity.AuthenticateRoomId = -1;
 
             room.Entities.TryAdd(entity.RoomEntity.InstanceId, entity);
 
             if (!room.IsActive)
                 TryInitialise();
+
+            if (!string.IsNullOrEmpty(entity.RoomEntity.AuthenticateTeleporterId))
+            {
+                var teleporter = room.ItemManager.Items.Values.Where(x => x.Data.Id == entity.RoomEntity.AuthenticateTeleporterId).FirstOrDefault();
+
+                if (teleporter != null)
+                {
+                    entity.RoomEntity.WalkingAllowed = false;
+                    entity.RoomEntity.Position = teleporter.Position.Copy();
+
+                    teleporter.UpdateStatus(TeleporterInteractor.TELEPORTER_EFFECTS);
+
+                    Task.Delay(1000).ContinueWith(t =>
+                    {
+                        teleporter.UpdateStatus(TeleporterInteractor.TELEPORTER_OPEN);
+                        entity.RoomEntity.WalkingAllowed = true;
+
+                        entity.RoomEntity.Move(
+                            teleporter.Position.GetSquareInFront().X,
+                            teleporter.Position.GetSquareInFront().Y
+                        );
+                    });
+
+                    Task.Delay(2000).ContinueWith(t =>
+                    {
+                        teleporter.UpdateStatus(TeleporterInteractor.TELEPORTER_CLOSE);
+                    });
+                }
+
+                entity.RoomEntity.AuthenticateTeleporterId = null;
+            }
 
             if (entity is Player player)
             {

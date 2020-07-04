@@ -77,6 +77,9 @@ namespace Kurkku.Game
             }
             else
             {
+                if (room.ItemManager.Items == null)
+                    room.ItemManager.Load();
+
                 return room.ItemManager.GetItem(itemData.Id);
             }
 

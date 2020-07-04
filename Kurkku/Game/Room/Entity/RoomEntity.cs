@@ -1,11 +1,13 @@
 ﻿using Kurkku.Messages.Outgoing;
 using Kurkku.Util.Extensions;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace Kurkku.Game
 {
-    public abstract class RoomEntity {
+    public abstract class RoomEntity
+    {
         public IEntity Entity { get; set; }
         public Room Room { get; set; }
         public Position Position { get; set; }
@@ -180,7 +182,7 @@ namespace Kurkku.Game
                     RemoveStatus("lay");
                 }
             }
-            
+
             if (item != null)
             {
                 item.Interactor.OnStop(this.Entity);
@@ -218,6 +220,62 @@ namespace Kurkku.Game
                 this.Status.Remove(key);
         }
 
+        /// <summary>
+        /// Warp etntiy to position
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="v"></param>
+        public void Warp(Position targetPosition, bool instantUpdate = false)
+        {
+            RoomTile oldTile = CurrentTile;
+
+            if (oldTile != null)
+            {
+                oldTile.RemoveEntity(Entity);
+            }
+
+            if (Next != null)
+            {
+                RoomTile nextTile = Next.GetTile(Room);
+
+                if (nextTile != null)
+                {
+                    nextTile.RemoveEntity(Entity);
+                }
+            }
+
+            Position = targetPosition.Copy();
+            RefreshHeight(targetPosition);
+
+            RoomTile newTile = CurrentTile;
+
+            if (newTile != null)
+            {
+                newTile.AddEntity(Entity);
+            }
+
+            if (instantUpdate && Room != null)
+            {
+                InteractItem();
+                Room.Send(new UsersStatusComposer(List.Create(Entity)));
+            }
+        }
+
+        private void RefreshHeight(Position newPosition)
+        {
+            var targetPosition = newPosition ?? Position;
+
+            var oldTile = Position.GetTile(Room);
+            var newTile = targetPosition.GetTile(Room);
+
+            if (oldTile.GetWalkingHeight() != newTile.GetWalkingHeight())
+            {
+                Position.Z = newTile.GetWalkingHeight();
+                NeedsUpdate = true;
+            }
+        }
+
         public RoomTile CurrentTile => Position.GetTile(Room);
     }
+
 }
