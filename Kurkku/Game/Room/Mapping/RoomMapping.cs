@@ -1,9 +1,16 @@
-﻿using Kurkku.Messages.Outgoing;
+﻿using System;
+using Kurkku.Messages.Outgoing;
 
 namespace Kurkku.Game
 {
     public class RoomMapping : ILoadable
     {
+        public enum MappingAction
+        {
+            ADD,
+            REMOVE
+        }
+
         #region Fields
 
         private Room room;
@@ -28,6 +35,46 @@ namespace Kurkku.Game
         #endregion
 
         #region Public methods
+
+        /// <summary>
+        /// Mapping item handler for adding/removing item to collision map
+        /// </summary>
+        public void MapItem(Item item, MappingAction mappingAction)
+        {
+            switch (mappingAction)
+            {
+                case MappingAction.ADD:
+                    {
+                        // Add item to tile
+                        foreach (var affectedPosition in AffectedTile.GetAffectedTiles(item))
+                        {
+                            var roomTile = affectedPosition.GetTile(room);
+
+                            if (roomTile == null)
+                                continue;
+
+                            roomTile.AddItem(item);
+                        }
+
+                        break;
+                    }
+                case MappingAction.REMOVE:
+                    {
+                        // Remove item from tile
+                        foreach (var affectedPosition in AffectedTile.GetAffectedTiles(item))
+                        {
+                            var roomTile = affectedPosition.GetTile(room);
+
+                            if (roomTile == null)
+                                continue;
+
+                            roomTile.RemoveItem(item);
+                        }
+
+                        break;
+                    }
+            }
+        }
 
         /// <summary>
         /// Regenerate the room map
@@ -94,17 +141,7 @@ namespace Kurkku.Game
                 item.Data.Rotation = position.Rotation;
 
                 room.Send(new FloorItemComposer(item));
-
-                foreach (var affectedPosition in AffectedTile.GetAffectedTiles(item))
-                {
-                    var roomTile = affectedPosition.GetTile(room);
-
-                    if (roomTile == null)
-                        continue;
-
-                    roomTile.AddItem(item);
-                }
-                
+                MapItem(item, MappingAction.ADD);
                 item.UpdateEntities();
             }
 

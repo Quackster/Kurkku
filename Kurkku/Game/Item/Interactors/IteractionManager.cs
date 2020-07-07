@@ -30,6 +30,7 @@ namespace Kurkku.Game
             Interactors[InteractorType.TROPHY] = typeof(TrophyInteractor);
             Interactors[InteractorType.ROOMDIMMER] = typeof(MoodlightInteractor);
             Interactors[InteractorType.TELEPORTER] = typeof(TeleporterInteractor);
+            Interactors[InteractorType.ROLLER] = typeof(RollerInteractor);
         }
 
         #endregion

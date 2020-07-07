@@ -11,11 +11,13 @@ namespace Kurkku.Game
 
         public int Id;
         public ItemData Data { get; }
+        public RollingData RollingData { get; set; }
         public ItemDefinition Definition => ItemManager.Instance.GetDefinition(Data.DefinitionId);
         public Room Room => RoomManager.Instance.GetRoom(Data.RoomId);
+        public RoomTile CurrentTile => Position != null ? (Position.GetTile(Room) ?? null) : null;
         public Interactor Interactor { get; }
         public Position Position { get; set; }
-
+        public bool IsRollingBlocked { get; set; }
         #endregion
 
         #region Constructors

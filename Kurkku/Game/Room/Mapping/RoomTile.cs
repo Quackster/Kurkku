@@ -167,5 +167,26 @@ namespace Kurkku.Game
             ResetHighestItem();
         }
 
+        /// <summary>
+        /// Get the list of items on this tile.
+        /// </summary>
+        /// <returns></returns>
+        public List<Item> GetTileItems()
+        {
+            var items = new List<Item>(Furniture.Values);
+            return items.OrderBy(x => x.Position.Z).ToList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="frontRoller"></param>
+        /// <returns></returns>
+        public List<Item> GetItemsAbove(Item item)
+        {
+            var items = GetTileItems();
+            items.RemoveAll(x => x.Data.Id == item.Data.Id || x.Position.X < item.Position.Z);
+            return items;
+        }
     }
 }

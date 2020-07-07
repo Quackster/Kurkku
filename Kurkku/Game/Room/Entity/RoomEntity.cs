@@ -9,6 +9,7 @@ namespace Kurkku.Game
     public abstract class RoomEntity
     {
         public IEntity Entity { get; set; }
+        public RollingData RollingData { get; set; }
         public Room Room { get; set; }
         public Position Position { get; set; }
         public Position Next { get; set; }
@@ -18,8 +19,8 @@ namespace Kurkku.Game
         public int InstanceId { get; set; }
         public bool NeedsUpdate { get; set; }
         public int RoomId => Room != null ? Room.Data.Id : 0;
-        public RoomTile Tile => Position != null ? (Position.GetTile(Room) ?? null) : null;
-        public Item CurrentItem => Tile?.HighestItem;
+        public RoomTile CurrentTile => Position != null ? (Position.GetTile(Room) ?? null) : null;
+        public Item CurrentItem => CurrentTile?.HighestItem;
         public RoomTimerManager TimerManager { get; set; }
         public string AuthenticateTeleporterId { get; set; }
         public int AuthenticateRoomId { get; set; }
@@ -163,7 +164,7 @@ namespace Kurkku.Game
         /// </summary>
         public void InteractItem()
         {
-            var roomTile = Tile;
+            var roomTile = CurrentTile;
 
             if (roomTile == null)
                 return;
@@ -274,8 +275,6 @@ namespace Kurkku.Game
                 NeedsUpdate = true;
             }
         }
-
-        public RoomTile CurrentTile => Position.GetTile(Room);
     }
 
 }

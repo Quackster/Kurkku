@@ -4,10 +4,17 @@ namespace Kurkku.Game
 {
     public abstract class Interactor
     {
+        #region Properties 
+
+        protected int TicksTimer { get; set; }
         protected bool NeedsExtraDataUpdate { get; set; }
         protected string ExtraData { get; set; }
         public Item Item { get; }
         public virtual ExtraDataType ExtraDataType { get; }
+
+        #endregion
+
+        #region Constructor
 
         protected Interactor(Item item)
         {
@@ -15,8 +22,48 @@ namespace Kurkku.Game
             NeedsExtraDataUpdate = true;
         }
 
-        public virtual object GetExtraData(bool inventoryView = false) { return Item.Data.ExtraData; }
-        public virtual object GetJsonObject() { return null; }
+        #endregion
+
+        #region Tick methods
+
+        public bool RequiresTick()
+        {
+            return Item.Definition.InteractorType == InteractorType.ROLLER;
+        }
+
+        public bool HasTicks()
+        {
+            return (TicksTimer > 0);
+        }
+
+        public void SetTicks(int time)
+        {
+            TicksTimer = time;
+        }
+
+        protected void CancelTicks()
+        {
+            TicksTimer = -1;
+        }
+
+        public void Tick()
+        {
+            OnTick();
+
+            if (TicksTimer > 0)
+                TicksTimer--;
+
+            if (TicksTimer == 0)
+            {
+                CancelTicks();
+                OnTickComplete();
+            }
+        }
+
+        #endregion
+
+        #region Public methods
+
         public void SetJsonObject(object jsonObject)
         {
             if (jsonObject is string)
@@ -27,10 +74,16 @@ namespace Kurkku.Game
             NeedsExtraDataUpdate = true;
         }
 
+        public virtual object GetExtraData(bool inventoryView = false) { return Item.Data.ExtraData; }
+        public virtual object GetJsonObject() { return null; }
+        public virtual void OnTick() { }
+        public virtual void OnTickComplete() { }
         public virtual void OnStop(IEntity entity) { }
         public virtual void OnInteract(IEntity entity) { }
         public virtual void OnPickup(IEntity entity) { }
         public virtual void OnPlace(IEntity entity) { }
         public virtual bool OnWalkRequest(IEntity entity, Position goal) { return false; }
+
+        #endregion
     }
 }

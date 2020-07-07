@@ -52,6 +52,8 @@ namespace Kurkku
             log.Info("Booting Kurkku - Written by Quackster");
             log.Info("Emulation of Habbo Hotel 2013 flash client");
 
+            log.Info(RoomTaskManager.GetProcessTime(1.5));
+
             try
             {
                 tryDatabaseConnection();

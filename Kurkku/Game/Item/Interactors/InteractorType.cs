@@ -10,6 +10,7 @@
         POST_IT,
         TELEPORTER,
         GATE,
+        ROLLER,
         ONE_WAY_GATE,
         VENDING_MACHINE,
         DICE,
