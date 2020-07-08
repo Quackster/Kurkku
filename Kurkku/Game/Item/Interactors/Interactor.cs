@@ -46,9 +46,9 @@ namespace Kurkku.Game
             TicksTimer = -1;
         }
 
-        public void Tick()
+        public bool CanTick()
         {
-            OnTick();
+            //OnTick();
 
             if (TicksTimer > 0)
                 TicksTimer--;
@@ -56,9 +56,16 @@ namespace Kurkku.Game
             if (TicksTimer == 0)
             {
                 CancelTicks();
-                OnTickComplete();
+                return true;
             }
-        }
+
+            return false;
+            /*if (TicksTimer == 0)
+            {
+                CancelTicks();
+                OnTickComplete();
+            }*/
+            }
 
         #endregion
 

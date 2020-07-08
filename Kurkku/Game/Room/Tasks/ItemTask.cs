@@ -4,27 +4,15 @@ using System.Collections.Generic;
 using Kurkku.Util.Extensions;
 using Kurkku.Messages.Outgoing;
 using System.Linq;
+using System.Collections.Concurrent;
 
 namespace Kurkku.Game
 {
-    public class QueuedItemTask
-    {
-        private Item item;
-        private long runningTick;
-        private long resetEveryTick;
-
-        public QueuedItemTask(Item item, long runningTick, long resetEveryTick)
-        {
-            this.item = item;
-            this.runningTick = runningTick;
-            this.resetEveryTick = resetEveryTick;
-        }
-    }
-
     public class ItemTask : IRoomTask
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(EntityTask));
         private Room room;
+        private ConcurrentQueue<Item> tickedItems;// = new ConcurrentQueue<Item>();
 
         /// <summary>
         /// Set task interval, which is 500ms
@@ -37,6 +25,7 @@ namespace Kurkku.Game
         public ItemTask(Room room)
         {
             this.room = room;
+            this.tickedItems = new ConcurrentQueue<Item>(); 
         }
 
         /// <summary>
@@ -46,14 +35,23 @@ namespace Kurkku.Game
         {
             try
             {
-                var entityUpdates = new List<IEntity>();
-
                 foreach (Item item in room.ItemManager.Items.Values)
                 {
                     if (item.Interactor.RequiresTick())
                     {
-                        item.Interactor.Tick();
+                        if (item.Interactor.CanTick())
+                        {
+                            item.Interactor.OnTick();
+                            tickedItems.Enqueue(item);
+                        }
                     }
+                }
+
+                List<Item> tickCompletedItems = tickedItems.Dequeue<Item>();
+
+                foreach (var item in tickCompletedItems)
+                {
+                    item.Interactor.OnTickComplete();
                 }
             }
             catch (Exception ex)

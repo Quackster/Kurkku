@@ -11,7 +11,7 @@ namespace Kurkku.Game
 
         public Position CanRoll(Item item, Item roller, Room room)
         {
-            if (roller == null || roller.Room == null || roller.CurrentTile == null)
+            if (roller == null || roller.Room == null || roller.CurrentTile == null || item.RollingData != null)
             {
                 return null;
             }
