@@ -8,9 +8,9 @@ namespace Kurkku.Game
     {
         #region Public methods
 
-        public Position CanRoll(IEntity entity, Item roller, Room room)
+        public void TryGetRollingData(IEntity entity, Item roller, Room room, out Position nextPosition)
         {
-            return null;
+            nextPosition = null;
         }
 
         public void DoRoll(IEntity entity, Item roller, Room room, Position fromPosition, Position nextPosition)

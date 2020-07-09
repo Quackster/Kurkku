@@ -50,7 +50,7 @@ namespace Kurkku.Game
                     if (itemsRolling.ContainsKey(item))
                         continue;
 
-                    Position nextPosition = RoomTaskManager.RollerItemTask.CanRoll(item, roller, room);
+                    RoomTaskManager.RollerItemTask.TryGetRollingData(item, roller, room, out var nextPosition);
 
                     if (nextPosition != null)
                     {
@@ -69,7 +69,7 @@ namespace Kurkku.Game
 
                     if (!entitiesRolling.ContainsKey(entity))
                     {
-                        Position nextPosition = RoomTaskManager.RollerEntityTask.CanRoll(entity, roller, room);
+                        RoomTaskManager.RollerEntityTask.TryGetRollingData(entity, roller, room, out var nextPosition);
 
                         if (nextPosition != null)
                         {

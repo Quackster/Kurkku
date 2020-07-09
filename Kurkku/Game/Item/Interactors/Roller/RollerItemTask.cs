@@ -9,21 +9,23 @@ namespace Kurkku.Game
     {
         #region Public methods
 
-        public Position CanRoll(Item item, Item roller, Room room)
+        public void TryGetRollingData(Item item, Item roller, Room room, out Position nextPosition)
         {
+            nextPosition = null;
+
             if (roller == null || roller.Room == null || roller.CurrentTile == null || item.RollingData != null)
             {
-                return null;
+                return;
             }
 
             if (item.Id == roller.Id)
             {
-                return null;
+                return;
             }
 
             if (item.Position.Z < roller.Position.Z)
             {
-                return null;
+                return;
             }
 
             Position front = roller.Position.GetSquareInFront();
@@ -31,7 +33,7 @@ namespace Kurkku.Game
 
             if (frontTile == null)
             {
-                return null;
+                return;
             }
 
             // Check all entities in the room
@@ -47,7 +49,7 @@ namespace Kurkku.Game
                 {
                     if (e.RoomEntity.Next == front)
                     {
-                        return null;
+                        return;
                     }
                 }
 
@@ -62,13 +64,13 @@ namespace Kurkku.Game
                 {
                     if (e.RoomEntity.RollingData.NextPosition == front)
                     {
-                        return null;
+                        return;
                     }
                 }
 
                 if (e.RoomEntity.Position == front)
                 {
-                    return null;
+                    return;
                 }
             }
 
@@ -85,7 +87,7 @@ namespace Kurkku.Game
                     // Don't roll if there's another item that's going to roll into this item
                     if (floorItem.RollingData.NextPosition == front)//.getRollingData().getNextPosition().equals(front))
                     {
-                        return null;
+                        return;
                     }
                 }
             }
@@ -115,7 +117,7 @@ namespace Kurkku.Game
                     {
                         if (Math.Abs(frontRoller.Position.Z - roller.Position.Z) > 0.1)
                         {
-                            return null; // Don't roll if the height of the roller is different by >0.1
+                            return; // Don't roll if the height of the roller is different by >0.1
                         }
                     }
 
@@ -141,7 +143,7 @@ namespace Kurkku.Game
                             {
                                 if (frontTile.GetItemsAbove(frontRoller).Count > 0 || frontTile.Entities.Count > 0)
                                 {
-                                    return null;
+                                    return;
 
                                 }
                             }
@@ -166,7 +168,7 @@ namespace Kurkku.Game
                         }
                         else
                         {
-                            return null;
+                            return;
                         }
                     }
                 }
@@ -174,7 +176,7 @@ namespace Kurkku.Game
                 {
                     if (!RoomTile.IsValidTile(room, null, frontTile.Position))
                     {
-                        return null;
+                        return;
                     }
                 }
             }
@@ -189,8 +191,7 @@ namespace Kurkku.Game
                 nextHeight = GameConfiguration.getInstance().getInteger("stack.height.limit");
             }*/
 
-            Position nextPosition = new Position(front.X, front.Y, nextHeight);
-
+            nextPosition = new Position(front.X, front.Y, nextHeight);
             item.RollingData = new RollingData
             {
                 RollingItem = item,
@@ -198,9 +199,6 @@ namespace Kurkku.Game
                 FromPosition = item.Position.Copy(),
                 NextPosition = nextPosition.Copy()
             };
-
-            //item.setRollingData(new RollingData(item, roller, item.Position.Copy(), nextPosition));
-            return nextPosition;
         }
 
         public void DoRoll(Item item, Item roller, Room room, Position fromPosition, Position nextPosition)

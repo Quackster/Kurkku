@@ -8,7 +8,7 @@ namespace Kurkku.Game
     {
         #region Methods
 
-        Position CanRoll(T rollingType, Item roller, Room room);
+        void TryGetRollingData(T rollingType, Item roller, Room room, out Position nextPosition);
         void DoRoll(T rollingType, Item roller, Room room, Position fromPosition, Position nextPosition);
 
         #endregion
