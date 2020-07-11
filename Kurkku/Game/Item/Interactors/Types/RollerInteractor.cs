@@ -110,6 +110,7 @@ namespace Kurkku.Game
                     if (!item.RollingItem.IsRollingBlocked)
                         RoomTaskManager.RollerItemTask.DoRoll(item.RollingItem, item.Roller, Item.Room, item.FromPosition, item.NextPosition);
 
+                    log.Info("item " + item.RollingItem.Definition.Data.Name + "  -  " + item.RollingItem.Position);
                     item.RollingItem.Save();
                 }
 
@@ -139,7 +140,7 @@ namespace Kurkku.Game
                                 return;
 
                             entity.RoomEntity.InteractItem();//getRoomUser().invokeItem(null, true);
-                        entity.RoomEntity.RollingData = null;
+                            entity.RoomEntity.RollingData = null;
                         }
                     });
                 }

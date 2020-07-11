@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Kurkku.Messages.Outgoing;
 using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
@@ -18,6 +19,7 @@ namespace Kurkku.Game
         public Interactor Interactor { get; }
         public Position Position { get; set; }
         public bool IsRollingBlocked { get; set; }
+        public bool IsRolling { get { return RollingData != null; } }
         #endregion
 
         #region Constructors
@@ -156,26 +158,21 @@ namespace Kurkku.Game
             if (tile == null || room == null)
                 return false;
 
-            bool isRotation = (item.Position.Rotation != rotation) && (new Position(x, y) == item.Position);
+            bool isRotation = (item.Position.Rotation != rotation) && (new Position(x, y) == (item.Position)
+                || (item.RollingData != null && new Position(x, y) == (item.RollingData.NextPosition))
+                || (item.RollingData != null && new Position(x, y) == (item.RollingData.FromPosition)));
 
             if (isRotation)
             {
-                if (item.Definition.Data.Length <= 1 && item.Definition.Data.Width <= 1)
-                    return true;
-
-
-                /*
-                if (item.getRollingData() != null) {
+                if (item.RollingData != null)
+                {
                     return false; // Don't allow rotating items when they're rolling
                 }
 
-                if (item.getDefinition().getLength() <= 1 && item.getDefinition().getWidth() <= 1) {
+                if (item.Definition.Data.Length <= 1 && item.Definition.Data.Width <= 1)
+                {
                     return true;
                 }
-                */
-
-                /*if (item.Definition.Data.Length <= 1 && item.Definition.Data.Width <= 1)
-                    return true;*/
             }
 
             foreach (Position position in AffectedTile.GetAffectedTiles(this, x, y, rotation))
@@ -227,6 +224,14 @@ namespace Kurkku.Game
         }
 
         /// <summary>
+        /// Override the position from the data variable, used to save to the database.
+        /// </summary>
+        public void ApplyPosition()
+        {
+            Position = new Position(Data.X, Data.Y, Data.Z, Data.Rotation, Data.Rotation);
+        }
+
+        /// <summary>
         /// Get if placing an item on top of another item is allowed.
         /// </summary>
         private bool CanItemsMerge(Item item, Item tileItem, Position targetTile)
@@ -257,6 +262,62 @@ namespace Kurkku.Game
                 return false;
 
             return true;
+        }
+
+        public Item GetItemBelow()
+        {
+            var tile = Position.GetTile(Room);
+
+            if (tile == null || tile.GetTileItems() == null)
+            {
+                return null;
+            }
+
+            var items = tile.GetTileItems();
+            int position = items.IndexOf(this);
+
+            if (position > -1)
+            {
+                int nextPosition = position - 1;
+
+                if (nextPosition < 0)
+                {
+                    return null;
+                }
+
+                return items[nextPosition];
+
+            }
+
+            return null;
+        }
+
+        public Item GetItemAbove()
+        {
+            var tile = Position.GetTile(Room);
+
+            if (tile == null || tile.GetTileItems() == null)
+            {
+                return null;
+            }
+
+            var items = tile.GetTileItems();
+            int position = items.IndexOf(this);
+
+            if (position > -1)
+            {
+                int nextPosition = position + 1;
+
+                if (nextPosition >= tile.GetTileItems().Count)
+                {
+                    return null;
+                }
+
+                return items[nextPosition];
+
+            }
+
+            return null;
         }
 
         #endregion

@@ -175,7 +175,7 @@ namespace Kurkku.Game
                 page.Images = JsonConvert.DeserializeObject<List<string>>(page.Data.ImagesData);
                 page.Texts = JsonConvert.DeserializeObject<List<string>>(page.Data.TextsData);
 
-                var bestDiscount = GetBestDiscount(page.Data.Id);
+                TryGetBestDiscount(page.Data.Id, out var bestDiscount);
 
                 if (bestDiscount == null)
                 {
@@ -233,14 +233,16 @@ namespace Kurkku.Game
         /// <summary>
         /// Get the best discount in the list of discounts by page id
         /// </summary>
-        public CatalogueDiscountData GetBestDiscount(int pageId)
+        public void TryGetBestDiscount(int pageId, out CatalogueDiscountData catalogueDiscountData)
         {
+            catalogueDiscountData = null;
+
             var discounts = Discounts.Where(x => x.PageId == pageId && (x.ExpireDate > DateTime.Now || x.ExpireDate == null)).ToList();
 
             if (!discounts.Any())
-                return null;
+                return;
 
-            return discounts
+            catalogueDiscountData = discounts
                 .Where(x => x.DiscountBatchSize > 0 && x.DiscountAmountPerBatch > 0)
                 .OrderByDescending(x => x.DiscountAmountPerBatch / x.DiscountBatchSize)
                 .FirstOrDefault();

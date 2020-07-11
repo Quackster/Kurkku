@@ -39,8 +39,9 @@ namespace Kurkku.Game
         /// </summary>
         public void Load()
         {
-            if (!Tasks.Any())
-                RegisterTasks();
+            StopTasks();
+            Tasks.Clear();
+            RegisterTasks();
 
             foreach (var task in Tasks)
                 task.CreateTask();

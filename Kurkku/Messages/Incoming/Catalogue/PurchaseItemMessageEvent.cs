@@ -37,7 +37,8 @@ namespace Kurkku.Messages.Incoming
 
             // Credits to Alejandro from Morningstar xoxo
             int totalDiscountedItems = 0;
-            var discount = CatalogueManager.Instance.GetBestDiscount(cataloguePage.Data.Id);
+           
+            CatalogueManager.Instance.TryGetBestDiscount(cataloguePage.Data.Id, out var discount);
 
             if (catalogueItem.AllowBulkPurchase && discount != null)
             {

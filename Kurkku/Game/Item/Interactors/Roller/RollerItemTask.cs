@@ -13,7 +13,7 @@ namespace Kurkku.Game
         {
             nextPosition = null;
 
-            if (roller == null || roller.Room == null || roller.CurrentTile == null || item.RollingData != null)
+            if (roller == null || roller.Room == null || roller.CurrentTile == null)
             {
                 return;
             }
@@ -144,7 +144,6 @@ namespace Kurkku.Game
                                 if (frontTile.GetItemsAbove(frontRoller).Count > 0 || frontTile.Entities.Count > 0)
                                 {
                                     return;
-
                                 }
                             }
                         }
@@ -154,7 +153,7 @@ namespace Kurkku.Game
 
                     if (!highestNextItem.Definition.HasBehaviour(ItemBehaviour.ROLLER))
                     {
-                        if (highestNextItem.Definition.HasBehaviour(ItemBehaviour.IS_WALKABLE)
+                        if (highestNextItem.Definition.HasBehaviour(ItemBehaviour.IS_STACKABLE)
                                 && item.CurrentTile.Entities.IsEmpty)
                         {
 
@@ -205,9 +204,10 @@ namespace Kurkku.Game
         {
             room.Mapping.MapItem(item, RoomMapping.MappingAction.REMOVE);
 
-            item.Position.X = nextPosition.X;
-            item.Position.Y = nextPosition.Y;
-            item.Position.Z = nextPosition.Z;
+            item.Data.X = nextPosition.X;
+            item.Data.Y = nextPosition.Y;
+            item.Data.Z = nextPosition.Z;
+            item.ApplyPosition();
 
             room.Mapping.MapItem(item, RoomMapping.MappingAction.ADD);
         }

@@ -14,7 +14,7 @@ namespace Kurkku.Messages.Outgoing
 
             player.Send(new CataloguePageComposer(cataloguePage));
 
-            var discount = CatalogueManager.Instance.GetBestDiscount(cataloguePage.Data.Id);
+            CatalogueManager.Instance.TryGetBestDiscount(cataloguePage.Data.Id, out var discount);
 
             if (discount != null)
                 player.Send(new CatalogueItemDiscountComposer(discount));

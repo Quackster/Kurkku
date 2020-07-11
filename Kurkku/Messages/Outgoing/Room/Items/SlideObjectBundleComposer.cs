@@ -45,7 +45,7 @@ namespace Kurkku.Messages.Outgoing
             {
                 m_Data.Add(rollingEntity.RollingEntity.RoomEntity.InstanceId);
                 m_Data.Add(rollingEntity.FromPosition.Z.ToClientValue());
-                m_Data.Add(rollingEntity.DisplayHeight);
+                m_Data.Add(rollingEntity.DisplayHeight.ToClientValue());
             }
         }
     }

@@ -103,6 +103,20 @@ namespace Kurkku.Game
             return Behaviours.Contains(behaviour);
         }
 
+        /// <summary>
+        /// Get top height, but any top height below 0 will be returned as 0.
+        /// </summary>
+        /// <returns></returns>
+        public double GetPositiveTopHeight()
+        {
+            if (Data.TopHeight < 0)
+            {
+                return 0;
+            }
+
+            return Data.TopHeight;
+        }
+
         #endregion
     }
 }

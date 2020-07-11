@@ -25,6 +25,7 @@ namespace Kurkku.Game
         public string AuthenticateTeleporterId { get; set; }
         public int AuthenticateRoomId { get; set; }
         public bool WalkingAllowed { get; internal set; }
+        public bool IsRolling { get { return RollingData != null; } }
 
         /// <summary>
         /// Get the status handling, the value is the value string and the time it was added.
