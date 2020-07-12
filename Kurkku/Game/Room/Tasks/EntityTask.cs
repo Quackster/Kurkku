@@ -29,7 +29,7 @@ namespace Kurkku.Game
         /// Run method called every 500ms
         /// </summary>
         /// <param name="state">whatever this means??</param>
-        public override void Run(object state)
+        public override void Run()
         {
             try
             {

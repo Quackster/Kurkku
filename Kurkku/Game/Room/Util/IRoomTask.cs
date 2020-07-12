@@ -21,7 +21,10 @@ namespace Kurkku.Game
             if (Task != null)
                 return;
 
-            Task = new Timer(new TimerCallback(Run), null, 0, Interval);
+            Task = new Timer((e) =>
+            {
+                Run();
+            }, null, 0, Interval);
         }
 
         /// <summary>
@@ -36,7 +39,7 @@ namespace Kurkku.Game
             Task = null;
         }
 
-        public abstract void Run(object state);
+        public abstract void Run();
 
         #endregion
     }

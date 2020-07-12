@@ -22,59 +22,43 @@ namespace Kurkku.Game
             }
 
             if (entity.RoomEntity.IsWalking)
-            {
                 return;
-            }
 
             if (entity.RoomEntity.Position.Z < roller.Position.Z)
-            {
                 return;
-            }
 
             Position front = roller.Position.GetSquareInFront();
             RoomTile frontTile = front.GetTile(room);
 
             if (frontTile == null)
-            {
                 return;
-            }
 
             // Check all entities in the room
             foreach (IEntity e in room.Entities.Values)
             {
                 if (e.RoomEntity.Room == null)
-                {
                     continue;
-                }
 
                 // Don't roll if an entity is going to walk into the furniture
                 if (e.RoomEntity.Next != null)
                 {
                     if (e.RoomEntity.Next == front)
-                    {
                         return;
-                    }
                 }
 
                 // Ignore people who are walking
                 if (e.RoomEntity.IsWalking)
-                {
                     continue;
-                }
 
                 // Don't roll if there's an entity rolling into you
                 if (e.RoomEntity.RollingData != null)
                 {
                     if (e.RoomEntity.RollingData.NextPosition == front)
-                    {
                         return;
-                    }
                 }
 
                 if (e.RoomEntity.Position == front)
-                {
                     return;
-                }
             }
 
             // Check all rolling items in the room
@@ -83,15 +67,11 @@ namespace Kurkku.Game
                 if (floorItem.RollingData != null)
                 {
                     if (floorItem.Position == roller.Position)
-                    {
                         continue;
-                    }
 
                     // Don't roll if there's another item that's going to roll into this item
                     if (floorItem.RollingData.NextPosition == front)//.getRollingData().getNextPosition().equals(front))
-                    {
                         return;
-                    }
                 }
             }
 
@@ -105,9 +85,7 @@ namespace Kurkku.Game
                 foreach (Item frontItem in frontTile.GetTileItems())
                 {
                     if (!frontItem.Definition.HasBehaviour(ItemBehaviour.ROLLER))
-                    {
                         continue;
-                    }
 
                     frontRoller = frontItem;
                 }
@@ -119,17 +97,13 @@ namespace Kurkku.Game
                     if (frontRoller.Position.Z != roller.Position.Z)
                     {
                         if (Math.Abs(frontRoller.Position.Z - roller.Position.Z) > 0.1)
-                        {
                             return; // Don't roll if the height of the roller is different by >0.1
-                        }
                     }
 
                     foreach (Item frontItem in frontTile.GetTileItems())
                     {
                         if (frontItem.Position.Z < frontRoller.Position.Z)
-                        {
                             continue;
-                        }
 
                         // This is because the ItemRollingAnalysis has setHighestItem in nextTile in doRoll which blocks this
                         if (entity.RoomEntity.CurrentItem != null

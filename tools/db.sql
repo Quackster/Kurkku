@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS `authentication_ticket` (
 /*!40000 ALTER TABLE `authentication_ticket` DISABLE KEYS */;
 INSERT INTO `authentication_ticket` (`user_id`, `sso_ticket`, `expires_at`) VALUES
 	(1, '123', NULL),
+	(2, 'kek', NULL),
+	(1, '123', NULL),
 	(2, 'kek', NULL);
 /*!40000 ALTER TABLE `authentication_ticket` ENABLE KEYS */;
 
@@ -26,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `catalogue_discounts` (
 
 /*!40000 ALTER TABLE `catalogue_discounts` DISABLE KEYS */;
 INSERT INTO `catalogue_discounts` (`page_id`, `purchase_limit`, `item_count_required`, `item_count_free`, `expire_at`) VALUES
+	(16, 100, 5, 2, '2020-07-20 19:54:58'),
 	(16, 100, 5, 2, '2020-07-20 19:54:58');
 /*!40000 ALTER TABLE `catalogue_discounts` ENABLE KEYS */;
 
@@ -3083,11 +3086,11 @@ INSERT INTO `item_definitions` (`id`, `sprite`, `name`, `description`, `sprite_i
 	(177, 'rare_dragonlamp*6', 'Golden Dragon', 'Scary and scorching!', 1626, 1, 1, 0, '2', 'requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(178, 'rare_dragonlamp*1', 'Blue Dragon Lamp', 'Scary and scorching!', 1627, 1, 1, 0, '2', 'requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(179, 'rare_dragonlamp*3', 'Silver Dragon Lamp', 'Scary and scorching!', 1628, 1, 1, 0, '2', 'requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
-	(180, 'queue_tile1*6', 'Blue Habbo Roller', 'Movin\' on up!', 1650, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
-	(181, 'queue_tile1*9', 'Green Habbo Roller', 'Movin\' on up!', 1652, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
-	(182, 'queue_tile1*8', 'Teal Habbo Roller', 'Movin\' on up!', 1653, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
-	(183, 'queue_tile1*7', 'Purple Habbo Roller', 'Movin\' on up!', 1655, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
-	(184, 'queue_tile1*2', 'Red Habbo Roller', 'Movin\' on up!', 1656, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
+	(180, 'queue_tile1*6', 'Blue Habbo Roller', 'Movin\' on up!', 1650, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'roller', 1, 1, 1, 1, '', -1, '0,2,4,6'),
+	(181, 'queue_tile1*9', 'Green Habbo Roller', 'Movin\' on up!', 1652, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'roller', 1, 1, 1, 1, '', -1, '0,2,4,6'),
+	(182, 'queue_tile1*8', 'Teal Habbo Roller', 'Movin\' on up!', 1653, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'roller', 1, 1, 1, 1, '', -1, '0,2,4,6'),
+	(183, 'queue_tile1*7', 'Purple Habbo Roller', 'Movin\' on up!', 1655, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'roller', 1, 1, 1, 1, '', -1, '0,2,4,6'),
+	(184, 'queue_tile1*2', 'Red Habbo Roller', 'Movin\' on up!', 1656, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'roller', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(185, 'cn_lamp', 'Chinese Lantern', 'Soft and atmospheric light for your room!', 1741, 1, 1, 0, '2', 'requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(186, 'cn_sofa', 'Chinese Lacquer Sofa', 'Imported and very stylish!', 1742, 3, 1, 1, '1', '', 'chair', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(187, 'sporttrack1*1', 'Clay Straight Track', 'Suitable for all sports!', 1745, 2, 2, 0, '2', 'is_stackable,is_walkable,requires_rights_for_interaction', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
@@ -3129,7 +3132,7 @@ INSERT INTO `item_definitions` (`id`, `sprite`, `name`, `description`, `sprite_i
 	(223, 'hc_frplc', 'Heavy Duty Fireplace', 'Pixel-powered for maximum heating', 2078, 1, 3, 0, '2', 'requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(224, 'hc_lmpst', 'Victorian Street Light', 'Somber and atmospheric', 2079, 1, 1, 0, '2', 'requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(225, 'hc_machine', 'Weird Science Machine', 'By and for mad inventors', 2080, 1, 3, 0, '2', 'requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
-	(226, 'hc_rllr', 'HC Roller', 'Highest class transportation', 2081, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
+	(226, 'hc_rllr', 'HC Roller', 'Highest class transportation', 2081, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'roller', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(227, 'hc_rntgn', 'X-Ray Divider', 'Believe it or not!', 2082, 2, 1, 0, '2', 'requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(228, 'hc_trll', 'Drinks Trolley', 'For swanky dinners only', 2083, 1, 2, 0, '2', 'requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(229, 'gothic_chair*3', 'Gothic Chair Red', 'The dark side of Habbo', 2090, 1, 1, 1.2, '1', '', 'chair', 1, 1, 1, 1, '', -1, '0,2,4,6'),
@@ -4099,7 +4102,7 @@ INSERT INTO `item_definitions` (`id`, `sprite`, `name`, `description`, `sprite_i
 	(1415, 'SF_crate_1', 'Small Crate', 'Weightless in Space', 3205, 1, 1, 0.99, '2', 'is_stackable,requires_rights_for_interaction', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(1416, 'sf_stick', 'Light Pole', 'Attracts space critters.', 3206, 1, 1, 0, '5', 'requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(1417, 'SF_chair_blue', 'Medium Chair', 'Space captain\'s side kick.', 3207, 1, 1, 1.2, '1', '', 'chair', 1, 1, 1, 1, '', -1, '0,2,4,6'),
-	(1418, 'sf_roller', 'SciFi Roller', 'Moving through space.', 3209, 1, 1, 0.45, '1', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
+	(1418, 'sf_roller', 'SciFi Roller', 'Moving through space.', 3209, 1, 1, 0.45, '1', 'is_stackable,is_walkable,roller', 'roller', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(1419, 'SF_alien', 'Dizziti', 'Alien Collectible', 3210, 1, 1, 0, '2', 'requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(1420, 'SF_floor_2', 'Spaceship Floor Dark', 'Space walk', 3211, 2, 2, 0, '2', 'is_stackable,is_walkable,requires_rights_for_interaction', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(1421, 'SF_panel3', 'Navigation Console', 'Steer clear of Black Holes', 3208, 1, 1, 0, '4', 'requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
@@ -4469,11 +4472,11 @@ INSERT INTO `item_definitions` (`id`, `sprite`, `name`, `description`, `sprite_i
 	(1786, 'byesw_loadscreen', '0', '-1', 4267, 0, 0, 0, '3', 'requires_rights_for_interaction,wall_item', 'default', 1, 1, 1, 1, '', -1, ''),
 	(1787, 'byesw_hotel', 'Hotel view memorial', '3 different miniature Hotels.', 3289, 1, 1, 0, '6', 'requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(1788, 'byesw_hand', 'Big Hand seat memorial', 'We\'ll miss you Big Hand!', 3291, 1, 1, 1.3, '2', '', 'chair', 1, 1, 1, 1, '', -1, '0,2,4,6'),
-	(1789, 'queue_tile1*0', 'White Quest Roller', 'The power of movement', 1658, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
-	(1790, 'queue_tile1*1', 'Pink Habbo Roller', 'Movin\' on up!', 1657, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
-	(1791, 'queue_tile1*3', 'Aqua Habbo Roller', 'Movin\' on up!', 1649, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
-	(1792, 'queue_tile1*4', 'Gold Habbo Roller', 'Movin\' on up!', 1651, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
-	(1793, 'queue_tile1*5', 'Black Habbo Roller', 'Movin\' on up!', 1654, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),
+	(1789, 'queue_tile1*0', 'White Quest Roller', 'The power of movement', 1658, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'roller', 1, 1, 1, 1, '', -1, '0,2,4,6'),
+	(1790, 'queue_tile1*1', 'Pink Habbo Roller', 'Movin\' on up!', 1657, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'roller', 1, 1, 1, 1, '', -1, '0,2,4,6'),
+	(1791, 'queue_tile1*3', 'Aqua Habbo Roller', 'Movin\' on up!', 1649, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'roller', 1, 1, 1, 1, '', -1, '0,2,4,6'),
+	(1792, 'queue_tile1*4', 'Gold Habbo Roller', 'Movin\' on up!', 1651, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'roller', 1, 1, 1, 1, '', -1, '0,2,4,6'),
+	(1793, 'queue_tile1*5', 'Black Habbo Roller', 'Movin\' on up!', 1654, 1, 1, 0.45, '2', 'is_stackable,is_walkable,roller', 'roller', 1, 1, 1, 1, '', -1, '0,2,4,6'),
 	(1794, 'guitar_v', '0', '-1', 4012, 1, 1, 0, '2', 'requires_rights_for_interaction,wall_item', 'default', 1, 1, 1, 1, '', -1, ''),
 	(1795, 'guitar_skull', '0', '-1', 4011, 1, 1, 0, '2', 'requires_rights_for_interaction,wall_item', 'default', 1, 1, 1, 1, '', -1, ''),
 	(1796, 'diner_shaker', 'Diner Shaker', 'Would you like some fries with that shake?', 2814, 1, 1, 0, '2', 'requires_rights_for_interaction,solid', 'default', 1, 1, 1, 1, '', -1, '0,2,4,6'),

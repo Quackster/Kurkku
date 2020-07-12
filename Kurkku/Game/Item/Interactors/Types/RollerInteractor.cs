@@ -27,7 +27,7 @@ namespace Kurkku.Game
 
         public override void OnTick()
         {
- try
+            try
             {
                 var room = Item.Room;
                 var roller = this.Item;
@@ -110,7 +110,6 @@ namespace Kurkku.Game
                     if (!item.RollingItem.IsRollingBlocked)
                         RoomTaskManager.RollerItemTask.DoRoll(item.RollingItem, item.Roller, Item.Room, item.FromPosition, item.NextPosition);
 
-                    log.Info("item " + item.RollingItem.Definition.Data.Name + "  -  " + item.RollingItem.Position);
                     item.RollingItem.Save();
                 }
 
@@ -136,11 +135,11 @@ namespace Kurkku.Game
 
                         if (entity != null)
                         {
-                            if (entity.RoomEntity.RollingData == null)
-                                return;
-
-                            entity.RoomEntity.InteractItem();//getRoomUser().invokeItem(null, true);
-                            entity.RoomEntity.RollingData = null;
+                            if (entity.RoomEntity.RollingData != null)
+                            {
+                                entity.RoomEntity.InteractItem();//getRoomUser().invokeItem(null, true);
+                                entity.RoomEntity.RollingData = null;
+                            }
                         }
                     });
                 }

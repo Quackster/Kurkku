@@ -60,7 +60,7 @@ namespace Kurkku.Messages.Outgoing
 
             composer.Data.Add(item.Definition.Data.IsRecyclable);
             composer.Data.Add(item.Definition.Data.IsTradable);
-            composer.Data.Add(item.Definition.Data.IsStackable);
+            composer.Data.Add(item.Definition.InteractorType == InteractorType.DECORATION ? true : item.Definition.Data.IsStackable);
             composer.Data.Add(item.Definition.Data.IsSellable);
 
             composer.Data.Add(-1); // timer
@@ -72,8 +72,6 @@ namespace Kurkku.Messages.Outgoing
                 composer.Data.Add("");
                 composer.Data.Add(0); // todo: sprite code for wrapping
             }
-
-            Console.WriteLine(string.Join(", ", composer));
         }
     }
 }

@@ -85,7 +85,7 @@ namespace Kurkku.Game
         /// </summary>
         public void Update()
         {
-            player.Send(new UserRightsMessageComposer(player.IsSubscribed ? 2 : 0, player.Details.Rank));
+            player.Send(new UserRightsMessageComposer(player.IsSubscribed ? 2 : 0, 1));
             player.Send(new ScrSendUserInfoComposer(player.Subscription.Data));
         }
 
