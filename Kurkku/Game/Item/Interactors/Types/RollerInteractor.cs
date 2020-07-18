@@ -21,6 +21,9 @@ namespace Kurkku.Game
         #endregion
 
         public override ExtraDataType ExtraDataType => ExtraDataType.StringData;
+
+        public double TaskProcessTime { get { return 2.0; } }
+
         public QueuedRollerData queuedRoller;
 
         public RollerInteractor(Item item) : base(item) { }
@@ -125,7 +128,7 @@ namespace Kurkku.Game
                     Item.Room.Send(new SlideObjectBundleComposer(queuedRollerData.Roller, rollingItems, entityRollerData));
 
                     // Delay after rolling finished
-                    Task.Delay(800).ContinueWith(t =>
+                    Task.Delay((int)(TaskProcessTime * 0.4) * 1000).ContinueWith(t =>
                     {
                         foreach (RollingData rollingData in queuedRollerData.RollingItems)
                         {
@@ -147,7 +150,7 @@ namespace Kurkku.Game
                 queuedRoller = null;
             }
 
-            SetTicks(RoomTaskManager.GetProcessTime(2.0));
+            SetTicks(RoomTaskManager.GetProcessTime(TaskProcessTime));
         }
     }
 }

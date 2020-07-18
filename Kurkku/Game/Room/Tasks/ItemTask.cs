@@ -30,7 +30,7 @@ namespace Kurkku.Game
         /// <summary>
         /// Run method called every 500ms
         /// </summary>
-        public override void Run()
+        public override void Run(object state)
         {
             foreach (Item item in room.ItemManager.Items.Values)
             {
@@ -44,9 +44,7 @@ namespace Kurkku.Game
                 }
             }
 
-            List<Item> tickCompletedItems = tickedItems.Dequeue<Item>();
-
-            foreach (var item in tickCompletedItems)
+            foreach (var item in tickedItems.Dequeue())
             {
                 item.Interactor.OnTickComplete();
             }
