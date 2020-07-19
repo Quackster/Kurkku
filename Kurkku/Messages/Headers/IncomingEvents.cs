@@ -63,5 +63,6 @@
         public static readonly short ToggleMoodlightMessageEvent = 2017;
         public static readonly short SaveMoodlightMessageEvent = 2541;
         public static readonly short InteractItemMessageEvent = 3820;
+        public static readonly short ThrowDiceMessageEvent = 3101;
     }
 }

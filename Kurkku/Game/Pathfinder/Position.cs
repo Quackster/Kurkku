@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Kurkku.Game
 {
@@ -60,21 +62,57 @@ namespace Kurkku.Game
 
             return room.Mapping.Tiles[X, Y];
         }
+
+        /// <summary>
+        /// Get if the position is adjacent to this position
+        /// </summary>
         public bool Touches(Position position)
         {
             return GetDistanceSquared(position) <= 2;
         }
 
+
+        /// <summary>
+        /// Add coordinates to current position
+        /// </summary>
         public Position Add(Position other)
         {
             return new Position(other.X + X, other.Y + Y, other.Z + Z);
         }
 
+        /// <summary>
+        /// Subtract coordinates to current position
+        /// </summary>
         public Position Subtract(Position other)
         {
             return new Position(other.X - X, other.Y - Y, other.Z - Z);
         }
 
+        /// <summary>
+        /// Get the closest tile to this current tile
+        /// </summary>
+        public Position ClosestTile(Room room, Position other, IEntity entity = null)
+        {
+            List<Position> potentialTiles = new List<Position>();
+
+            for (int i = 0; i < Pathfinder.MovePoints.Length; i++)
+                potentialTiles.Add(Copy() + Pathfinder.MovePoints[i]);
+
+
+            potentialTiles.RemoveAll(x => !RoomTile.IsValidTile(room, entity, x));
+
+            if (potentialTiles.Count > 0)
+            {
+                potentialTiles = potentialTiles.OrderBy(x => x.GetDistanceSquared(other)).ToList();
+                return potentialTiles[0];
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Get distance between two coordinates
+        /// </summary>
         public int GetDistanceSquared(Position point)
         {
             int dx = X - point.X;

@@ -123,6 +123,12 @@ namespace Kurkku.Game
 
             Goal = new Position(x, y);
 
+            var goalTile = Goal.GetTile(Room);
+
+            if (goalTile != null && goalTile.HighestItem != null)
+                if (goalTile.HighestItem.Interactor.OnWalkRequest(Entity, Goal))
+                    return;
+
             if (!RoomTile.IsValidTile(Room, Entity, Goal))
                 return;
 
@@ -133,12 +139,6 @@ namespace Kurkku.Game
 
             if (pathList.Count > 0)
             {
-                var goalTile = Goal.GetTile(Room);
-
-                if (goalTile != null && goalTile.HighestItem != null)
-                    if (goalTile.HighestItem.Interactor.OnWalkRequest(Entity, Goal))
-                        return;
-
                 PathList = pathList;
                 IsWalking = true;
             }

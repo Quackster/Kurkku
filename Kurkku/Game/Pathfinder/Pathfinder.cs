@@ -168,7 +168,7 @@ namespace Kurkku.Game
             return true;
         }
 
-        private static Position[] MovePoints = new Position[]
+        public static Position[] MovePoints = new Position[]
         {
             new Position(-1, -1),
             new Position(0, -1),
