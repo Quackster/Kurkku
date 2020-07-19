@@ -125,6 +125,7 @@ namespace Kurkku.Game
                 case InteractorType.BED:
                 case InteractorType.CHAIR:
                 case InteractorType.DEFAULT:
+                case InteractorType.DICE:
                     Data.ExtraData = state;
                     Update();
                     break;

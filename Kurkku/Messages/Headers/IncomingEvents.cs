@@ -64,5 +64,6 @@
         public static readonly short SaveMoodlightMessageEvent = 2541;
         public static readonly short InteractItemMessageEvent = 3820;
         public static readonly short ThrowDiceMessageEvent = 3101;
+        public static readonly short CloseDiceMessageEvent = 22;
     }
 }

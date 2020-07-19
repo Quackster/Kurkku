@@ -16,7 +16,7 @@ namespace Kurkku.Game
         public Item Item { get; }
         public virtual ExtraDataType ExtraDataType { get; }
         public virtual bool RequiresTick { get; }
-        public ConcurrentDictionary<string, QueuedStateData> QueuedStates { get; set; }
+        public ConcurrentDictionary<string, QueuedEvent> EventQueue { get; set; }
         #endregion
 
         #region Constructor
@@ -25,7 +25,7 @@ namespace Kurkku.Game
         {
             Item = item;
             NeedsExtraDataUpdate = true;
-            QueuedStates = new ConcurrentDictionary<string, QueuedStateData>();
+            EventQueue = new ConcurrentDictionary<string, QueuedEvent>();
         }
 
         #endregion
@@ -58,7 +58,7 @@ namespace Kurkku.Game
         /// </summary>
         public void TryTickState()
         {
-            foreach (var kvp in QueuedStates.ToArray())
+            foreach (var kvp in EventQueue.ToArray())
             {
                 var key = kvp.Key;
                 var queuedStateData = kvp.Value;
@@ -68,8 +68,8 @@ namespace Kurkku.Game
 
                 if (queuedStateData.TicksTimer == 0)
                 {
-                    QueuedStates.Remove(key);
-                    ProcessTickState(key, queuedStateData.Attributes);
+                    EventQueue.Remove(key);
+                    ProcessQueuedEvent(queuedStateData);
                 }
             }
         }
@@ -77,12 +77,12 @@ namespace Kurkku.Game
         /// <summary>
         /// Queue state to process for the future
         /// </summary>
-        public void QueueState(string state, double time, Dictionary<object, object> attributes)
+        public void QueueEvent(string state, double time, Dictionary<object, object> attributes)
         {
-            if (QueuedStates.ContainsKey(state))
-                QueuedStates.Remove(state);
+            if (EventQueue.ContainsKey(state))
+                EventQueue.Remove(state);
 
-            QueuedStates.TryAdd(state, new QueuedStateData(RoomTaskManager.GetProcessTime(time), attributes));
+            EventQueue.TryAdd(state, new QueuedEvent(state, RoomTaskManager.GetProcessTime(time), attributes));
         }
 
         #endregion
@@ -103,31 +103,58 @@ namespace Kurkku.Game
         public virtual object GetJsonObject() { return null; }
         public virtual void OnTick() { }
         public virtual void OnTickComplete() { }
-        public virtual void ProcessTickState(string state, Dictionary<object, object> attributes) { }
+        public virtual void ProcessQueuedEvent(QueuedEvent queuedEvent) { }
         public virtual void OnStop(IEntity entity) { }
         public virtual void OnInteract(IEntity entity) { }
-        public virtual void OnPickup(IEntity entity) { }
-        public virtual void OnPlace(IEntity entity) { }
+        public virtual void OnPickup(IEntity entity) { EventQueue.Clear(); }
+        public virtual void OnPlace(IEntity entity) { EventQueue.Clear(); }
         public virtual bool OnWalkRequest(IEntity entity, Position goal) { return false; }
 
         #endregion
     }
 
-    public class QueuedStateData
+    public class QueuedEvent
     {
         #region Properties
 
+        public string EventName { get; set; }
         public int TicksTimer { get; set; } 
-        public Dictionary<object, object> Attributes { get; set; }
+        private Dictionary<object, object> Attributes { get; set; }
 
         #endregion
 
         #region Constructor
 
-        public QueuedStateData(int ticksTimer, Dictionary<object, object> attributes)
+        public QueuedEvent(string eventName, int ticksTimer, Dictionary<object, object> attributes)
         {
+            EventName = eventName;
             TicksTimer = ticksTimer;
             Attributes = attributes;
+        }
+
+        #endregion
+
+        #region Public methods
+
+        /// <summary>
+        /// Has an attribute
+        /// </summary>
+        public bool HasAttribute(object key)
+        {
+            return Attributes.ContainsKey(key);
+        }
+
+        /// <summary>
+        /// Get attribute by class it expects
+        /// </summary>
+        public T GetAttribute<T>(object key)
+        {
+            if (Attributes.ContainsKey(key))
+            {
+                return (T)Attributes[key];
+            }
+
+            return default(T);
         }
 
         #endregion

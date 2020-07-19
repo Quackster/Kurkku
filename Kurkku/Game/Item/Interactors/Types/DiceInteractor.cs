@@ -5,6 +5,12 @@ namespace Kurkku.Game
 {
     public class DiceInteractor : Interactor
     {
+        public static class DiceAttributes
+        {
+            public const string ROLL_DICE = "ROLL_DICE";
+            public const string ENTITY = "ENTITY";
+        }
+
         #region Overridden Properties
 
         public override ExtraDataType ExtraDataType => ExtraDataType.StringData;
@@ -18,6 +24,9 @@ namespace Kurkku.Game
 
         #endregion
 
+        /// <summary>
+        /// Find closest sourrounding avaliable tile for player
+        /// </summary>
         public override bool OnWalkRequest(IEntity entity, Position goal)
         {
             var closestTile = Item.Position.ClosestTile(Item.Room, entity.RoomEntity.Position, entity);
@@ -31,28 +40,55 @@ namespace Kurkku.Game
             return false;
         }
 
+        /// <summary>
+        /// On interact dice handler
+        /// </summary>
         public override void OnInteract(IEntity entity)
         {
             if (!Item.Position.Touches(entity.RoomEntity.Position))
                 return;
 
-            // Queue future task for rolling dice
-            if (!QueuedStates.ContainsKey("ROLL_DICE"))
+            int.TryParse(Item.Data.ExtraData, out int currentMode);
+
+            if (currentMode > 0)
             {
-                QueueState("ROLL_DICE", 4.0, new Dictionary<object, object>
+                Item.UpdateStatus("0");
+                Item.Save();
+                return;
+            }
+            else
+            {
+                // Queue future task for rolling dice
+                if (!EventQueue.ContainsKey(DiceAttributes.ROLL_DICE))
                 {
-                    { "ENTITY", entity }
-                });
+                    Item.UpdateStatus("-1");
+                    Item.Save();
+
+                    // Queue dice result delay
+                    QueueEvent(DiceAttributes.ROLL_DICE, 2.0, new Dictionary<object, object>()
+                    {
+                        [DiceAttributes.ENTITY] = entity
+                    });
+                }
             }
         }
 
-        public override void ProcessTickState(string state, Dictionary<object, object> attributes) 
+        /// <summary>
+        /// Process future state
+        /// </summary>
+        public override void ProcessQueuedEvent(QueuedEvent queuedEvent) 
         {
-            switch (state)
+            if (!queuedEvent.HasAttribute(DiceAttributes.ENTITY))
+                return;
+
+            var entity = queuedEvent.GetAttribute<IEntity>(DiceAttributes.ENTITY);
+
+            switch (queuedEvent.EventName)
             {
-                case "ROLL_DICE":
+                case DiceAttributes.ROLL_DICE:
                     {
-                        Console.WriteLine("dice rolled!");
+                        Item.UpdateStatus("3");
+                        Item.Save();
                     }
                     break;
             }

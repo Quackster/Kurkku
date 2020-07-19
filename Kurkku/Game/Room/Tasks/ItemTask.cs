@@ -40,7 +40,7 @@ namespace Kurkku.Game
             {
                 foreach (Item item in room.ItemManager.Items.Values)
                 {
-                    if (item.Interactor.RequiresTick || item.Interactor.QueuedStates.Count > 0)
+                    if (item.Interactor.RequiresTick || item.Interactor.EventQueue.Count > 0)
                     {
                         if (item.Interactor.CanTick())
                         {
