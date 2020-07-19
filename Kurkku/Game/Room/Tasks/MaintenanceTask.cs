@@ -5,9 +5,9 @@ using Kurkku.Util;
 
 namespace Kurkku.Game
 {
-    public class MaintenanceTask : IRoomTask
+    public class StatusTask : IRoomTask
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(MaintenanceTask));
+        private static readonly ILog log = LogManager.GetLogger(typeof(StatusTask));
         private Room room;
 
         /// <summary>
@@ -18,7 +18,7 @@ namespace Kurkku.Game
         /// <summary>
         /// Constructor for the entity task
         /// </summary>
-        public MaintenanceTask(Room room)
+        public StatusTask(Room room)
         {
             this.room = room;
         }

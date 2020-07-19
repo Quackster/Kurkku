@@ -4,7 +4,12 @@ namespace Kurkku.Game
 {
     public class StickieInteractor : Interactor
     {
+        #region Overridden Properties
+
         public override ExtraDataType ExtraDataType => ExtraDataType.StringData;
+        public override bool RequiresTick => false;
+
+        #endregion
 
         public StickieInteractor(Item item) : base(item) { }
 

@@ -7,7 +7,12 @@ namespace Kurkku.Game
 {
     public class MoodlightInteractor : Interactor
     {
+        #region Overridden Properties
+
         public override ExtraDataType ExtraDataType => ExtraDataType.StringData;
+        public override bool RequiresTick => false;
+
+        #endregion
 
         public MoodlightInteractor(Item item) : base(item)
         {

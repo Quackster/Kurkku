@@ -11,6 +11,7 @@ namespace Kurkku.Game
         protected string ExtraData { get; set; }
         public Item Item { get; }
         public virtual ExtraDataType ExtraDataType { get; }
+        public virtual bool RequiresTick { get; }
 
         #endregion
 
@@ -26,21 +27,6 @@ namespace Kurkku.Game
 
         #region Tick methods
 
-        public bool RequiresTick()
-        {
-            return Item.Definition.InteractorType == InteractorType.ROLLER;
-        }
-
-        public bool HasTicks()
-        {
-            return (TicksTimer > 0);
-        }
-
-        public void SetTicks(int time)
-        {
-            TicksTimer = time;
-        }
-
         protected void CancelTicks()
         {
             TicksTimer = -1;
@@ -48,8 +34,6 @@ namespace Kurkku.Game
 
         public bool CanTick()
         {
-            //OnTick();
-
             if (TicksTimer > 0)
                 TicksTimer--;
 
@@ -60,12 +44,7 @@ namespace Kurkku.Game
             }
 
             return false;
-            /*if (TicksTimer == 0)
-            {
-                CancelTicks();
-                OnTickComplete();
-            }*/
-            }
+        }
 
         #endregion
 

@@ -27,7 +27,7 @@ namespace Kurkku.Messages.Incoming
                 return;
 
             string wallPosition = request.ReadString();
-            room.Mapping.MoveItem(item, wallPosition: wallPosition);
+            room.FurnitureManager.MoveItem(item, wallPosition: wallPosition);
         }
     }
 }

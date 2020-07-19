@@ -27,7 +27,7 @@ namespace Kurkku.Messages.Incoming
             if (item == null && item.Data.OwnerId != player.Details.Id && !room.IsOwner(player.Details.Id)) // TODO: Staff check
                 return;
 
-            room.Mapping.RemoveItem(item, player);
+            room.FurnitureManager.RemoveItem(item, player);
 
             var owner = PlayerManager.Instance.GetPlayerById(item.Data.OwnerId);
 

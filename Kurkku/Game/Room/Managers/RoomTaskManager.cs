@@ -12,7 +12,6 @@ namespace Kurkku.Game
         public static readonly RollerItemTask RollerItemTask = new RollerItemTask();
 
         private Room room;
-        private static int processMs = 500;
 
         #endregion
 
@@ -53,8 +52,8 @@ namespace Kurkku.Game
         private void RegisterTasks()
         {
             Tasks.Add(new EntityTask(room));
-            Tasks.Add(new MaintenanceTask(room));
-            Tasks.Add(new ItemTask(room));
+            Tasks.Add(new StatusTask(room));
+            Tasks.Add(new ItemTickTask(room));
         }
 
         /// <summary>
@@ -71,7 +70,7 @@ namespace Kurkku.Game
         /// </summary>
         public static int GetProcessTime(double time)
         {
-            return(int)(time / 0.5);
+            return (int)(time / 0.5);
         }
 
         #endregion

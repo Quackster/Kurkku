@@ -18,6 +18,7 @@ namespace Kurkku.Game
         public RoomTaskManager TaskManager { get; }
         public RoomItemManager ItemManager { get; }
         public RoomMapping Mapping { get; set; }
+        public RoomFurniture FurnitureManager { get; set; }
         public RoomModel Model => RoomManager.Instance.RoomModels.FirstOrDefault(x => x.Data.Model == Data.Model);
         public ConcurrentDictionary<int, IEntity> Entities { get; }
         public bool IsActive { get; set; }
@@ -34,6 +35,7 @@ namespace Kurkku.Game
             Mapping = new RoomMapping(this);
             TaskManager = new RoomTaskManager(this);
             ItemManager = new RoomItemManager(this);
+            FurnitureManager = new RoomFurniture(this);
         }
 
         #endregion

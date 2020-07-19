@@ -1,48 +1,42 @@
 ﻿using Kurkku.Messages.Outgoing;
-using Kurkku.Util.Extensions;
-using log4net;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Kurkku.Game
 {
     public class RollerInteractor : Interactor
     {
-        #region Fields
-
-        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        
-        #endregion
-
-        public override ExtraDataType ExtraDataType => ExtraDataType.StringData;
+        #region Properties
 
         public double TaskProcessTime { get { return 2.0; } }
+        public List<RollingData> RollingItems { get; set; }
+        public IEntity RollingEntity { get; set; }
 
-        public QueuedRollerData queuedRoller;
+        #endregion
+
+        #region Overridden Properties
+
+        public override ExtraDataType ExtraDataType => ExtraDataType.StringData;
+        public override bool RequiresTick => true;
+
+        #endregion
 
         public RollerInteractor(Item item) : base(item) { }
 
         public override void OnTick()
         {
-            try
-            {
-                var room = Item.Room;
-                var roller = this.Item;
-
                 var itemsRolling = new Dictionary<Item, Tuple<Item, Position>>();
                 var entitiesRolling = new Dictionary<IEntity, Tuple<Item, Position>>();
 
-                if (roller.CurrentTile == null)
+                if (Item.CurrentTile == null)
                     return;
 
-                var rollerTile = roller.CurrentTile;
-                var currentRollerData = new QueuedRollerData(roller);
+                var rollerTile = Item.CurrentTile;
+
+                RollingItems = new List<RollingData>();
+                RollingEntity = null;
 
                 // Process items on rollers
                 foreach (Item item in rollerTile.GetTileItems())
@@ -53,12 +47,12 @@ namespace Kurkku.Game
                     if (itemsRolling.ContainsKey(item))
                         continue;
 
-                    RoomTaskManager.RollerItemTask.TryGetRollingData(item, roller, room, out var nextPosition);
+                    RoomTaskManager.RollerItemTask.TryGetRollingData(item, Item, Item.Room, out var nextPosition);
 
                     if (nextPosition != null)
                     {
-                        itemsRolling.Add(item, Tuple.Create(roller, nextPosition));
-                        currentRollerData.RollingItems.Add(item.RollingData);
+                        itemsRolling.Add(item, Tuple.Create(Item, nextPosition));
+                        RollingItems.Add(item.RollingData);
                     }
 
                 }
@@ -72,65 +66,46 @@ namespace Kurkku.Game
 
                     if (!entitiesRolling.ContainsKey(entity))
                     {
-                        RoomTaskManager.RollerEntityTask.TryGetRollingData(entity, roller, room, out var nextPosition);
+                        RoomTaskManager.RollerEntityTask.TryGetRollingData(entity, Item, Item.Room, out var nextPosition);
 
                         if (nextPosition != null)
                         {
-                            entitiesRolling.Add(entity, Tuple.Create(roller, nextPosition));
-                            currentRollerData.RollingEntity = entity;
+                            entitiesRolling.Add(entity, Tuple.Create(Item, nextPosition));
+                            RollingEntity = entity;
                         }
                     }
                 }
-
-                // We're rolling! So set the variable
-                if (currentRollerData.RollingItems.Count > 0 || currentRollerData.RollingEntity != null)
-                {
-                    queuedRoller = currentRollerData;
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error("RollerTask crashed: ", ex);
-            }
         }
 
         public override void OnTickComplete()
         {
-            if (queuedRoller != null)
+            if (RollingItems.Any() || RollingEntity != null)
             {
-                // Perform roll animation for entity
-                var queuedRollerData = queuedRoller;
-                var entity = queuedRollerData.RollingEntity;
+                var entity = RollingEntity;
+                var rollingItems = new List<RollingData>(RollingItems);
 
                 if (entity != null)
-                {
                     RoomTaskManager.RollerEntityTask.DoRoll(entity, entity.RoomEntity.RollingData.Roller, Item.Room, entity.RoomEntity.RollingData.FromPosition, entity.RoomEntity.RollingData.NextPosition);
-                }
 
                 // Perform roll animation for item
-                foreach (var item in queuedRollerData.RollingItems)
+                foreach (var item in rollingItems)
                 {
-                    if (!item.RollingItem.IsRollingBlocked)
-                        RoomTaskManager.RollerItemTask.DoRoll(item.RollingItem, item.Roller, Item.Room, item.FromPosition, item.NextPosition);
+                    if (item.RollingItem.IsRollingBlocked)
+                        continue;
 
+                    RoomTaskManager.RollerItemTask.DoRoll(item.RollingItem, item.Roller, Item.Room, item.FromPosition, item.NextPosition);
                     item.RollingItem.Save();
                 }
 
                 // Send roller packet
-                if (queuedRollerData.RollingItems.Count > 0 || queuedRollerData.RollingEntity != null)
+                if (RollingItems.Count > 0 || RollingEntity != null)
                 {
-                    var rollingItems = new List<RollingData>(queuedRollerData.RollingItems);
-                    rollingItems.RemoveAll(item => item.RollingItem.IsRollingBlocked);
-
-                    var entityRollerData = queuedRollerData.RollingEntity == null ? null :
-                            (queuedRollerData.RollingEntity.RoomEntity == null ? null : queuedRollerData.RollingEntity.RoomEntity.RollingData);
-
-                    Item.Room.Send(new SlideObjectBundleComposer(queuedRollerData.Roller, rollingItems, entityRollerData));
+                    Item.Room?.Send(new SlideObjectBundleComposer(Item, rollingItems.Where(x => !x.RollingItem.IsRollingBlocked).ToList(), entity?.RoomEntity?.RollingData));
 
                     // Delay after rolling finished
                     Task.Delay((int)(TaskProcessTime * 0.4) * 1000).ContinueWith(t =>
                     {
-                        foreach (RollingData rollingData in queuedRollerData.RollingItems)
+                        foreach (RollingData rollingData in rollingItems)
                         {
                             rollingData.RollingItem.IsRollingBlocked = false;
                             rollingData.RollingItem.RollingData = null;
@@ -146,11 +121,9 @@ namespace Kurkku.Game
                         }
                     });
                 }
-
-                queuedRoller = null;
             }
 
-            SetTicks(RoomTaskManager.GetProcessTime(TaskProcessTime));
+            TicksTimer = RoomTaskManager.GetProcessTime(TaskProcessTime);
         }
     }
 }

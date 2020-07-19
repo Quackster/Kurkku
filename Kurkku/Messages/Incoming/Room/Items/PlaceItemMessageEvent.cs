@@ -44,7 +44,7 @@ namespace Kurkku.Messages.Incoming
                     return;
 
                 var wallPosition = $"{placementData[1]} {placementData[2]} {placementData[3]}";
-                room.Mapping.AddItem(item, wallPosition: wallPosition, player: player);
+                room.FurnitureManager.AddItem(item, wallPosition: wallPosition, player: player);
             }
             else
             {
@@ -63,7 +63,7 @@ namespace Kurkku.Messages.Incoming
                     return;
                 }
 
-                room.Mapping.AddItem(item, position, player: player);
+                room.FurnitureManager.AddItem(item, position, player: player);
             }
 
             player.Inventory.RemoveItem(item);

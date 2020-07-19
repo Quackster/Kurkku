@@ -58,7 +58,7 @@ namespace Kurkku.Messages.Incoming
                 return;
             }
 
-            room.Mapping.MoveItem(item, new Position
+            room.FurnitureManager.MoveItem(item, new Position
             {
                 X = x,
                 Y = y,

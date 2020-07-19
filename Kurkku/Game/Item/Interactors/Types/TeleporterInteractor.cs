@@ -11,7 +11,12 @@ namespace Kurkku.Game
         public const string TELEPORTER_OPEN = "1";
         public const string TELEPORTER_EFFECTS = "2";
 
+        #region Overridden Properties
+
         public override ExtraDataType ExtraDataType => ExtraDataType.StringData;
+        public override bool RequiresTick => false;
+
+        #endregion
 
         public TeleporterInteractor(Item item) : base(item) { }
 

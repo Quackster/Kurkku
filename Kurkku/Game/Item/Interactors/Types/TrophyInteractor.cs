@@ -6,7 +6,12 @@ namespace Kurkku.Game
 {
     public class TrophyInteractor : Interactor
     {
+        #region Overridden Properties
+
         public override ExtraDataType ExtraDataType => ExtraDataType.StringData;
+        public override bool RequiresTick => false;
+
+        #endregion
 
         public TrophyInteractor(Item item) : base(item)
         {

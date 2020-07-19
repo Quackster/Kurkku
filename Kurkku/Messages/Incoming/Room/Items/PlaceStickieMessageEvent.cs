@@ -27,7 +27,7 @@ namespace Kurkku.Messages.Incoming
                 return;
 
             string wallPosition = request.ReadString();
-            room.Mapping.AddItem(item, wallPosition: wallPosition);
+            room.FurnitureManager.AddItem(item, wallPosition: wallPosition);
 
             player.Inventory.RemoveItem(item);
             player.Send(new FurniListRemoveComposer(item.Id));

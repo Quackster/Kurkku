@@ -1,15 +1,19 @@
 ﻿using log4net;
 using System;
-using System.Collections.Generic;
 using Kurkku.Util.Extensions;
-using Kurkku.Messages.Outgoing;
-using System.Linq;
 using System.Collections.Concurrent;
+using System.Reflection;
 
 namespace Kurkku.Game
 {
-    public class ItemTask : IRoomTask
+    public class ItemTickTask : IRoomTask
     {
+        #region Fields
+
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        #endregion
+
         private Room room;
         private ConcurrentQueue<Item> tickedItems;// = new ConcurrentQueue<Item>();
 
@@ -21,7 +25,7 @@ namespace Kurkku.Game
         /// <summary>
         /// Constructor for the item task
         /// </summary>
-        public ItemTask(Room room)
+        public ItemTickTask(Room room)
         {
             this.room = room;
             this.tickedItems = new ConcurrentQueue<Item>(); 
@@ -32,21 +36,28 @@ namespace Kurkku.Game
         /// </summary>
         public override void Run(object state)
         {
-            foreach (Item item in room.ItemManager.Items.Values)
+            try
             {
-                if (item.Interactor.RequiresTick())
+                foreach (Item item in room.ItemManager.Items.Values)
                 {
-                    if (item.Interactor.CanTick())
+                    if (item.Interactor.RequiresTick)
                     {
-                        item.Interactor.OnTick();
-                        tickedItems.Enqueue(item);
+                        if (item.Interactor.CanTick())
+                        {
+                            item.Interactor.OnTick();
+                            tickedItems.Enqueue(item);
+                        }
                     }
                 }
-            }
 
-            foreach (var item in tickedItems.Dequeue())
+                foreach (var item in tickedItems.Dequeue())
+                {
+                    item.Interactor.OnTickComplete();
+                }
+            }
+            catch (Exception ex)
             {
-                item.Interactor.OnTickComplete();
+                log.Error("Item tick task crashed: ", ex);
             }
         }
     }

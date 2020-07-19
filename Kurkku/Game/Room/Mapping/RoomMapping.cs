@@ -5,12 +5,6 @@ namespace Kurkku.Game
 {
     public class RoomMapping : ILoadable
     {
-        public enum MappingAction
-        {
-            ADD,
-            REMOVE
-        }
-
         #region Fields
 
         private Room room;
@@ -35,46 +29,6 @@ namespace Kurkku.Game
         #endregion
 
         #region Public methods
-
-        /// <summary>
-        /// Mapping item handler for adding/removing item to collision map
-        /// </summary>
-        public void MapItem(Item item, MappingAction mappingAction)
-        {
-            switch (mappingAction)
-            {
-                case MappingAction.ADD:
-                    {
-                        // Add item to tile
-                        foreach (var affectedPosition in AffectedTile.GetAffectedTiles(item))
-                        {
-                            var roomTile = affectedPosition.GetTile(room);
-
-                            if (roomTile == null)
-                                continue;
-
-                            roomTile.AddItem(item);
-                        }
-
-                        break;
-                    }
-                case MappingAction.REMOVE:
-                    {
-                        // Remove item from tile
-                        foreach (var affectedPosition in AffectedTile.GetAffectedTiles(item))
-                        {
-                            var roomTile = affectedPosition.GetTile(room);
-
-                            if (roomTile == null)
-                                continue;
-
-                            roomTile.RemoveItem(item);
-                        }
-
-                        break;
-                    }
-            }
-        }
 
         /// <summary>
         /// Regenerate the room map
@@ -114,181 +68,29 @@ namespace Kurkku.Game
         }
 
         /// <summary>
-        /// Add item to map handler
+        /// Mapping item handler for adding/removing item to collision map
         /// </summary>
-        internal void AddItem(Item item, Position position = null, string wallPosition = null, Player player = null)
+        public void AddItem(Item item)
         {
-            item.Data.RoomId = room.Data.Id;
-
-            if (item.Definition.HasBehaviour(ItemBehaviour.WALL_ITEM))
+            // Add item to tile
+            foreach (var affectedPosition in AffectedTile.GetAffectedTiles(item))
             {
-                item.Data.WallPosition = wallPosition;
-                room.Send(new WallItemComposer(item));
-            }
-            else
-            {
-                RoomTile tile = position.GetTile(room);
+                var roomTile = affectedPosition.GetTile(room);
 
-                if (tile == null)
-                    return;
+                if (roomTile == null)
+                    continue;
 
-                position.Z = tile.TileHeight;
-
-                item.Data.X = position.X;
-                item.Data.Y = position.Y;
-                item.Data.Z = position.Z;
-                item.Data.Rotation = position.Rotation;
-                item.ApplyPosition();
-
-                HandleItemAdjusted(item, false);
-
-                room.Send(new FloorItemComposer(item));
-                MapItem(item, MappingAction.ADD);
-                item.UpdateEntities();
+                roomTile.AddItem(item);
             }
 
-            item.Interactor.OnPlace(player);
-            item.Save();
-
-            room.ItemManager.AddItem(item);
         }
 
         /// <summary>
-        /// Move item handler
+        /// Mapping item handler for adding/removing item to collision map
         /// </summary>
-        internal void MoveItem(Item item, Position position = null, string wallPosition = null)
+        public void RemoveItem(Item item)
         {
-            if (item.Definition.HasBehaviour(ItemBehaviour.WALL_ITEM))
-            {
-                item.Data.WallPosition = wallPosition;
-                room.Send(new UpdateWallItemComposer(item));
-            }
-            else
-            {
-                bool isRotation = false;
-
-                if (item.Position == new Position(position.X, position.Y) && item.Position.Rotation != position.Rotation)
-                    isRotation = true;
-
-                var oldPosition = item.Position.Copy();
-                var oldTile = item.Position.GetTile(room);
-
-                if (oldTile == null)
-                    return;
-
-                // Move item from tile
-                foreach (var affectedPosition in AffectedTile.GetAffectedTiles(item))
-                {
-                    var roomTile = affectedPosition.GetTile(room);
-
-                    if (roomTile == null)
-                        continue;
-
-                    roomTile.RemoveItem(item);
-                }
-
-                var newTile = position.GetTile(room);
-
-                if (newTile == null)
-                    return;
-
-                position.Z = newTile.TileHeight;
-
-                item.Data.X = position.X;
-                item.Data.Y = position.Y;
-                item.Data.Z = position.Z;
-                item.Data.Rotation = position.Rotation;
-                item.ApplyPosition();
-
-                HandleItemAdjusted(item, isRotation);
-
-                // Move item to new tile
-                foreach (var affectedPosition in AffectedTile.GetAffectedTiles(item))
-                {
-                    var roomTile = affectedPosition.GetTile(room);
-
-                    if (roomTile == null)
-                        continue;
-
-                    roomTile.AddItem(item);
-                }
-
-                item.UpdateEntities(oldPosition);
-                room.Send(new UpdateFloorItemComposer(item));
-            }
-
-
-            item.Save();
-        }
-
-        private void HandleItemAdjusted(Item item, bool isRotation)
-        {
-            RoomTile tile = item.Position.GetTile(room);
-
-            if (tile == null)
-            {
-                return;
-            }
-
-            if (!isRotation)
-            {
-                Item highestItem = tile.HighestItem;
-                double tileHeight = tile.TileHeight;
-
-                if (highestItem != null && highestItem.Id == item.Id)
-                {
-                    tileHeight -= highestItem.Height;
-
-                    double defaultHeight = room.Model.TileHeights[item.Position.X, item.Position.Y];//this.room.getModel().getTileHeight(item.getPosition().getX(), item.getPosition().getY());
-
-                    if (tileHeight < defaultHeight)
-                    {
-                        tileHeight = defaultHeight;
-                    }
-                }
-
-                item.Position.Z = tileHeight;//.getPosition().setZ(tileHeight);
-
-                if (highestItem != null && highestItem.RollingData != null)
-                {
-                    Item roller = highestItem.RollingData.Roller;
-
-                    if (highestItem.GetItemBelow() != null && highestItem.GetItemBelow().Definition.HasBehaviour(ItemBehaviour.ROLLER))
-                    {
-                        // If the difference between the roller, and the next item up is more than 0.5, then set the item below the floating item
-                        if (Math.Abs(highestItem.Position.Z - roller.Position.Z) >= 0.5)
-                        {
-                            item.Position.Z = roller.Position.Z + roller.Definition.GetPositiveTopHeight();//.getPosition().setZ(roller.getPosition().getZ() + roller.getDefinition().getPositiveTopHeight());
-                        }
-                    }
-
-                    item.Position.Z = roller.Position.Z + roller.Definition.GetPositiveTopHeight();//getPosition().setZ(roller.getPosition().getZ() + roller.getDefinition().getPositiveTopHeight());
-
-                    /*if (!highestItem.hasBehaviour(ItemBehaviour.CAN_STACK_ON_TOP)) {
-                        item.getPosition().setZ(roller.getPosition().getZ() + roller.getDefinition().getTopHeight());
-
-                        /*for (Item tileItem : tile.getItems()) {
-                            if (tileItem.getPosition().getZ() >= item.getPosition().getZ()) {
-                                tileItem.getRollingData().setHeightUpdate(item.getDefinition().getTopHeight());
-                            }
-                        }
-                    }*/
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// Remove item handler
-        /// </summary>
-        public void RemoveItem(Item item, Player player)
-        {
-            RoomTile tile = item.Position.GetTile(room);
-
-            if (tile == null)
-                return;
-
-
+            // Remove item from tile
             foreach (var affectedPosition in AffectedTile.GetAffectedTiles(item))
             {
                 var roomTile = affectedPosition.GetTile(room);
@@ -299,29 +101,6 @@ namespace Kurkku.Game
                 roomTile.RemoveItem(item);
             }
 
-            if (item.Definition.HasBehaviour(ItemBehaviour.WALL_ITEM))
-            {
-                room.Send(new RemoveWallItemComposer(item));
-                item.Data.WallPosition = string.Empty;
-            }
-            else
-            {
-                room.Send(new RemoveFloorItemComposer(item));
-                item.UpdateEntities();
-
-                item.Data.X = item.Position.X;
-                item.Data.Y = item.Position.Y;
-                item.Data.Z = item.Position.Z;
-                item.Data.Rotation = item.Position.Rotation;
-                item.ApplyPosition();
-            }
-
-            item.Interactor.OnPickup(player);
-
-            item.Data.RoomId = 0;
-            item.Save();
-
-            room.ItemManager.RemoveItem(item);
         }
 
         #endregion

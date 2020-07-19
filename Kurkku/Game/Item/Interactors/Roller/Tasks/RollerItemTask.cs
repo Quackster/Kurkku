@@ -202,14 +202,14 @@ namespace Kurkku.Game
 
         public void DoRoll(Item item, Item roller, Room room, Position fromPosition, Position nextPosition)
         {
-            room.Mapping.MapItem(item, RoomMapping.MappingAction.REMOVE);
+            room.Mapping.RemoveItem(item);
 
             item.Data.X = nextPosition.X;
             item.Data.Y = nextPosition.Y;
             item.Data.Z = nextPosition.Z;
             item.ApplyPosition();
 
-            room.Mapping.MapItem(item, RoomMapping.MappingAction.ADD);
+            room.Mapping.AddItem(item);
         }
 
         #endregion
