@@ -10,7 +10,6 @@ namespace Kurkku.Game
         #region Overridden Properties
 
         public override ExtraDataType ExtraDataType => ExtraDataType.StringData;
-        public override bool RequiresTick => false;
 
         #endregion
 

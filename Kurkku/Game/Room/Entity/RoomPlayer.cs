@@ -17,6 +17,7 @@
         public RoomPlayer(Player player) : base((IEntity)player)
         {
             Player = player;
+            TaskObject = new PlayerTaskObject(player);
         }
 
         #endregion

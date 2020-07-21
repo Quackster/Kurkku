@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿
+using System;
+using System.Timers;
 
 namespace Kurkku.Game
 {
@@ -21,7 +23,11 @@ namespace Kurkku.Game
             if (Task != null)
                 return;
 
-            Task = new Timer(new TimerCallback(Run), null, Interval, Interval);
+            Task = new Timer();
+            Task.Interval = Interval;
+            Task.Elapsed += Run;
+            Task.Enabled = true;
+            Task.Start();
         }
 
         /// <summary>
@@ -36,7 +42,7 @@ namespace Kurkku.Game
             Task = null;
         }
 
-        public abstract void Run(object state);
+        public abstract void Run(object sender, ElapsedEventArgs e);
 
         #endregion
     }

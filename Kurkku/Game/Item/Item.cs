@@ -107,7 +107,7 @@ namespace Kurkku.Game
         }
 
 
-        public void UpdateStatus(string state)
+        public void UpdateStatus(string state = "")
         {
             switch (Definition.InteractorType)
             {
@@ -127,10 +127,10 @@ namespace Kurkku.Game
                 case InteractorType.DEFAULT:
                 case InteractorType.DICE:
                     Data.ExtraData = state;
-                    Update();
                     break;
             }
 
+            Update();
         }
 
         /// <summary>

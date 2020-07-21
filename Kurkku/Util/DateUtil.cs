@@ -11,5 +11,13 @@ namespace Kurkku.Util
         {
             return DateTimeOffset.Now.ToUnixTimeSeconds();
         }
+
+        /// <summary>
+        /// Get the current unix timestamp.
+        /// </summary>
+        public static long GetUnixTimestampInMillis()
+        {
+            return DateTimeOffset.Now.ToUnixTimeMilliseconds();
+        }
     }
 }

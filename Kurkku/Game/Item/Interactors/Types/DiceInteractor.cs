@@ -11,16 +11,25 @@ namespace Kurkku.Game
             public const string ENTITY = "ENTITY";
         }
 
+        #region Fields
+
+        public DiceTaskObject taskObject;
+
+        #endregion
+
         #region Overridden Properties
 
         public override ExtraDataType ExtraDataType => ExtraDataType.StringData;
-        public override bool RequiresTick => false;
+        public override ITaskObject TaskObject => taskObject;
 
         #endregion
 
         #region Constructor
 
-        public DiceInteractor(Item item) : base(item) { }
+        public DiceInteractor(Item item) : base(item)
+        {
+            this.taskObject = new DiceTaskObject(item);
+        }
 
         #endregion
 
@@ -59,38 +68,17 @@ namespace Kurkku.Game
             else
             {
                 // Queue future task for rolling dice
-                if (!EventQueue.ContainsKey(DiceAttributes.ROLL_DICE))
+                if (!TaskObject.EventQueue.ContainsKey(DiceAttributes.ROLL_DICE))
                 {
                     Item.UpdateStatus("-1");
                     Item.Save();
 
                     // Queue dice result delay
-                    QueueEvent(DiceAttributes.ROLL_DICE, 2.0, new Dictionary<object, object>()
+                    TaskObject.QueueEvent(DiceAttributes.ROLL_DICE, 2.0, new Dictionary<object, object>()
                     {
                         [DiceAttributes.ENTITY] = entity
                     });
                 }
-            }
-        }
-
-        /// <summary>
-        /// Process future state
-        /// </summary>
-        public override void ProcessQueuedEvent(QueuedEvent queuedEvent) 
-        {
-            if (!queuedEvent.HasAttribute(DiceAttributes.ENTITY))
-                return;
-
-            var entity = queuedEvent.GetAttribute<IEntity>(DiceAttributes.ENTITY);
-
-            switch (queuedEvent.EventName)
-            {
-                case DiceAttributes.ROLL_DICE:
-                    {
-                        Item.UpdateStatus("3");
-                        Item.Save();
-                    }
-                    break;
             }
         }
     }

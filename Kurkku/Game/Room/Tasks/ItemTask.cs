@@ -3,6 +3,9 @@ using System;
 using Kurkku.Util.Extensions;
 using System.Collections.Concurrent;
 using System.Reflection;
+using System.Collections.Generic;
+using System.Linq;
+using System.Timers;
 
 namespace Kurkku.Game
 {
@@ -15,7 +18,8 @@ namespace Kurkku.Game
         #endregion
 
         private Room room;
-        private ConcurrentQueue<Item> tickedItems;// = new ConcurrentQueue<Item>();
+        private ConcurrentQueue<ITaskObject> tickedItems;
+        private List<ITaskObject> queuedItems;
 
         /// <summary>
         /// Set task interval, which is 500ms
@@ -28,32 +32,39 @@ namespace Kurkku.Game
         public ItemTickTask(Room room)
         {
             this.room = room;
-            this.tickedItems = new ConcurrentQueue<Item>(); 
+            this.tickedItems = new ConcurrentQueue<ITaskObject>(); 
         }
 
         /// <summary>
         /// Run method called every 500ms
         /// </summary>
-        public override void Run(object state)
+        public override void Run(object sender, ElapsedEventArgs e)
         {
             try
             {
-                foreach (Item item in room.ItemManager.Items.Values)
+                queuedItems = new List<ITaskObject>();
+                queuedItems.AddRange(room.ItemManager.Items.Values.Where(x => x.Interactor.TaskObject != null).Select(x => x.Interactor.TaskObject).ToList());
+                queuedItems.AddRange(room.EntityManager.GetEntities<Player>().Where(x => x.RoomEntity.TaskObject != null).Select(x => x.RoomEntity.TaskObject).ToList());
+
+                foreach (var taskObject in queuedItems)
                 {
-                    if (item.Interactor.RequiresTick || item.Interactor.EventQueue.Count > 0)
+                    if (taskObject.RequiresTick)
                     {
-                        if (item.Interactor.CanTick())
+                        if (taskObject.CanTick())
                         {
-                            item.Interactor.OnTick();
-                            tickedItems.Enqueue(item);
+                            taskObject.OnTick();
+
+                            if (!tickedItems.Contains(taskObject))
+                                tickedItems.Enqueue(taskObject);
                         }
                     }
+
+                    if (taskObject.EventQueue.Count > 0)
+                        taskObject.TryTickState();
                 }
 
-                foreach (var item in tickedItems.Dequeue())
-                {
-                    item.Interactor.OnTickComplete();
-                }
+                foreach (var taskObject in tickedItems.Dequeue())
+                    taskObject.OnTickComplete();
             }
             catch (Exception ex)
             {
