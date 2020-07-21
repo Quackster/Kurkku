@@ -13,7 +13,8 @@ namespace Kurkku.Game
 
         #region Fields
 
-        public DiceTaskObject taskObject;
+        public DefaultTaskObject taskObject;
+        public Random random;
 
         #endregion
 
@@ -28,7 +29,8 @@ namespace Kurkku.Game
 
         public DiceInteractor(Item item) : base(item)
         {
-            this.taskObject = new DiceTaskObject(item);
+            this.taskObject = new DefaultTaskObject(item); // If we want item ticking, this must not be null
+            this.random = new Random();
         }
 
         #endregion
@@ -74,12 +76,24 @@ namespace Kurkku.Game
                     Item.Save();
 
                     // Queue dice result delay
-                    TaskObject.QueueEvent(DiceAttributes.ROLL_DICE, 2.0, new Dictionary<object, object>()
+                    TaskObject.QueueEvent(DiceAttributes.ROLL_DICE, 2.0, RolledDice, new Dictionary<object, object>()
                     {
-                        [DiceAttributes.ENTITY] = entity
+                        {DiceAttributes.ENTITY, entity}
                     });
                 }
             }
+        }
+
+        /// <summary>
+        /// Handle rolled dice (see task object it 
+        /// </summary>
+        /// <param name="queuedEvent"></param>
+        public void RolledDice(QueuedEvent queuedEvent)
+        {
+            var diceRoll = random.Next(1, 7);
+
+            Item.UpdateStatus(Convert.ToString(diceRoll));
+            Item.Save();
         }
     }
 }

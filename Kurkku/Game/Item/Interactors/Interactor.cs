@@ -57,15 +57,17 @@ namespace Kurkku.Game
 
         public string EventName { get; set; }
         public long TicksTimer { get; set; } 
+        public Action<QueuedEvent> Action { get; set; }
         private Dictionary<object, object> Attributes { get; set; }
 
         #endregion
 
         #region Constructor
 
-        public QueuedEvent(string eventName, long ticksTimer, Dictionary<object, object> attributes)
+        public QueuedEvent(string eventName, Action<QueuedEvent> action, long ticksTimer, Dictionary<object, object> attributes)
         {
             EventName = eventName;
+            Action = action;
             TicksTimer = ticksTimer;
             Attributes = attributes;
         }

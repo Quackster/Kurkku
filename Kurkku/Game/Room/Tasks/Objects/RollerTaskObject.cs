@@ -132,7 +132,6 @@ namespace Kurkku.Game
             TicksTimer = RoomTaskManager.GetProcessTime(TaskProcessTime);
         }
 
-#endregion
-        public override void ProcessQueuedEvent(QueuedEvent queuedEvent) { }
+        #endregion
     }
 }

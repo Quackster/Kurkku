@@ -69,7 +69,7 @@ namespace Kurkku.Game
                 if (queuedStateData.TicksTimer == 0)
                 {
                     EventQueue.Remove(key);
-                    ProcessQueuedEvent(queuedStateData);
+                    queuedStateData.Action(queuedStateData);
                 }
             }
         }
@@ -77,16 +77,20 @@ namespace Kurkku.Game
         /// <summary>
         /// Queue state to process for the future
         /// </summary>
-        public void QueueEvent(string state, double time, Dictionary<object, object> attributes)
+        public void QueueEvent(string state, double time, Action<QueuedEvent> action, Dictionary<object, object> attributes = null)
         {
             if (EventQueue.ContainsKey(state))
                 EventQueue.Remove(state);
 
-            EventQueue.TryAdd(state, new QueuedEvent(state, RoomTaskManager.GetProcessTime(time), attributes));
+            EventQueue.TryAdd(state, new QueuedEvent(state, action, RoomTaskManager.GetProcessTime(time), attributes));
+        }
+
+        internal void QueueEvent(string rOLL_DICE, object rolledDice, double v, Dictionary<object, object> dictionary)
+        {
+            throw new NotImplementedException();
         }
 
         public virtual void OnTick() { }
         public virtual void OnTickComplete() { }
-        public virtual void ProcessQueuedEvent(QueuedEvent queuedEvent) { }
     }
 }

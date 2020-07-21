@@ -40,34 +40,14 @@ namespace Kurkku.Game
         public override void OnTickComplete()
         {
             if (!EventQueue.ContainsKey(PlayerAttribute.AFK_CHECK))
-                QueueEvent(PlayerAttribute.AFK_CHECK, 1.0, new Dictionary<object, object>() { });
+                QueueEvent(PlayerAttribute.AFK_CHECK, 1.0, ProcessTypingStatus, null);
 
             TicksTimer = RoomTaskManager.GetProcessTime(0.5);
         }
 
-        public override void ProcessQueuedEvent(QueuedEvent queuedEvent)
+        public void ProcessTypingStatus(QueuedEvent queuedEvent)
         {
-            var player = (Player)Entity;
 
-            switch (queuedEvent.EventName)
-            {
-                case PlayerAttribute.AFK_CHECK:
-                    {
-                        if (player.RoomUser.TimerManager.SpeechBubbleDate != -1 && DateUtil.GetUnixTimestamp() > player.RoomUser.TimerManager.SpeechBubbleDate)
-                        {
-                            player.RoomUser.TimerManager.ResetSpeechBubbleTimer();
-                            player.RoomUser.Room.Send(new TypingStatusComposer(player.RoomUser.InstanceId, false));
-                        }
-
-                        break;
-                    }
-                case PlayerAttribute.SPEECH_PATTERN:
-                    {
-                        player.RoomEntity.Talk(ChatMessageType.CHAT, "test lol");
-
-                        break;
-                    }
-            }
         }
 
 
