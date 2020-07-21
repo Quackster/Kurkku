@@ -78,9 +78,7 @@ namespace Kurkku.Game
                     Item.UpdateStatus("-1");
                     Item.Save();
 
-                    // Queue dice result delay
-                    TaskObject.QueueEvent(DiceAttributes.ROLL_DICE, 2.0, RolledDice, new Dictionary<object, object>()
-                    {
+                    TaskObject.QueueEvent(DiceAttributes.ROLL_DICE, 2.0, RolledDice, new Dictionary<object, object>() {
                         {DiceAttributes.ENTITY, entity}
                     });
                 }
@@ -90,16 +88,11 @@ namespace Kurkku.Game
         /// <summary>
         /// Handle rolled dice (see task object it 
         /// </summary>
-        /// <param name="queuedEvent"></param>
         public void RolledDice(QueuedEvent queuedEvent)
         {
-            if (Item.IsRolling)
-                return;
-
             if (!queuedEvent.HasAttribute(DiceAttributes.ENTITY))
                 return;
 
-            var entity = queuedEvent.GetAttribute<IEntity>(DiceAttributes.ENTITY);
             var diceRoll = random.Next(1, 7);
 
             Item.UpdateStatus(Convert.ToString(diceRoll));
