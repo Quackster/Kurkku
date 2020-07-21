@@ -56,6 +56,9 @@ namespace Kurkku.Game
         /// </summary>
         public override void OnInteract(IEntity entity)
         {
+            if (Item.IsRolling || entity.RoomEntity.IsWalking)
+                return;
+
             if (!Item.Position.Touches(entity.RoomEntity.Position))
                 return;
 
@@ -90,6 +93,13 @@ namespace Kurkku.Game
         /// <param name="queuedEvent"></param>
         public void RolledDice(QueuedEvent queuedEvent)
         {
+            if (Item.IsRolling)
+                return;
+
+            if (!queuedEvent.HasAttribute(DiceAttributes.ENTITY))
+                return;
+
+            var entity = queuedEvent.GetAttribute<IEntity>(DiceAttributes.ENTITY);
             var diceRoll = random.Next(1, 7);
 
             Item.UpdateStatus(Convert.ToString(diceRoll));
