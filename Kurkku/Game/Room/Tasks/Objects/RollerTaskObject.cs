@@ -50,7 +50,7 @@ namespace Kurkku.Game
                 if (item.Definition.HasBehaviour(ItemBehaviour.ROLLER))
                     continue;
 
-                if (itemsRolling.ContainsKey(item))
+                if (itemsRolling.ContainsKey(item) || item.IsRolling)
                     continue;
 
                 RoomTaskManager.RollerItemTask.TryGetRollingData(item, Item, Item.Room, out var nextPosition);
@@ -70,7 +70,7 @@ namespace Kurkku.Game
             {
                 var entity = rollerEntities.Values.Select(x => x).FirstOrDefault();
 
-                if (!entitiesRolling.ContainsKey(entity))
+                if (!entitiesRolling.ContainsKey(entity) || entity.RoomEntity.IsRolling)
                 {
                     RoomTaskManager.RollerEntityTask.TryGetRollingData(entity, Item, Item.Room, out var nextPosition);
 

@@ -21,6 +21,18 @@ namespace Kurkku.Storage.Database.Access
         }
 
         /// <summary>
+        /// Get the list of users' own rooms
+        /// </summary>
+        public static List<TagData> GetRoomTags(int roomId)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                TagData tagDataAlias = null;
+                return session.QueryOver<TagData>(() => tagDataAlias).Where(() => tagDataAlias.RoomId == roomId).List() as List<TagData>;
+            }
+        }
+
+        /// <summary>
         /// Count the rooms the user has.
         /// </summary>
         public static int CountUserRooms(int userId)

@@ -11,6 +11,7 @@ using Kurkku.Game;
 using Kurkku.Messages;
 using System.Threading;
 using System.Linq;
+using Kurkku.Storage.Database.Data;
 
 namespace Kurkku
 {
@@ -52,10 +53,20 @@ namespace Kurkku
             log.Info("Booting Kurkku - Written by Quackster");
             log.Info("Emulation of Habbo Hotel 2013 flash client");
 
+
             try
             {
                 tryDatabaseConnection();
                 tryGameData();
+
+                var room = RoomDao.GetRoomData(1);
+                var tags = room.Tags;
+
+                foreach (var text in tags)
+                {
+                    Console.WriteLine(text);
+                }
+
                 tryCreateServer();
             }
             catch (Exception ex)

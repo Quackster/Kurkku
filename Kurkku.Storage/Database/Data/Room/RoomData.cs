@@ -1,5 +1,7 @@
 ﻿
 using FluentNHibernate.Mapping;
+using System;
+using System.Collections.Generic;
 
 namespace Kurkku.Storage.Database.Data
 {
@@ -30,6 +32,11 @@ namespace Kurkku.Storage.Database.Data
             Map(x => x.FloorThickness, "floor_thickness").Generated.Insert();
             Map(x => x.Rating, "rating").Generated.Insert();
             Map(x => x.IsOwnerHidden, "is_owner_hidden");
+
+            HasMany(x => x.Tags).Table("tags")
+                .KeyColumn("room_id")
+                .Element("text")
+                .Not.LazyLoad();
 
             References(x => x.OwnerData, "owner_id")
                 .ReadOnly()
@@ -72,6 +79,8 @@ namespace Kurkku.Storage.Database.Data
         public virtual int UsersMax { get; set; }
         public virtual bool IsMuted { get; set; }
         public virtual bool IsOwnerHidden { get; set; }
+        public virtual IList<string> Tags { get; set; }
+
     }
 
     public enum RoomStatus
