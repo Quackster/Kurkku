@@ -57,7 +57,13 @@ namespace Kurkku.Messages.Outgoing
             messageComposer.Data.Add(0);
             messageComposer.Data.Add(0);
             messageComposer.Data.Add("");
-            messageComposer.Data.Add(0); // tags
+            messageComposer.Data.Add(room.Tags.Count);
+
+            foreach (var tag in room.Tags)
+            {
+                messageComposer.Data.Add(tag);
+            }
+
             messageComposer.Data.Add(0);
             messageComposer.Data.Add(0);
             messageComposer.Data.Add(0);

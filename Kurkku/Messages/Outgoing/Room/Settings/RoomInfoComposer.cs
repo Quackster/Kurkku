@@ -35,7 +35,15 @@ namespace Kurkku.Messages.Outgoing
             Data.Add(0);
             Data.Add(0);
             Data.Add("");
-            Data.Add(0); // tags
+
+            Data.Add(roomData.Tags.Count);
+
+            foreach (var tag in roomData.Tags)
+            {
+                Data.Add(tag);
+            }
+
+
             Data.Add(0);
             Data.Add(0);
             Data.Add(0);

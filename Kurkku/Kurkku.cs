@@ -58,15 +58,6 @@ namespace Kurkku
             {
                 tryDatabaseConnection();
                 tryGameData();
-
-                var room = RoomDao.GetRoomData(1);
-                var tags = room.Tags;
-
-                foreach (var text in tags)
-                {
-                    Console.WriteLine(text);
-                }
-
                 tryCreateServer();
             }
             catch (Exception ex)
