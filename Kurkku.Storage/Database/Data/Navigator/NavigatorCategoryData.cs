@@ -11,7 +11,6 @@ namespace Kurkku.Storage.Database.Data
             Map(x => x.Caption, "caption");
             Map(x => x.IsEnabled, "enabled");
             Map(x => x.MinimumRank, "min_rank");
-            Map(x => x.IsTradingAllowed, "trading_allowed");
         }
     }
 
@@ -21,6 +20,5 @@ namespace Kurkku.Storage.Database.Data
         public virtual string Caption { get; set; }
         public virtual bool IsEnabled { get; set; }
         public virtual int MinimumRank { get; set; }
-        public virtual bool IsTradingAllowed { get; set; }
     }
 }

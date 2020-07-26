@@ -65,5 +65,6 @@
         public static readonly short InteractItemMessageEvent = 3820;
         public static readonly short ThrowDiceMessageEvent = 3101;
         public static readonly short CloseDiceMessageEvent = 22;
+        public static readonly short SaveRoomMessageEvent = 3036;
     }
 }

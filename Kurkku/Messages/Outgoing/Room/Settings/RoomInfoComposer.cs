@@ -28,7 +28,7 @@ namespace Kurkku.Messages.Outgoing
             Data.Add(roomData.UsersMax);
             Data.Add(roomData.Description);
             Data.Add(0);
-            Data.Add(roomData.Category.IsTradingAllowed ? 2 : 0); // can category trade?
+            Data.Add(roomData.TradeSetting); // can category trade?
             Data.Add(roomData.Rating);
             Data.Add(0);
             Data.Add(roomData.Category.Id);
@@ -62,7 +62,7 @@ namespace Kurkku.Messages.Outgoing
             Data.Add(checkEntry);
             Data.Add(false); // ??
             Data.Add(false); // ??
-            Data.Add(false); // ??
+            Data.Add(roomData.IsMuted); // ??
 
             Data.Add(0); // ??
             Data.Add(0); // ??
