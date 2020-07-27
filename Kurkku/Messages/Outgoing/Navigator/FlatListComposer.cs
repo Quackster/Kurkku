@@ -50,7 +50,7 @@ namespace Kurkku.Messages.Outgoing
             messageComposer.Data.Add(room.UsersMax);
             messageComposer.Data.Add(room.Description);
             messageComposer.Data.Add(0);
-            messageComposer.Data.Add(room.TradeSetting); // can category trade?
+            messageComposer.Data.Add(room.TradeSetting);// room.TradeSetting);
             messageComposer.Data.Add(room.Rating);
             messageComposer.Data.Add(0);
             messageComposer.Data.Add(room.Category.Id);

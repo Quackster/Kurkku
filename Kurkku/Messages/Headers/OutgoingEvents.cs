@@ -77,5 +77,6 @@
         public static readonly short ItemPlaceErrorComposer = 2312;
         public static readonly short MoodlightConfigComposer = 418;
         public static readonly short SlideObjectBundleComposer = 106;
+        public static readonly short RoomSettingsSavedComposer = 3713;
     }
 }

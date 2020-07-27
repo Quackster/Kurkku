@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using Kurkku.Game;
+using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
+using Kurkku.Storage.Database.Access;
+using Kurkku.Storage.Database.Data;
 
 namespace Kurkku.Messages.Incoming
 {
@@ -10,6 +13,11 @@ namespace Kurkku.Messages.Incoming
     {
         public void Handle(Player player, Request request)
         {
+            var room = player.RoomUser.Room;
+
+            if (room == null || !room.IsOwner(player.Details.Id))
+                return;
+
             int roomId = request.ReadInt();
             string name = request.ReadString();
             string description = request.ReadString();
@@ -41,7 +49,7 @@ namespace Kurkku.Messages.Incoming
             if (whoMute < 0 || whoMute > 1)
                 whoMute = 0;
 
-            if (whoKick < 0 || whoKick > 1)
+            if (whoKick < 0 || whoKick > 2)
                 whoKick = 0;
 
             if (whoBan < 0 || whoBan > 1)
@@ -67,6 +75,41 @@ namespace Kurkku.Messages.Incoming
 
             if (tagCount > 2)
                 return;
+
+            room.Data.Name = name;
+            room.Data.Description = description;
+            room.Data.Status = (RoomStatus)roomAccess;
+            room.Data.Password = password;
+            room.Data.UsersMax = maxUsers;
+            room.Data.CategoryId = categoryId;
+            room.Data.TradeSetting = tradeSettings;
+            room.Data.AllowPets = allowPets;
+            room.Data.AllowPetsEat = allowPetsEat;
+            room.Data.AllowWalkthrough = roomBlockingEnabled;
+            room.Data.IsHidingWall = hidewall;
+            room.Data.WallThickness = wallThickness;
+            room.Data.FloorThickness = floorThickness;
+            room.Data.WhoCanBan = (RoomBanSetting)whoBan;
+            room.Data.WhoCanKick  = (RoomKickSetting)whoKick;
+            room.Data.WhoCanMute = (RoomMuteSetting)whoMute;
+
+            TagDao.DeleteRoomTags(room.Data.Id);
+
+            foreach (var tag in tags)
+            {
+                TagDao.SaveTag(new TagData
+                {
+                    RoomId = room.Data.Id,
+                    Text = tag
+                });
+
+            }
+
+            RoomDao.SaveRoom(room.Data);
+
+            room.Send(new RoomSettingsSavedComposer(room.Data.Id));
+            room.Send(new RoomInfoComposer(room.Data, true, false));
+            room.Send(new RoomVisualizationSettingsComposer(room.Data.FloorThickness, room.Data.WallThickness, room.Data.IsHidingWall));
         }
     }
 }

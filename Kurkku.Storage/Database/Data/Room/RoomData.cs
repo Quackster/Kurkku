@@ -34,6 +34,9 @@ namespace Kurkku.Storage.Database.Data
             Map(x => x.IsOwnerHidden, "is_owner_hidden").Generated.Insert();
             Map(x => x.TradeSetting, "trade_setting").Generated.Insert();
             Map(x => x.IsMuted, "is_muted").Generated.Insert();
+            Map(x => x.WhoCanBan, "who_can_ban").Generated.Insert();
+            Map(x => x.WhoCanKick, "who_can_kick").Generated.Insert();
+            Map(x => x.WhoCanMute, "who_can_mute").Generated.Insert();
 
             HasMany(x => x.Tags)
                 .Table("tags")
@@ -84,7 +87,23 @@ namespace Kurkku.Storage.Database.Data
         public virtual bool IsOwnerHidden { get; set; }
         public virtual int TradeSetting { get; set; }
         public virtual IList<string> Tags { get; set; }
+        public virtual RoomMuteSetting WhoCanMute { get; set; }
+        public virtual RoomKickSetting WhoCanKick { get; set; }
+        public virtual RoomBanSetting WhoCanBan { get; set; }
 
+        public static RoomStatus ToStatusEnum(int roomAccess)
+        {
+            switch (roomAccess)
+            {
+                case 1:
+                    return RoomStatus.CLOSED;
+                case 2:
+                    return RoomStatus.PASSWORD;
+                default:
+                    return RoomStatus.OPEN;
+
+            }
+        }
     }
 
     public enum RoomStatus
@@ -94,5 +113,23 @@ namespace Kurkku.Storage.Database.Data
         PASSWORD = 2
     }
 
+    public enum RoomMuteSetting
+    {
+        NONE = 0,
+        USERS_WITH_RIGHTS = 1,
+    }
 
+    public enum RoomBanSetting
+    {
+        NONE = 0,
+        USERS_WITH_RIGHTS = 1,
+        ALL_USERS = 2
+    }
+
+    public enum RoomKickSetting
+    {
+        NONE = 0,
+        USERS_WITH_RIGHTS = 1,
+        ALL_USERS = 2
+    }
 }

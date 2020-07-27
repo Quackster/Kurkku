@@ -10,7 +10,7 @@ namespace Kurkku.Storage.Database.Data
             Table("tags");
             Map(x => x.UserId, "user_id").Generated.Insert();
             Map(x => x.RoomId, "room_id").Generated.Insert();
-            Map(x => x.Text, "text");
+            Map(x => x.Text, "text").Generated.Insert();
 
             References(x => x.Room, "room_id")
                 .ReadOnly()

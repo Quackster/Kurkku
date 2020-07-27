@@ -79,6 +79,7 @@ namespace Kurkku.Storage.Database.Access
                     {
                         session.Update(data);
                         transaction.Commit();
+                        session.Refresh(data);
                     }
                     catch
                     {

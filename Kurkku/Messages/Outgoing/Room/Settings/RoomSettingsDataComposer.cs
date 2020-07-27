@@ -1,6 +1,6 @@
 ﻿using Kurkku.Game;
 
-namespace Kurkku.Messages.outoing
+namespace Kurkku.Messages.Outoing
 {
     internal class RoomSettingsDataComposer : IMessageComposer
     {
@@ -28,16 +28,16 @@ namespace Kurkku.Messages.outoing
                 m_Data.Add(tag);
             }
 
-            m_Data.Add(1); // Trade settings
+            m_Data.Add(room.Data.TradeSetting);
             m_Data.Add(room.Data.AllowPets ? 1 : 0);
             m_Data.Add(room.Data.AllowPetsEat ? 1 : 0);
             m_Data.Add(room.Data.AllowWalkthrough ? 1 : 0);
-            m_Data.Add(room.Data.IsHidingWall ? 0 : 1);
+            m_Data.Add(room.Data.IsHidingWall ? 1 : 0);
             m_Data.Add(room.Data.WallThickness);
             m_Data.Add(room.Data.FloorThickness);
-            m_Data.Add(1);
-            m_Data.Add(1);
-            m_Data.Add(1);
+            m_Data.Add((int)room.Data.WhoCanMute);
+            m_Data.Add((int)room.Data.WhoCanKick);
+            m_Data.Add((int)room.Data.WhoCanBan);
             //m_Data.Add(room.Data.AllowPets ? 1 : 0); 
             //m_Data.Add(room.Data.AllowPetsEat ? 1 : 0);
             //m_Data.Add(room.Data.AllowWalkthrough ? 1 : 0);
