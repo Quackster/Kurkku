@@ -16,7 +16,6 @@ groups:
   root:
     rank: 7
     permissions:
-    - room.furni.owner
     - room.owner
     - root
     inherits:

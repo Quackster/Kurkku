@@ -167,9 +167,10 @@ namespace Kurkku.Game
             Authenticated = true;
             AuthenticationTime = DateTime.Now;
 
+
             Send(new AuthenticationOKComposer());
             Send(new AvailabilityStatusComposer());
-            Send(new UserRightsMessageComposer(IsSubscribed ? 2 : 0, playerData.Rank));
+            Send(new UserRightsMessageComposer(IsSubscribed ? 2 : 0, UserGroup.HasPermission("room.addstaffpicks") ? 7 : playerData.Rank));
 
             return true;
         }
