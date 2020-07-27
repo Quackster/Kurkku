@@ -88,6 +88,7 @@ namespace Kurkku
         /// </summary>
         private static void tryGameData()
         {
+            PermissionsManager.Instance.Load();
             ValueManager.Instance.Load();
             InteractionManager.Instance.Load();
             ItemManager.Instance.Load();

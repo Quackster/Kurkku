@@ -104,6 +104,11 @@ namespace Kurkku.Game
         /// </summary>
         public DateTime AuthenticationTime { get; private set; }
 
+        /// <summary>
+        /// Get user group
+        /// </summary>
+        public UserGroup UserGroup { get { return PermissionsManager.Instance.Ranks[Details.Rank]; } }
+
         #endregion
 
         #region Constructors

@@ -1,0 +1,24 @@
+groups:
+  default:
+    rank: 1
+  moderator:
+    rank: 6
+    permissions:
+    - room.mute
+    - room.kick
+    - room.ban
+    - room.rights
+    - room.addstaffpicks
+    - player.ban
+    - player.mute
+    inherits:
+    - default
+  root:
+    rank: 7
+    permissions:
+    - room.furni.owner
+    - room.owner
+    - root
+    inherits:
+    - default
+    - moderator

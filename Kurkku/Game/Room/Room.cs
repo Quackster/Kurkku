@@ -63,6 +63,14 @@ namespace Kurkku.Game
                 if (Data.OwnerId == userId)
                     return true;
 
+            var player = PlayerManager.Instance.GetPlayerById(userId);
+
+            if (player != null)
+            {
+                if (player.UserGroup.HasPermission("room.rights"))
+                    return true;
+            }
+
             return false;
         }
 
@@ -73,6 +81,14 @@ namespace Kurkku.Game
         {
             if (Data.OwnerId == userId)
                 return true;
+
+            var player = PlayerManager.Instance.GetPlayerById(userId);
+
+            if (player != null)
+            {
+                if (player.UserGroup.HasPermission("room.owner"))
+                    return true;
+            }
 
             return false;
         }
