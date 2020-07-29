@@ -49,30 +49,36 @@ namespace Kurkku.Game
 
                 for (int x = 0; x < MapSizeX; x++)
                 {
-                    string tile = Convert.ToString(line[x]);
+                    try
+                    {
+                        string tile = Convert.ToString(line[x]);
 
-                    if (tile.IsNumeric())
-                    {
-                        TileStates[x, y] = TileState.OPEN;
-                        TileHeights[x, y] = double.Parse(tile);
-                    }
-                    else
-                    {
-                        TileStates[x, y] = TileState.CLOSED;
-                        TileHeights[x, y] = 0;
-                    }
+                        if (tile.IsNumeric())
+                        {
+                            TileStates[x, y] = TileState.OPEN;
+                            TileHeights[x, y] = double.Parse(tile);
+                        }
+                        else
+                        {
+                            TileStates[x, y] = TileState.CLOSED;
+                            TileHeights[x, y] = 0;
+                        }
 
-                    if (Data.DoorX == x &&
-                        Data.DoorY == y)
-                    {
-                        TileStates[x, y] = TileState.OPEN;
-                        TileHeights[x, y] = Data.DoorZ;
+                        if (Data.DoorX == x &&
+                            Data.DoorY == y)
+                        {
+                            TileStates[x, y] = TileState.OPEN;
+                            TileHeights[x, y] = Data.DoorZ;
 
-                        Heightmap += Convert.ToString(Data.DoorZ);
-                    }
-                    else
+                            Heightmap += Convert.ToString(Data.DoorZ);
+                        }
+                        else
+                        {
+                            Heightmap += tile;
+                        }
+                    } catch
                     {
-                        Heightmap += tile;
+                        var t = 123;
                     }
                 }
 

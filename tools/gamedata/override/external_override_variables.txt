@@ -1,0 +1,7 @@
+seasonalcurrencyindicator.currency=104
+seasonalcurrencyindicator.enabled=true
+seasonalcurrencyindicator.page=duckets_shop
+
+duckets.enabled=true
+duckets.promo.enabled=false
+duckets.upper_limit=650

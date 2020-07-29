@@ -1,0 +1,11 @@
+purse.seasonal.currency=Clouds
+
+catalog.purchase.youractivitypoints.101=Seashells: %activitypoints%
+catalog.purchase.youractivitypoints.103=Stars: %activitypoints%
+catalog.purchase.youractivitypoints.104=Clouds: %activitypoints%
+catalog.purchase.youractivitypoints.105=Diamonds: %activitypoints%
+catalog.purchase.youractivitypoints.1=Seashells: %activitypoints%
+catalog.purchase.youractivitypoints.2=Hearts: %activitypoints%
+catalog.purchase.youractivitypoints.3=Gift points: %activitypoints%
+catalog.purchase.youractivitypoints.4=Shells: %activitypoints%
+catalog.purchase.youractivitypoints.5=Your Diamonds: %activitypoints%
