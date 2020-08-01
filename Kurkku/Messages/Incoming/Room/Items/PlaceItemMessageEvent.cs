@@ -17,24 +17,23 @@ namespace Kurkku.Messages.Incoming
                 return;
 
             Room room = player.RoomUser.Room;
-
-            if (room == null || !room.HasRights(player.Details.Id))
-            {
-                player.Send(new ItemPlaceErrorComposer(ItemPlaceError.NoRights));
-                return;
-            }
-
             var placementData = request.ReadString().Split(' ');
 
             if (!placementData[0].IsNumeric())
                 return;
 
             int itemId = int.Parse(placementData[0]);
-
             Item item = player.Inventory.GetItem(itemId);
 
             if (item == null)
                 return;
+
+            if (room == null || !room.HasRights(player.Details.Id) || (room.ItemManager.HasItem(x => x.Definition.HasBehaviour(ItemBehaviour.NOTE_TAG)) && item.Definition.InteractorType == InteractorType.STICKY_POLE)) 
+            {
+                player.Send(new ItemPlaceErrorComposer(ItemPlaceError.NoRights));
+                return;
+            }
+
 
             if (item.Definition.HasBehaviour(ItemBehaviour.WALL_ITEM))
             {

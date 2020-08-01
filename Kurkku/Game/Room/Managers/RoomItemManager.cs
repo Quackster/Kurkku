@@ -1,5 +1,6 @@
 ﻿using Kurkku.Storage.Database.Access;
 using Kurkku.Util.Extensions;
+using System;
 using System.Collections.Concurrent;
 using System.Linq;
 
@@ -81,6 +82,14 @@ namespace Kurkku.Game.Managers
         public void RemoveItem(Item item)
         {
             Items.Remove(item.Id);
+        }
+
+        /// <summary>
+        /// Get if room has item where matching parameters
+        /// </summary>
+        public bool HasItem(Func<Item, bool> predicate)
+        {
+            return Items.Values.Where(x => x.Definition != null).Count(predicate) > 0;
         }
 
         #endregion

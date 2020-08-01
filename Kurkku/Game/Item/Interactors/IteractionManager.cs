@@ -26,7 +26,7 @@ namespace Kurkku.Game
             Interactors[InteractorType.DEFAULT] = typeof(DefaultInteractor);
             Interactors[InteractorType.BED] = typeof(BedInteractor);
             Interactors[InteractorType.CHAIR] = typeof(ChairInteractor);
-            Interactors[InteractorType.POST_IT] = typeof(StickieInteractor);
+            Interactors[InteractorType.STICKY_POLE] = typeof(StickieInteractor);
             Interactors[InteractorType.TROPHY] = typeof(TrophyInteractor);
             Interactors[InteractorType.ROOMDIMMER] = typeof(MoodlightInteractor);
             Interactors[InteractorType.TELEPORTER] = typeof(TeleporterInteractor);

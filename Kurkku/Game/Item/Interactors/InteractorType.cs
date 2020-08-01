@@ -7,7 +7,7 @@
         DEFAULT,
         SCOREBOARD,
         ROOMDIMMER,
-        POST_IT,
+        STICKY_POLE,
         TELEPORTER,
         GATE,
         ROLLER,
