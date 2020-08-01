@@ -11,7 +11,7 @@ namespace Kurkku.Game
         #region Properties 
 
         protected bool NeedsExtraDataUpdate { get; set; }
-        protected string ExtraData { get; set; }
+        protected object ExtraData { get; set; }
         public Item Item { get; }
         public virtual ExtraDataType ExtraDataType { get; }
         public virtual ITaskObject TaskObject { get; set; }

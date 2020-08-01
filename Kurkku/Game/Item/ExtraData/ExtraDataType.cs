@@ -6,6 +6,7 @@ namespace Kurkku.Game
 {
     public enum ExtraDataType
     {
-        StringData = 0
+        StringData = 0,
+        StringArrayData = 1
     }
 }

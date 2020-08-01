@@ -7,7 +7,7 @@
         DEFAULT,
         SCOREBOARD,
         ROOMDIMMER,
-        STICKY_POLE,
+        POST_IT,
         TELEPORTER,
         GATE,
         ROLLER,
@@ -23,6 +23,7 @@
         STEP_LIGHT,
         DECORATION,
         FORTUNE,
-        LERT
+        LERT,
+        MANNEQUIN
     }
 }

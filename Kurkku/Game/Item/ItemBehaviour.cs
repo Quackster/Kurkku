@@ -31,6 +31,6 @@
         PET_CAT_FOOD,
         PET_DOG_FOOD,
         PET_CROC_FOOD,
-        NOTE_TAG
+        STICKY_POLE
     }
 }

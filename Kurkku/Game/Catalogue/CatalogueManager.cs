@@ -117,6 +117,11 @@ namespace Kurkku.Game
                         };
                     }
                     break;
+                case InteractorType.MANNEQUIN:
+                    {
+                        serializeable = new MannequinExtraData();
+                    }
+                    break;
             }
 
             var extraData = string.Empty;

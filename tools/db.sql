@@ -13,8 +13,6 @@ CREATE TABLE IF NOT EXISTS `authentication_ticket` (
 /*!40000 ALTER TABLE `authentication_ticket` DISABLE KEYS */;
 INSERT INTO `authentication_ticket` (`user_id`, `sso_ticket`, `expires_at`) VALUES
 	(1, '123', NULL),
-	(2, 'kek', NULL),
-	(1, '123', NULL),
 	(2, 'kek', NULL);
 /*!40000 ALTER TABLE `authentication_ticket` ENABLE KEYS */;
 
@@ -48,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `catalogue_items` (
   `allow_bulk_purchase` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2558 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=2560 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 /*!40000 ALTER TABLE `catalogue_items` DISABLE KEYS */;
 INSERT INTO `catalogue_items` (`id`, `sale_code`, `page_id`, `order_id`, `price_coins`, `price_seasonal`, `seasonal_type`, `hidden`, `amount`, `definition_id`, `item_specialspriteid`, `is_package`, `allow_bulk_purchase`) VALUES
@@ -2587,7 +2585,9 @@ INSERT INTO `catalogue_items` (`id`, `sale_code`, `page_id`, `order_id`, `price_
 	(2554, 'floor', '3', 1, 2, 0, 'DUCKETS', 0, 1, 249, '607', 0, 1),
 	(2555, 'floor', '3', 1, 2, 0, 'DUCKETS', 0, 1, 249, '608', 0, 1),
 	(2556, 'floor', '3', 1, 2, 0, 'DUCKETS', 0, 1, 249, '609', 0, 1),
-	(2557, 'floor', '3', 1, 2, 0, 'DUCKETS', 0, 1, 249, '610', 0, 1);
+	(2557, 'floor', '3', 1, 2, 0, 'DUCKETS', 0, 1, 249, '610', 0, 1),
+	(2558, 'boutique_mannequin1', '19', 1, 2, 0, 'DUCKETS', 0, 1, 2383, '', 0, 1),
+	(2559, 'note_tag', '19', 1, 2, 0, 'DUCKETS', 0, 1, 2382, '0', 0, 1);
 /*!40000 ALTER TABLE `catalogue_items` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `catalogue_packages` (
@@ -2874,7 +2874,9 @@ INSERT INTO `item` (`id`, `order_id`, `user_id`, `room_id`, `definition_id`, `x`
 	('3a8796c2-3790-4bd0-98dd-820523fd477b', 0, 1, 2, 50, '7', '11', '0', '', 2, '', -1, '2020-05-06 00:23:41', '2020-07-18 16:13:46'),
 	('3d326422-6238-4733-a6b6-fd2b5be90f59', 0, 1, 0, 1789, '10', '7', '0.001', '', 4, '', -1, '2020-07-13 02:22:58', '2020-07-18 16:13:31'),
 	('48d496ee-086a-42fc-8378-b2e90c326f4b', 0, 1, 2, 30, '7', '2', '0', '', 2, '', -1, '2020-05-06 00:23:28', '2020-05-06 00:24:04'),
+	('4a1c2d4e-f0f1-41fe-ad26-1224ec7621ab', 0, 1, 70, 2383, '4', '9', '0', '', 2, '', -1, '2020-08-01 19:39:38', '2020-08-01 19:48:07'),
 	('526b759d-a17d-4ef3-bc48-5004a6281b3f', 0, 1, 2, 773, '0', '0', '0', ':w=1,8 l=5,75 l', 0, '', -1, '2020-05-06 00:29:12', '2020-05-06 00:29:24'),
+	('52fd7f6f-a13a-4393-b1e7-63267f85ee6e', 0, 1, 70, 2382, '4', '1', '0', '', 0, '0', -1, '2020-08-01 12:47:24', '2020-08-01 12:47:45'),
 	('59f72d3c-17c7-414e-ac1a-288ef6822816', 0, 1, 0, 111, '8', '8', '0.451', '', 0, '5', -1, '2020-07-16 22:46:40', '2020-07-27 16:38:54'),
 	('6ca06db4-eda7-4ba0-a550-11d0c3928ba3', 0, 1, 2, 70, '2', '5', '1', '', 0, '', -1, '2020-05-06 00:29:39', '2020-07-13 18:18:53'),
 	('6cfab7d4-8151-4dd5-b5b2-e670d72cb604', 0, 1, 2, 774, '0', '0', '0', ':w=4,4 l=10,68 r', 0, '', -1, '2020-05-06 00:21:22', '2020-05-06 00:21:26'),
@@ -2914,7 +2916,7 @@ CREATE TABLE IF NOT EXISTS `item_definitions` (
   `allowed_rotations` tinytext NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2382 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=2384 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 /*!40000 ALTER TABLE `item_definitions` DISABLE KEYS */;
 INSERT INTO `item_definitions` (`id`, `sprite`, `name`, `description`, `sprite_id`, `length`, `width`, `top_height`, `max_status`, `behaviour`, `interactor`, `is_tradable`, `is_recyclable`, `is_stackable`, `is_sellable`, `drink_ids`, `rental_time`, `allowed_rotations`) VALUES
@@ -5063,7 +5065,9 @@ INSERT INTO `item_definitions` (`id`, `sprite`, `name`, `description`, `sprite_i
 	(2378, 'avatar_effect138', NULL, NULL, 138, 0, 0, 0, '0', 'effect,requires_rights_for_interaction', 'default', 1, 1, 1, 1, '', -1, ''),
 	(2379, 'avatar_effect139', NULL, NULL, 139, 0, 0, 0, '0', 'effect,requires_rights_for_interaction', 'default', 1, 1, 1, 1, '', -1, ''),
 	(2380, 'avatar_effect140', NULL, NULL, 140, 0, 0, 0, '0', 'effect,requires_rights_for_interaction', 'default', 1, 1, 1, 1, '', -1, ''),
-	(2381, 'room_ad_plus_badge', NULL, NULL, -1, 0, 0, 0, '0', '', 'default', 1, 1, 1, 1, NULL, -1, '');
+	(2381, 'room_ad_plus_badge', NULL, NULL, -1, 0, 0, 0, '0', '', 'default', 1, 1, 1, 1, NULL, -1, ''),
+	(2382, 'note_tag', NULL, NULL, 3983, 1, 1, 0, '0', 'solid,sticky_pole', 'default', 1, 1, 1, 1, NULL, -1, ''),
+	(2383, 'boutique_mannequin1', NULL, NULL, 4170, 1, 1, 0, '0', 'solid', 'mannequin', 1, 1, 1, 1, NULL, -1, '');
 /*!40000 ALTER TABLE `item_definitions` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `messenger_category` (
@@ -5115,7 +5119,7 @@ CREATE TABLE IF NOT EXISTS `navigator_official_rooms` (
   `image_url` text NOT NULL,
   `thumbnail_layout` text NOT NULL,
   PRIMARY KEY (`banner_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `navigator_official_rooms` DISABLE KEYS */;
 INSERT INTO `navigator_official_rooms` (`banner_id`, `parent_id`, `banner_type`, `room_id`, `image_type`, `label`, `description`, `description_entry`, `image_url`, `thumbnail_layout`) VALUES
@@ -5191,7 +5195,7 @@ CREATE TABLE IF NOT EXISTS `room` (
   `who_can_kick` enum('NONE','USERS_WITH_RIGHTS','ALL_USERS') NOT NULL DEFAULT 'USERS_WITH_RIGHTS',
   `who_can_ban` enum('NONE','USERS_WITH_RIGHTS') NOT NULL DEFAULT 'USERS_WITH_RIGHTS',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
 INSERT INTO `room` (`id`, `owner_id`, `name`, `description`, `category_id`, `visitors_now`, `visitors_max`, `status`, `password`, `model`, `ccts`, `wallpaper`, `floor`, `landscape`, `rating`, `allow_pets`, `allow_pets_eat`, `allow_walkthrough`, `hidewall`, `wall_thickness`, `floor_thickness`, `is_owner_hidden`, `trade_setting`, `is_muted`, `who_can_mute`, `who_can_kick`, `who_can_ban`) VALUES
@@ -5211,7 +5215,7 @@ INSERT INTO `room` (`id`, `owner_id`, `name`, `description`, `category_id`, `vis
 	(14, 0, 'Rooftop Cafe', 'rooftop', 7, 0, 20, 'OPEN', '', 'rooftop_2', 'hh_room_rooftop', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
 	(15, 0, 'Palazzo Pizza', 'pizza', 6, 0, 40, 'OPEN', '', 'pizza', 'hh_room_pizza', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
 	(16, 0, 'Habburgers', 'habburger\'s', 6, 0, 40, 'OPEN', '', 'habburger', 'hh_room_habburger', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
-	(17, 0, 'Grandfathers Lounge', 'dusty_lounge', 8, 1, 45, 'OPEN', '', 'dusty_lounge', 'hh_room_dustylounge', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
+	(17, 0, 'Grandfathers Lounge', 'dusty_lounge', 8, 0, 45, 'OPEN', '', 'dusty_lounge', 'hh_room_dustylounge', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
 	(18, 0, 'Oriental Tearoom', 'tearoom', 7, 0, 40, 'OPEN', '', 'tearoom', 'hh_room_tearoom', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
 	(19, 0, 'Oldskool Lounge', 'old_skool', 7, 0, 45, 'OPEN', '', 'old_skool0', 'hh_room_old_skool', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
 	(20, 0, 'Oldskool Dancefloor', 'old_skool', 7, 0, 45, 'OPEN', '', 'old_skool1', 'hh_room_old_skool', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
@@ -5255,7 +5259,8 @@ INSERT INTO `room` (`id`, `owner_id`, `name`, `description`, `category_id`, `vis
 	(59, 0, 'Star Lounge', 'star_lounge', 7, 0, 35, 'OPEN', '', 'star_lounge', 'hh_room_starlounge', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
 	(60, 0, 'Club Orient', 'orient', 8, 0, 35, 'OPEN', '', 'orient', 'hh_room_orient', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
 	(61, 0, 'Imperial Palace', 'emperors', 5, 0, 30, 'OPEN', '', 'emperors', 'hh_room_emperors', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
-	(62, 0, 'Beauty Salon II', 'beauty_salon_loreal', 5, 0, 25, 'OPEN', '', 'beauty_salon1', 'hh_room_beauty_salon_general', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS');
+	(62, 0, 'Beauty Salon II', 'beauty_salon_loreal', 5, 0, 25, 'OPEN', '', 'beauty_salon1', 'hh_room_beauty_salon_general', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
+	(70, 1, 'test', '', 14, 1, 25, 'OPEN', '', 'model_a', '', '0', '0', '0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS');
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `room_category` (
@@ -5470,8 +5475,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 7, 9218, '', '2020-04-25 21:07:53', '2020-07-29 20:03:23'),
-	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 6, 999990, '', '2020-04-25 21:07:53', '2020-07-27 23:16:23');
+	(1, 'Alex', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 7, 9212, '', '2020-04-25 21:07:53', '2020-08-01 19:55:00'),
+	(2, 'Test', 'hd-180-1.hr-100-61.ch-210-66.lg-270-82.sh-290-80', 'M', 1, 999990, '', '2020-04-25 21:07:53', '2020-07-29 20:07:39');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_seasonal_currencies` (
@@ -5511,8 +5516,8 @@ CREATE TABLE IF NOT EXISTS `user_settings` (
 
 /*!40000 ALTER TABLE `user_settings` DISABLE KEYS */;
 INSERT INTO `user_settings` (`user_id`, `daily_respect_points`, `daily_respect_pet_points`, `respect_points`, `friend_requests_enabled`, `following_enabled`, `online_time`) VALUES
-	(1, 3, 3, 0, 1, 1, 16943),
-	(2, 0, 0, 0, 1, 1, 89);
+	(1, 3, 3, 0, 1, 1, 17641),
+	(2, 0, 0, 0, 1, 1, 115);
 /*!40000 ALTER TABLE `user_settings` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_subscriptions` (
@@ -5528,7 +5533,7 @@ CREATE TABLE IF NOT EXISTS `user_subscriptions` (
 
 /*!40000 ALTER TABLE `user_subscriptions` DISABLE KEYS */;
 INSERT INTO `user_subscriptions` (`user_id`, `subscribed_at`, `expire_at`, `gift_at`, `gifts_redeemable`, `subscription_age`, `subscription_age_last_updated`) VALUES
-	(1, '2020-05-04 21:15:47', '2020-08-26 19:07:07', '2020-06-04 21:15:47', 12, 674084984, '2020-07-29 20:04:03');
+	(1, '2020-05-04 21:15:47', '2020-08-26 19:07:07', '2020-06-04 21:15:47', 12, 674343635, '2020-08-01 19:55:00');
 /*!40000 ALTER TABLE `user_subscriptions` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

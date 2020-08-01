@@ -28,7 +28,7 @@ namespace Kurkku.Messages.Incoming
             if (item == null)
                 return;
 
-            if (room == null || !room.HasRights(player.Details.Id) || (room.ItemManager.HasItem(x => x.Definition.HasBehaviour(ItemBehaviour.NOTE_TAG)) && item.Definition.InteractorType == InteractorType.STICKY_POLE)) 
+            if (room == null || !room.HasRights(player.Details.Id) || (room.ItemManager.HasItem(x => x.Definition.HasBehaviour(ItemBehaviour.STICKY_POLE)) && item.Definition.InteractorType == InteractorType.POST_IT)) 
             {
                 player.Send(new ItemPlaceErrorComposer(ItemPlaceError.NoRights));
                 return;

@@ -26,12 +26,13 @@ namespace Kurkku.Game
             Interactors[InteractorType.DEFAULT] = typeof(DefaultInteractor);
             Interactors[InteractorType.BED] = typeof(BedInteractor);
             Interactors[InteractorType.CHAIR] = typeof(ChairInteractor);
-            Interactors[InteractorType.STICKY_POLE] = typeof(StickieInteractor);
+            Interactors[InteractorType.POST_IT] = typeof(StickieInteractor);
             Interactors[InteractorType.TROPHY] = typeof(TrophyInteractor);
             Interactors[InteractorType.ROOMDIMMER] = typeof(MoodlightInteractor);
             Interactors[InteractorType.TELEPORTER] = typeof(TeleporterInteractor);
             Interactors[InteractorType.ROLLER] = typeof(RollerInteractor);
             Interactors[InteractorType.DICE] = typeof(DiceInteractor);
+            Interactors[InteractorType.MANNEQUIN] = typeof(MannequinInteractor);
         }
 
         #endregion
@@ -66,6 +67,17 @@ namespace Kurkku.Game
             {
                 case ExtraDataType.StringData:
                     composer.Data.Add((string)interactor.GetExtraData(inventoryView));
+                    break;
+                case ExtraDataType.StringArrayData:
+                    var values = (Dictionary<string, string>)interactor.GetExtraData(inventoryView);
+                    composer.Data.Add(values.Count);
+
+                    foreach (var kvp in values)
+                    {
+                        composer.Data.Add(kvp.Key);
+                        composer.Data.Add(kvp.Value);
+                    }
+
                     break;
             }
         }
