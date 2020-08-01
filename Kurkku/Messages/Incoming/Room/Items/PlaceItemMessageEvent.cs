@@ -39,7 +39,7 @@ namespace Kurkku.Messages.Incoming
             {
                 // Do nothing if dimmer exists.. replicating Habbo's behaviour here, I literally bought another room dimmer on official Habbo just to test what happens!
                 if (item.Definition.InteractorType == InteractorType.ROOMDIMMER &&
-                    room.ItemManager.Items.Values.Count(x => x.Definition.InteractorType == InteractorType.ROOMDIMMER) > 0)
+                    room.ItemManager.HasItem(x => x.Definition.InteractorType == InteractorType.ROOMDIMMER))
                     return;
 
                 var wallPosition = $"{placementData[1]} {placementData[2]} {placementData[3]}";
