@@ -31,7 +31,7 @@ namespace Kurkku.Messages.Incoming
                     return;
             }
 
-            item.Interactor.OnInteract(player);
+            item.Interactor.OnInteract(player, request.ReadInt());
         }
     }
 }

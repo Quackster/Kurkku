@@ -107,7 +107,7 @@ namespace Kurkku.Game
         }
 
 
-        public void UpdateStatus(string state = "")
+        public void UpdateState(string state = "")
         {
             switch (Definition.InteractorType)
             {

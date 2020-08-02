@@ -115,11 +115,11 @@ namespace Kurkku.Game
                     entity.RoomEntity.WalkingAllowed = false;
                     entity.RoomEntity.Position = teleporter.Position.Copy();
 
-                    teleporter.UpdateStatus(TeleporterInteractor.TELEPORTER_EFFECTS);
+                    teleporter.UpdateState(TeleporterInteractor.TELEPORTER_EFFECTS);
 
                     Task.Delay(1000).ContinueWith(t =>
                     {
-                        teleporter.UpdateStatus(TeleporterInteractor.TELEPORTER_OPEN);
+                        teleporter.UpdateState(TeleporterInteractor.TELEPORTER_OPEN);
                         entity.RoomEntity.WalkingAllowed = true;
 
                         entity.RoomEntity.Move(
@@ -130,7 +130,7 @@ namespace Kurkku.Game
 
                     Task.Delay(2000).ContinueWith(t =>
                     {
-                        teleporter.UpdateStatus(TeleporterInteractor.TELEPORTER_CLOSE);
+                        teleporter.UpdateState(TeleporterInteractor.TELEPORTER_CLOSE);
                     });
                 }
 

@@ -54,7 +54,7 @@ namespace Kurkku.Game
         /// <summary>
         /// On interact dice handler
         /// </summary>
-        public override void OnInteract(IEntity entity)
+        public override void OnInteract(IEntity entity, int requestData)
         {
             if (Item.IsRolling || entity.RoomEntity.IsWalking)
                 return;
@@ -66,7 +66,7 @@ namespace Kurkku.Game
 
             if (currentMode > 0)
             {
-                Item.UpdateStatus("0");
+                Item.UpdateState("0");
                 Item.Save();
                 return;
             }
@@ -75,7 +75,7 @@ namespace Kurkku.Game
                 // Queue future task for rolling dice
                 if (!TaskObject.EventQueue.ContainsKey(DiceAttributes.ROLL_DICE))
                 {
-                    Item.UpdateStatus("-1");
+                    Item.UpdateState("-1");
                     Item.Save();
 
                     TaskObject.QueueEvent(DiceAttributes.ROLL_DICE, 2.0, RolledDice, new Dictionary<object, object>() {
@@ -95,7 +95,7 @@ namespace Kurkku.Game
 
             var diceRoll = random.Next(1, 7);
 
-            Item.UpdateStatus(Convert.ToString(diceRoll));
+            Item.UpdateState(Convert.ToString(diceRoll));
             Item.Save();
         }
     }

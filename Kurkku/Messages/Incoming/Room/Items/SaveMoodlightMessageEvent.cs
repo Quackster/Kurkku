@@ -39,7 +39,6 @@ namespace Kurkku.Messages.Incoming
             moodlightData.Presets[moodlightData.CurrentPreset - 1].ColorCode = colourCode;
             moodlightData.Presets[moodlightData.CurrentPreset - 1].ColorIntensity = intensity;
             moodlightData.Presets[moodlightData.CurrentPreset - 1].IsBackground = isBackground;
-
             moodlight.Interactor.SetJsonObject(moodlightData);
 
             moodlight.Update();

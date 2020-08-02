@@ -43,7 +43,7 @@ namespace Kurkku.Game
         public virtual object GetExtraData(bool inventoryView = false) { return Item.Data.ExtraData; }
         public virtual object GetJsonObject() { return null; }
         public virtual void OnStop(IEntity entity) { }
-        public virtual void OnInteract(IEntity entity) { }
+        public virtual void OnInteract(IEntity entity, int requestData = 0) { }
         public virtual void OnPickup(IEntity entity) { TaskObject?.EventQueue.Clear(); }
         public virtual void OnPlace(IEntity entity) { TaskObject?.EventQueue.Clear(); }
         public virtual bool OnWalkRequest(IEntity entity, Position goal) { return false; }

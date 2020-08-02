@@ -19,7 +19,7 @@ namespace Kurkku.Game
 
         public TeleporterInteractor(Item item) : base(item) { }
 
-        public override void OnInteract(IEntity entity)
+        public override void OnInteract(IEntity entity, int requestData)
         {
             var roomUser = entity.RoomEntity;
             var room = entity.RoomEntity.Room;
@@ -40,7 +40,7 @@ namespace Kurkku.Game
             string pairId = ((TeleporterExtraData)GetJsonObject()).LinkedItem;
             ItemData targetTeleporterData = ItemDao.GetItem(pairId);
 
-            Item.UpdateStatus(TELEPORTER_OPEN);
+            Item.UpdateState(TELEPORTER_OPEN);
 
             roomUser.Move(Item.Position.X, Item.Position.Y);
             roomUser.WalkingAllowed = false;
@@ -59,7 +59,7 @@ namespace Kurkku.Game
 
                 Task.Delay(2000).ContinueWith(t =>
                 {
-                    Item.UpdateStatus(TELEPORTER_CLOSE);
+                    Item.UpdateState(TELEPORTER_CLOSE);
                 });
 
                 Task.Delay(2500).ContinueWith(t =>
@@ -80,14 +80,14 @@ namespace Kurkku.Game
             if (Item.Position == roomUser.Position &&
                 !RoomTile.IsValidTile(roomUser.Room, entity, Item.Position.GetSquareInFront()))
             {
-                Item.UpdateStatus(TELEPORTER_EFFECTS);
+                Item.UpdateState(TELEPORTER_EFFECTS);
 
                 Task.Delay(1000).ContinueWith(t =>
                 {
                     if (string.IsNullOrEmpty(roomUser.AuthenticateTeleporterId))
                         return;
 
-                    Item.UpdateStatus(TELEPORTER_CLOSE);
+                    Item.UpdateState(TELEPORTER_CLOSE);
                 });
 
                 Task.Delay(2000).ContinueWith(t =>
@@ -97,7 +97,7 @@ namespace Kurkku.Game
 
                     if (pairedTeleporter.Data.RoomId == Item.Data.RoomId)
                     {
-                        pairedTeleporter.UpdateStatus(TELEPORTER_EFFECTS);
+                        pairedTeleporter.UpdateState(TELEPORTER_EFFECTS);
 
                         var newPosition = pairedTeleporter.Position.Copy();
                         newPosition.Rotation = pairedTeleporter.Position.Rotation;
@@ -119,7 +119,7 @@ namespace Kurkku.Game
                         if (string.IsNullOrEmpty(roomUser.AuthenticateTeleporterId))
                             return;
 
-                        pairedTeleporter.UpdateStatus(TELEPORTER_OPEN);
+                        pairedTeleporter.UpdateState(TELEPORTER_OPEN);
 
                         roomUser.Move(
                             pairedTeleporter.Position.GetSquareInFront().X,
@@ -133,7 +133,7 @@ namespace Kurkku.Game
                         if (string.IsNullOrEmpty(roomUser.AuthenticateTeleporterId))
                             return;
 
-                        pairedTeleporter.UpdateStatus(TELEPORTER_CLOSE);
+                        pairedTeleporter.UpdateState(TELEPORTER_CLOSE);
                         roomUser.AuthenticateTeleporterId = null;
                     });
 
@@ -148,7 +148,7 @@ namespace Kurkku.Game
                 if (string.IsNullOrEmpty(roomUser.AuthenticateTeleporterId))
                     return;
 
-                Item.UpdateStatus(TELEPORTER_EFFECTS);
+                Item.UpdateState(TELEPORTER_EFFECTS);
             });
 
             Task.Delay(1500).ContinueWith(t =>
@@ -156,7 +156,7 @@ namespace Kurkku.Game
                 if (string.IsNullOrEmpty(roomUser.AuthenticateTeleporterId))
                     return;
 
-                Item.UpdateStatus(TELEPORTER_CLOSE);
+                Item.UpdateState(TELEPORTER_CLOSE);
 
                 if (pairedTeleporter.Data.RoomId != Item.Data.RoomId)
                 {
@@ -170,7 +170,7 @@ namespace Kurkku.Game
 
                 if (pairedTeleporter.Data.RoomId == Item.Data.RoomId)
                 {
-                    pairedTeleporter.UpdateStatus(TELEPORTER_EFFECTS);
+                    pairedTeleporter.UpdateState(TELEPORTER_EFFECTS);
                 }
             });
 
@@ -184,7 +184,7 @@ namespace Kurkku.Game
                         return;
                     }
 
-                    pairedTeleporter.UpdateStatus(TELEPORTER_OPEN);
+                    pairedTeleporter.UpdateState(TELEPORTER_OPEN);
 
                     roomUser.WalkingAllowed = true;
                     roomUser.Move(
@@ -204,11 +204,11 @@ namespace Kurkku.Game
 
                     if (pairedTeleporter.Data.RoomId == Item.Data.RoomId)
                     {
-                        pairedTeleporter.UpdateStatus(TELEPORTER_CLOSE);
+                        pairedTeleporter.UpdateState(TELEPORTER_CLOSE);
                     }
                     else
                     {
-                        pairedTeleporter.UpdateStatus(TELEPORTER_CLOSE);
+                        pairedTeleporter.UpdateState(TELEPORTER_CLOSE);
                     }
                 });
             }
@@ -224,7 +224,7 @@ namespace Kurkku.Game
                 State = TELEPORTER_CLOSE
             });
 
-            Item.Update();
+            Item.Save();
         }
 
         public override void OnPlace(IEntity entity)
@@ -237,7 +237,7 @@ namespace Kurkku.Game
                 State = TELEPORTER_CLOSE
             });
 
-            Item.Update();
+            Item.Save();
         }
 
         public override object GetJsonObject()
