@@ -67,5 +67,6 @@
         public static readonly short CloseDiceMessageEvent = 22;
         public static readonly short SaveRoomMessageEvent = 3036;
         public static readonly short SaveMannequinMessageEvent = 2529;
+        public static readonly short ChangeLooksMessageEvent = 885;
     }
 }
