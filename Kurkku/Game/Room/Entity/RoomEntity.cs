@@ -27,6 +27,9 @@ namespace Kurkku.Game
         public bool WalkingAllowed { get; internal set; }
         public bool IsRolling { get { return RollingData != null; } }
         public virtual ITaskObject TaskObject { get; set; }
+        public int DanceId { get; set; }
+        public bool IsDancing => DanceId > 0;
+        public bool IsSitting => Status.ContainsKey("sit");
 
         /// <summary>
         /// Get the status handling, the value is the value string and the time it was added.
@@ -50,6 +53,7 @@ namespace Kurkku.Game
             Goal = null;
             Next = null;
             InstanceId = -1;
+            DanceId = 0;
             Room = null;
             TimerManager.Reset();
             WalkingAllowed = true;

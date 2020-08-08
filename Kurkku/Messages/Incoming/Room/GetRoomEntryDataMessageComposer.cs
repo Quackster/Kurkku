@@ -31,13 +31,13 @@ namespace Kurkku.Messages.Incoming
             player.Send(new FloorItemsComposer(room.ItemManager.Items));
             player.Send(new WallItemsComposer(room.ItemManager.Items));
 
-            /*
-                    player.send(new USER_OBJECTS(room.getEntities()));
-        room.send(new USER_OBJECTS(player), List.of(player));
-        player.send(new USER_STATUSES(room.getEntities()));
-        */
-
-
+            foreach (var entity in room.Entities.Values)
+            {
+                if (entity.RoomEntity.IsDancing)
+                {
+                    player.Send(new DanceMessageComposer(entity.RoomEntity.InstanceId, entity.RoomEntity.DanceId));
+                }
+            }
         }
     }
 }

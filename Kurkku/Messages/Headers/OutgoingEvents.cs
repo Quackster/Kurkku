@@ -79,5 +79,6 @@
         public static readonly short SlideObjectBundleComposer = 106;
         public static readonly short RoomSettingsSavedComposer = 3713;
         public static readonly short UserChangeMessageComposer = 2859;
+        public static readonly short DanceMessageComposer = 732;
     }
 }
