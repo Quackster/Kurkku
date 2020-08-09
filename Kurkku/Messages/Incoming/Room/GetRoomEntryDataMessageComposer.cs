@@ -34,9 +34,7 @@ namespace Kurkku.Messages.Incoming
             foreach (var entity in room.Entities.Values)
             {
                 if (entity.RoomEntity.IsDancing)
-                {
                     player.Send(new DanceMessageComposer(entity.RoomEntity.InstanceId, entity.RoomEntity.DanceId));
-                }
             }
         }
     }

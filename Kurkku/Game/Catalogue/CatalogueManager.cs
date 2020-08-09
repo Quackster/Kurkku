@@ -144,12 +144,12 @@ namespace Kurkku.Game
 
                 firstTeleporter.ExtraData = JsonConvert.SerializeObject(new TeleporterExtraData
                 {
-                    LinkedItem = secondTeleporter.Id
+                    LinkedItem = secondTeleporter.Id.ToString()
                 });
 
                 secondTeleporter.ExtraData = JsonConvert.SerializeObject(new TeleporterExtraData
                 {
-                    LinkedItem = firstTeleporter.Id
+                    LinkedItem = firstTeleporter.Id.ToString()
                 });
 
                 items.Add(firstTeleporter);

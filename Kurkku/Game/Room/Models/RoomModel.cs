@@ -76,10 +76,8 @@ namespace Kurkku.Game
                         {
                             Heightmap += tile;
                         }
-                    } catch
-                    {
-                        var t = 123;
                     }
+                    catch { }
                 }
 
                 Heightmap += "\r";

@@ -72,7 +72,7 @@ namespace Kurkku.Game
 
                 if (player != null)
                 {
-                    return player.Inventory.GetItem(itemData.Id);
+                    return player.Inventory.GetItem(itemData.Id.ToString());
                 }
             }
             else
@@ -80,7 +80,7 @@ namespace Kurkku.Game
                 if (room.ItemManager.Items == null)
                     room.ItemManager.Load();
 
-                return room.ItemManager.GetItem(itemData.Id);
+                return room.ItemManager.GetItem(itemData.Id.ToString());
             }
 
 

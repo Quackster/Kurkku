@@ -108,7 +108,7 @@ namespace Kurkku.Game
 
             if (!string.IsNullOrEmpty(entity.RoomEntity.AuthenticateTeleporterId))
             {
-                var teleporter = room.ItemManager.Items.Values.Where(x => x.Data.Id == entity.RoomEntity.AuthenticateTeleporterId).FirstOrDefault();
+                var teleporter = room.ItemManager.Items.Values.Where(x => x.Data.Id.ToString() == entity.RoomEntity.AuthenticateTeleporterId).FirstOrDefault();
 
                 if (teleporter != null)
                 {

@@ -70,11 +70,11 @@ namespace Kurkku.Game
                 return;
             }
 
-            var targetTeleporter = ItemManager.Instance.ResolveItem(targetTeleporterData.Id);
+            var targetTeleporter = ItemManager.Instance.ResolveItem(targetTeleporterData.Id.ToString());
             var pairedTeleporter = targetTeleporter ?? new Item(targetTeleporterData);
             var pairedData = ((TeleporterExtraData)pairedTeleporter.Interactor.GetJsonObject());
 
-            roomUser.AuthenticateTeleporterId = pairedTeleporter.Data.Id;
+            roomUser.AuthenticateTeleporterId = pairedTeleporter.Data.Id.ToString();
 
             // Check if the user is inside the teleporter, if so, walk out. Useful if the user is stuck inside.
             if (Item.Position == roomUser.Position &&

@@ -63,7 +63,7 @@ namespace Kurkku.Game.Managers
         /// </summary>
         public Item GetItem(string itemId)
         {
-            return Items.Values.Where(x => x.Data.Id == itemId).FirstOrDefault();
+            return Items.Values.Where(x => x.Data.Id.ToString() == itemId).FirstOrDefault();
         }
 
         /// <summary>
