@@ -13,6 +13,7 @@ namespace Kurkku.Game
 
         public static readonly ItemManager Instance = new ItemManager();
         private int ItemCounter;
+        private int EffectCounter;
 
         #endregion
 
@@ -49,6 +50,14 @@ namespace Kurkku.Game
         public int GenerateId()
         {
             return Interlocked.Increment(ref ItemCounter);
+        }
+
+        /// <summary>
+        /// Generate client side ID for effect
+        /// </summary>
+        public int GenerateEffectId()
+        {
+            return Interlocked.Increment(ref EffectCounter);
         }
 
         /// <summary>

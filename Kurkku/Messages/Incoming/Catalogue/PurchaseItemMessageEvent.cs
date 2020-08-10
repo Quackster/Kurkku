@@ -29,8 +29,8 @@ namespace Kurkku.Messages.Incoming
                 return;
             }
 
-            if (catalogueItem.Definition != null && catalogueItem.Definition.HasBehaviour(ItemBehaviour.EFFECT))
-                return; // Effects disabled for now
+            //if (catalogueItem.Definition != null && catalogueItem.Definition.HasBehaviour(ItemBehaviour.EFFECT))
+            //    return; // Effects disabled for now
 
             string extraData = request.ReadString().FilterInput(false);
             int amount = request.ReadInt();
@@ -52,7 +52,6 @@ namespace Kurkku.Messages.Incoming
 
                     bonusDiscount += basicDiscount - discount.MinimumDiscountForBonus;
                 }
-
 
                 totalDiscountedItems = ((int)basicDiscount * (int)discount.DiscountAmountPerBatch) + (int)bonusDiscount;
             }

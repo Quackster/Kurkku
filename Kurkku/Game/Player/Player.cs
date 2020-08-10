@@ -95,6 +95,11 @@ namespace Kurkku.Game
         public Inventory Inventory { get; set; }
 
         /// <summary>
+        /// Get effect manager instance for user
+        /// </summary>
+        public EffectManager EffectManager { get; set; }
+
+        /// <summary>
         /// Whether the player has logged in or not
         /// </summary>
         public bool Authenticated { get; private set; }
@@ -163,6 +168,9 @@ namespace Kurkku.Game
 
             Messenger = new Messenger(this);
             Messenger.SendStatus();
+
+            EffectManager = new EffectManager(this);
+            EffectManager.Load();
 
             Authenticated = true;
             AuthenticationTime = DateTime.Now;

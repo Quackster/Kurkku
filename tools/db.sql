@@ -5475,7 +5475,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'ha-1008-62.ea-1402-62.hd-180-1.ca-1806-73.cc-260-62.lg-275-64', 'm', 7, 9182, '', '2020-04-25 21:07:53', '2020-08-08 20:40:19'),
+	(1, 'Alex', 'ha-1008-62.ea-1402-62.hd-180-1.ca-1806-73.cc-260-62.lg-275-64', 'm', 7, 9182, '', '2020-04-25 21:07:53', '2020-08-11 00:07:53'),
 	(2, 'Test', 'sh-300-64.ha-1008-62.ca-1806-73.cc-260-62.ea-1402-62.lg-270-64.hd-180-1', 'M', 1, 999990, '', '2020-04-25 21:07:53', '2020-08-08 20:40:23');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
@@ -5490,7 +5490,10 @@ CREATE TABLE IF NOT EXISTS `user_effects` (
 
 /*!40000 ALTER TABLE `user_effects` DISABLE KEYS */;
 INSERT INTO `user_effects` (`id`, `user_id`, `effect_id`, `expire_at`, `is_activated`) VALUES
-	('3bd2c097-e4de-42e1-8ff2-a5a53e50fa70', 1, 10, NULL, 0);
+	('3bd2c097-e4de-42e1-8ff2-a5a53e50fa70', 1, 10, NULL, 0),
+	('50ab0460-1e13-4172-9a4b-db27122a5946', 1, 16, NULL, 0),
+	('6e97a2aa-4b15-4295-8717-8c2f6dbe0453', 1, 31, NULL, 0),
+	('8f93418d-2b28-42b2-8a9e-c0ae91b7c0f0', 1, 1, NULL, 0);
 /*!40000 ALTER TABLE `user_effects` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_seasonal_currencies` (
@@ -5506,7 +5509,7 @@ INSERT INTO `user_seasonal_currencies` (`user_id`, `seasonal_type`, `balance`) V
 	(1, 'STARS', 0),
 	(1, 'CLOUDS', 0),
 	(1, 'DIAMONDS', 0),
-	(1, 'DUCKETS', 350),
+	(1, 'DUCKETS', 83),
 	(1, 'LOYALTY_POINTS', 0),
 	(2, 'PUMPKINS', 0),
 	(2, 'PEANUTS', 0),
@@ -5530,7 +5533,7 @@ CREATE TABLE IF NOT EXISTS `user_settings` (
 
 /*!40000 ALTER TABLE `user_settings` DISABLE KEYS */;
 INSERT INTO `user_settings` (`user_id`, `daily_respect_points`, `daily_respect_pet_points`, `respect_points`, `friend_requests_enabled`, `following_enabled`, `online_time`) VALUES
-	(1, 3, 3, 0, 1, 1, 21548),
+	(1, 3, 3, 0, 1, 1, 21617),
 	(2, 0, 0, 0, 1, 1, 158);
 /*!40000 ALTER TABLE `user_settings` ENABLE KEYS */;
 
@@ -5547,7 +5550,7 @@ CREATE TABLE IF NOT EXISTS `user_subscriptions` (
 
 /*!40000 ALTER TABLE `user_subscriptions` DISABLE KEYS */;
 INSERT INTO `user_subscriptions` (`user_id`, `subscribed_at`, `expire_at`, `gift_at`, `gifts_redeemable`, `subscription_age`, `subscription_age_last_updated`) VALUES
-	(1, '2020-05-04 21:15:47', '2020-11-02 19:37:29', '2020-06-04 21:15:47', 12, 674951145, '2020-08-08 20:40:19');
+	(1, '2020-05-04 21:15:47', '2020-11-02 19:37:29', '2020-06-04 21:15:47', 12, 675136398, '2020-08-11 00:07:53');
 /*!40000 ALTER TABLE `user_subscriptions` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
