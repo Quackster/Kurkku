@@ -99,12 +99,13 @@ namespace Kurkku.Game
         private void PurchaseEffect(int userId, CatalogueItem catalogueItem, int amount)
         {
             List<EffectData> purchaseEffectsQueue = new List<EffectData>();
+            var existingEffects = EffectDao.GetUserEffects(userId);
 
             for (int i = 0; i < amount; i++)
             {
                 foreach (var cataloguePackage in catalogueItem.Packages)
                 {
-                    var dataList = GenerateEffectData(userId, cataloguePackage);
+                    var dataList = GenerateEffectData(userId, cataloguePackage, existingEffects);
 
                     if (!dataList.Any())
                         continue;
@@ -114,10 +115,7 @@ namespace Kurkku.Game
             }
 
             // Bulk create items
-            EffectDao.CreateEffects(purchaseEffectsQueue);
-
-            // Create into game instance
-            List<Effect> items = purchaseEffectsQueue.Select(x => new Effect(x)).ToList();
+            EffectDao.SaveEffects(purchaseEffectsQueue);
 
             var player = PlayerManager.Instance.GetPlayerById(userId);
 
@@ -125,18 +123,29 @@ namespace Kurkku.Game
                 return;
 
             player.Send(new PurchaseOKComposer(catalogueItem));
+            purchaseEffectsQueue.ForEach(x => player.Send(new EffectAddedMessageComposer(new Effect(player, x))));
         }
 
-        private List<EffectData> GenerateEffectData(int userId, CataloguePackage cataloguePackage)
+        private List<EffectData> GenerateEffectData(int userId, CataloguePackage cataloguePackage, List<EffectData> existingEffects)
         {
             List<EffectData> effects = new List<EffectData>();
             int itemsToGenerate = cataloguePackage.Data.Amount;
 
             for (int i = 0; i < itemsToGenerate; i++)
             {
-                EffectData itemData = new EffectData();
-                itemData.UserId = userId;
-                itemData.EffectId = cataloguePackage.Definition.Data.SpriteId;
+                EffectData itemData = existingEffects.Where(x => x.EffectId == cataloguePackage.Definition.Data.SpriteId).FirstOrDefault();
+
+                if (itemData != null)
+                {
+                    itemData.Quantity++;
+                }
+                else
+                {
+                    itemData = new EffectData();
+                    itemData.UserId = userId;
+                    itemData.EffectId = cataloguePackage.Definition.Data.SpriteId;
+                }
+
                 effects.Add(itemData);
             }
 

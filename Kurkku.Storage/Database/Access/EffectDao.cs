@@ -11,7 +11,7 @@ namespace Kurkku.Storage.Database.Access
         /// <summary>
         /// Create items and refresh it with their filled in database ID's
         /// </summary>
-        public static void CreateEffects(List<EffectData> items)
+        public static void SaveEffects(List<EffectData> items)
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
@@ -20,14 +20,14 @@ namespace Kurkku.Storage.Database.Access
                     try
                     {
                         foreach (var itemData in items)
-                            session.Save(itemData);
+                            session.SaveOrUpdate(itemData);
 
                         transaction.Commit();
 
                         foreach (var itemData in items)
                             session.Refresh(itemData);
                     }
-                    catch
+                    catch (Exception ex)
                     {
                         transaction.Rollback();
                     }

@@ -1,4 +1,5 @@
-﻿using Kurkku.Storage.Database.Access;
+﻿using Kurkku.Messages.Outgoing;
+using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
 using System;
 using System.Collections.Concurrent;
@@ -11,16 +12,16 @@ namespace Kurkku.Game
     {
         #region Properties
 
-        public IEntity Entity;
+        private Player player;
         public ConcurrentDictionary<int, Effect> Effects { get; set; }
 
         #endregion
 
         #region Constructor
 
-        public EffectManager(IEntity entity)
+        public EffectManager(Player player)
         {
-            Entity = entity;
+            this.player = player;
         }
 
         #endregion
@@ -31,14 +32,25 @@ namespace Kurkku.Game
         {
             Effects = new ConcurrentDictionary<int, Effect>();
 
-            foreach (var effectData in EffectDao.GetUserEffects(Entity.EntityData.Id))
+            foreach (var effectData in EffectDao.GetUserEffects(player.EntityData.Id))
             {
-                Effect effect = new Effect(effectData);
+                Effect effect = new Effect(player, effectData);
                 Effects.TryAdd(effect.Id, effect);
             }
+
+            player.Send(new EffectsMessageComposer(new List<Effect>(Effects.Values)));
+        }
+
+
+
+        /// <summary>
+        /// Gets the duration of the intended effect.
+        /// </summary>
+        public int GetEffectDuration(int effectId)
+        {
+            return 3600;
         }
 
         #endregion
-
     }
 }

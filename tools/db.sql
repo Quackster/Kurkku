@@ -2876,7 +2876,7 @@ INSERT INTO `item` (`id`, `order_id`, `user_id`, `room_id`, `definition_id`, `x`
 	('48d496ee-086a-42fc-8378-b2e90c326f4b', 0, 1, 2, 30, '7', '2', '0', '', 2, '', -1, '2020-05-06 00:23:28', '2020-05-06 00:24:04'),
 	('4a1c2d4e-f0f1-41fe-ad26-1224ec7621ab', 0, 1, 70, 2383, '4', '9', '0', '', 2, '{"Gender":"M","Figure":"ha-1008-62.ca-1806-73.cc-260-62.ea-1402-62.lg-275-64.hd-180-1","OutfitName":"Alex"}', -1, '2020-08-01 19:39:38', '2020-08-03 23:26:32'),
 	('526b759d-a17d-4ef3-bc48-5004a6281b3f', 0, 1, 2, 773, '0', '0', '0', ':w=1,8 l=5,75 l', 0, '', -1, '2020-05-06 00:29:12', '2020-05-06 00:29:24'),
-	('52fd7f6f-a13a-4393-b1e7-63267f85ee6e', 0, 1, 70, 2382, '4', '1', '0', '', 0, '0', -1, '2020-08-01 12:47:24', '2020-08-01 12:47:45'),
+	('52fd7f6f-a13a-4393-b1e7-63267f85ee6e', 0, 1, 0, 2382, '4', '1', '0', '', 0, '0', -1, '2020-08-01 12:47:24', '2020-08-13 00:56:32'),
 	('59f72d3c-17c7-414e-ac1a-288ef6822816', 0, 1, 0, 111, '8', '8', '0.451', '', 0, '5', -1, '2020-07-16 22:46:40', '2020-07-27 16:38:54'),
 	('6ca06db4-eda7-4ba0-a550-11d0c3928ba3', 0, 1, 2, 70, '2', '5', '1', '', 0, '', -1, '2020-05-06 00:29:39', '2020-07-13 18:18:53'),
 	('6cfab7d4-8151-4dd5-b5b2-e670d72cb604', 0, 1, 2, 774, '0', '0', '0', ':w=4,4 l=10,68 r', 0, '', -1, '2020-05-06 00:21:22', '2020-05-06 00:21:26'),
@@ -5260,7 +5260,7 @@ INSERT INTO `room` (`id`, `owner_id`, `name`, `description`, `category_id`, `vis
 	(60, 0, 'Club Orient', 'orient', 8, 0, 35, 'OPEN', '', 'orient', 'hh_room_orient', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
 	(61, 0, 'Imperial Palace', 'emperors', 5, 0, 30, 'OPEN', '', 'emperors', 'hh_room_emperors', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
 	(62, 0, 'Beauty Salon II', 'beauty_salon_loreal', 5, 0, 25, 'OPEN', '', 'beauty_salon1', 'hh_room_beauty_salon_general', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
-	(70, 1, 'test', '', 14, 0, 25, 'OPEN', '', 'model_a', '', '0', '0', '0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS');
+	(70, 1, 'test', '', 14, 1, 25, 'OPEN', '', 'model_a', '', '0', '0', '0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS');
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `room_category` (
@@ -5475,25 +5475,25 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'ha-1008-62.ea-1402-62.hd-180-1.ca-1806-73.cc-260-62.lg-275-64', 'm', 7, 9182, '', '2020-04-25 21:07:53', '2020-08-11 00:07:53'),
+	(1, 'Alex', 'ha-1008-62.ca-1806-73.cc-260-62.ea-1402-62.lg-275-64.hd-180-1', 'M', 7, 9182, '', '2020-04-25 21:07:53', '2020-08-13 01:18:07'),
 	(2, 'Test', 'sh-300-64.ha-1008-62.ca-1806-73.cc-260-62.ea-1402-62.lg-270-64.hd-180-1', 'M', 1, 999990, '', '2020-04-25 21:07:53', '2020-08-08 20:40:23');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_effects` (
-  `id` char(36) NOT NULL,
   `user_id` int(11) NOT NULL,
   `effect_id` int(11) NOT NULL,
   `expire_at` datetime DEFAULT NULL,
-  `is_activated` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`)
+  `quantity` int(11) NOT NULL DEFAULT 1,
+  `is_activated` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user_effects` DISABLE KEYS */;
-INSERT INTO `user_effects` (`id`, `user_id`, `effect_id`, `expire_at`, `is_activated`) VALUES
-	('3bd2c097-e4de-42e1-8ff2-a5a53e50fa70', 1, 10, NULL, 0),
-	('50ab0460-1e13-4172-9a4b-db27122a5946', 1, 16, NULL, 0),
-	('6e97a2aa-4b15-4295-8717-8c2f6dbe0453', 1, 31, NULL, 0),
-	('8f93418d-2b28-42b2-8a9e-c0ae91b7c0f0', 1, 1, NULL, 0);
+INSERT INTO `user_effects` (`user_id`, `effect_id`, `expire_at`, `quantity`, `is_activated`) VALUES
+	(1, 5, NULL, 1, 0),
+	(1, 10, NULL, 1, 0),
+	(1, 18, NULL, 1, 0),
+	(1, 7, NULL, 1, 0),
+	(1, 6, NULL, 1, 0);
 /*!40000 ALTER TABLE `user_effects` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_seasonal_currencies` (
@@ -5509,7 +5509,7 @@ INSERT INTO `user_seasonal_currencies` (`user_id`, `seasonal_type`, `balance`) V
 	(1, 'STARS', 0),
 	(1, 'CLOUDS', 0),
 	(1, 'DIAMONDS', 0),
-	(1, 'DUCKETS', 83),
+	(1, 'DUCKETS', 6968),
 	(1, 'LOYALTY_POINTS', 0),
 	(2, 'PUMPKINS', 0),
 	(2, 'PEANUTS', 0),
@@ -5533,7 +5533,7 @@ CREATE TABLE IF NOT EXISTS `user_settings` (
 
 /*!40000 ALTER TABLE `user_settings` DISABLE KEYS */;
 INSERT INTO `user_settings` (`user_id`, `daily_respect_points`, `daily_respect_pet_points`, `respect_points`, `friend_requests_enabled`, `following_enabled`, `online_time`) VALUES
-	(1, 3, 3, 0, 1, 1, 21617),
+	(1, 3, 3, 0, 1, 1, 22977),
 	(2, 0, 0, 0, 1, 1, 158);
 /*!40000 ALTER TABLE `user_settings` ENABLE KEYS */;
 
@@ -5550,7 +5550,7 @@ CREATE TABLE IF NOT EXISTS `user_subscriptions` (
 
 /*!40000 ALTER TABLE `user_subscriptions` DISABLE KEYS */;
 INSERT INTO `user_subscriptions` (`user_id`, `subscribed_at`, `expire_at`, `gift_at`, `gifts_redeemable`, `subscription_age`, `subscription_age_last_updated`) VALUES
-	(1, '2020-05-04 21:15:47', '2020-11-02 19:37:29', '2020-06-04 21:15:47', 12, 675136398, '2020-08-11 00:07:53');
+	(1, '2020-05-04 21:15:47', '2020-11-02 19:37:29', '2020-06-04 21:15:47', 12, 675313408, '2020-08-13 01:18:07');
 /*!40000 ALTER TABLE `user_subscriptions` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
