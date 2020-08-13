@@ -45,5 +45,16 @@ namespace Kurkku.Storage.Database.Access
                 return session.QueryOver<EffectData>().Where(x => x.UserId == userId).List() as List<EffectData>;
             }
         }
+
+        /// <summary>
+        /// Get list of all effects for user
+        /// </summary>
+        public static List<EffectSettingData> GetEffectSettings()
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                return session.QueryOver<EffectSettingData>().List() as List<EffectSettingData>;
+            }
+        }
     }
 }

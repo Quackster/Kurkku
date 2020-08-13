@@ -4,7 +4,7 @@ using Kurkku.Storage.Database.Data;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Kurkku.Game
 {
@@ -34,21 +34,22 @@ namespace Kurkku.Game
 
             foreach (var effectData in EffectDao.GetUserEffects(player.EntityData.Id))
             {
-                Effect effect = new Effect(player, effectData);
+                Effect effect = new Effect(effectData);
                 Effects.TryAdd(effect.Id, effect);
             }
 
             player.Send(new EffectsMessageComposer(new List<Effect>(Effects.Values)));
         }
 
-
-
         /// <summary>
-        /// Gets the duration of the intended effect.
+        /// Add effect to collection
         /// </summary>
-        public int GetEffectDuration(int effectId)
+        public void AddEffect(EffectData effectData)
         {
-            return 3600;
+            var effect = new Effect(effectData);
+
+            player.Send(new EffectAddedMessageComposer(effect));
+            Effects.TryAdd(effect.Id, effect);
         }
 
         #endregion

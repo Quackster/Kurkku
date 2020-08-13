@@ -27,10 +27,10 @@ namespace Kurkku.Messages.Outgoing
         internal static void Compose(Effect effect, IMessageComposer composer)
         {
             composer.Data.Add(effect.Id);
-            composer.Data.Add(0);
-            composer.Data.Add((int)effect.Duration);
+            composer.Data.Add(effect.IsCostume ? 1 : 0);
+            composer.Data.Add(effect.Duration);
             composer.Data.Add(effect.Data.IsActivated ? effect.Data.Quantity : effect.Data.Quantity);
-            composer.Data.Add(effect.Data.IsActivated ? (int)effect.TimeLeft : -1);
+            composer.Data.Add(effect.Data.IsActivated ? effect.TimeLeft : -1);
         }
     }
 }

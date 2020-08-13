@@ -2805,6 +2805,119 @@ INSERT INTO `catalogue_subscriptions` (`id`, `page_id`, `price_coins`, `price_se
 	(3, 63, 60, 0, 'DUCKETS', 6);
 /*!40000 ALTER TABLE `catalogue_subscriptions` ENABLE KEYS */;
 
+CREATE TABLE IF NOT EXISTS `effects` (
+  `effect_id` int(11) NOT NULL,
+  `duration` int(11) NOT NULL,
+  `is_costume` tinyint(4) NOT NULL,
+  PRIMARY KEY (`effect_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*!40000 ALTER TABLE `effects` DISABLE KEYS */;
+INSERT INTO `effects` (`effect_id`, `duration`, `is_costume`) VALUES
+	(1, 3600, 0),
+	(2, 3600, 0),
+	(3, 3600, 0),
+	(4, 3600, 0),
+	(5, 3600, 0),
+	(6, 3600, 0),
+	(7, 3600, 0),
+	(8, 3600, 0),
+	(9, 3600, 0),
+	(10, 3600, 0),
+	(11, 3600, 0),
+	(12, 3600, 0),
+	(13, 3600, 0),
+	(14, 3600, 0),
+	(15, 3600, 0),
+	(16, 3600, 0),
+	(17, 3600, 0),
+	(18, 3600, 0),
+	(23, 3600, 0),
+	(24, 3600, 0),
+	(25, 3600, 0),
+	(26, 3600, 0),
+	(27, 2592000, 1),
+	(31, 2592000, 1),
+	(32, 2592000, 1),
+	(44, 3600, 0),
+	(47, 2592000, 1),
+	(48, 3600, 0),
+	(53, 3600, 0),
+	(54, 3600, 0),
+	(59, 3600, 0),
+	(60, 2592000, 1),
+	(61, 3600, 0),
+	(62, 3600, 0),
+	(63, 3600, 0),
+	(64, 3600, 0),
+	(66, 3600, 0),
+	(67, 3600, 0),
+	(69, 3600, 0),
+	(70, 3600, 0),
+	(71, 3600, 0),
+	(72, 3600, 0),
+	(73, 3600, 0),
+	(74, 3600, 0),
+	(75, 3600, 0),
+	(76, 3600, 0),
+	(78, 2592000, 1),
+	(79, 2592000, 1),
+	(80, 2592000, 1),
+	(81, 2592000, 1),
+	(82, 2592000, 1),
+	(83, 2592000, 1),
+	(84, 2592000, 1),
+	(85, 2592000, 1),
+	(86, 2592000, 1),
+	(87, 2592000, 1),
+	(88, 2592000, 1),
+	(89, 2592000, 1),
+	(90, 3600, 0),
+	(91, 3600, 0),
+	(92, 2592000, 1),
+	(93, 3600, 0),
+	(94, 3600, 0),
+	(99, 3600, 0),
+	(100, 3600, 0),
+	(104, 3600, 0),
+	(105, 3600, 0),
+	(106, 3600, 0),
+	(107, 3600, 0),
+	(108, 3600, 0),
+	(109, 3600, 0),
+	(110, 3600, 0),
+	(111, 3600, 0),
+	(112, 3600, 0),
+	(113, 3600, 0),
+	(114, 3600, 0),
+	(115, 2592000, 1),
+	(116, 2592000, 1),
+	(117, 2592000, 1),
+	(118, 2592000, 1),
+	(119, 2592000, 1),
+	(120, 2592000, 1),
+	(121, 2592000, 1),
+	(122, 2592000, 1),
+	(123, 2592000, 1),
+	(124, 2592000, 1),
+	(125, 2592000, 1),
+	(126, 3600, 0),
+	(127, 2592000, 1),
+	(128, 2592000, 1),
+	(129, 2592000, 1),
+	(130, 3600, 0),
+	(131, 3600, 0),
+	(132, 2592000, 1),
+	(133, 2592000, 1),
+	(134, 2592000, 1),
+	(135, 2592000, 1),
+	(136, 3600, 0),
+	(137, 3600, 0),
+	(138, 3600, 0),
+	(139, 3600, 0),
+	(140, 3600, 0);
+/*!40000 ALTER TABLE `effects` ENABLE KEYS */;
+
 DELIMITER //
 CREATE DEFINER=`root`@`localhost` EVENT `event_club_gifts` ON SCHEDULE EVERY 1 SECOND STARTS '2020-05-03 19:17:59' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
 	SET @gift_interval = (SELECT `value` FROM `server_settings` WHERE `setting` = 'club.gift.interval');
@@ -5475,7 +5588,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'ha-1008-62.ca-1806-73.cc-260-62.ea-1402-62.lg-275-64.hd-180-1', 'M', 7, 9182, '', '2020-04-25 21:07:53', '2020-08-13 01:18:07'),
+	(1, 'Alex', 'ha-1008-62.ca-1806-73.cc-260-62.ea-1402-62.lg-275-64.hd-180-1', 'M', 7, 9182, '', '2020-04-25 21:07:53', '2020-08-13 21:03:22'),
 	(2, 'Test', 'sh-300-64.ha-1008-62.ca-1806-73.cc-260-62.ea-1402-62.lg-270-64.hd-180-1', 'M', 1, 999990, '', '2020-04-25 21:07:53', '2020-08-08 20:40:23');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
@@ -5489,11 +5602,17 @@ CREATE TABLE IF NOT EXISTS `user_effects` (
 
 /*!40000 ALTER TABLE `user_effects` DISABLE KEYS */;
 INSERT INTO `user_effects` (`user_id`, `effect_id`, `expire_at`, `quantity`, `is_activated`) VALUES
-	(1, 5, NULL, 1, 0),
-	(1, 10, NULL, 1, 0),
-	(1, 18, NULL, 1, 0),
+	(1, 127, NULL, 1, 0),
+	(1, 128, NULL, 1, 0),
+	(1, 129, NULL, 1, 0),
+	(1, 132, NULL, 1, 0),
+	(1, 134, NULL, 1, 0),
+	(1, 135, NULL, 1, 0),
+	(1, 133, NULL, 1, 0),
+	(1, 1, NULL, 1, 0),
 	(1, 7, NULL, 1, 0),
-	(1, 6, NULL, 1, 0);
+	(1, 6, NULL, 1, 0),
+	(1, 5, NULL, 1, 0);
 /*!40000 ALTER TABLE `user_effects` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_seasonal_currencies` (
@@ -5509,7 +5628,7 @@ INSERT INTO `user_seasonal_currencies` (`user_id`, `seasonal_type`, `balance`) V
 	(1, 'STARS', 0),
 	(1, 'CLOUDS', 0),
 	(1, 'DIAMONDS', 0),
-	(1, 'DUCKETS', 6968),
+	(1, 'DUCKETS', 98970),
 	(1, 'LOYALTY_POINTS', 0),
 	(2, 'PUMPKINS', 0),
 	(2, 'PEANUTS', 0),
@@ -5533,7 +5652,7 @@ CREATE TABLE IF NOT EXISTS `user_settings` (
 
 /*!40000 ALTER TABLE `user_settings` DISABLE KEYS */;
 INSERT INTO `user_settings` (`user_id`, `daily_respect_points`, `daily_respect_pet_points`, `respect_points`, `friend_requests_enabled`, `following_enabled`, `online_time`) VALUES
-	(1, 3, 3, 0, 1, 1, 22977),
+	(1, 3, 3, 0, 1, 1, 39612),
 	(2, 0, 0, 0, 1, 1, 158);
 /*!40000 ALTER TABLE `user_settings` ENABLE KEYS */;
 
@@ -5550,7 +5669,7 @@ CREATE TABLE IF NOT EXISTS `user_subscriptions` (
 
 /*!40000 ALTER TABLE `user_subscriptions` DISABLE KEYS */;
 INSERT INTO `user_subscriptions` (`user_id`, `subscribed_at`, `expire_at`, `gift_at`, `gifts_redeemable`, `subscription_age`, `subscription_age_last_updated`) VALUES
-	(1, '2020-05-04 21:15:47', '2020-11-02 19:37:29', '2020-06-04 21:15:47', 12, 675313408, '2020-08-13 01:18:07');
+	(1, '2020-05-04 21:15:47', '2020-11-02 19:37:29', '2020-06-04 21:15:47', 12, 675384521, '2020-08-13 21:03:22');
 /*!40000 ALTER TABLE `user_subscriptions` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

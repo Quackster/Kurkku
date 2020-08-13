@@ -1,4 +1,5 @@
 ﻿using Kurkku.Messages.Outgoing;
+using Kurkku.Storage.Database;
 using Kurkku.Storage.Database.Access;
 using Kurkku.Storage.Database.Data;
 using Newtonsoft.Json;
@@ -22,6 +23,7 @@ namespace Kurkku.Game
         public List<CatalogueItem> Items;
         public List<CataloguePackage> Packages;
         public List<CatalogueDiscountData> Discounts;
+        public Dictionary<int, EffectType> Effects;
 
         #endregion
 
@@ -32,6 +34,7 @@ namespace Kurkku.Game
             Pages = CatalogueDao.GetPages().Select(x => new CataloguePage(x)).ToList();
             Items = CatalogueDao.GetItems().Select(x => new CatalogueItem(x)).ToList();
             Packages = CatalogueDao.GetPackages().Select(i => new CataloguePackage(i, Items.FirstOrDefault(x => x.Data.SaleCode == i.SaleCode))).ToList();
+            Effects = EffectDao.GetEffectSettings().ToDictionary(x => x.EffectId, x => new EffectType(x));
             Discounts = CatalogueDao.GetDiscounts();
             DeserialisePageData();
 
@@ -123,7 +126,7 @@ namespace Kurkku.Game
                 return;
 
             player.Send(new PurchaseOKComposer(catalogueItem));
-            purchaseEffectsQueue.ForEach(x => player.Send(new EffectAddedMessageComposer(new Effect(player, x))));
+            purchaseEffectsQueue.ForEach(player.EffectManager.AddEffect);
         }
 
         private List<EffectData> GenerateEffectData(int userId, CataloguePackage cataloguePackage, List<EffectData> existingEffects)
@@ -321,6 +324,14 @@ namespace Kurkku.Game
         public List<CataloguePackage> GetPackages(string saleCode)
         {
             return Packages.Where(x => x.Data.SaleCode == saleCode).ToList();
+        }
+
+        /// <summary>
+        /// Get effect settings
+        /// </summary>
+        public EffectType GetEffectSetting(int effectId)
+        {
+            return Effects[effectId];
         }
 
         #endregion

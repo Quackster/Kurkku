@@ -12,7 +12,8 @@ namespace Kurkku.Game
         public int Id => Data.EffectId;
         public EffectData Data { get; set; }
         private Player player { get; }
-        public int Duration => player.EffectManager.GetEffectDuration(Id);
+        public int Duration => CatalogueManager.Instance.GetEffectSetting(Id).Duration;
+        public bool IsCostume => CatalogueManager.Instance.GetEffectSetting(Id).IsCostume;
 
         public int TimeLeft
         {
@@ -32,7 +33,7 @@ namespace Kurkku.Game
 
         #region Constructor
 
-        public Effect(Player player, EffectData effectData)
+        public Effect(EffectData effectData)
         {
             this.player = player;
             this.Data = effectData;
