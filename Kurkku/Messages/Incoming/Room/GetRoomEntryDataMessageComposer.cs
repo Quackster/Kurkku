@@ -36,6 +36,9 @@ namespace Kurkku.Messages.Incoming
                 if (entity.RoomEntity.IsDancing)
                     player.Send(new DanceMessageComposer(entity.RoomEntity.InstanceId, entity.RoomEntity.DanceId));
             }
+
+            if (player.RoomEntity.CurrentEffect > 0)
+                player.RoomEntity.UseEffect(player.RoomEntity.CurrentEffect);
         }
     }
 }
