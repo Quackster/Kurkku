@@ -52,7 +52,7 @@ namespace Kurkku.Game
         private void RegisterTasks()
         {
             Tasks.Add(new EntityTask(room));
-            Tasks.Add(new StatusTask(room));
+            //Tasks.Add(new StatusTask(room));
             Tasks.Add(new ItemTickTask(room));
         }
 

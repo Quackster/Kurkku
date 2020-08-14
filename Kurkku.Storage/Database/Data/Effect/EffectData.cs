@@ -8,7 +8,7 @@ namespace Kurkku.Storage.Database.Data
         public EffectMapping()
         {
             Table("user_effects");
-            Map(x => x.ExpireAt, "expire_at").Generated.Insert().Nullable();
+            Map(x => x.ExpiresAt, "expires_at").Generated.Insert().Nullable();
             Map(x => x.Quantity, "quantity").Generated.Insert();
             Map(x => x.IsActivated, "is_activated").Generated.Insert();
 
@@ -22,7 +22,7 @@ namespace Kurkku.Storage.Database.Data
     {
         public virtual int UserId { get; set; }
         public virtual int EffectId { get; set; }
-        public virtual DateTime? ExpireAt { get; set; }
+        public virtual DateTime? ExpiresAt { get; set; }
         public virtual int Quantity { get; set; }
         public virtual bool IsActivated { get; set; }
 

@@ -1,8 +1,11 @@
 ﻿using Kurkku.Messages.Outgoing;
+using Kurkku.Storage.Database.Access;
 using Kurkku.Util;
+using Kurkku.Util.Extensions;
 using log4net;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -12,8 +15,8 @@ namespace Kurkku.Game
     {
         private class PlayerAttribute
         {
-            public const string AFK_CHECK = "AFK_CHECK";
-            public const string SPEECH_PATTERN = "SPEECH_PATTERN";
+            public const string TYPING_STATUS = "TYPING_STATUS";
+            public const string EFFECT_EXPIRY = "EFFECT_EXPIRY";
         }
 
         #region Fields
@@ -39,17 +42,52 @@ namespace Kurkku.Game
         public override void OnTick() { }
         public override void OnTickComplete()
         {
-            if (!EventQueue.ContainsKey(PlayerAttribute.AFK_CHECK))
-                QueueEvent(PlayerAttribute.AFK_CHECK, 1.0, ProcessTypingStatus, null);
+            if (!EventQueue.ContainsKey(PlayerAttribute.TYPING_STATUS))
+                QueueEvent(PlayerAttribute.TYPING_STATUS, 1.0, ProcessTypingStatus, null);
+
+            if (!EventQueue.ContainsKey(PlayerAttribute.EFFECT_EXPIRY))
+                QueueEvent(PlayerAttribute.EFFECT_EXPIRY, 1.0, ProcessEffectExpiry, null);
 
             TicksTimer = RoomTaskManager.GetProcessTime(0.5);
         }
 
         public void ProcessTypingStatus(QueuedEvent queuedEvent)
         {
+            if (!(Entity is Player))
+                return;
 
+            var player = (Player)Entity;
+
+            if (player.RoomUser.TimerManager.SpeechBubbleDate != -1 && DateUtil.GetUnixTimestamp() > player.RoomUser.TimerManager.SpeechBubbleDate)
+            {
+                player.RoomUser.TimerManager.ResetSpeechBubbleTimer();
+                player.RoomUser.Room.Send(new TypingStatusComposer(player.RoomUser.InstanceId, false));
+            }
         }
 
+        public void ProcessEffectExpiry(QueuedEvent queuedEvent)
+        {
+            if (!(Entity is Player))
+                return;
+
+            var player = (Player)Entity;
+
+            foreach (var effect in player.EffectManager.Effects.Where(x => x.Value.Data.IsActivated && x.Value.Data.ExpiresAt != null && DateTime.Now > x.Value.Data.ExpiresAt).ToList())
+            {
+                if (effect.Value.Data.Quantity > 0)
+                    effect.Value.Data.Quantity--;
+
+                effect.Value.Data.ExpiresAt = null;
+
+                if (effect.Value.Data.Quantity == 0)
+                {
+                    player.EffectManager.Effects.Remove(effect.Value.Id);
+                    EffectDao.DeleteEffect(effect.Value.Data);
+                }
+                else
+                    EffectDao.UpdateEffect(effect.Value.Data);
+            }
+        }
 
         #endregion
     }

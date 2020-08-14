@@ -78,5 +78,17 @@ namespace Kurkku.Storage.Database.Access
                 }
             }
         }
+
+        /// <summary>
+        /// Delete effect
+        /// </summary>
+        /// <param name="effectId"></param>
+        public static void DeleteEffect(EffectData effectData)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                session.Query<EffectData>().Where(x => x.EffectId == effectData.EffectId && x.UserId == effectData.UserId).Delete();
+            }
+        }
     }
 }

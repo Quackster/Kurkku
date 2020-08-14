@@ -18,9 +18,9 @@ namespace Kurkku.Game
         {
             get
             {
-                if (Data.ExpireAt.HasValue)
+                if (Data.ExpiresAt.HasValue)
                 {
-                    int seconds = (int)(Data.ExpireAt - DateTime.Now).Value.TotalSeconds;
+                    int seconds = (int)(Data.ExpiresAt - DateTime.Now).Value.TotalSeconds;
                     return seconds >= 0 ? seconds : 0;
                 }
 
@@ -51,7 +51,7 @@ namespace Kurkku.Game
                 return false;
 
             Data.IsActivated = true;
-            Data.ExpireAt = DateTime.Now.AddSeconds(Duration);
+            Data.ExpiresAt = DateTime.Now.AddSeconds(Duration);
             EffectDao.UpdateEffect(Data);
 
             return true;
