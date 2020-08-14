@@ -30,6 +30,7 @@ namespace Kurkku.Game
         public int DanceId { get; set; }
         public bool IsDancing => DanceId > 0;
         public bool IsSitting => Status.ContainsKey("sit");
+        public int CurrentEffect { get; set; }
 
         /// <summary>
         /// Get the status handling, the value is the value string and the time it was added.
@@ -268,6 +269,9 @@ namespace Kurkku.Game
             }
         }
 
+        /// <summary>
+        /// Refresh height of entity
+        /// </summary>
         private void RefreshHeight(Position newPosition)
         {
             var targetPosition = newPosition ?? Position;
@@ -281,6 +285,20 @@ namespace Kurkku.Game
                 NeedsUpdate = true;
             }
         }
+
+        /// <summary>
+        /// Use the effects
+        /// </summary>
+        /// <param name="effectId"></param>
+        public void UseEffect(int effectId)
+        {
+            if (IsDancing)
+                Room.Send(new DanceMessageComposer(InstanceId, 0));
+
+            CurrentEffect = effectId;
+            Room.Send(new EffectMessageComposer(InstanceId, effectId));
+        }
+
     }
 
 }

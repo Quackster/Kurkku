@@ -1,7 +1,6 @@
-﻿using Kurkku.Storage.Database.Data;
+﻿using Kurkku.Storage.Database.Access;
+using Kurkku.Storage.Database.Data;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Kurkku.Game
 {
@@ -37,6 +36,25 @@ namespace Kurkku.Game
         {
             this.player = player;
             this.Data = effectData;
+        }
+
+        #endregion
+
+        #region Public methods
+
+        /// <summary>
+        /// Try activate the effects
+        /// </summary>
+        public bool TryActivate()
+        {
+            if (Data.IsActivated)
+                return false;
+
+            Data.IsActivated = true;
+            Data.ExpireAt = DateTime.Now.AddSeconds(Duration);
+            EffectDao.UpdateEffect(Data);
+
+            return true;
         }
 
         #endregion

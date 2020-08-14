@@ -69,5 +69,9 @@
         public static readonly short SaveMannequinMessageEvent = 2529;
         public static readonly short ChangeLooksMessageEvent = 885;
         public static readonly short DanceMessageEvent = 866;
+        public static readonly short EffectActivatedMessageEvent = 106;
+        public static readonly short EffectSelectedMessageEvent = 261;
+        /*[2020-08-13 22:30:27,062] DEBUG  Player Alex - Unknown: 106 / [0][0][0]?
+[2020-08-13 22:30:27,063] DEBUG  Player Alex - Unknown: 261 / [0][0][0]?*/
     }
 }

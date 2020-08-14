@@ -37,8 +37,6 @@ namespace Kurkku.Game
             Effects = EffectDao.GetEffectSettings().ToDictionary(x => x.EffectId, x => new EffectType(x));
             Discounts = CatalogueDao.GetDiscounts();
             DeserialisePageData();
-
-            var test = Items.Where(x => x.Data.IsPackage).ToList();
         }
 
         #endregion

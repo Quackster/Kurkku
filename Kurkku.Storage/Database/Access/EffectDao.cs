@@ -56,5 +56,27 @@ namespace Kurkku.Storage.Database.Access
                 return session.QueryOver<EffectSettingData>().List() as List<EffectSettingData>;
             }
         }
+
+        /// <summary>
+        /// Update effect instance
+        /// </summary>
+        public static void UpdateEffect(EffectData effectData)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    try
+                    {
+                        session.Update(effectData);
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
+        }
     }
 }

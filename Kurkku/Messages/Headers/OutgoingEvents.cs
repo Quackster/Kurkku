@@ -82,5 +82,7 @@
         public static readonly short DanceMessageComposer = 732;
         public static readonly short EffectAddedMessageComposer = 2347;
         public static readonly short EffectsMessageComposer = 631;
+        public static readonly short EffectActivatedMessageComposer = 2803;
+        public static readonly short EffectMessageComposer = 3194;
     }
 }
