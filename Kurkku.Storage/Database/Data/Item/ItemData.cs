@@ -8,7 +8,7 @@ namespace Kurkku.Storage.Database.Data
         public ItemMapping()
         {
             Table("item");
-            Id(x => x.Id, "id").GeneratedBy.Guid();
+            Id(x => x.Id, "id");
             Map(x => x.OrderId, "order_id");
             Map(x => x.OwnerId, "user_id");
             Map(x => x.RoomId, "room_id");
@@ -28,7 +28,9 @@ namespace Kurkku.Storage.Database.Data
 
     public class ItemData
     {
-        public virtual Guid Id { get; set; }
+        public ItemData() => Id = Guid.NewGuid().ToString();
+
+        public virtual string Id { get; set; }
         public virtual int OrderId { get; set; }
         public virtual int OwnerId { get; set; }
         public virtual PlayerData OwnerData { get; set; }

@@ -29,8 +29,9 @@ namespace Kurkku.Game
         public virtual ITaskObject TaskObject { get; set; }
         public int DanceId { get; set; }
         public bool IsDancing => DanceId > 0;
+        public bool HasEffect => EffectId > 0;
         public bool IsSitting => Status.ContainsKey("sit");
-        public int CurrentEffect { get; set; }
+        public int EffectId { get; set; }
 
         /// <summary>
         /// Get the status handling, the value is the value string and the time it was added.
@@ -295,7 +296,7 @@ namespace Kurkku.Game
             if (IsDancing)
                 Room.Send(new DanceMessageComposer(InstanceId, 0));
 
-            CurrentEffect = effectId;
+            EffectId = effectId;
             Room.Send(new EffectMessageComposer(InstanceId, effectId));
         }
 

@@ -35,10 +35,13 @@ namespace Kurkku.Messages.Incoming
             {
                 if (entity.RoomEntity.IsDancing)
                     player.Send(new DanceMessageComposer(entity.RoomEntity.InstanceId, entity.RoomEntity.DanceId));
+
+                if (entity.RoomEntity.HasEffect)
+                    player.Send(new EffectMessageComposer(entity.RoomEntity.InstanceId, entity.RoomEntity.EffectId));
             }
 
-            if (player.RoomEntity.CurrentEffect > 0)
-                player.RoomEntity.UseEffect(player.RoomEntity.CurrentEffect);
+            if (player.RoomEntity.EffectId > 0)
+                player.RoomEntity.UseEffect(player.RoomEntity.EffectId);
         }
     }
 }

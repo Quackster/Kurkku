@@ -74,7 +74,7 @@ namespace Kurkku.Game
                 }
             }
 
-            // Bulk create items
+            // Bulk create items - ignore teleporters because they were already created
             ItemDao.CreateItems(purchaseQueue);
 
             // Convert item data to item instance
@@ -97,6 +97,9 @@ namespace Kurkku.Game
             player.Send(new FurniListUpdateComposer());
         }
 
+        /// <summary>
+        /// Purchase effect handler
+        /// </summary>
         private void PurchaseEffect(int userId, CatalogueItem catalogueItem, int amount)
         {
             List<EffectData> purchaseEffectsQueue = new List<EffectData>();
@@ -127,6 +130,9 @@ namespace Kurkku.Game
             purchaseEffectsQueue.ForEach(player.EffectManager.AddEffect);
         }
 
+        /// <summary>
+        /// Generate effects queue data.
+        /// </summary>
         private List<EffectData> GenerateEffectData(int userId, CataloguePackage cataloguePackage, List<EffectData> existingEffects)
         {
             List<EffectData> effects = new List<EffectData>();

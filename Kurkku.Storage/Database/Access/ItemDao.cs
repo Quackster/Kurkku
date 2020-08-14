@@ -49,7 +49,7 @@ namespace Kurkku.Storage.Database.Access
         {
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
-                return session.QueryOver<ItemData>().Where(x => x.Id.ToString() == itemId).Take(1).SingleOrDefault();
+                return session.QueryOver<ItemData>().Where(x => x.Id == itemId).Take(1).SingleOrDefault();
             }
         }
 
