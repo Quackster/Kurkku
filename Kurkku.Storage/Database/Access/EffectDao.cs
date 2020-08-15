@@ -71,7 +71,7 @@ namespace Kurkku.Storage.Database.Access
                         session.Update(effectData);
                         transaction.Commit();
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         transaction.Rollback();
                     }

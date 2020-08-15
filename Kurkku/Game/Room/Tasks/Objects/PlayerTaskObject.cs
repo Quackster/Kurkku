@@ -51,6 +51,9 @@ namespace Kurkku.Game
             TicksTimer = RoomTaskManager.GetProcessTime(0.5);
         }
 
+        /// <summary>
+        /// Process typing status stopped after x seconds
+        /// </summary>
         public void ProcessTypingStatus(QueuedEvent queuedEvent)
         {
             if (!(Entity is Player))
@@ -65,6 +68,9 @@ namespace Kurkku.Game
             }
         }
 
+        /// <summary>
+        /// Process effect expiry
+        /// </summary>
         public void ProcessEffectExpiry(QueuedEvent queuedEvent)
         {
             if (!(Entity is Player))
@@ -85,7 +91,14 @@ namespace Kurkku.Game
                     EffectDao.DeleteEffect(effect.Value.Data);
                 }
                 else
+                {
                     EffectDao.UpdateEffect(effect.Value.Data);
+                }
+
+                player.Send(new EffectExpiredMessageComposer(effect.Value.Id));
+
+                if (player.RoomEntity.EffectId == effect.Value.Id)
+                    player.RoomEntity.UseEffect(0);
             }
         }
 
