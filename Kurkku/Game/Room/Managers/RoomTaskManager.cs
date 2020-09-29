@@ -42,8 +42,7 @@ namespace Kurkku.Game
             Tasks.Clear();
             RegisterTasks();
 
-            foreach (var task in Tasks)
-                task.CreateTask();
+            Tasks.ForEach(x => x.CreateTask());
         }
 
         /// <summary>

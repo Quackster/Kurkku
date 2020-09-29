@@ -85,11 +85,6 @@ namespace Kurkku.Game
             EventQueue.TryAdd(state, new QueuedEvent(state, action, RoomTaskManager.GetProcessTime(time), attributes));
         }
 
-        internal void QueueEvent(string rOLL_DICE, object rolledDice, double v, Dictionary<object, object> dictionary)
-        {
-            throw new NotImplementedException();
-        }
-
         public virtual void OnTick() { }
         public virtual void OnTickComplete() { }
     }
