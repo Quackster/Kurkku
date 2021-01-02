@@ -31,7 +31,9 @@ namespace Kurkku.Game
             RoomTile frontTile = front.GetTile(room);
 
             if (frontTile == null)
+            {
                 return;
+            }
 
             // Check all entities in the room
             foreach (IEntity e in room.Entities.Values)

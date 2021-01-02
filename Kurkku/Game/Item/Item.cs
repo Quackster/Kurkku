@@ -154,7 +154,7 @@ namespace Kurkku.Game
         /// </summary>
         public bool IsValidMove(Item item, Room room, int x, int y, int rotation)
         {
-            RoomTile tile = Position.GetTile(room);
+            RoomTile tile = new Position(x, y).GetTile(room);
 
             if (tile == null || room == null)
                 return false;

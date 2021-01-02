@@ -60,6 +60,10 @@ namespace Kurkku.Game
             if (room == null || room.Model == null || !room.Model.IsTile(this))
                 return null;
 
+            if (room.Model.TileStates[this.X, this.Y] == TileState.CLOSED)
+                return null;
+
+
             return room.Mapping.Tiles[X, Y];
         }
 
