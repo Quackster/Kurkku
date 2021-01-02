@@ -11,9 +11,6 @@ CREATE TABLE IF NOT EXISTS `authentication_ticket` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `authentication_ticket` DISABLE KEYS */;
-INSERT INTO `authentication_ticket` (`user_id`, `sso_ticket`, `expires_at`) VALUES
-	(1, '123', NULL),
-	(2, 'kek', NULL);
 /*!40000 ALTER TABLE `authentication_ticket` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `catalogue_discounts` (
@@ -2974,9 +2971,6 @@ CREATE TABLE IF NOT EXISTS `item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*!40000 ALTER TABLE `item` DISABLE KEYS */;
-INSERT INTO `item` (`id`, `order_id`, `user_id`, `room_id`, `definition_id`, `x`, `y`, `z`, `wall_position`, `rotation`, `custom_data`, `expire_time`, `created_at`, `updated_at`) VALUES
-	('2429e668-255e-4927-8d81-1432935669a8', 0, 1, 70, 101, '4', '3', '0', '', 2, '{"LinkedItem":"70037610-bc69-4016-a9fe-d8e56284e8a1","State":"0"}', -1, '2020-08-14 18:35:16', '2020-08-14 18:35:33'),
-	('70037610-bc69-4016-a9fe-d8e56284e8a1', 0, 1, 71, 101, '4', '8', '0', '', 2, '{"LinkedItem":"2429e668-255e-4927-8d81-1432935669a8","State":"0"}', -1, '2020-08-14 18:35:16', '2020-08-14 18:39:22');
 /*!40000 ALTER TABLE `item` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `item_definitions` (
@@ -5279,7 +5273,7 @@ CREATE TABLE IF NOT EXISTS `room` (
   `who_can_kick` enum('NONE','USERS_WITH_RIGHTS','ALL_USERS') NOT NULL DEFAULT 'USERS_WITH_RIGHTS',
   `who_can_ban` enum('NONE','USERS_WITH_RIGHTS') NOT NULL DEFAULT 'USERS_WITH_RIGHTS',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
 INSERT INTO `room` (`id`, `owner_id`, `name`, `description`, `category_id`, `visitors_now`, `visitors_max`, `status`, `password`, `model`, `ccts`, `wallpaper`, `floor`, `landscape`, `rating`, `allow_pets`, `allow_pets_eat`, `allow_walkthrough`, `hidewall`, `wall_thickness`, `floor_thickness`, `is_owner_hidden`, `trade_setting`, `is_muted`, `who_can_mute`, `who_can_kick`, `who_can_ban`) VALUES
@@ -5343,9 +5337,7 @@ INSERT INTO `room` (`id`, `owner_id`, `name`, `description`, `category_id`, `vis
 	(59, 0, 'Star Lounge', 'star_lounge', 7, 0, 35, 'OPEN', '', 'star_lounge', 'hh_room_starlounge', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
 	(60, 0, 'Club Orient', 'orient', 8, 0, 35, 'OPEN', '', 'orient', 'hh_room_orient', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
 	(61, 0, 'Imperial Palace', 'emperors', 5, 0, 30, 'OPEN', '', 'emperors', 'hh_room_emperors', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
-	(62, 0, 'Beauty Salon II', 'beauty_salon_loreal', 5, 0, 25, 'OPEN', '', 'beauty_salon1', 'hh_room_beauty_salon_general', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
-	(70, 1, 'test', '', 14, 1, 25, 'OPEN', '', 'model_a', '', '0', '0', '0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS'),
-	(71, 1, 'test2', '', 14, 0, 25, 'OPEN', '', 'model_a', '', '0', '0', '0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS');
+	(62, 0, 'Beauty Salon II', 'beauty_salon_loreal', 5, 0, 25, 'OPEN', '', 'beauty_salon1', 'hh_room_beauty_salon_general', '0', '0', '0.0', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS', 'USERS_WITH_RIGHTS');
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `room_category` (
@@ -5548,6 +5540,7 @@ CREATE TABLE IF NOT EXISTS `tags` (
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
   `figure` text NOT NULL DEFAULT '0',
   `sex` varchar(1) NOT NULL DEFAULT 'M',
   `rank` int(11) NOT NULL DEFAULT 1,
@@ -5556,12 +5549,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   `join_date` datetime NOT NULL DEFAULT current_timestamp(),
   `last_online` datetime NOT NULL DEFAULT current_timestamp(),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`id`, `username`, `figure`, `sex`, `rank`, `credits`, `motto`, `join_date`, `last_online`) VALUES
-	(1, 'Alex', 'ea-1402-62.ha-1008-62.hd-180-1.cc-260-62.ca-1806-73.lg-275-64', 'M', 7, 9167, '', '2020-04-25 21:07:53', '2020-08-15 10:09:15'),
-	(2, 'Test', 'sh-300-64.ha-1008-62.ca-1806-73.cc-260-62.ea-1402-62.lg-270-64.hd-180-1', 'M', 1, 999990, '', '2020-04-25 21:07:53', '2020-08-08 20:40:23');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_effects` (
@@ -5573,15 +5563,6 @@ CREATE TABLE IF NOT EXISTS `user_effects` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user_effects` DISABLE KEYS */;
-INSERT INTO `user_effects` (`user_id`, `effect_id`, `expires_at`, `quantity`, `is_activated`) VALUES
-	(1, 127, NULL, 1, 0),
-	(1, 128, NULL, 1, 0),
-	(1, 129, NULL, 1, 0),
-	(1, 132, NULL, 1, 0),
-	(1, 134, NULL, 1, 0),
-	(1, 135, NULL, 1, 0),
-	(1, 133, NULL, 1, 0),
-	(1, 5, NULL, 1, 0);
 /*!40000 ALTER TABLE `user_effects` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_seasonal_currencies` (
@@ -5591,21 +5572,6 @@ CREATE TABLE IF NOT EXISTS `user_seasonal_currencies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user_seasonal_currencies` DISABLE KEYS */;
-INSERT INTO `user_seasonal_currencies` (`user_id`, `seasonal_type`, `balance`) VALUES
-	(1, 'PUMPKINS', 0),
-	(1, 'PEANUTS', 0),
-	(1, 'STARS', 0),
-	(1, 'CLOUDS', 0),
-	(1, 'DIAMONDS', 0),
-	(1, 'DUCKETS', 98169),
-	(1, 'LOYALTY_POINTS', 0),
-	(2, 'PUMPKINS', 0),
-	(2, 'PEANUTS', 0),
-	(2, 'STARS', 0),
-	(2, 'CLOUDS', 0),
-	(2, 'DIAMONDS', 0),
-	(2, 'DUCKETS', 0),
-	(2, 'LOYALTY_POINTS', 0);
 /*!40000 ALTER TABLE `user_seasonal_currencies` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_settings` (
@@ -5620,9 +5586,6 @@ CREATE TABLE IF NOT EXISTS `user_settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user_settings` DISABLE KEYS */;
-INSERT INTO `user_settings` (`user_id`, `daily_respect_points`, `daily_respect_pet_points`, `respect_points`, `friend_requests_enabled`, `following_enabled`, `online_time`) VALUES
-	(1, 3, 3, 0, 1, 1, 41195),
-	(2, 0, 0, 0, 1, 1, 158);
 /*!40000 ALTER TABLE `user_settings` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user_subscriptions` (
@@ -5637,8 +5600,6 @@ CREATE TABLE IF NOT EXISTS `user_subscriptions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `user_subscriptions` DISABLE KEYS */;
-INSERT INTO `user_subscriptions` (`user_id`, `subscribed_at`, `expire_at`, `gift_at`, `gifts_redeemable`, `subscription_age`, `subscription_age_last_updated`) VALUES
-	(1, '2020-05-04 21:15:47', '2020-11-02 19:37:29', '2020-06-04 21:15:47', 12, 675518066, '2020-08-15 10:09:15');
 /*!40000 ALTER TABLE `user_subscriptions` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
