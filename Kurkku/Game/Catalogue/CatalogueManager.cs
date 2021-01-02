@@ -190,7 +190,9 @@ namespace Kurkku.Game
                     {
                         //  { "Gender":"M","Figure":"lg-275-64.cc-260-62.ca-1806-73.ch-3030-62.hd-180-1.hr-100-61","OutfitName":"Default Mannequin"}
 
-                        serializeable = new MannequinExtraData()
+                        serializeable = new MannequinExtraData();
+
+                        /*
                         {
                             //"ch-3030-66.lg-275-64.ca-1806-73.cc-260-1408",
                             //"ch-875-1331-1331.lg-280-91.sh-295-1331.wa-3211-110-110.cc-3007-1331-1331"
@@ -199,6 +201,7 @@ namespace Kurkku.Game
                             Gender = "M",
                             OutfitName = "Default Mannequin"
                         };
+                        */
                     }
                     break;
             }
