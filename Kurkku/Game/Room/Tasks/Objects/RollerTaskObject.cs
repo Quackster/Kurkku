@@ -109,7 +109,8 @@ namespace Kurkku.Game
                     Item.Room?.Send(new SlideObjectBundleComposer(Item, rollingItems.Where(x => !x.RollingItem.IsRollingBlocked).ToList(), entity?.RoomEntity?.RollingData));
 
                     // Delay after rolling finished
-                    Task.Delay((int)(TaskProcessTime * 0.4) * 1000).ContinueWith(t =>
+                    int delay = (int)(double)(TaskProcessTime * 0.4 * 1000);
+                    Task.Delay(delay).ContinueWith(t =>
                     {
                         foreach (RollingData rollingData in rollingItems)
                         {
