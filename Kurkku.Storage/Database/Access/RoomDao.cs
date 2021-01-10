@@ -34,6 +34,8 @@ namespace Kurkku.Storage.Database.Access
                     .Where(
                         Restrictions.On(() => roomDataAlias.Name).IsInsensitiveLike(query, MatchMode.Anywhere) ||
                         Restrictions.On(() => playerDataAlias.Name).IsInsensitiveLike(query, MatchMode.Anywhere))
+                    .OrderBy(() => roomDataAlias.UsersNow).Desc
+                    .OrderBy(() => roomDataAlias.Rating).Desc
                     .Take(roomLimit)
                     .List<RoomData>() as List<RoomData>;
             }
@@ -56,8 +58,41 @@ namespace Kurkku.Storage.Database.Access
                     .Where(() => 
                         tagAlias.Text == tag &&
                         ownerAlias.Name != null)
+                    .OrderBy(() => roomDataAlias.UsersNow).Desc
+                    .OrderBy(() => roomDataAlias.Rating).Desc
                     .Take(roomLimit)
                     .List<RoomData>() as List<RoomData>;
+            }
+        }
+
+        /// <summary>
+        /// Get the list of users' own rooms
+        /// </summary>
+        public static List<RoomData> GetPopularFlats(int resultsLimit = 50)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                RoomData roomDataAlias = null;
+                PlayerData playerDataAlias = null;
+
+                /*
+                var test = session.QueryOver<RoomData>(() => roomDataAlias)
+                    .JoinQueryOver<PlayerData>(() => roomDataAlias.OwnerData, () => playerDataAlias)
+                        .Where(() => playerDataAlias.Id == roomDataAlias.OwnerId)
+                    .Where(
+                        Restrictions.On(() => roomDataAlias.Name).IsInsensitiveLike(query, MatchMode.Anywhere) ||
+                        Restrictions.On(() => playerDataAlias.Name).IsInsensitiveLike(query, MatchMode.Anywhere))
+                    //.Select(Projections.Entity(() => playerDataAlias))
+                    //.Select(x => x.OwnerData);
+                    .List<PlayerData>() as List<PlayerData>;*/
+
+                return session.QueryOver<RoomData>(() => roomDataAlias)
+                    .JoinQueryOver<PlayerData>(() => roomDataAlias.OwnerData, () => playerDataAlias)
+                        .Where(() => playerDataAlias.Id == roomDataAlias.OwnerId)
+                    .OrderBy(() => roomDataAlias.UsersNow).Desc
+                    .OrderBy(() => roomDataAlias.Rating).Desc
+                    .Take(resultsLimit)
+                    .List() as List<RoomData>;
             }
         }
 
@@ -69,7 +104,13 @@ namespace Kurkku.Storage.Database.Access
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
                 RoomData roomDataAlias = null;
-                return session.QueryOver<RoomData>(() => roomDataAlias).Where(() => roomDataAlias.OwnerId == userId).List() as List<RoomData>;
+                PlayerData playerDataAlias = null;
+
+                return session.QueryOver<RoomData>(() => roomDataAlias)
+                    .Where(() => playerDataAlias.Id == userId)
+                    .OrderBy(() => roomDataAlias.UsersNow).Desc
+                    .OrderBy(() => roomDataAlias.Rating).Desc
+                    .List() as List<RoomData>;
             }
         }
 
