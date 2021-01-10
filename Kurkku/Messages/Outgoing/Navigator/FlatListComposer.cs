@@ -61,7 +61,7 @@ namespace Kurkku.Messages.Outgoing
 
             foreach (var tag in room.Tags)
             {
-                messageComposer.Data.Add(tag);
+                messageComposer.Data.Add(tag.Text);
             }
 
             messageComposer.Data.Add(0);

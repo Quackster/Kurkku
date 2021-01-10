@@ -71,5 +71,8 @@
         public static readonly short DanceMessageEvent = 866;
         public static readonly short EffectActivatedMessageEvent = 106;
         public static readonly short EffectSelectedMessageEvent = 261;
+        public static readonly short PopularTagsMessageEvent = 3733;
+        public static readonly short SearchFlatsMessageEvent = 47;
+        public static readonly short SearchFlatTagsMessageEvent = 2952;
     }
 }

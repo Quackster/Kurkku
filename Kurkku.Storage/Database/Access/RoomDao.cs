@@ -1,5 +1,8 @@
 ﻿using Kurkku.Storage.Database.Data;
+using NHibernate;
+using NHibernate.Criterion;
 using NHibernate.Linq;
+using NHibernate.Transform;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,6 +10,56 @@ namespace Kurkku.Storage.Database.Access
 {
     public class RoomDao
     {
+        public static List<RoomData> SearchRooms(string query, int roomLimit = 50)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                RoomData roomDataAlias = null;
+                PlayerData playerDataAlias = null;
+
+                /*
+                var test = session.QueryOver<RoomData>(() => roomDataAlias)
+                    .JoinQueryOver<PlayerData>(() => roomDataAlias.OwnerData, () => playerDataAlias)
+                        .Where(() => playerDataAlias.Id == roomDataAlias.OwnerId)
+                    .Where(
+                        Restrictions.On(() => roomDataAlias.Name).IsInsensitiveLike(query, MatchMode.Anywhere) ||
+                        Restrictions.On(() => playerDataAlias.Name).IsInsensitiveLike(query, MatchMode.Anywhere))
+                    //.Select(Projections.Entity(() => playerDataAlias))
+                    //.Select(x => x.OwnerData);
+                    .List<PlayerData>() as List<PlayerData>;*/
+
+                return session.QueryOver<RoomData>(() => roomDataAlias)
+                    .JoinQueryOver<PlayerData>(() => roomDataAlias.OwnerData, () => playerDataAlias)
+                        .Where(() => playerDataAlias.Id == roomDataAlias.OwnerId)
+                    .Where(
+                        Restrictions.On(() => roomDataAlias.Name).IsInsensitiveLike(query, MatchMode.Anywhere) ||
+                        Restrictions.On(() => playerDataAlias.Name).IsInsensitiveLike(query, MatchMode.Anywhere))
+                    .Take(roomLimit)
+                    .List<RoomData>() as List<RoomData>;
+            }
+        }
+
+        /// <summary>
+        /// Search rooms by tag
+        /// </summary>
+        public static List<RoomData> SearchTags(string tag, int roomLimit = 50)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                RoomData roomDataAlias = null;
+                TagData tagAlias = null;
+                PlayerData ownerAlias = null;
+
+                return session.QueryOver<RoomData>(() => roomDataAlias)
+                    .JoinQueryOver<TagData>(() => roomDataAlias.Tags, () => tagAlias)
+                    .JoinQueryOver<PlayerData>(() => roomDataAlias.OwnerData, () => ownerAlias)
+                    .Where(() => 
+                        tagAlias.Text == tag &&
+                        ownerAlias.Name != null)
+                    .Take(roomLimit)
+                    .List<RoomData>() as List<RoomData>;
+            }
+        }
 
         /// <summary>
         /// Get the list of users' own rooms

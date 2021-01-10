@@ -293,11 +293,16 @@ namespace Kurkku.Game
         /// <param name="effectId"></param>
         public void UseEffect(int effectId)
         {
-            if (IsDancing)
-                Room.Send(new DanceMessageComposer(InstanceId, 0));
-
             EffectId = effectId;
-            Room.Send(new EffectMessageComposer(InstanceId, effectId));
+
+            if (Room != null)
+            {
+                if (IsDancing)
+                    Room.Send(new DanceMessageComposer(InstanceId, 0));
+
+
+                Room.Send(new EffectMessageComposer(InstanceId, effectId));
+            }
         }
 
     }

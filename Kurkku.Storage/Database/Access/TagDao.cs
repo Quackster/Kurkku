@@ -1,5 +1,7 @@
 ﻿using Kurkku.Storage.Database.Data;
 using NHibernate.Linq;
+using NHibernate.Transform;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,6 +21,30 @@ namespace Kurkku.Storage.Database.Access
         }
 
         /// <summary>
+        /// Get popular tags assigned to a room.
+        /// </summary>
+        public static List<PopularTag> GetPopularTags(int tagLimit = 50)
+        {
+            using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
+            {
+                TagData tagAlias = null;
+                PopularTag popularTagAlias = null;
+
+                return session.QueryOver<TagData>(() => tagAlias)
+                    .Where(x => x.RoomId > 0)
+                    .SelectList(list => list
+                        .Select(() => tagAlias.Text).WithAlias(() => popularTagAlias.Tag)
+                        .SelectCount(() => tagAlias.RoomId).WithAlias(() => popularTagAlias.Quantity)
+                        .SelectGroup(() => tagAlias.Text)
+
+                    )
+                    .TransformUsing(Transformers.AliasToBean<PopularTag>())
+                    .Take(tagLimit)
+                    .List<PopularTag>() as List<PopularTag>;
+            }
+        }
+
+        /// <summary>
         /// Save the room tags
         /// </summary>
         /// <returns></returns>
@@ -33,8 +59,9 @@ namespace Kurkku.Storage.Database.Access
                         session.Save(tagData);
                         transaction.Commit();
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        Console.WriteLine(ex);
                         transaction.Rollback();
                     }
                 }

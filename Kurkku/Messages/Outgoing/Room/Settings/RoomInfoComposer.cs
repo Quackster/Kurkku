@@ -40,7 +40,7 @@ namespace Kurkku.Messages.Outgoing
 
             foreach (var tag in roomData.Tags)
             {
-                Data.Add(tag);
+                Data.Add(tag.Text);
             }
 
 

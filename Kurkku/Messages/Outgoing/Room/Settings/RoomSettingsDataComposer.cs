@@ -25,7 +25,7 @@ namespace Kurkku.Messages.Outoing
 
             foreach (var tag in room.Data.Tags)
             {
-                m_Data.Add(tag);
+                m_Data.Add(tag.Text);
             }
 
             m_Data.Add(room.Data.TradeSetting);

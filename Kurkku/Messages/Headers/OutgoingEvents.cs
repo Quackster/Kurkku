@@ -85,5 +85,6 @@
         public static readonly short EffectActivatedMessageComposer = 2803;
         public static readonly short EffectMessageComposer = 3194;
         public static readonly short EffectExpiredMessageComposer = 1176;
+        public static readonly short PopularTagsComposer = 257;
     }
 }

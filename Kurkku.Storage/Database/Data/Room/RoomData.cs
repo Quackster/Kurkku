@@ -41,7 +41,6 @@ namespace Kurkku.Storage.Database.Data
             HasMany(x => x.Tags)
                 .Table("tags")
                 .KeyColumn("room_id")
-                .Element("text")
                 .Not.LazyLoad();
 
             References(x => x.OwnerData, "owner_id")
@@ -86,7 +85,7 @@ namespace Kurkku.Storage.Database.Data
         public virtual bool IsMuted { get; set; }
         public virtual bool IsOwnerHidden { get; set; }
         public virtual int TradeSetting { get; set; }
-        public virtual IList<string> Tags { get; set; }
+        public virtual IList<TagData> Tags { get; set; }
         public virtual RoomMuteSetting WhoCanMute { get; set; }
         public virtual RoomKickSetting WhoCanKick { get; set; }
         public virtual RoomBanSetting WhoCanBan { get; set; }

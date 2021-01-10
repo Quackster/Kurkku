@@ -1,6 +1,7 @@
 ﻿using Kurkku.Game;
 using Kurkku.Messages.Outgoing;
 using Kurkku.Network.Streams;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Kurkku.Messages.Incoming
