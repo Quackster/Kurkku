@@ -35,10 +35,8 @@ namespace Kurkku.Storage.Database.Access
                 return session.QueryOver<TagData>(() => tagAlias)
                     .Where(x => x.RoomId > 0)
                     .SelectList(list => list
-                        .Select(() => tagAlias.Text).WithAlias(() => popularTagAlias.Tag)
+                        .SelectGroup(() => tagAlias.Text).WithAlias(() => popularTagAlias.Tag)
                         .SelectCount(() => tagAlias.RoomId).WithAlias(() => popularTagAlias.Quantity)
-                        .SelectGroup(() => tagAlias.Text)
-
                     )
                     .OrderByAlias(() => popularTagAlias.Quantity).Desc
                     .TransformUsing(Transformers.AliasToBean<PopularTag>())
