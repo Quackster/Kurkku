@@ -1,4 +1,6 @@
 ﻿using Kurkku.Storage.Database.Data;
+using NHibernate.Criterion;
+using NHibernate.Criterion.Lambda;
 using NHibernate.Linq;
 using NHibernate.Transform;
 using System;
@@ -37,8 +39,9 @@ namespace Kurkku.Storage.Database.Access
                         .SelectCount(() => tagAlias.RoomId).WithAlias(() => popularTagAlias.Quantity)
                         .SelectGroup(() => tagAlias.Text)
 
-                    )
+                    ).OrderByAlias(() => popularTagAlias.Quantity).Desc
                     .TransformUsing(Transformers.AliasToBean<PopularTag>())
+                    //.OrderBy(Projections.Count(() => builder)).Desc
                     .Take(tagLimit)
                     .List<PopularTag>() as List<PopularTag>;
             }
