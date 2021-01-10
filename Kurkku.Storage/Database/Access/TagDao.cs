@@ -39,9 +39,9 @@ namespace Kurkku.Storage.Database.Access
                         .SelectCount(() => tagAlias.RoomId).WithAlias(() => popularTagAlias.Quantity)
                         .SelectGroup(() => tagAlias.Text)
 
-                    ).OrderByAlias(() => popularTagAlias.Quantity).Desc
+                    )
+                    .OrderByAlias(() => popularTagAlias.Quantity).Desc
                     .TransformUsing(Transformers.AliasToBean<PopularTag>())
-                    //.OrderBy(Projections.Count(() => builder)).Desc
                     .Take(tagLimit)
                     .List<PopularTag>() as List<PopularTag>;
             }
