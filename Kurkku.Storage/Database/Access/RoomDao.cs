@@ -104,10 +104,9 @@ namespace Kurkku.Storage.Database.Access
             using (var session = SessionFactoryBuilder.Instance.SessionFactory.OpenSession())
             {
                 RoomData roomDataAlias = null;
-                PlayerData playerDataAlias = null;
 
                 return session.QueryOver<RoomData>(() => roomDataAlias)
-                    .Where(() => playerDataAlias.Id == userId)
+                    .Where(() => roomDataAlias.OwnerId == userId)
                     .OrderBy(() => roomDataAlias.UsersNow).Desc
                     .OrderBy(() => roomDataAlias.Rating).Desc
                     .List() as List<RoomData>;

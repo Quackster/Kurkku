@@ -27,7 +27,7 @@ namespace Kurkku.Storage.Database.Access
                         foreach (var itemData in items)
                             session.Refresh(itemData);
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         transaction.Rollback();
                     }

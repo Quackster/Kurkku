@@ -29,10 +29,9 @@ namespace Kurkku.Storage.Database.Access
                             session.SaveOrUpdate(settingsData);
                             transaction.Commit();
                         }
-                        catch (HibernateException ex)
+                        catch
                         {
                             transaction.Rollback();
-                            throw ex;
                         }
                     }
                 } 
